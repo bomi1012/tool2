@@ -6,4 +6,4 @@
 *.ear
 
 palaver/.project
-palaver/.settings/
+palaver/.settings/*
