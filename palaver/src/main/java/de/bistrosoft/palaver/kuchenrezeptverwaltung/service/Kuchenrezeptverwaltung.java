@@ -11,10 +11,10 @@ import de.bistrosoft.palaver.data.KuchenrezeptDAO;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenrezept;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenrezeptHasArtikel;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenrezeptHasFussnote;
-import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver2.data.ArtikelDAO;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver.artikelverwaltung.dao.ArtikelDAO;
+import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
+import de.hska.awp.palaver.dao.ConnectException;
+import de.hska.awp.palaver.dao.DAOException;
 
 /**
  * @author Christine Hartkorn, Jasmin Baumgartner
@@ -62,7 +62,7 @@ public class Kuchenrezeptverwaltung extends KuchenrezeptDAO {
 			throws ConnectException, DAOException, SQLException {
 		List<Artikel> result = null;
 
-		result = ArtikelDAO.getInstance().getAllArtikel();
+		result = ArtikelDAO.getInstance().getActiveArtikeln();
 
 		return result;
 	}

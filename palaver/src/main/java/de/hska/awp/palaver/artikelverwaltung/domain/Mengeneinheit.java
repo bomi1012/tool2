@@ -1,52 +1,27 @@
-package de.hska.awp.palaver2.artikelverwaltung.domain;
+package de.hska.awp.palaver.artikelverwaltung.domain;
 
-/**
- * Die Klasse spiegelt die Mengeneinheit wieder.
- * 
- * @author Christian Barth
- * 
- */
-public class Mengeneinheit implements java.io.Serializable {
+import de.hska.awp.palaver.EntityName;
+
+public class Mengeneinheit extends EntityName implements java.io.Serializable {
 
 	private static final long serialVersionUID = 5210068506937506344L;
-
-	private Long id;
-	private String name;
 	private String kurz;
 
 	public Mengeneinheit() {
 		super();
 	}
-
 	public Mengeneinheit(Long id, String name, String kurz) {
+		this.kurz = kurz;
 		this.id = id;
 		this.name = name;
+	}
+	public Mengeneinheit(String name, String kurz) {
 		this.kurz = kurz;
-	}
-
-	public Long getId() {
-		return this.id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
 		this.name = name;
 	}
 
-	public String getKurz() {
-		return this.kurz;
-	}
-
-	public void setKurz(String kurz) {
-		this.kurz = kurz;
-	}
+	public String getKurz() { return this.kurz; }
+	public void setKurz(String kurz) { this.kurz = kurz; }
 
 	@Override
 	public String toString() {

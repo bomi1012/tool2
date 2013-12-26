@@ -1,8 +1,4 @@
-/**
- * Created by Sebastian Walz
- * 24.04.2013 16:03:13
- */
-package de.hska.awp.palaver2.gui.view;
+package de.hska.awp.palaver2.gui.view.lieferantenverwaltung;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,16 +14,14 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.CustomTable;
-import com.vaadin.ui.CustomTable.CellStyleGenerator;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
+import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -36,28 +30,21 @@ import de.hska.awp.palaver2.util.ViewHandler;
 import de.hska.awp.palaver2.util.customFilter;
 import de.hska.awp.palaver2.util.customFilterDecorator;
 
-/**
- * @author Sebastian Walz Diese Klasse gibt eine Tabelle aus, in der alle
- *         Artikel angezeigt werden. Klick man doppelt auf einen, kommt man
- *         direkt zur UpdateForm.
- */
 @SuppressWarnings("serial")
-public class ArtikelAnzeigen extends VerticalLayout implements View {
-	private static final Logger log = LoggerFactory.getLogger(ArtikelAnzeigen.class.getName());
+public class LieferantAnzeigen extends VerticalLayout implements View {
+
+	private static final Logger log = LoggerFactory.getLogger(LieferantAnzeigen.class.getName());
 
 	private FilterTable table;
 
 	private Button showFilter;
 	private Button auswaehlen;
-
 	private Label headline;
 
 	private HorizontalLayout head;
+	private Lieferant lieferant;
 
-	private Artikel artikel;
-
-
-	public ArtikelAnzeigen() {
+	public LieferantAnzeigen() {
 		super();
 
 		this.setSizeFull();
@@ -69,7 +56,7 @@ public class ArtikelAnzeigen extends VerticalLayout implements View {
 		auswaehlen = new Button(IConstants.BUTTON_SELECT);
 		auswaehlen.setHeight("50px");
 
-		headline = new Label("Alle Artikel");
+		headline = new Label("Alle Lieferanten");
 		headline.setStyleName("ViewHeadline");
 
 		head = new HorizontalLayout();
@@ -94,7 +81,8 @@ public class ArtikelAnzeigen extends VerticalLayout implements View {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
-					artikel = (Artikel) event.getProperty().getValue();
+					lieferant = (Lieferant) event.getProperty().getValue();
+					auswaehlen.setEnabled(true);
 				}
 			}
 		});
@@ -108,52 +96,28 @@ public class ArtikelAnzeigen extends VerticalLayout implements View {
 
 			}
 		});
-		
+
 		auswaehlen.addClickListener(new ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (artikel != null) {
-					ViewHandler.getInstance().switchView(ArtikelErstellen.class, new ViewDataObject<Artikel>(artikel));
+				if (lieferant != null) {
+					ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
 				}
 				else {
 					((Application) UI.getCurrent().getData())
-						.showDialog(IConstants.INFO_ARTIKEL_AUSWAEHLEN);
+						.showDialog(IConstants.INFO_LIEFERANT_AUSWAEHLEN);
 				}
 			}
 		});
 
-		BeanItemContainer<Artikel> container;
+		BeanItemContainer<Lieferant> container;
 		try {
-			container = new BeanItemContainer<Artikel>(Artikel.class, Artikelverwaltung.getInstance().getAllArtikel());
+			container = new BeanItemContainer<Lieferant>(Lieferant.class, Lieferantenverwaltung.getInstance().getAllLieferanten());
 			table.setContainerDataSource(container);
-			table.setVisibleColumns(new Object[] { "name", "artikelnr", "lieferant", "kategorie", "preis", "standard", "grundbedarf",
-				"bestellgroesse", "notiz" });
-			
-			
+			table.setVisibleColumns(new Object[] { "name", "kundennummer", "bezeichnung", "strasse", "plz", "ort", "email", "telefon", "fax",
+					"notiz" });
 			table.sort(new Object[] { "name" }, new boolean[] { true });
-			table.setColumnHeader("bestellgroesse", "Gebinde");
-			table.setColumnWidth("kategorie", 70);
-			table.setColumnWidth("artikelnr", 60);
-			table.setColumnWidth("preis", 50);
-			table.setColumnWidth("bestellgroesse", 50);
-
-			table.setCellStyleGenerator(new CellStyleGenerator() {
-
-				@Override
-				public String getStyle(CustomTable source, Object itemId, Object propertyId) {
-					Artikel artikel = (Artikel) itemId;
-					if ("standard".equals(propertyId)) {
-						return artikel.isStandard() ? "check" : "cross";
-					}
-					if ("grundbedarf".equals(propertyId)) {
-						return artikel.isGrundbedarf() ? "check" : "cross";
-					}
-							return "";
-				}
-			});
-			table.setColumnWidth("standard", 60);
-			table.setColumnWidth("grundbedarf", 80);
 		} catch (Exception e) {
 			log.error(e.toString());
 		}
@@ -167,12 +131,29 @@ public class ArtikelAnzeigen extends VerticalLayout implements View {
 		showFilter.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
+//				if (table.isFilterBarVisible()) {
+//					table.setFilterBarVisible(false);
+//					table.resetFilters();
+//					showFilter.setCaption(IConstants.BUTTON_SHOW_FILTER);
+//					showFilter.setIcon(new ThemeResource("img/filter.ico"));
+//				} else {
+//					table.setFilterBarVisible(true);
+//					showFilter.setCaption(IConstants.BUTTON_HIDE_FILTER);
+//					showFilter.setIcon(new ThemeResource("img/disable_filter.ico"));
+//				}
 				table.resetFilters();
 			}
 		});
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.hska.awp.palaver2.util.View#getViewParam(de.hska.awp.palaver2.util
+	 * .ViewData)
+	 */
 	@Override
-	public void getViewParam(ViewData data) {	
+	public void getViewParam(ViewData data) {
 	}
 }

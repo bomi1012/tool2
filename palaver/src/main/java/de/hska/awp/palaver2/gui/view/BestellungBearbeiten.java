@@ -40,9 +40,9 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
-import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
+import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
+import de.hska.awp.palaver.artikelverwaltung.domain.Kategorie;
+import de.hska.awp.palaver.artikelverwaltung.service.Artikelverwaltung;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.bestellverwaltung.service.Bestellpositionverwaltung;
@@ -231,10 +231,6 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 				if ("grundbedarf".equals(propertyId))
 				{
 					return artikel.isGrundbedarf() ? "check" : "cross";
-				}
-				if ("lebensmittel".equals(propertyId))
-				{
-					return artikel.isNonfood() ? "check" : "cross";
 				}
 				return "";
 			}
@@ -445,7 +441,7 @@ public class BestellungBearbeiten extends VerticalLayout implements View {
 		list = new ArrayList<BestellungData>();
 		artikel = new ArrayList<Artikel>();
 		try {
-			artikel = Artikelverwaltung.getInstance().getAllArtikelByLieferantId(bestellung.getLieferant().getId());
+			artikel = Artikelverwaltung.getInstance().getActiveArtikelByLieferantId(bestellung.getLieferant().getId());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			log.error(e.toString());

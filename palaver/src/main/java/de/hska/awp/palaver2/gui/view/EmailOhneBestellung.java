@@ -25,6 +25,7 @@ import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.emailversand.Mail;
+import de.hska.awp.palaver2.gui.view.lieferantenverwaltung.LieferantSuche;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;

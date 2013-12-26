@@ -9,8 +9,8 @@ import de.bistrosoft.palaver.menueplanverwaltung.KochInMenueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
 import de.bistrosoft.palaver.util.Week;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver.dao.ConnectException;
+import de.hska.awp.palaver.dao.DAOException;
 
 public class Menueplanverwaltung extends MenueplanDAO {
 
@@ -63,7 +63,7 @@ public class Menueplanverwaltung extends MenueplanDAO {
 			for (MenueComponent mc : menueplan.getMenues()) {
 
 				super.createMenueForMenueplan(menueplan, mc.getMenue(),
-						mc.getAngezeigterName(), mc.getCol(), mc.getRow(), mc.getPortion());
+						mc.getAngezeigterName(), mc.getCol(), mc.getRow(), mc.getPortion(), mc.getFussnoten());
 			}
 
 			super.deleteKoecheByMenueplan(menueplan);

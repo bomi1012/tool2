@@ -10,9 +10,13 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
-import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
+import de.hska.awp.palaver.artikelverwaltung.dao.ArtikelDAO;
+import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
+import de.hska.awp.palaver.artikelverwaltung.domain.Kategorie;
+import de.hska.awp.palaver.artikelverwaltung.domain.Mengeneinheit;
+import de.hska.awp.palaver.dao.AbstractDAO;
+import de.hska.awp.palaver.dao.ConnectException;
+import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
@@ -189,11 +193,11 @@ public class BestellpositionDAO extends AbstractDAO {
 		ResultSet set = getMany(MessageFormat.format(GET_ARTIKEL_BY_ID, id));
 
 		while (set.next()) {
-			result = new Artikel(set.getLong("id"), getMengeneinheitById(set.getLong("mengeneinheit_fk")),
-					getKategorieById(set.getLong("kategorie_fk")), getLieferantById(set.getLong("lieferant_fk")), set.getString("artikelnr"),
-					set.getString("name"), set.getDouble("bestellgroesse"), set.getFloat("preis"), 
-					set.getBoolean("standard"), set.getBoolean("grundbedarf"), set.getInt("durchschnitt"), set.getBoolean("lebensmittel"),
-					set.getString("notiz"));
+//			result = new Artikel(set.getLong("id"), getMengeneinheitById(set.getLong("mengeneinheit_fk")),
+//					getKategorieById(set.getLong("kategorie_fk")), getLieferantById(set.getLong("lieferant_fk")), set.getString("artikelnr"),
+//					set.getString("name"), set.getDouble("bestellgroesse"), set.getFloat("preis"), 
+//					set.getBoolean("standard"), set.getBoolean("grundbedarf"), set.getInt("durchschnitt"), set.getBoolean("lebensmittel"),
+//					set.getString("notiz"));
 		}
 		return result;
 	}

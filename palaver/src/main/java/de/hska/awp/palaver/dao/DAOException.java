@@ -5,7 +5,7 @@
  *
  * Copyright (c) 2012 SEEBURGER AG, Germany. All Rights Reserved.
  */
-package de.hska.awp.palaver2.data;
+package de.hska.awp.palaver.dao;
 
 @SuppressWarnings("serial")
 public class DAOException extends Exception

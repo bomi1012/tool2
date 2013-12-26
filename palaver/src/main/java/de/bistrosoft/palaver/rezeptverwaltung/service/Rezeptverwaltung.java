@@ -7,10 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver2.data.ArtikelDAO;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver.artikelverwaltung.dao.ArtikelDAO;
+import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
+import de.hska.awp.palaver.dao.ConnectException;
+import de.hska.awp.palaver.dao.DAOException;
 import de.bistrosoft.palaver.data.FussnoteDAO;
 import de.bistrosoft.palaver.data.GeschmackDAO;
 import de.bistrosoft.palaver.data.RezeptDAO;
@@ -66,7 +66,7 @@ public class Rezeptverwaltung extends RezeptDAO {
 	public List<Artikel> getAllArtikelByRezeptId() throws ConnectException,
 			DAOException, SQLException {
 		List<Artikel> result = null;
-		result = ArtikelDAO.getInstance().getAllArtikel();
+		result = ArtikelDAO.getInstance().getActiveArtikeln();
 		return result;
 	}
 

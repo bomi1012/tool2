@@ -25,13 +25,13 @@ import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.Week;
-import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
-import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
-import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
-import de.hska.awp.palaver2.data.AbstractDAO;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
+import de.hska.awp.palaver.artikelverwaltung.domain.Mengeneinheit;
+import de.hska.awp.palaver.artikelverwaltung.service.Artikelverwaltung;
+import de.hska.awp.palaver.artikelverwaltung.service.Mengeneinheitverwaltung;
+import de.hska.awp.palaver.dao.AbstractDAO;
+import de.hska.awp.palaver.dao.ConnectException;
+import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 
@@ -46,15 +46,15 @@ public class MenueplanDAO extends AbstractDAO {
 
 	private final String GET_MENUEPLAN_BY_WEEK = "SELECT * FROM " + TABLE
 			+ " WHERE week = {0} AND year = {1,number,#}";
-	private final String GET_MENUES_BY_MENUEPLAN = "SELECT m.id, m.name, m.aufwand,m.favorit, k.id AS koch, k.name AS kochname, k.vorname,k.benutzername, g.id,g.name, ma.id,ma.name,mhm.angezName, mhm.spalte, mhm.zeile, mhm.portion "+ 
+	private final String GET_MENUES_BY_MENUEPLAN = "SELECT m.id, m.name, m.aufwand,m.favorit, k.id AS koch, k.name AS kochname, k.vorname,k.benutzername, g.id,g.name, ma.id,ma.name,mhm.angezName, mhm.spalte, mhm.zeile, mhm.portion, mhm.fussnote "+ 
 			"FROM menue m, menueplan_has_menues mhm, mitarbeiter k, geschmack g, menueart ma "+
 			"WHERE m.id = mhm.menue "+
 			"AND mhm.menueplan = {0} "+
 			"AND m.geschmack_fk=g.id "+
 			"AND m.menueart_fk=ma.id "+
 			"AND m.koch=k.id";
-	private final String CREATE_MENUE_FOR_MENUEPLAN = "INSERT INTO menueplan_has_menues (menueplan, menue,angezName, spalte, zeile, portion) "
-			+ "VALUES ({0},{1},{2},{3},{4},{5})";
+	private final String CREATE_MENUE_FOR_MENUEPLAN = "INSERT INTO menueplan_has_menues (menueplan, menue,angezName, spalte, zeile, portion, fussnote) "
+			+ "VALUES ({0},{1},{2},{3},{4},{5},{6})";
 	private final String CREATE_MENUEPLAN = "INSERT INTO menueplan (week,year)  VALUES ({0},{1,number,#})";
 	private final String UPDATE_MENUEPLAN_FREIGEBEN = "UPDATE menueplan SET freigegeben = {0} where id = {1}";
 	private final String DELETE_MENUPLANITEMS_BY_MENUEPLAN = "DELETE FROM menueplan_has_menues WHERE menueplan = {0}";
@@ -152,8 +152,9 @@ public class MenueplanDAO extends AbstractDAO {
 				
 				String angezName = setMenues.getString("angezName");
 				Integer portion = setMenues.getInt("portion");
+				String fussnote = setMenues.getString("fussnote");
 				MenueComponent menueComp = new MenueComponent(menue, angezName,
-						null, null, row, col, false,portion);
+						null, null, row, col, false,portion, fussnote);
 				menues.add(menueComp);
 			}
 			menueplan.setMenues(menues);
@@ -213,8 +214,9 @@ public class MenueplanDAO extends AbstractDAO {
 				
 				String angezName = setMenues.getString("angezName");
 				Integer portion = setMenues.getInt("portion");
+				String fussnote = setMenues.getString("fussnote");
 				MenueComponent menueComp = new MenueComponent(menue, angezName,
-						null, null, row, col, false,portion);
+						null, null, row, col, false, portion, fussnote);
 				menues.add(menueComp);
 			}
 			menueplan.setMenues(menues);
@@ -296,11 +298,11 @@ public class MenueplanDAO extends AbstractDAO {
 	}
 
 	public void createMenueForMenueplan(Menueplan mpl, Menue menue,
-			String name, int col, int row, Integer portion) throws ConnectException,
+			String name, int col, int row, Integer portion, String fussnote) throws ConnectException,
 			DAOException {
 		String strName = "'" + name + "'";
 		putManaged(MessageFormat.format(CREATE_MENUE_FOR_MENUEPLAN,
-				mpl.getId(), menue.getId(), strName, col, row,portion));
+				mpl.getId(), menue.getId(), strName, col, row,portion, "'" + fussnote + "'"));
 
 	}
 
@@ -355,7 +357,6 @@ public class MenueplanDAO extends AbstractDAO {
 			throws ConnectException, DAOException {
 		String sql = "DELETE FROM menueplan_has_koeche WHERE menueplan = "
 				+ menueplan.getId();
-		System.out.println(sql);
 		putManaged(sql);
 	}
 }

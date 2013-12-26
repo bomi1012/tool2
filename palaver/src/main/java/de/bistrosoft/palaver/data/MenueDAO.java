@@ -17,9 +17,9 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.Util;
-import de.hska.awp.palaver2.data.AbstractDAO;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver.dao.AbstractDAO;
+import de.hska.awp.palaver.dao.ConnectException;
+import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.data.MitarbeiterDAO;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 
@@ -91,7 +91,6 @@ public class MenueDAO extends AbstractDAO {
 			k.setVorname(set.getString(7));
 			k.setBenutzername(set.getString(13));
 			m.setKoch(k);
-			System.out.println(k);
 			m.setGeschmack(new Geschmack(set.getLong(8), set.getString(9), true));
 			m.setMenueart(new Menueart(set.getLong(10), set.getString(11)));
 			m.setAktiv(set.getBoolean(12));

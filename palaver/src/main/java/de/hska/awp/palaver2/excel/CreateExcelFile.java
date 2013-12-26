@@ -98,7 +98,7 @@ public class CreateExcelFile {
 				row.createCell((short) 4).setCellValue(
 						bp.getArtikel().getBestellgroesse());
 				row.createCell((short) 5).setCellValue(
-						bp.getArtikel().getMengeneinheitBestellung().getKurz());
+						bp.getArtikel().getMengeneinheit().getKurz());
 				if (mehrereliefertermine != true) {
 					row.createCell((short) 6).setCellValue(bp.getGesamt());
 					row.createCell((short) 7).setCellValue(

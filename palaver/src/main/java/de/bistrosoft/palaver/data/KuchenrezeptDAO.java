@@ -11,15 +11,15 @@ import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenrezept;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenrezeptHasArtikel;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenrezeptHasFussnote;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Fussnotekuchenverwaltung;
-import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
-import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
-import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
-import de.hska.awp.palaver2.data.AbstractDAO;
-import de.hska.awp.palaver2.data.ArtikelDAO;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
-import de.hska.awp.palaver2.data.MengeneinheitDAO;
+import de.hska.awp.palaver.artikelverwaltung.dao.ArtikelDAO;
+import de.hska.awp.palaver.artikelverwaltung.dao.MengeneinheitDAO;
+import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
+import de.hska.awp.palaver.artikelverwaltung.domain.Mengeneinheit;
+import de.hska.awp.palaver.artikelverwaltung.service.Artikelverwaltung;
+import de.hska.awp.palaver.artikelverwaltung.service.Mengeneinheitverwaltung;
+import de.hska.awp.palaver.dao.AbstractDAO;
+import de.hska.awp.palaver.dao.ConnectException;
+import de.hska.awp.palaver.dao.DAOException;
 
 /**
  * 

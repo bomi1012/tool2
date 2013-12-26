@@ -32,8 +32,8 @@ import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Kuchenrezeptverwaltu
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver.dao.ConnectException;
+import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.util.IConstants;
 
 /**

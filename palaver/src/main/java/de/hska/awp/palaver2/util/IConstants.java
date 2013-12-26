@@ -9,7 +9,9 @@ public interface IConstants
 
 // DB Verbindung
 //  Team
-String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=root";
+//String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=root";
+//  Team
+String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/test?user=root&password=root";
 //	Produktiv
 //String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=BaDAbU352M";
 //	TEST
@@ -17,6 +19,7 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&passw
 	
 	// Menuepunkte mit Unterpunkten
 	String		MENU_ARTIKEL_HEADLINE = "Artikel";
+	String		MENU_SONSTIGES = "Sonstiges...";
 	String		MENU_ARTIKEL_NEU = "Artikel anlegen";
 	String		MENU_ARTIKEL_ANZEIGEN = "Alle Artikel anzeigen";
 	String		MENU_LIEFERANT_HEADLINE = "Lieferant";
@@ -96,6 +99,8 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&passw
 	String		BUTTON_DISCARD_ICON = "img/cross.ico";
 	String 		BUTTON_ADD_ICON = "img/add.ico";
 	String 		BUTTON_NEW_ICON = "img/new.ico";
+	String 		BUTTON_SHOW_ICON = "img/show.png";
+	String 		BUTTON_FOLDER_ICON = "img/folder.png";
 	String 		BUTTON_EDIT_ICON = "img/edit.ico";
 	String		BUTTON_OK_ICON = "img/check.ico";
 	String		BUTTON_EXCEL_ICON = "img/excel1.ico";

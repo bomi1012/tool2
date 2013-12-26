@@ -1,4 +1,4 @@
-package de.hska.awp.palaver2.gui.view;
+package de.hska.awp.palaver2.gui.view.artikelverwaltung;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,9 +23,9 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
-import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
+import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
+import de.hska.awp.palaver.artikelverwaltung.domain.Mengeneinheit;
+import de.hska.awp.palaver.artikelverwaltung.service.Mengeneinheitverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -213,7 +213,7 @@ public class MengeneinheitenAnzeigen extends VerticalLayout implements View {
 
 		BeanItemContainer<Mengeneinheit> container;
 		try {
-			container = new BeanItemContainer<Mengeneinheit>(Mengeneinheit.class, Mengeneinheitverwaltung.getInstance().getAllMengeneinheit());
+			container = new BeanItemContainer<Mengeneinheit>(Mengeneinheit.class, Mengeneinheitverwaltung.getInstance().getAllMengeneinheiten());
 			table.setContainerDataSource(container);
 			table.setVisibleColumns(new Object[] { "name", "kurz" });
 			table.sort(new Object[] { "id" }, new boolean[] { true });

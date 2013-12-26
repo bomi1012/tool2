@@ -2,7 +2,7 @@
  * Created by Sebastian Walz
  * 18.04.2013 15:41:31
  */
-package de.hska.awp.palaver2.gui.view;
+package de.hska.awp.palaver2.gui.view.lieferantenverwaltung;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +17,6 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
@@ -25,7 +24,6 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
@@ -134,9 +132,7 @@ public class LieferantErstellen extends VerticalLayout implements View
 		mitte.addComponent(control);
 		mitte.setComponentAlignment(control, Alignment.TOP_CENTER);
 		
-//		rechts.addComponent(verwerfen);
-//		rechts.addComponent(speichern);
-		
+	
 		speichern.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		verwerfen.setIcon(new ThemeResource(IConstants.BUTTON_DISCARD_ICON));
 		

@@ -9,8 +9,8 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.VerticalLayout;
 
-import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
+import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
+import de.hska.awp.palaver.artikelverwaltung.service.Artikelverwaltung;
 import de.hska.awp.palaver2.util.customFilter;
 import de.hska.awp.palaver2.util.customFilterDecorator;
 
@@ -45,7 +45,7 @@ public class RezeptArtikelAnzeigen extends VerticalLayout {
 		BeanItemContainer<Artikel> container;
 		try {
 			container = new BeanItemContainer<Artikel>(Artikel.class,
-					Artikelverwaltung.getInstance().getAllArtikelName());
+					Artikelverwaltung.getInstance().getActiveArtikeln());
 			table.setContainerDataSource(container);
 			table.setVisibleColumns(new Object[] { "name" });
 			table.sort(new Object[] { "name" }, new boolean[] { true });

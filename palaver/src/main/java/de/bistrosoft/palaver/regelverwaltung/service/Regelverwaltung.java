@@ -3,8 +3,8 @@ package de.bistrosoft.palaver.regelverwaltung.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver.dao.ConnectException;
+import de.hska.awp.palaver.dao.DAOException;
 import de.bistrosoft.palaver.data.RegelDAO;
 import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
 

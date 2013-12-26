@@ -8,19 +8,16 @@ import org.slf4j.LoggerFactory;
 
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
-import com.vaadin.server.Page;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.MenuBar;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.UI;
@@ -35,29 +32,28 @@ import de.bistrosoft.palaver.gui.view.KuchenrezeptAnlegen;
 import de.bistrosoft.palaver.gui.view.KuchenrezeptAnzeigen;
 import de.bistrosoft.palaver.gui.view.MenueAnlegen;
 import de.bistrosoft.palaver.gui.view.MenueAnzeigenTabelle;
+import de.bistrosoft.palaver.gui.view.MenueartEinst;
 import de.bistrosoft.palaver.gui.view.MenueplanAnzeigen;
-import de.bistrosoft.palaver.gui.view.MenueplanHistorie;
 import de.bistrosoft.palaver.gui.view.RegelnAnzeigen;
 import de.bistrosoft.palaver.gui.view.RezeptAnlegen;
 import de.bistrosoft.palaver.gui.view.RezeptAnzeigenTabelle;
-import de.bistrosoft.palaver.gui.view.MenueartEinst;
 import de.bistrosoft.palaver.gui.view.ZubereitungEinst;
 import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver2.gui.view.ArtikelAnzeigen;
-import de.hska.awp.palaver2.gui.view.ArtikelErstellen;
 import de.hska.awp.palaver2.gui.view.BestellungAnzeigen;
 import de.hska.awp.palaver2.gui.view.BestellungBearbeitenAuswaehlen;
 import de.hska.awp.palaver2.gui.view.BestellungGenerieren;
 import de.hska.awp.palaver2.gui.view.BestellungLieferantAuswaehlen;
 import de.hska.awp.palaver2.gui.view.EmailOhneBestellung;
-import de.hska.awp.palaver2.gui.view.KategorienAnzeigen;
-import de.hska.awp.palaver2.gui.view.LieferantAnzeigen;
-import de.hska.awp.palaver2.gui.view.LieferantErstellen;
-import de.hska.awp.palaver2.gui.view.MengeneinheitenAnzeigen;
 import de.hska.awp.palaver2.gui.view.MitarbeiterAnzeigen;
 import de.hska.awp.palaver2.gui.view.MitarbeiterErstellen;
 import de.hska.awp.palaver2.gui.view.NachrichtAnzeigen;
 import de.hska.awp.palaver2.gui.view.RollenAnzeigen;
+import de.hska.awp.palaver2.gui.view.artikelverwaltung.ArtikelAnzeigen;
+import de.hska.awp.palaver2.gui.view.artikelverwaltung.ArtikelErstellen;
+import de.hska.awp.palaver2.gui.view.artikelverwaltung.KategorienAnzeigen;
+import de.hska.awp.palaver2.gui.view.artikelverwaltung.MengeneinheitenAnzeigen;
+import de.hska.awp.palaver2.gui.view.lieferantenverwaltung.LieferantAnzeigen;
+import de.hska.awp.palaver2.gui.view.lieferantenverwaltung.LieferantErstellen;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.ViewHandler;
@@ -108,11 +104,21 @@ public class MainLayout extends VerticalLayout implements Command {
 		this.addComponent(header);
 
 		menu.setWidth("100%");
+		
+		/** Artikel */
 		MenuItem artikelItem = menu.addItem(IConstants.MENU_ARTIKEL_HEADLINE,
 				null);
-		artikelItem.addItem(IConstants.MENU_ARTIKEL_NEU, this);
-		artikelItem.addItem(IConstants.MENU_ARTIKEL_ANZEIGEN, this);
+		MenuItem aShow = artikelItem.addItem(IConstants.MENU_ARTIKEL_ANZEIGEN, this);
+		MenuItem aNew = artikelItem.addItem(IConstants.MENU_ARTIKEL_NEU, this);
+		aNew.setIcon(new ThemeResource(IConstants.BUTTON_NEW_ICON));
+		aShow.setIcon(new ThemeResource(IConstants.BUTTON_SHOW_ICON));
+		artikelItem.addSeparator();
+		MenuItem aOther = artikelItem.addItem(IConstants.MENU_SONSTIGES, null);
+		aOther.setIcon(new ThemeResource(IConstants.BUTTON_FOLDER_ICON));
+		aOther.addItem(IConstants.MENU_KATEGORIE_ANZEIGEN, this);
+		aOther.addItem(IConstants.MENU_MENGENEINHEIT_ANZEIGEN, this);
 
+		/** Lieferant */
 		MenuItem lieferantItem = menu.addItem(
 				IConstants.MENU_LIEFERANT_HEADLINE, null);
 		lieferantItem.addItem(IConstants.MENU_LIEFERANT_NEW, this);
@@ -152,6 +158,9 @@ public class MainLayout extends VerticalLayout implements Command {
 				.userHasPersmission(Rollen.ADMINISTRATOR)
 				|| ((Application) UI.getCurrent().getData())
 						.userHasPersmission(Rollen.BESTELLER)) {
+			
+			bestellungItem.addItem("Grundbedarf generieren", this);
+			
 			bestellungItem.addItem(IConstants.MENU_BESTELLUNG_NEW_RANDOM, this);
 			bestellungItem.addItem(IConstants.MENU_BESTELLUNG_GENERATE, this);
 		}

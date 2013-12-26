@@ -4,45 +4,43 @@
  * created at 28.11.2012 09:12:11  by Sebastian Walz
  *
  */
-package de.hska.awp.palaver2.data;
+package de.hska.awp.palaver.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import com.sun.rowset.*;
 
+
 import javax.sql.rowset.CachedRowSet;
 
 public abstract class AbstractDAO
 {
-	private Connector 				conn;
+	protected static final String FIELD_ID = "id";
+	protected static final String FIELD_NAME = "name";
+	private Connector conn;	
+	private Statement statement;
+	protected ResultSet set;
 	
-	private Statement 				statement;
-	
-	public AbstractDAO()
-	{
+	public AbstractDAO() {
 		super();
 		conn = new Connector();
 	}
 	
 	@SuppressWarnings({ "resource", "restriction" })
-	protected synchronized ResultSet getManaged(String querry) throws ConnectException, DAOException, SQLException 
-	{
+	protected synchronized ResultSet getManaged(String querry) throws ConnectException, DAOException, SQLException  {
 		openConnection();
 
 		ResultSet result = null;
 		CachedRowSet cache = new CachedRowSetImpl();
-		try 
-		{
+		try  {
 			result = statement.executeQuery(querry);
 			cache.populate(result);	
 		} 
-		catch (Exception e) 
-		{
+		catch (Exception e) {
 			throw new DAOException("Statement error: " + querry + " caused by: " + e.toString());
 		}
-		finally 
-		{
+		finally  {
 			closeConnection();
 			if (result != null)
 			{
@@ -53,83 +51,63 @@ public abstract class AbstractDAO
 	}
 	
 	@SuppressWarnings({ "resource", "restriction" })
-	protected synchronized ResultSet getMany(String querry) throws ConnectException, DAOException, SQLException 
-	{
-		
-
+	protected synchronized ResultSet getMany(String querry) throws ConnectException, DAOException, SQLException  {
 		ResultSet result = null;
 		CachedRowSet cache = new CachedRowSetImpl();
-		try 
-		{
+		try  {
 			result = statement.executeQuery(querry);
 			cache.populate(result);	
 		} 
-		catch (Exception e) 
-		{
+		catch (Exception e)  {
 			throw new DAOException("Statement error: " + querry + " caused by: " + e.toString());
 		}
 		
 		return cache.getOriginal();
 	}
 	
-	protected synchronized void putManaged(String querry) throws ConnectException, DAOException 
-	{
+	protected synchronized void putManaged(String querry) throws ConnectException, DAOException  {
 		openConnection();
-
-		try 
-		{
+		try  {
 			statement.executeUpdate(querry);
 		} 
-		catch (Exception e) 
-		{
+		catch (Exception e)  {
 			throw new DAOException("Statement error: " + querry);
 		}
-		finally
-		{
+		finally {
 			closeConnection();	
 		}
 	}
 	
-	protected synchronized void putMany(String querry) throws ConnectException, DAOException 
-	{
+	protected synchronized void putMany(String querry) throws ConnectException, DAOException  {
 		
-		try 
-		{
+		try  {
 			statement.executeUpdate(querry);
 		} 
-		catch (Exception e) 
-		{
+		catch (Exception e)  {
 			throw new DAOException("Statement error: " + querry);
 		}
 		
 	}
 	
-	
-	
 	@Deprecated
-	protected ResultSet get(String querry) throws SQLException
-	{
+	protected ResultSet get(String querry) throws SQLException {
 		ResultSet result = null;
 		result = statement.executeQuery(querry);
 		
 		return result;
 	}
 	
-	protected void openConnection() throws ConnectException
-	{
+	protected void openConnection() throws ConnectException {
 		conn.connect();
 		statement = conn.getStmt();
 	}
 	
-	protected void closeConnection() throws ConnectException, DAOException
-	{
+	protected void closeConnection() throws ConnectException, DAOException {
 		conn.disconnect();
-		try
-		{
+		try {
 			statement.close();
 		}
-		catch (SQLException e)
-		{
+		catch (SQLException e) {
 			throw new DAOException(e.toString());
 		}
 	}

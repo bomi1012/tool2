@@ -1,4 +1,4 @@
-package de.hska.awp.palaver2.gui.view;
+package de.hska.awp.palaver2.gui.view.lieferantenverwaltung;
 
 import java.sql.SQLException;
 
@@ -28,8 +28,9 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver.dao.ConnectException;
+import de.hska.awp.palaver.dao.DAOException;
+import de.hska.awp.palaver2.gui.view.EmailOhneBestellung;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Ansprechpartner;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Ansprechpartnerverwaltung;

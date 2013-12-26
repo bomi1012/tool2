@@ -8,9 +8,9 @@ import java.util.List;
 
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.FussnoteKuchen;
 
-import de.hska.awp.palaver2.data.AbstractDAO;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver.dao.AbstractDAO;
+import de.hska.awp.palaver.dao.ConnectException;
+import de.hska.awp.palaver.dao.DAOException;
 
 /**
  * 
@@ -67,8 +67,6 @@ public class FussnoteKuchenDAO extends AbstractDAO {
 	public List<FussnoteKuchen> getFussnoteKuchenByKuchen(Long id)
 			throws ConnectException, DAOException, SQLException {
 		List<FussnoteKuchen> list = new ArrayList<FussnoteKuchen>();
-		System.out.println(MessageFormat.format(GET_FUSSNOTEKUCHEN_BY_KUCHEN,
-				id));
 		ResultSet set = getManaged(MessageFormat.format(
 				GET_FUSSNOTEKUCHEN_BY_KUCHEN, id));
 		while (set.next()) {

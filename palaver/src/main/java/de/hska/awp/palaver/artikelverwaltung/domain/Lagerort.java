@@ -1,41 +1,22 @@
-package de.hska.awp.palaver2.artikelverwaltung.domain;
+package de.hska.awp.palaver.artikelverwaltung.domain;
 
-/**
- * Klasse Kategorie
- * @author Mihail Boehm
- */
-public class Kategorie implements java.io.Serializable {
-	private static final long serialVersionUID = -4647006694762094989L;
+import de.hska.awp.palaver.EntityName;
 
-	private Long id;
-	private String name;
-
-	public Kategorie() {
+public class Lagerort extends EntityName {
+	
+	public Lagerort() {
 		super();
 	}
-	
-	/**
-	 * @param id
-	 * @param name
-	 */
-	public Kategorie(Long id, String name) {
+	public Lagerort(String name) {
+		super();
+		this.name = name;
+	}
+	public Lagerort(Long id, String name) {
+		super();
 		this.id = id;
 		this.name = name;
 	}
 
-	public Long getId() {
-		return this.id;
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	// Geändert von S.Walz wegen GUI
 	@Override
 	public String toString() {
 		return name;
@@ -58,7 +39,7 @@ public class Kategorie implements java.io.Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Kategorie other = (Kategorie) obj;
+		Lagerort other = (Lagerort) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -71,4 +52,5 @@ public class Kategorie implements java.io.Serializable {
 			return false;
 		return true;
 	}
+
 }

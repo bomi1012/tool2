@@ -10,8 +10,8 @@ import java.sql.SQLException;
 import java.util.List;
 import de.bistrosoft.palaver.data.FussnoteKuchenDAO;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.FussnoteKuchen;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver.dao.ConnectException;
+import de.hska.awp.palaver.dao.DAOException;
 
 public class Fussnotekuchenverwaltung extends FussnoteKuchenDAO {
 

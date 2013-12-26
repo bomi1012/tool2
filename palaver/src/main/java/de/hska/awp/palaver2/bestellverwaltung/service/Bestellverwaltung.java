@@ -16,14 +16,14 @@ import java.util.Locale;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 import de.bistrosoft.palaver.util.Week;
-import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
+import de.hska.awp.palaver.artikelverwaltung.dao.ArtikelDAO;
+import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
+import de.hska.awp.palaver.artikelverwaltung.service.Artikelverwaltung;
+import de.hska.awp.palaver.dao.ConnectException;
+import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
-import de.hska.awp.palaver2.data.ArtikelDAO;
 import de.hska.awp.palaver2.data.BestellungDAO;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
 import de.hska.awp.palaver2.data.LieferantDAO;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
@@ -168,7 +168,7 @@ public class Bestellverwaltung extends BestellungDAO {
 			throws ConnectException, DAOException, SQLException {
 		List<Artikel> list = null;
 		ArtikelDAO adao = ArtikelDAO.getInstance();
-		adao.getAllArtikelByLieferantId(lieferant.getId());
+		adao.getActiveArtikelByLieferantId(lieferant.getId());
 		return list;
 	}
 
@@ -310,7 +310,7 @@ public class Bestellverwaltung extends BestellungDAO {
 			for (int i = 0; i < rhaDoppeltZusammen.size(); i++) {
 				Bestellposition bp = new Bestellposition();
 				bp.setArtikel(rhaDoppeltZusammen.get(i).getArtikel());
-				bp.setDurchschnitt(rhaDoppeltZusammen.get(i).getArtikel().getDurchschnitt());
+				bp.setDurchschnitt(rhaDoppeltZusammen.get(i).getArtikel().getDurchschnittLT1());
 				bp.setFreitag(convertMenge(rhaDoppeltZusammen.get(i))); // Ohne Durchschnitt!!!
 				// + bp.getDurchschnitt());
 				bp.setKantine(bp.getFreitag());
@@ -360,7 +360,7 @@ public class Bestellverwaltung extends BestellungDAO {
 				if (vorhanden == false) {
 					Bestellposition bp = new Bestellposition();
 					bp.setArtikel(rhaDoppeltZusammen.get(i).getArtikel());
-					bp.setDurchschnitt(rhaDoppeltZusammen.get(i).getArtikel().getDurchschnitt());
+					bp.setDurchschnitt(rhaDoppeltZusammen.get(i).getArtikel().getDurchschnittLT1());
 					bp.setFreitag(leer);
 					//bp.setKantine(convertMenge(rhaDoppeltZusammen.get(i)));
 					bp.setGeliefert(false);
@@ -384,9 +384,9 @@ public class Bestellverwaltung extends BestellungDAO {
 				for (int z = 0; z < bestellPosition_list.size(); z++) {
 					if (listArtrtikelByGrundbedarf.get(i).equals(bestellPosition_list.get(z).getArtikel())) {
 						
-						if(bestellPosition_list.get(z).getKantine() < listArtrtikelByGrundbedarf.get(i).getDurchschnitt()){
+						if(bestellPosition_list.get(z).getKantine() < listArtrtikelByGrundbedarf.get(i).getDurchschnittLT1()){
 							bestellPosition_list.get(z).setDurchschnitt(
-									listArtrtikelByGrundbedarf.get(i).getDurchschnitt() - 
+									listArtrtikelByGrundbedarf.get(i).getDurchschnittLT1() - 
 									bestellPosition_list.get(z).getKantine()
 									);	
 							bestellPosition_list.get(z).setGesamt(bestellPosition_list.get(z).getKantine() + bestellPosition_list.get(z).getDurchschnitt());
@@ -406,7 +406,7 @@ public class Bestellverwaltung extends BestellungDAO {
 				if (vorhanden == false) {
 					Bestellposition bp = new Bestellposition();
 					bp.setArtikel(listArtrtikelByGrundbedarf.get(i));
-					bp.setDurchschnitt(listArtrtikelByGrundbedarf.get(i).getDurchschnitt());
+					bp.setDurchschnitt(listArtrtikelByGrundbedarf.get(i).getDurchschnittLT1());
 					bp.setFreitag(bp.getDurchschnitt());
 					bp.setKantine(leer);
 					bp.setGeliefert(false);

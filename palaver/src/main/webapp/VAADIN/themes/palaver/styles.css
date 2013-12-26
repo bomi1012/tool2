@@ -129,10 +129,10 @@
 }
 
 .v-stepper .v-stepper-updown {
-	position: absolute;
-	top: 2px;
-	right: 1px;
-	margin: 0 1px;
+position: absolute;
+top: 3px;
+right: -9px;
+margin: 0 1px;
 }
 
 .v-stepper .v-stepper-up,
@@ -147,7 +147,7 @@
 
 .stepper-palaver .v-stepper .v-stepper-up {
 	background: transparent url("img/stepper_arrow_up.png") no-repeat center center;
-	padding-top: 2px;
+	padding-top: 1px;
 }
 
 .stepper-palaver .v-stepper .v-stepper-down {

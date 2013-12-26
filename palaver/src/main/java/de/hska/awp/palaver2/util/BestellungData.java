@@ -12,8 +12,8 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 
 import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
+import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
+import de.hska.awp.palaver.artikelverwaltung.domain.Kategorie;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 
 public class BestellungData implements java.io.Serializable {
@@ -62,7 +62,7 @@ public class BestellungData implements java.io.Serializable {
 		this.artikel = bp.getArtikel();
 		this.geliefert = bp.isGeliefert();
 		this.name = bp.getArtikelName();
-		this.gebinde = bp.getArtikel().getBestellgroesse() + " " + bp.getArtikel().getMengeneinheitBestellung().getKurz();
+		this.gebinde = bp.getArtikel().getBestellgroesse() + " " + bp.getArtikel().getMengeneinheit().getKurz();
 		this.kategorie = bp.getArtikel().getKategorie();
 		this.durchschnitt.setValue(bp.getDurchschnitt().toString());
 		this.kantine.setValue(bp.getKantine().toString());
@@ -152,13 +152,13 @@ public class BestellungData implements java.io.Serializable {
 	public BestellungData(Artikel artikel) {
 		super();
 		this.name = artikel.getName();
-		this.gebinde = artikel.getBestellgroesse() + " " + artikel.getMengeneinheitBestellung().getKurz();
+		this.gebinde = artikel.getBestellgroesse() + " " + artikel.getMengeneinheit().getKurz();
 		this.kategorie = artikel.getKategorie();
-		this.durchschnitt.setValue(artikel.getDurchschnitt() + "");
+		this.durchschnitt.setValue(artikel.getDurchschnittLT1() + "");
 		this.kantine.setValue(0 + "");
-		this.gesamt.setValue("" + artikel.getDurchschnitt());
+		this.gesamt.setValue("" + artikel.getDurchschnittLT1());
 		this.gesamt.setEnabled(false);
-		this.freitag.setValue(artikel.getDurchschnitt());
+		this.freitag.setValue(artikel.getDurchschnittLT1());
 		this.montag.setValue(0);
 		this.artikel = artikel;
 

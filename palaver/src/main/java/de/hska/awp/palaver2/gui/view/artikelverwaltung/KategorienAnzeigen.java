@@ -1,4 +1,4 @@
-package de.hska.awp.palaver2.gui.view;
+package de.hska.awp.palaver2.gui.view.artikelverwaltung;
 
 import java.util.List;
 
@@ -25,10 +25,10 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
-import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
-import de.hska.awp.palaver2.artikelverwaltung.service.Kategorienverwaltung;
+import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
+import de.hska.awp.palaver.artikelverwaltung.domain.Kategorie;
+import de.hska.awp.palaver.artikelverwaltung.service.Artikelverwaltung;
+import de.hska.awp.palaver.artikelverwaltung.service.Kategorienverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -96,7 +96,7 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 				if (kategorieUpdate != null) {
 					try {
 						List<Artikel> artikels= Artikelverwaltung.getInstance()
-								.getAllArtikelnByKategorieId(
+								.getActiveArtikelnByKategorieId(
 										kategorieUpdate.getId());						
 						if(artikels.size() == 0){
 							Kategorienverwaltung.getInstance().deleteKategorie(kategorieUpdate.getId());
@@ -309,7 +309,7 @@ public class KategorienAnzeigen extends VerticalLayout implements View {
 							String notification = "Kategorie gespeichert";
 							try {
 								Kategorienverwaltung.getInstance()
-										.createNewKategorie(me);
+										.createKategorie(me);
 								UI.getCurrent().removeWindow(kategNeu);
 								((Application) UI.getCurrent().getData())
 										.showDialog(notification);

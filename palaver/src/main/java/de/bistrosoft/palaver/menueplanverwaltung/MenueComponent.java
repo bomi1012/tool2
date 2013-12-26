@@ -56,7 +56,7 @@ public class MenueComponent extends CustomComponent {
 	private String angezeigterName;
 
 	List<Fussnote> fns;
-	String fn;
+	String fn = null;
 
 	String descNotification;
 
@@ -225,7 +225,7 @@ public class MenueComponent extends CustomComponent {
 	// Konstruktor für Menükomponente
 	public MenueComponent(Menue menue, String angezName,
 			MenueplanGridLayout nMenueplan, DDGridLayout nMenueGrid, int nRow,
-			int nCol, Boolean isChanged, Integer portion) {
+			int nCol, Boolean isChanged, Integer portion, String fussnote) {
 		this.isChanged = isChanged;
 		this.col = nCol;
 		this.row = nRow;
@@ -235,24 +235,27 @@ public class MenueComponent extends CustomComponent {
 		this.setMenue(menue);
 		this.angezeigterName = angezName;
 		this.portion = portion;
+		this.fn = fussnote;
 
 		// Vertikales Layout erstellen
 		VerticalLayout vl = new VerticalLayout();
 		setCompositionRoot(vl);
 
-		// Menübezeichnung des ausgewählten Menüs der Menükomponente hinzufügen
-		try {
-			fns = Fussnotenverwaltung.getInstance().getFussnoteByMenue(
-					menue.getId());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		fn = "";
-		for (Fussnote f : fns) {
-			fn = fn + " " + f.getAbkuerzung().toString() + ",";
-		}
-		if(!fn.equals("")){
-			fn = " (" + fn.substring(1, fn.length() - 1) + ")";
+		if(fn == "") {			
+			// Menübezeichnung des ausgewählten Menüs der Menükomponente hinzufügen
+			try {
+				fns = Fussnotenverwaltung.getInstance().getFussnoteByMenue(
+						menue.getId());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			fn = "";
+			for (Fussnote f : fns) {
+				fn = fn + " " + f.getAbkuerzung().toString() + ",";
+			}
+			if(!fn.equals("")){
+				fn = " (" + fn.substring(1, fn.length() - 1) + ")";
+			}
 		}
 		Button btText = new Button(angezName + fn );
 		btText.setPrimaryStyleName(BaseTheme.BUTTON_LINK);

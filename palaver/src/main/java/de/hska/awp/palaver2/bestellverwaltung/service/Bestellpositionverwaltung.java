@@ -9,8 +9,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver.dao.ConnectException;
+import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.data.BestellpositionDAO;
 import de.hska.awp.palaver2.util.BestellungData;
 import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;

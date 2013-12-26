@@ -14,15 +14,15 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Zubereitungverwaltung;
-import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
-import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
-import de.hska.awp.palaver2.artikelverwaltung.service.Mengeneinheitverwaltung;
-import de.hska.awp.palaver2.data.AbstractDAO;
-import de.hska.awp.palaver2.data.ArtikelDAO;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
-import de.hska.awp.palaver2.data.MengeneinheitDAO;
+import de.hska.awp.palaver.artikelverwaltung.dao.ArtikelDAO;
+import de.hska.awp.palaver.artikelverwaltung.dao.MengeneinheitDAO;
+import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
+import de.hska.awp.palaver.artikelverwaltung.domain.Mengeneinheit;
+import de.hska.awp.palaver.artikelverwaltung.service.Artikelverwaltung;
+import de.hska.awp.palaver.artikelverwaltung.service.Mengeneinheitverwaltung;
+import de.hska.awp.palaver.dao.AbstractDAO;
+import de.hska.awp.palaver.dao.ConnectException;
+import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.data.MitarbeiterDAO;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
@@ -67,8 +67,7 @@ public class RezeptDAO extends AbstractDAO {
 	private static final String GET_ALL_ARTIKEL_REZEPT = "select a.id, a.name, a.notiz, me.id, me.name, me.kurz "
 															+ "from artikel a, mengeneinheit me "
 															+ "where a.mengeneinheit_fk=me.id "
-															+ "AND a.delete = 0 "
-															+ "and lebensmittel=1";
+															+ "AND a.status = 0 ";
 
 	Rezept rezept;
 
@@ -108,7 +107,7 @@ public class RezeptDAO extends AbstractDAO {
 			Artikel a = new Artikel(set.getLong(1),set.getString(2));
 			a.setNotiz(set.getString(3));
 			Mengeneinheit me = new Mengeneinheit(set.getLong(4),set.getString(5), set.getString(6));
-			a.setMengeneinheitBestellung(me);
+			a.setMengeneinheit(me);
 			list.add(a);
 		}
 		return list;
@@ -316,7 +315,7 @@ public class RezeptDAO extends AbstractDAO {
 			String artikel_fk = a.getArtikelId().toString();
 			String menge = Double.toString(a.getMenge());
 			String me = Long
-					.toString(a.getArtikel().getMengeneinheitBestellung().getId());
+					.toString(a.getArtikel().getMengeneinheit().getId());
 			putManaged(MessageFormat.format(SAVE_ARTIKEL, rez, artikel_fk,
 					menge, me));
 		}

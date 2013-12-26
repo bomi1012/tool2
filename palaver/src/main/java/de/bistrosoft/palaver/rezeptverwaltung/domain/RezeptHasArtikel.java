@@ -2,8 +2,8 @@ package de.bistrosoft.palaver.rezeptverwaltung.domain;
 
 // Generated 25.04.2013 13:27:05 by Hibernate Tools 4.0.0
 
-import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
+import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
+import de.hska.awp.palaver.artikelverwaltung.domain.Mengeneinheit;
 
 public class RezeptHasArtikel {
 
@@ -48,7 +48,7 @@ public class RezeptHasArtikel {
 
 	public RezeptHasArtikel(Artikel a) {
 		this.artikel = a;
-		this.mengeneinheit = a.getMengeneinheitBestellung();
+		this.mengeneinheit = a.getMengeneinheit();
 		this.menge = 1.0;
 		this.rezept = null;
 	}

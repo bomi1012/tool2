@@ -42,11 +42,11 @@ import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Fussnotekuchenverwal
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Kuchenrezeptverwaltung;
 import de.bistrosoft.palaver.util.TwinColTouch;
 import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver2.artikelverwaltung.service.Artikelverwaltung;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
-import de.hska.awp.palaver2.gui.view.ArtikelErstellen;
+import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
+import de.hska.awp.palaver.artikelverwaltung.service.Artikelverwaltung;
+import de.hska.awp.palaver.dao.ConnectException;
+import de.hska.awp.palaver.dao.DAOException;
+import de.hska.awp.palaver2.gui.view.artikelverwaltung.ArtikelErstellen;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -309,7 +309,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 	private void ladeArtikel() {
 		try {
 			containerArtikel = new BeanItemContainer<Artikel>(Artikel.class,
-					Artikelverwaltung.getInstance().getAllArtikel());
+					Artikelverwaltung.getInstance().getActiveArtikeln());
 			artikelTable.setContainerDataSource(containerArtikel);
 			artikelTable.setVisibleColumns(new Object[] { "name" });
 		} catch (IllegalArgumentException e) {

@@ -40,8 +40,8 @@ import de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver.dao.ConnectException;
+import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
@@ -376,7 +376,6 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 					public void valueChange(ValueChangeEvent event) {
 						Date datum = date.getValue();
 						Week selectedWeek = CalendarWeek.getWeekFromDate(datum);
-						System.out.println("Date Change");
 						lbMplWeek.setCaption(lbMplWeek.getCaption()
 								+ " ersetzen mit " + selectedWeek.getWeek()
 								+ "/" + selectedWeek.getYear());

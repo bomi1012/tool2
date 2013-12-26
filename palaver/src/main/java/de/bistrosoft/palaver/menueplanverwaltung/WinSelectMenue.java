@@ -30,8 +30,8 @@ import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
 import de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
+import de.hska.awp.palaver.dao.ConnectException;
+import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.util.IConstants;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
@@ -237,7 +237,7 @@ public class WinSelectMenue extends Window {
 								.getValue());
 						MenueComponent menueComp = new MenueComponent(menue,
 								tfAngezName.getValue(), menueplan, menueGrid,
-								sourceRow, sourceColumn, true, iPortion);
+								sourceRow, sourceColumn, true, iPortion, tfFussnote.getValue());
 						menueplan.addMenue(menueComp, sourceColumn, sourceRow);
 						menueGrid.setComponentAlignment(menueComp,
 								Alignment.MIDDLE_CENTER);
@@ -270,16 +270,17 @@ public class WinSelectMenue extends Window {
 					tfName.setEnabled(false);
 					tfKoch.setValue(menue.getKochname());
 					tfKoch.setEnabled(false);
-					String a = "";
-					int b = 0;
-					for (Fussnote fn : menue.getFussnoten()) {
-						if(menue.getFussnoten().get(menue.getFussnoten().size()-1) == menue.getFussnoten().get(b)){
-							a = fn.getAbkuerzung();
-						} else {  a = a + fn.getAbkuerzung() + ", "; }
+					if(menue.getFussnoten() != null) {
+						String a = "";
+						int b = 0;
+						for (Fussnote fn : menue.getFussnoten()) {
+							if(menue.getFussnoten().get(menue.getFussnoten().size()-1) == menue.getFussnoten().get(b)){
+								a = fn.getAbkuerzung();
+							} else {  a = a + fn.getAbkuerzung() + ", "; }
+						}
+						tfFussnote.setValue(a);
+						tfFussnote.setEnabled(true);
 					}
-					tfFussnote.setValue(a);
-					tfFussnote.setEnabled(true);
-					
 					if (menue.getMenueart() != null) {
 						tfMenueart.setValue(menue.getMenueart()
 								.getBezeichnung());
@@ -305,7 +306,6 @@ public class WinSelectMenue extends Window {
 		if (destComp instanceof MenueComponent) {
 			Mitarbeiter tmpMa = ((MenueComponent) destComp).getMenue()
 					.getKoch();
-			System.out.println(tmpMa);
 			if (((Application) UI.getCurrent().getData()).getUser().equals(
 					tmpMa)) {
 
@@ -336,6 +336,7 @@ public class WinSelectMenue extends Window {
 			ftMenueList.select(mc.getMenue());
 			tfAngezName.setValue(mc.getAngezeigterName());
 			tfPortion.setValue(mc.getPortion().toString());
+			tfFussnote.setValue(mc.getFussnoten());
 		}
 
 	}

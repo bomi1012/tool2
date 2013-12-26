@@ -1,21 +1,20 @@
-package de.hska.awp.palaver2.artikelverwaltung.service;
+package de.hska.awp.palaver.artikelverwaltung.service;
 
 import java.sql.SQLException;
 import java.util.List;
 
-import de.hska.awp.palaver2.artikelverwaltung.domain.Kategorie;
-import de.hska.awp.palaver2.data.ConnectException;
-import de.hska.awp.palaver2.data.DAOException;
-import de.hska.awp.palaver2.data.KategorieDAO;
+import de.hska.awp.palaver.artikelverwaltung.dao.KategorieDAO;
+import de.hska.awp.palaver.artikelverwaltung.domain.Kategorie;
+import de.hska.awp.palaver.dao.ConnectException;
+import de.hska.awp.palaver.dao.DAOException;
 
 public class Kategorienverwaltung extends KategorieDAO {
-
+	
 	private static Kategorienverwaltung instance = null;
-
-	private Kategorienverwaltung() {
+	public Kategorienverwaltung() {
 		super();
 	}
-
+	
 	public static Kategorienverwaltung getInstance() {
 		if (instance == null) {
 			instance = new Kategorienverwaltung();
@@ -25,63 +24,34 @@ public class Kategorienverwaltung extends KategorieDAO {
 
 	/**
 	 * Die Methode liefert alle Kategorien zurück.
-	 * 
-	 * @throws SQLException
-	 * @throws DAOException
-	 * @throws ConnectException
 	 * @return List<Kategorie>
 	 */
 	public List<Kategorie> getAllKategories() throws ConnectException,
 			DAOException, SQLException {
-		List<Kategorie> result = null;
-		result = super.getAllKategories();
-		return result;
+		return super.getAllKategories();
 	}
 
 	/**
 	 * Die Methode liefert eine Kategorie anhand des Parameter id zurück.
-	 * 
 	 * @param id 
-	 * @throws SQLException
-	 * @throws DAOException
-	 * @throws ConnectException
-	 * 
 	 * @return Kategorie
 	 */
 	public Kategorie getKategorieById(Long id) throws ConnectException,
 			DAOException, SQLException {
-		Kategorie result = null;
-		result = super.getKategorieById(id);
-		return result;
+		return super.getKategorieById(id);
 	}
-
-	/**
-	 * Die Methode erzeugt eine Kategorie.
-	 * 
-	 * @throws SQLException
-	 * @throws DAOException
-	 * @throws ConnectException
-	 */
-	public void createNewKategorie(Kategorie kategorie)
+	
+	public void createKategorie(Kategorie kategorie)
 			throws ConnectException, DAOException, SQLException {
-		super.createNewKategorie(kategorie);
+		super.createKategorie(kategorie);
 	}
 
-	/**
-	 * Die Methode aktualisiert eine Kategorie.
-	 * 
-	 * @throws SQLException
-	 * @throws DAOException
-	 * @throws ConnectException
-	 */
 	public void updateKategorie(Kategorie kategorie) throws ConnectException,
 			DAOException, SQLException {
 		super.updateKategorie(kategorie);
 	}
-
+	
 	public void deleteKategorie(Long id) throws ConnectException, DAOException {
 		super.deleteKategorie(id); 		
 	}
-
-	
 }

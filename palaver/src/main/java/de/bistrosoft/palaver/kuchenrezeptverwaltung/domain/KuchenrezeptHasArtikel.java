@@ -1,7 +1,7 @@
 package de.bistrosoft.palaver.kuchenrezeptverwaltung.domain;
 
-import de.hska.awp.palaver2.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver2.artikelverwaltung.domain.Mengeneinheit;
+import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
+import de.hska.awp.palaver.artikelverwaltung.domain.Mengeneinheit;
 
 /**
  * 
@@ -39,7 +39,7 @@ public class KuchenrezeptHasArtikel {
 
 	public KuchenrezeptHasArtikel(Artikel a) {
 		this.artikel = a;
-		this.mengeneinheit = a.getMengeneinheitBestellung();
+		this.mengeneinheit = a.getMengeneinheit();
 		this.menge = 1.0;
 		this.kuchenrezept = null;
 	}
