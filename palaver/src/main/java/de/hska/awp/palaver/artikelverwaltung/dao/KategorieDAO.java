@@ -1,6 +1,5 @@
 package de.hska.awp.palaver.artikelverwaltung.dao;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -72,6 +71,6 @@ public class KategorieDAO extends AbstractDAO {
 	}
 
 	public void deleteKategorie(Long id) throws ConnectException, DAOException {
-		putManaged(MessageFormat.format(DELETE_QUERY, kategorie.getId()));		
+		putManaged(MessageFormat.format(DELETE_QUERY, id));		
 	}
 }

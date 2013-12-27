@@ -33,6 +33,7 @@ public class MengeneinheitDAO extends AbstractDAO {
 	private static final String UPDATE_QUERY = "UPDATE " + TABLE + " SET "
 			+ FIELD_NAME + " = {0}," + FIELD_KURZ + " = {1} WHERE " + FIELD_ID
 			+ " = {2}";
+	private static final String DELETE_QUERY = "DELETE FROM " + TABLE + " WHERE " + FIELD_ID + " = {0}";
 
 	private List<Mengeneinheit> list;
 	private Mengeneinheit mengeneinheit;
@@ -97,5 +98,10 @@ public class MengeneinheitDAO extends AbstractDAO {
 		putManaged(MessageFormat.format(UPDATE_QUERY,
 				"'" + mengeneinheit.getName() + "'",
 				"'" + mengeneinheit.getKurz() + "'", mengeneinheit.getId()));
+	}
+
+	public void deleteMengeneinheit(Long id) throws ConnectException, DAOException {
+		putManaged(MessageFormat.format(DELETE_QUERY, id));	
+		
 	}
 }

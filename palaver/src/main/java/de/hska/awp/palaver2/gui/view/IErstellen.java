@@ -1,0 +1,14 @@
+package de.hska.awp.palaver2.gui.view;
+
+import java.sql.SQLException;
+
+import com.vaadin.ui.VerticalLayout;
+
+import de.hska.awp.palaver.dao.ConnectException;
+import de.hska.awp.palaver.dao.DAOException;
+
+public interface IErstellen {
+	void sqlStatement(int i) throws ConnectException, DAOException, SQLException;
+	boolean validiereEingabe();
+	VerticalLayout boxLayout(VerticalLayout box, String width);
+}

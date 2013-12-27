@@ -21,8 +21,8 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomTable;
 import com.vaadin.ui.CustomTable.CellStyleGenerator;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
@@ -41,7 +41,7 @@ import de.hska.awp.palaver2.util.customFilterDecorator;
  *         direkt zur UpdateForm.
  */
 @SuppressWarnings("serial")
-public class ArtikelAnzeigen extends ArtikelAbstract implements View {
+public class ArtikelAnzeigen extends ArtikelverwaltungView implements View {
 	private static final Logger log = LoggerFactory.getLogger(ArtikelAnzeigen.class.getName());
 
 	private FilterTable table;
@@ -54,19 +54,18 @@ public class ArtikelAnzeigen extends ArtikelAbstract implements View {
 		filterButton = new Button(IConstants.BUTTON_CLEAR_FILTER);
 		filterButton.setIcon(new ThemeResource("img/disable_filter.ico"));
 
-		auswaehlenButton = new Button(IConstants.BUTTON_SELECT);
-		auswaehlenButton.setHeight("50px");
+		m_auswaehlenButton = new Button(IConstants.BUTTON_SELECT);
+		m_auswaehlenButton.setHeight("50px");
 
-		headlineLabel = new Label("Alle Artikel");
-		headlineLabel.setStyleName("ViewHeadline");
+		m_headlineLabel = headLine(m_headlineLabel, "Alle Artikel", "ViewHeadline");
 
-		controlHL = new HorizontalLayout();
-		controlHL.setWidth("100%");
-		controlHL.addComponent(headlineLabel);
-		controlHL.setComponentAlignment(headlineLabel, Alignment.MIDDLE_LEFT);
-		controlHL.addComponent(filterButton);
-		controlHL.setComponentAlignment(filterButton, Alignment.MIDDLE_RIGHT);
-		controlHL.setExpandRatio(headlineLabel, 1);
+		m_horizontalLayout = new HorizontalLayout();
+		m_horizontalLayout.setWidth("100%");
+		m_horizontalLayout.addComponent(m_headlineLabel);
+		m_horizontalLayout.setComponentAlignment(m_headlineLabel, Alignment.MIDDLE_LEFT);
+		m_horizontalLayout.addComponent(filterButton);
+		m_horizontalLayout.setComponentAlignment(filterButton, Alignment.MIDDLE_RIGHT);
+		m_horizontalLayout.setExpandRatio(m_headlineLabel, 1);
 
 		table = new FilterTable();
 		table.setStyleName("palaverTable");
@@ -76,17 +75,17 @@ public class ArtikelAnzeigen extends ArtikelAbstract implements View {
 		table.setFilterDecorator(new customFilterDecorator());
 		table.setSelectable(true);
 		
-		this.addComponent(controlHL);
+		this.addComponent(m_horizontalLayout);
 		this.addComponent(table);
 		this.setExpandRatio(table, 1);
-		this.addComponent(auswaehlenButton);
-		this.setComponentAlignment(auswaehlenButton, Alignment.BOTTOM_RIGHT);
+		this.addComponent(m_auswaehlenButton);
+		this.setComponentAlignment(m_auswaehlenButton, Alignment.BOTTOM_RIGHT);
 
 		table.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
-					artikel = (Artikel) event.getProperty().getValue();
+					m_artikel = (Artikel) event.getProperty().getValue();
 				}
 			}
 		});
@@ -95,17 +94,17 @@ public class ArtikelAnzeigen extends ArtikelAbstract implements View {
 			@Override
 			public void itemClick(ItemClickEvent event) {
 				if (event.isDoubleClick()) {
-					auswaehlenButton.click();
+					m_auswaehlenButton.click();
 				}
 
 			}
 		});
 		
-		auswaehlenButton.addClickListener(new ClickListener() {
+		m_auswaehlenButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (artikel != null) {
-					ViewHandler.getInstance().switchView(ArtikelErstellen.class, new ViewDataObject<Artikel>(artikel));
+				if (m_artikel != null) {
+					ViewHandler.getInstance().switchView(ArtikelErstellen.class, new ViewDataObject<Artikel>(m_artikel));
 				}
 				else {
 					((Application) UI.getCurrent().getData())
@@ -158,5 +157,17 @@ public class ArtikelAnzeigen extends ArtikelAbstract implements View {
 
 	@Override
 	public void getViewParam(ViewData data) {	
+	}
+	
+	private VerticalLayout vLayout(VerticalLayout box, String width) {
+		box = new VerticalLayout();
+		box.setWidth(width);
+		box.setSpacing(true);
+
+		box.addComponent(m_headlineLabel);
+		box.addComponent(new Hr());
+	
+
+		return box;
 	}
 }

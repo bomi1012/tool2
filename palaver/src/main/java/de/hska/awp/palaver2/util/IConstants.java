@@ -101,6 +101,7 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/test?user=root&password
 	String 		BUTTON_NEW_ICON = "img/new.ico";
 	String 		BUTTON_SHOW_ICON = "img/show.png";
 	String 		BUTTON_FOLDER_ICON = "img/folder.png";
+	String		BUTTON_SELECT_ICON = "img/select.png";
 	String 		BUTTON_EDIT_ICON = "img/edit.ico";
 	String		BUTTON_OK_ICON = "img/check.ico";
 	String		BUTTON_EXCEL_ICON = "img/excel1.ico";

@@ -50,4 +50,8 @@ public class Mengeneinheitverwaltung extends MengeneinheitDAO {
 	public void updateMengeneinheit(Mengeneinheit mengeneinheit) throws ConnectException, DAOException, SQLException {
 		super.updateMengeneinheit(mengeneinheit);
 	}
+	public void deleteMengeneinheit(Long id) throws ConnectException, DAOException {
+		super.deleteMengeneinheit(id);
+		
+	}
 }

@@ -21,7 +21,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
@@ -59,13 +58,13 @@ import de.hska.awp.palaver2.util.ViewHandler;
  *         anstatt einen neuen Artikel anzulegen wird er geaendert.
  */
 @SuppressWarnings({ "serial" })
-public class ArtikelErstellen extends ArtikelAbstract implements View,
+public class ArtikelErstellen extends ArtikelverwaltungView implements View,
 		ValueChangeListener {
 
 	private static final Logger log = LoggerFactory
 			.getLogger(ArtikelErstellen.class.getName());
 
-	private Window win;
+	
 	private HorizontalLayout newKomponent;
 
 	/** TextFields */
@@ -111,47 +110,46 @@ public class ArtikelErstellen extends ArtikelAbstract implements View,
 		this.setSizeFull();
 		this.setMargin(true);
 		/** TextFields */
-		nameField = textFieldSettingAE(nameField, ArtikelAbstract.ARTIKEL_NAME,
-				ArtikelAbstract.FULL, true, ArtikelAbstract.ARTIKEL_NAME, this);
+		nameField = textFieldSettingAE(nameField, ArtikelverwaltungView.ARTIKEL_NAME,
+				ArtikelverwaltungView.FULL, true, ArtikelverwaltungView.ARTIKEL_NAME, this);
 		artikelPreis = textFieldSettingAE(artikelPreis,
-				ArtikelAbstract.ARTIKEL_PREIS, ArtikelAbstract.FULL, false,
-				ArtikelAbstract.ARTIKEL_PREIS, this);
+				ArtikelverwaltungView.ARTIKEL_PREIS, ArtikelverwaltungView.FULL, false,
+				ArtikelverwaltungView.ARTIKEL_PREIS, this);
 		artikelNummer = textFieldSettingAE(artikelNummer,
-				ArtikelAbstract.ARTIKEL_NUMMER, ArtikelAbstract.FULL, false,
-				ArtikelAbstract.ARTIKEL_NUMMER, this);
-		gebinde = textFieldSettingAE(gebinde, ArtikelAbstract.ARTIKEL_GEBINDE,
-				ArtikelAbstract.FULL, true, ArtikelAbstract.ARTIKEL_GEBINDE,
+				ArtikelverwaltungView.ARTIKEL_NUMMER, ArtikelverwaltungView.FULL, false,
+				ArtikelverwaltungView.ARTIKEL_NUMMER, this);
+		gebinde = textFieldSettingAE(gebinde, ArtikelverwaltungView.ARTIKEL_GEBINDE,
+				ArtikelverwaltungView.FULL, true, ArtikelverwaltungView.ARTIKEL_GEBINDE,
 				this);
-		notiz = textFieldSettingAE(notiz, ArtikelAbstract.ARTIKEL_NOTIZ,
-				ArtikelAbstract.FULL, false, ArtikelAbstract.ARTIKEL_NOTIZ,
+		notiz = textFieldSettingAE(notiz, ArtikelverwaltungView.ARTIKEL_NOTIZ,
+				ArtikelverwaltungView.FULL, false, ArtikelverwaltungView.ARTIKEL_NOTIZ,
 				this);
 
 		/** NativeSelects */
 		lieferantSelect = nativeSelectSetting(lieferantSelect, "Lieferant",
-				ArtikelAbstract.FULL, true, "Lieferant", this);
+				ArtikelverwaltungView.FULL, true, "Lieferant", this);
 		mengeneinheitSelect = nativeSelectSetting(mengeneinheitSelect, "Mengeneinheit",
-				ArtikelAbstract.FULL, true, "Mengeneinheit", this);
+				ArtikelverwaltungView.FULL, true, "Mengeneinheit", this);
 		kategorieSelect = nativeSelectSetting(kategorieSelect, "Kategorie",
-				ArtikelAbstract.FULL, true, "Kategorie", this);
-		lagerortSelect = nativeSelectSetting(lagerortSelect, "Lagerort", ArtikelAbstract.FULL,
+				ArtikelverwaltungView.FULL, true, "Kategorie", this);
+		lagerortSelect = nativeSelectSetting(lagerortSelect, "Lagerort", ArtikelverwaltungView.FULL,
 				true, "Lagerort", this);
 
 		/** Buttons */
 		addLieferant = buttonSetting(addLieferant, IConstants.BUTTON_NEW,
-				IConstants.BUTTON_NEW_ICON);
+				IConstants.BUTTON_NEW_ICON, true);
 		addMengeneinheit = buttonSetting(addMengeneinheit, IConstants.BUTTON_NEW,
-				IConstants.BUTTON_NEW_ICON);
+				IConstants.BUTTON_NEW_ICON, true);
 		addKategorie = buttonSetting(addKategorie, IConstants.BUTTON_NEW,
-				IConstants.BUTTON_NEW_ICON);
+				IConstants.BUTTON_NEW_ICON, true);
 		addLagerort = buttonSetting(addLagerort, IConstants.BUTTON_NEW,
-				IConstants.BUTTON_NEW_ICON);
-		speichernButton = buttonSetting(speichernButton, IConstants.BUTTON_SAVE,
-				IConstants.BUTTON_SAVE_ICON);
-		verwerfenButton = buttonSetting(verwerfenButton, IConstants.BUTTON_DISCARD,
-				IConstants.BUTTON_DISCARD_ICON);
-		deaktivierenButton = buttonSetting(deaktivierenButton, IConstants.BUTTON_DEAKTIVIEREN,
-				IConstants.BUTTON_DELETE_ICON);
-		deaktivierenButton.setVisible(false);
+				IConstants.BUTTON_NEW_ICON, true);
+		m_speichernButton = buttonSetting(m_speichernButton, IConstants.BUTTON_SAVE,
+				IConstants.BUTTON_SAVE_ICON, true);
+		m_verwerfenButton = buttonSetting(m_verwerfenButton, IConstants.BUTTON_DISCARD,
+				IConstants.BUTTON_DISCARD_ICON, true);
+		m_deaktivierenButton = buttonSetting(m_deaktivierenButton, IConstants.BUTTON_DEAKTIVIEREN,
+				IConstants.BUTTON_DELETE_ICON, false);
 
 		/** IntSteppers */
 		durchschnittLT1 = intStepperSetting(durchschnittLT1, "Gebindeanzahl für den Termin 1",
@@ -167,25 +165,19 @@ public class ArtikelErstellen extends ArtikelAbstract implements View,
 		durchschnittHL.setExpandRatio(durchschnittLT2, 1);
 		durchschnittHL.setComponentAlignment(durchschnittLT2, Alignment.BOTTOM_RIGHT);
 		
-		
-		
-
-		headlineLabel = new Label(ArtikelAbstract.NEW_ARTIKEL);
-		headlineLabel.setStyleName("ViewHeadline");
-		
-		
+		m_headlineLabel = headLine(m_headlineLabel, ArtikelverwaltungView.NEW_ARTIKEL, "ViewHeadline");
 
 		/** ControlPanel */
-		controlHL = new HorizontalLayout();
-		controlHL.setSpacing(true);
-		controlHL.addComponent(verwerfenButton);
-		controlHL.addComponent(speichernButton);
-		controlHL.addComponent(deaktivierenButton);
+		m_horizontalLayout = new HorizontalLayout();
+		m_horizontalLayout.setSpacing(true);
+		m_horizontalLayout.addComponent(m_verwerfenButton);
+		m_horizontalLayout.addComponent(m_speichernButton);
+		m_horizontalLayout.addComponent(m_deaktivierenButton);
 
 		/** Layout */
-		boxVL = boxLayout(boxVL, "450");
-		this.addComponent(boxVL);
-		this.setComponentAlignment(boxVL, Alignment.MIDDLE_CENTER);
+		vertikalLayout = vLayout(vertikalLayout, "450");
+		this.addComponent(vertikalLayout);
+		this.setComponentAlignment(vertikalLayout, Alignment.MIDDLE_CENTER);
 		
 		/** ValueChangeListene */
 		grundbedarf.addValueChangeListener(new ValueChangeListener() {
@@ -196,7 +188,7 @@ public class ArtikelErstellen extends ArtikelAbstract implements View,
 			}
 		});
 		
-		speichernButton.addClickListener(new ClickListener() {
+		m_speichernButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (validiereEingabe()) {
@@ -205,7 +197,7 @@ public class ArtikelErstellen extends ArtikelAbstract implements View,
 			}
 		});
 
-		verwerfenButton.addClickListener(new ClickListener() {
+		m_verwerfenButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (ArtikelErstellen.this.getParent() instanceof Window) {
@@ -218,7 +210,7 @@ public class ArtikelErstellen extends ArtikelAbstract implements View,
 			}
 		});
 		
-		deaktivierenButton.addClickListener(new ClickListener() {
+		m_deaktivierenButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				try {
@@ -265,8 +257,8 @@ public class ArtikelErstellen extends ArtikelAbstract implements View,
 	@Override
 	public void getViewParam(ViewData data) {
 		artikel = (Artikel) ((ViewDataObject<?>) data).getData();
-		deaktivierenButton.setVisible(true);
-		controlHL.replaceComponent(speichernButton, update);
+		m_deaktivierenButton.setVisible(true);
+		m_horizontalLayout.replaceComponent(m_speichernButton, update);
 		update.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
 		update.addClickListener(new ClickListener() {
 			@Override
@@ -275,7 +267,7 @@ public class ArtikelErstellen extends ArtikelAbstract implements View,
 			}
 		});
 
-		headlineLabel.setValue("Artikel bearbeiten");
+		m_headlineLabel.setValue("Artikel bearbeiten");
 		nameField.setValue(artikel.getName());
 		artikelNummer.setValue(artikel.getArtikelnr());
 		artikelPreis.setValue(artikel.getPreis() + "");
@@ -490,34 +482,34 @@ public class ArtikelErstellen extends ArtikelAbstract implements View,
 		});
 	}
 	
-	private VerticalLayout boxLayout(VerticalLayout box, String width) {
+	private VerticalLayout vLayout(VerticalLayout box, String width) {
 		box = new VerticalLayout();
 		box.setWidth(width);
 		box.setSpacing(true);
 
-		box.addComponent(headlineLabel);
+		box.addComponent(m_headlineLabel);
 		box.addComponent(new Hr());
 		box.addComponent(nameField);
 		box.addComponent(artikelNummer);
 		box.addComponent(artikelPreis);
 		box.addComponent(notiz);
 		box.addComponent(newKomponent(newKomponent, lieferantSelect,
-				addLieferant, ArtikelAbstract.FULL));
+				addLieferant, ArtikelverwaltungView.FULL));
 		box.addComponent(newKomponent(newKomponent, kategorieSelect,
-				addKategorie, ArtikelAbstract.FULL));
+				addKategorie, ArtikelverwaltungView.FULL));
 		box.addComponent(newKomponent(newKomponent, lagerortSelect, addLagerort,
-				ArtikelAbstract.FULL));
+				ArtikelverwaltungView.FULL));
 		box.addComponent(standard);
 		box.addComponent(fuerRezepte);
 		box.addComponent(gebinde);
 		box.addComponent(newKomponent(newKomponent, mengeneinheitSelect,
-				addMengeneinheit, ArtikelAbstract.FULL));
+				addMengeneinheit, ArtikelverwaltungView.FULL));
 		box.addComponent(grundbedarf);
 		box.addComponent(durchschnittHL);
 		box.addComponent(new Hr());
 
-		box.addComponent(controlHL);
-		box.setComponentAlignment(controlHL, Alignment.MIDDLE_RIGHT);
+		box.addComponent(m_horizontalLayout);
+		box.setComponentAlignment(m_horizontalLayout, Alignment.MIDDLE_RIGHT);
 
 		return box;
 	}
