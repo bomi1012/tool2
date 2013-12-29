@@ -75,7 +75,7 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/test?user=root&password
 	String		BUTTON_DEAKTIVIEREN = "Deaktivieren";
 	String		BUTTON_DISCARD = "Verwerfen";
 	String		BUTTON_ADD = "Hinzufügen";
-	String		BUTTON_NEW = "Neu";
+	String		BUTTON_NEW = "Erstellen";
 	String		BUTTON_EDIT = "Bearbeiten";
 	String		BUTTON_OK = "OK";
 	String		BUTTON_DELETE = "Löschen";
@@ -107,6 +107,15 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/test?user=root&password
 	String		BUTTON_EXCEL_ICON = "img/excel1.ico";
 	String		BUTTON_EMAILVERSAND_ICON = "img/mail.ico";
 	
+	
+	String 		ICON_ZOOM = "icons/zoom.png";
+	String 		ICON_PAGE_EDIT = "icons/page_edit.png";
+	String 		ICON_PAGE_ADD = "icons/page_add.png";
+	String 		ICON_PAGE_DELETE = "icons/page_delete.png";
+	String 		ICON_PAGE_REFRESH = "icons/page_refresh.png";
+	String 		ICON_PAGE_SAVE = "icons/page_save.png";
+	
+	
 	String		ICON_YES = "img/tick_circle.ico";
 	String		ICON_NO = "img/cross_circle.ico";
 	String		ICON_DELETE = "img/Delete.ico";
@@ -119,7 +128,7 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/test?user=root&password
 	String		INFO_REZEPT_REZEPTART = "Bitte Rezeptart wählen!";	
 	String 		INFO_REZEPT_KOCH = "Bitte Koch wählen!";
 	String		INFO_REZEPT_NAME = "Bitte Namen eingeben!";
-	String		INFO_REZEPT_NAME_VALID = "Bitte vollständigen Namen eingeben";
+	String		INFO_NAME_VALID = "Bitte vollständigen Namen eingeben";
 	String		INFO_REZEPT_KOCH_VALID = "Bitte vollständigen Koch wählen";
 	String		INFO_REZEPT_REZEPTART_VALID = "Bitte vollständige Rezeptart wählen";
 	String		INFO_REZEPT_MENUE_SAVE_WINDOW = "Funktion nicht möglich";

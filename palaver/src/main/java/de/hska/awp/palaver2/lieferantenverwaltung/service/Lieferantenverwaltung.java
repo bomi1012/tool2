@@ -126,5 +126,8 @@ public class Lieferantenverwaltung extends LieferantDAO {
 			super.deaktivierung(id, 0);
 		}
 	}
-	
+
+	public List<Lieferant> getLieferantenByGrundbedarf(boolean hatGrundbedarf) throws SQLException, ConnectException, DAOException {
+		return super.getLieferantenByGrundbedarf(hatGrundbedarf);
+	}	
 }

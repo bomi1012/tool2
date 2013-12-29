@@ -52,6 +52,7 @@ import de.hska.awp.palaver2.gui.view.artikelverwaltung.ArtikelAnzeigen;
 import de.hska.awp.palaver2.gui.view.artikelverwaltung.ArtikelErstellen;
 import de.hska.awp.palaver2.gui.view.artikelverwaltung.KategorienAnzeigen;
 import de.hska.awp.palaver2.gui.view.artikelverwaltung.MengeneinheitenAnzeigen;
+import de.hska.awp.palaver2.gui.view.bestellverwaltung.GrundbedarfGenerierenAnsicht;
 import de.hska.awp.palaver2.gui.view.lieferantenverwaltung.LieferantAnzeigen;
 import de.hska.awp.palaver2.gui.view.lieferantenverwaltung.LieferantErstellen;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
@@ -309,6 +310,8 @@ public class MainLayout extends VerticalLayout implements Command {
 						.switchView(BestellungGenerieren.class);
 			} else if (selectedItem.getText().equals(IConstants.MENU_HEADER)) {
 				setHeaderVisible(!this.header.isVisible());
+			} else if(selectedItem.getText().equals("Grundbedarf generieren")) {
+				ViewHandler.getInstance().switchView(GrundbedarfGenerierenAnsicht.class);
 			}
 			// else if (selectedItem.getText().equals(IConstants.MENU_INFO))
 			// {

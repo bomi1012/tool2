@@ -136,7 +136,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		name.setSizeFull();
 		name.setMaxLength(200);
 		name.addValidator(new StringLengthValidator(
-				IConstants.INFO_REZEPT_NAME_VALID, 3, 200, false));
+				IConstants.INFO_NAME_VALID, 3, 200, false));
 
 		//Setzte Eigenschaften des TwinCol Zubereitung
 		zubereitung.setWidth("100%");

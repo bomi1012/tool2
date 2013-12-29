@@ -1,6 +1,8 @@
 package de.hska.awp.palaver2.gui.view;
 
-import com.vaadin.data.Validator;
+import org.tepi.filtertable.FilterTable;
+
+import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -9,71 +11,66 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-import de.hska.awp.palaver2.gui.view.artikelverwaltung.ArtikelErstellen;
-import de.hska.awp.palaver2.gui.view.artikelverwaltung.ArtikelverwaltungView;
+import de.hska.awp.palaver2.util.IConstants;
 
+@SuppressWarnings("serial")
 public class ViewAbstract extends VerticalLayout {
-	private static final long serialVersionUID = -7534579781394440179L;
 	protected static final String FULL = "100%";
+	protected static final String STYLE_HEADLINE = "ViewHeadline";
+	protected static final String FIELD_NAME = "name";
+	protected Label m_headlineLabel;
+	protected VerticalLayout vertikalLayout;
+	protected HorizontalLayout m_horizontalLayout;
+	protected Button m_button;
+	protected Window win;
+	protected Table m_table;
+	protected FilterTable m_filterTable; 
+	protected TextField m_textField; 
+
+	public boolean m_create = true;
+	public boolean m_okRemove = false;
+	
 	
 	protected static final String MESSAGE_LEER_ARG_1 = "Tragen Sie bitte im Feld %s den Wert ein";
 	protected static final String MESSAGE_EXISTS_ARG_1 = "Der Name %s ist bereits im System vorhanden";	
 	protected static final String MESSAGE_SUSSEFULL_ARG_1 = "%s wurde erfolgreich gespeichert";
 	
-	protected VerticalLayout vertikalLayout;
-	protected HorizontalLayout m_horizontalLayout;
-	protected Label m_headlineLabel;
-	protected Button m_speichernButton;
-	protected Button m_verwerfenButton;
-	protected Button m_deaktivierenButton;
-	protected Button filterButton;
-	protected Button m_auswaehlenButton;
 	
+	public Button m_auswaehlenButton;
 	
-	protected Window win;
-	protected Table m_table;
-
+	protected TextField textFieldSetting(TextField field, String name,
+			String width, boolean required, String descript) {		
+		field = new TextField(name);
+		field.setWidth(width);
+		if(required) {
+			field.addValidator(new StringLengthValidator(IConstants.INFO_NAME_VALID, 1, 100, true));
+		}
+		field.setImmediate(true);
+		field.setDescription(descript);
+		return field;
+	}
 	
-	protected ViewAbstract() {
+	public ViewAbstract() {
 		super();
 	}
 	
-	protected ViewAbstract(Component... children) {
+	public ViewAbstract(Component... children) {
 		super(children);
 	}
 	
-	protected Button buttonSetting(Button button, String title, String icon, boolean isVisible) {
+	protected Button buttonSetting(Button button, String title, String icon, boolean isVisible, boolean isEnable) {
 		button = new Button(title);
-		button.setIcon(new ThemeResource(icon));
+		if(icon != null) 
+			button.setIcon(new ThemeResource(icon));
 		button.setVisible(isVisible);
+		button.setEnabled(isEnable);
 		return button;
 	}
-	@SuppressWarnings("unused")
-	protected NativeSelect nativeSelectSetting(NativeSelect select,
-			final String name, String width, boolean required, String descript,
-			Object object) {
-		select = new NativeSelect(name);
-		Object value = select.getValue();
-		select.setWidth(ArtikelverwaltungView.FULL);
-		if(required) {
-			select.addValidator(new Validator() {
-				private static final long serialVersionUID = 1972800127752278750L;
-				@Override
-				public void validate(Object value) throws InvalidValueException {
-					if (value == null) {
-						throw new InvalidValueException("Wählen Sie bitte den Name aus der Auswahl");
-					}
-				}
-			});
-		}
-		select.setImmediate(true);
-		select.addValueChangeListener((ArtikelErstellen) object);
-		select.setDescription(descript);
-		return select;
-	}
+	
 	protected HorizontalLayout newKomponent(HorizontalLayout hl,
 			NativeSelect select, Button button, String width) {
 		hl = new HorizontalLayout();
@@ -99,8 +96,9 @@ public class ViewAbstract extends VerticalLayout {
 		lable.setStyleName(style);
 		return lable;
 	}
-	
+
 	public class Hr extends Label {
+		@SuppressWarnings("deprecation")
 		public Hr() {
 			super("<hr/>", Label.CONTENT_XHTML);
 		}

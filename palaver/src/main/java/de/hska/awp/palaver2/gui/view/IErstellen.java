@@ -10,5 +10,5 @@ import de.hska.awp.palaver.dao.DAOException;
 public interface IErstellen {
 	void sqlStatement(int i) throws ConnectException, DAOException, SQLException;
 	boolean validiereEingabe();
-	VerticalLayout boxLayout(VerticalLayout box, String width);
+	VerticalLayout addToLayout(VerticalLayout box, String width);
 }

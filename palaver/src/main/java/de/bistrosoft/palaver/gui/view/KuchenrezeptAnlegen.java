@@ -129,7 +129,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		name.setInputPrompt(nameInput);
 		name.setSizeFull();
 		name.addValidator(new StringLengthValidator(
-				IConstants.INFO_REZEPT_NAME_VALID, 3, 200, false));
+				IConstants.INFO_NAME_VALID, 3, 200, false));
 
 		kommentar.setWidth("100%");
 		kommentar.setImmediate(true);

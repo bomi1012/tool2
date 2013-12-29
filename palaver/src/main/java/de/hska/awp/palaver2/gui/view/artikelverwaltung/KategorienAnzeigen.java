@@ -11,12 +11,7 @@ import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Table;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window.CloseEvent;
-import com.vaadin.ui.Window.CloseListener;
 
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver.artikelverwaltung.domain.Kategorie;
@@ -26,37 +21,41 @@ import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 
 @SuppressWarnings("serial")
-public class KategorienAnzeigen extends ArtikelverwaltungView implements View {
-	private static final Logger log = LoggerFactory.getLogger(KategorienAnzeigen.class.getName());
-	BeanItemContainer<Kategorie> container;
+public class KategorienAnzeigen extends OverAnzeigen implements View {
+	private static final Logger LOG = LoggerFactory.getLogger(KategorienAnzeigen.class.getName());
+	private static final String KATEGORIE_ALL = "Alle Kategorien";
+	private static final String LAYOUT = "50%";
+	private static final String WIDTH = "500";
+	private static final String HEIGHT = "250";
+	private BeanItemContainer<Kategorie> m_container;
 	public KategorienAnzeigen() {
 		super();
+		template();
+		listeners();
+		beans();
+	}
+
+
+	private void template() {
 		this.setSizeFull();
 		this.setMargin(true);
-		
-		m_headlineLabel = headLine(m_headlineLabel, "Alle Kategorien", "ViewHeadline");
-		m_createNewButton = buttonSetting(m_createNewButton, IConstants.BUTTON_NEW,
-				IConstants.BUTTON_NEW_ICON, true);
-		m_auswaehlenButton = buttonSetting(m_auswaehlenButton, IConstants.BUTTON_EDIT,
-				IConstants.BUTTON_EDIT_ICON, true);
-
-		m_table = new Table();
-		m_table.setSizeFull();
-		m_table.setSelectable(true);
-
-		/** ControlPanel */
-		m_horizontalLayout = new HorizontalLayout();
-		m_horizontalLayout.setSpacing(true);
-		m_horizontalLayout.addComponent(m_createNewButton);
-		m_horizontalLayout.addComponent(m_auswaehlenButton);
+		m_headlineLabel = headLine(m_headlineLabel, KATEGORIE_ALL, STYLE_HEADLINE);
+		m_table = table();
+		m_control = controlPanelEditAndNew();		
+		vertikalLayout = addToLayoutTableAndControl(vertikalLayout, LAYOUT);
 			
-		vertikalLayout = vLayout(vertikalLayout, "50%");
-		
+		this.addComponent(vertikalLayout);
+		this.setComponentAlignment(vertikalLayout, Alignment.MIDDLE_CENTER);
+	}
+	
+	
+	private void listeners() {
 		m_table.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
 					m_kategorie = (Kategorie) event.getProperty().getValue();
+					m_editButton.setEnabled(true);
 				}
 			}
 		});
@@ -64,13 +63,12 @@ public class KategorienAnzeigen extends ArtikelverwaltungView implements View {
 			@Override
 			public void itemClick(ItemClickEvent event) {
 				if (event.isDoubleClick()) {
-					m_auswaehlenButton.click();
+					m_editButton.click();
 				}
-
 			}
 		});
 
-		m_auswaehlenButton.addClickListener(new ClickListener() {
+		m_editButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (m_kategorie != null) {
@@ -82,19 +80,17 @@ public class KategorienAnzeigen extends ArtikelverwaltungView implements View {
 			}
 		});
 		
-		m_createNewButton.addClickListener(new ClickListener() {
+		m_createButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				windowModal(null);
 			}
-		});		
-		beans();
-		this.addComponent(vertikalLayout);
-		this.setComponentAlignment(vertikalLayout, Alignment.MIDDLE_CENTER);
+		});	
+		
 	}
 
 	private void windowModal(Kategorie kategorie) {				
-		win = windowUI(win, "Kategorie Bearbeiten", "500", "250");
+		win = windowUI(win, EDIT_KATEGORIE, WIDTH, HEIGHT);
 		if(kategorie != null) {
 			m_kategorieErstellen = new KategorieErstellen(kategorie);
 		} else {
@@ -104,42 +100,38 @@ public class KategorienAnzeigen extends ArtikelverwaltungView implements View {
 		win.setContent(m_kategorieErstellen);
 		win.setModal(true);
 		UI.getCurrent().addWindow(win);
-		win.addCloseListener(new CloseListener() {						
+		m_kategorieErstellen.m_speichernButton.addClickListener(new ClickListener() {					
 			@Override
-			public void windowClose(CloseEvent e) {
-				beans();
+			public void buttonClick(ClickEvent event) {	
+				m_container.addItem(m_kategorie);
+				setTable();
 			}
-		});		
+		});
+		m_kategorieErstellen.m_deaktivierenButton.addClickListener(new ClickListener() {					
+			@Override
+			public void buttonClick(ClickEvent event) {	
+				if(m_kategorieErstellen.m_okRemove) {
+					m_container.removeItem(m_kategorie);
+					setTable();
+				}
+			}
+		});
 	}
 	
-	private void beans() {
-		m_table.removeAllItems();	
-		try {
-			container = new BeanItemContainer<Kategorie>(Kategorie.class,
-					Kategorienverwaltung.getInstance().getAllKategories());
-			m_table.setContainerDataSource(container);
-			m_table.setVisibleColumns(new Object[] { "name" });
-			m_table.sort(new Object[] { "name" }, new boolean[] { true });
-		} catch (Exception e) {
-			log.error(e.toString());
-		}		
+	private void setTable() {
+		m_table.setContainerDataSource(m_container);
+		m_table.setVisibleColumns(new Object[] { FIELD_NAME });
+		m_table.sort(new Object[] { FIELD_NAME }, new boolean[] { true });
 	}
-
-	private VerticalLayout vLayout(VerticalLayout box, String width) {
-		box = new VerticalLayout();
-		box.setWidth(width);
-		box.setSpacing(true);
-		box.setMargin(true);
-		box.setSpacing(true);
-
-		box.addComponent(m_headlineLabel);
-		box.setComponentAlignment(m_headlineLabel, Alignment.MIDDLE_LEFT);
-
-		box.addComponent(m_table);
-		box.setComponentAlignment(m_table, Alignment.MIDDLE_CENTER);
-		box.addComponent(m_horizontalLayout);
-		box.setComponentAlignment(m_horizontalLayout, Alignment.MIDDLE_RIGHT);
-		return box;
+	
+	private void beans() {	
+		try {
+			m_container = new BeanItemContainer<Kategorie>(Kategorie.class,
+					Kategorienverwaltung.getInstance().getAllKategories());
+			setTable();
+		} catch (Exception e) {
+			LOG.error(e.toString());
+		}		
 	}
 
 	@Override

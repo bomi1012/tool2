@@ -42,7 +42,7 @@ public class ArtikelDAO extends AbstractDAO {
 	private final static String GET_ALL_ACTIVE_ARTIKLES = "SELECT * FROM " + TABLE 
 			+ " WHERE " + ACTIVE;
 	private final static String GET_ACTIVE_ARTIKLES_BY_LIEFERANT_ID = "SELECT * FROM " + TABLE 
-			+ " WHERE " + FIELD_LAGERORT_FK + " = {0} AND " + ACTIVE + " ORDER BY " + FIELD_NAME;
+			+ " WHERE " + FIELD_LIEFERANT_FK + " = {0} AND " + ACTIVE + " ORDER BY " + FIELD_NAME;
 	private final static String GET_ARTIKEL_BY_ID = "SELECT * FROM " + TABLE 
 			+ " WHERE " + FIELD_ID + " = {0}";
 	private final static String GET_ACTIVE_ARTIKELS_BY_NAME = "SELECT * FROM" + TABLE 
@@ -53,6 +53,10 @@ public class ArtikelDAO extends AbstractDAO {
 			+ " WHERE " + FIELD_STANDARD + " = 1" + ACTIVE;
 	private final static String GET_ACTIVE_ARTIKEL_BY_KATEGORIE = "SELECT * FROM " + TABLE 
 			+ " WHERE " + FIELD_KATEGORIE_FK + " = {0} AND " + ACTIVE;
+	private final static String GET_ACTIVE_GRUNDBEDARF_BY_LIEFERANT_ID = "SELECT * FROM " + TABLE 
+			+ " WHERE " + FIELD_LIEFERANT_FK + " = {0} AND " + ACTIVE
+			+ " AND " + FIELD_GRUNDBEDARF + " = 1";
+	
 	
 	private final static String INSERT_QUERY = "INSERT INTO " + TABLE + "(" 
 			+ "`" + FIELD_ARTIKELNUMMER + "`, " + "`" + FIELD_NAME + "`, " + "`" + FIELD_BESTELLGROESSE + "`, " 
@@ -228,5 +232,16 @@ public class ArtikelDAO extends AbstractDAO {
 				set.getBoolean(FIELD_GRUNDBEDARF), 
 				set.getBoolean(FIELD_FUER_REZEPT),  
 				LagerortDAO.getInstance().getLagerortById(set.getLong(FIELD_LAGERORT_FK)));	
+	}
+
+	public List<Artikel> getGrundbedarfByLieferantId(Long id) throws ConnectException, DAOException, SQLException {
+		list = new ArrayList<Artikel>();
+		set = getManaged(MessageFormat.format(GET_ACTIVE_GRUNDBEDARF_BY_LIEFERANT_ID, id));
+		openConnection();
+		while (set.next()) {
+			list.add(setArtikel(set));
+		}
+		closeConnection();
+		return list;
 	}	
 }

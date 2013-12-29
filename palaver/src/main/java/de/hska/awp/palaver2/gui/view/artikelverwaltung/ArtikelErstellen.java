@@ -14,7 +14,6 @@ import org.vaadin.risto.stepper.IntStepper;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.server.Page;
-import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -58,7 +57,7 @@ import de.hska.awp.palaver2.util.ViewHandler;
  *         anstatt einen neuen Artikel anzulegen wird er geaendert.
  */
 @SuppressWarnings({ "serial" })
-public class ArtikelErstellen extends ArtikelverwaltungView implements View,
+public class ArtikelErstellen extends OverErstellen implements View,
 		ValueChangeListener {
 
 	private static final Logger log = LoggerFactory
@@ -137,25 +136,28 @@ public class ArtikelErstellen extends ArtikelverwaltungView implements View,
 
 		/** Buttons */
 		addLieferant = buttonSetting(addLieferant, IConstants.BUTTON_NEW,
-				IConstants.BUTTON_NEW_ICON, true);
+				IConstants.BUTTON_NEW_ICON, true, true);
 		addMengeneinheit = buttonSetting(addMengeneinheit, IConstants.BUTTON_NEW,
-				IConstants.BUTTON_NEW_ICON, true);
+				IConstants.BUTTON_NEW_ICON, true, true);
 		addKategorie = buttonSetting(addKategorie, IConstants.BUTTON_NEW,
-				IConstants.BUTTON_NEW_ICON, true);
+				IConstants.BUTTON_NEW_ICON, true, true);
 		addLagerort = buttonSetting(addLagerort, IConstants.BUTTON_NEW,
-				IConstants.BUTTON_NEW_ICON, true);
+				IConstants.BUTTON_NEW_ICON, true, true);
 		m_speichernButton = buttonSetting(m_speichernButton, IConstants.BUTTON_SAVE,
-				IConstants.BUTTON_SAVE_ICON, true);
+				IConstants.BUTTON_SAVE_ICON, true, true);
 		m_verwerfenButton = buttonSetting(m_verwerfenButton, IConstants.BUTTON_DISCARD,
-				IConstants.BUTTON_DISCARD_ICON, true);
+				IConstants.BUTTON_DISCARD_ICON, true, true);
 		m_deaktivierenButton = buttonSetting(m_deaktivierenButton, IConstants.BUTTON_DEAKTIVIEREN,
-				IConstants.BUTTON_DELETE_ICON, false);
+				IConstants.BUTTON_DELETE_ICON, false, true);
 
 		/** IntSteppers */
 		durchschnittLT1 = intStepperSetting(durchschnittLT1, "Gebindeanzahl für den Termin 1",
 				"98%", 0, 70, "Gebindeanzahl1");
 		durchschnittLT2 = intStepperSetting(durchschnittLT2, "Gebindeanzahl für den Termin 2",
 				"98%", 0, 70, "Gebindeanzahl2");
+		
+		
+		
 		
 		durchschnittHL = new HorizontalLayout();
 		durchschnittHL.setWidth(FULL);
@@ -254,34 +256,38 @@ public class ArtikelErstellen extends ArtikelverwaltungView implements View,
 		load();
 	}
 	
+	public ArtikelErstellen(Artikel artikel) {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public void getViewParam(ViewData data) {
-		artikel = (Artikel) ((ViewDataObject<?>) data).getData();
-		m_deaktivierenButton.setVisible(true);
-		m_horizontalLayout.replaceComponent(m_speichernButton, update);
-		update.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
-		update.addClickListener(new ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				addArtickelToDataBase(1);
-			}
-		});
-
-		m_headlineLabel.setValue("Artikel bearbeiten");
-		nameField.setValue(artikel.getName());
-		artikelNummer.setValue(artikel.getArtikelnr());
-		artikelPreis.setValue(artikel.getPreis() + "");
-		lieferantSelect.select(artikel.getLieferant());
-		kategorieSelect.select(artikel.getKategorie());
-		lagerortSelect.select(artikel.getLagerort());
-		fuerRezepte.setValue(artikel.isFuerRezept());
-		gebinde.setValue(artikel.getBestellgroesse() + "");
-		standard.setValue(artikel.isStandard());
-		grundbedarf.setValue(artikel.isGrundbedarf());
-		durchschnittLT1.setValue(artikel.getDurchschnittLT1());
-		durchschnittLT2.setValue(artikel.getDurchschnittLT2());
-		notiz.setValue(artikel.getNotiz());
-		mengeneinheitSelect.select(artikel.getMengeneinheit());
+//		artikel = (Artikel) ((ViewDataObject<?>) data).getData();
+//		m_deaktivierenButton.setVisible(true);
+//		m_horizontalLayout.replaceComponent(m_speichernButton, update);
+//		update.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
+//		update.addClickListener(new ClickListener() {
+//			@Override
+//			public void buttonClick(ClickEvent event) {
+//				addArtickelToDataBase(1);
+//			}
+//		});
+//
+//		m_headlineLabel.setValue("Artikel bearbeiten");
+//		nameField.setValue(artikel.getName());
+//		artikelNummer.setValue(artikel.getArtikelnr());
+//		artikelPreis.setValue(artikel.getPreis() + "");
+//		lieferantSelect.select(artikel.getLieferant());
+//		kategorieSelect.select(artikel.getKategorie());
+//		lagerortSelect.select(artikel.getLagerort());
+//		fuerRezepte.setValue(artikel.isFuerRezept());
+//		gebinde.setValue(artikel.getBestellgroesse() + "");
+//		standard.setValue(artikel.isStandard());
+//		grundbedarf.setValue(artikel.isGrundbedarf());
+//		durchschnittLT1.setValue(artikel.getDurchschnittLT1());
+//		durchschnittLT2.setValue(artikel.getDurchschnittLT2());
+//		notiz.setValue(artikel.getNotiz());
+//		mengeneinheitSelect.select(artikel.getMengeneinheit());
 	}
 
 	@Override

@@ -65,4 +65,8 @@ public class Artikelverwaltung extends ArtikelDAO {
 			DAOException {
 		super.deaktivirenArtikel(artikel.getId());
 	}
+
+	public List<Artikel> getGrundbedarfByLieferantId(Long id) throws ConnectException, DAOException, SQLException {
+		return super.getGrundbedarfByLieferantId(id);
+	}
 }
