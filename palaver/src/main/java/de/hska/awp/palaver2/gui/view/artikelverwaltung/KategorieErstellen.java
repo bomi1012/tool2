@@ -70,9 +70,15 @@ ValueChangeListener, IErstellen  {
 						close();
 						((Application) UI.getCurrent().getData()).showDialog(String.format(ArtikelverwaltungView.MESSAGE_SUSSEFULL_ARG_1, 
 								KATEGORIE));
-					} catch (Exception e) {
-						LOG.error(e.toString());
-					} 
+					} catch (ConnectException e) {
+						e.printStackTrace();
+					} catch (DAOException e) {
+						((Application) UI.getCurrent().getData())
+							.showDialog(String.format(MESSAGE_EXISTS_ARG_1, m_nameField.getValue()));
+						e.printStackTrace();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		});

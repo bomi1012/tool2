@@ -103,7 +103,7 @@ public class MengeneinheitenAnzeigen extends OverAnzeigen implements View {
 		m_mengeneinheitErstellen.m_speichernButton.addClickListener(new ClickListener() {					
 			@Override
 			public void buttonClick(ClickEvent event) {	
-				m_container.addItem(m_mengeneinheit);
+				m_container.addItem(m_mengeneinheitErstellen.m_mengeneinheit);
 				setTable();
 			}
 		});

@@ -20,6 +20,7 @@ import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.gui.view.IErstellen;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.ViewHandler;
 
 public class MengeneinheitErstellen extends OverErstellen implements View,
 ValueChangeListener, IErstellen  {
@@ -27,6 +28,8 @@ ValueChangeListener, IErstellen  {
 	private TextField kurzField;
 	public MengeneinheitErstellen() {
 		super();
+		m_mengeneinheit = new Mengeneinheit(); 
+		m_create = true;		
 		layout(NEW_MENGENEINHEIT);
 	}
 	
@@ -67,15 +70,14 @@ ValueChangeListener, IErstellen  {
 				if (validiereEingabe()) {
 					try {
 						sqlStatement(0);
-						win = (Window) MengeneinheitErstellen.this.getParent();
-						win.close();	
+						close();
 						((Application) UI.getCurrent().getData()).showDialog(String.format(ArtikelverwaltungView.MESSAGE_SUSSEFULL_ARG_1, 
-								"Die Mengeneinhet"));	
+								MENGENEINHEIT));	
 					} catch (ConnectException e) {
 						e.printStackTrace();
 					} catch (DAOException e) {
 						((Application) UI.getCurrent().getData())
-							.showDialog(String.format(ArtikelverwaltungView.MESSAGE_EXISTS_ARG_1, m_nameField.getValue()));
+							.showDialog(String.format(MESSAGE_EXISTS_ARG_1, m_nameField.getValue()));
 						e.printStackTrace();
 					} catch (SQLException e) {
 						e.printStackTrace();
@@ -88,8 +90,7 @@ ValueChangeListener, IErstellen  {
 			private static final long serialVersionUID = -2701157762823717701L;
 			@Override
 			public void buttonClick(ClickEvent event) {
-				win = (Window) MengeneinheitErstellen.this.getParent();
-				win.close();
+				close();
 			}
 		});	
 		
@@ -100,10 +101,9 @@ ValueChangeListener, IErstellen  {
 				try {					
 					sqlStatement(1);
 					m_okRemove = true;
+					close();
 					((Application) UI.getCurrent().getData())
 	             		.showDialog("Mengeneinheit <" + m_mengeneinheit.getName() + "> wurde gelöscht");
-					win = (Window) MengeneinheitErstellen.this.getParent();
-					win.close();
 				} catch (ConnectException e) {
 					e.printStackTrace();
 				} catch (DAOException e) {
@@ -111,8 +111,7 @@ ValueChangeListener, IErstellen  {
 					.showDialog("Die Mengeneinheit <" + m_mengeneinheit.getName() + "> darf nicht gelöscht werden, " +
                   	"weil sie an Artikeln hängt.");  
 					m_okRemove = false;
-					win = (Window) MengeneinheitErstellen.this.getParent();
-					win.close();
+					close();
 					e.printStackTrace();
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -120,6 +119,15 @@ ValueChangeListener, IErstellen  {
 			}
 		});
 	} 
+	
+	private void close() {
+		if (MengeneinheitErstellen.this.getParent() instanceof Window) {					
+			Window win = (Window) MengeneinheitErstellen.this.getParent();
+			win.close();
+		} else {
+			ViewHandler.getInstance().switchView(MengeneinheitenAnzeigen.class);
+		}
+	}
 	
 	@Override
 	public void valueChange(ValueChangeEvent event) { }
