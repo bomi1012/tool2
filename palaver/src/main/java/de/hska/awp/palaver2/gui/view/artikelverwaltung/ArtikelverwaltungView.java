@@ -1,10 +1,11 @@
 package de.hska.awp.palaver2.gui.view.artikelverwaltung;
 
+import java.util.List;
+
 import org.vaadin.risto.stepper.IntStepper;
 
 import com.vaadin.data.Validator;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.TextField;
 
@@ -13,6 +14,7 @@ import de.hska.awp.palaver.artikelverwaltung.domain.Kategorie;
 import de.hska.awp.palaver.artikelverwaltung.domain.Lagerort;
 import de.hska.awp.palaver.artikelverwaltung.domain.Mengeneinheit;
 import de.hska.awp.palaver2.gui.view.ViewAbstract;
+import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 @SuppressWarnings("serial")
 public class ArtikelverwaltungView extends ViewAbstract {
@@ -43,6 +45,7 @@ public class ArtikelverwaltungView extends ViewAbstract {
 	
 	protected static final String MENGENEINHEIT_ABKUERZUNG = "Abkürzung";
 
+	protected static final String EDIT_ARTIKEL = "Artikel bearbeiten";
 	protected static final String EDIT_KATEGORIE = "Kategorie bearbeiten";
 	protected static final String EDIT_MENGENEINHEIT = "Mengeneinheit bearbeiten";
 	
@@ -56,19 +59,24 @@ public class ArtikelverwaltungView extends ViewAbstract {
 	public Kategorie m_kategorie;
 	public Artikel m_artikel;
 	public Lagerort m_lagerort;
+	public MengeneinheitErstellen m_mengeneinheitErstellen;
+	public ArtikelErstellen m_artikelErstellen;
+	public KategorieErstellen m_kategorieErstellen;
 	
+	public List<Mengeneinheit> m_mengen;
+	public List<Kategorie> m_kategorien;
+	public List<Lagerort> m_lagerorts;
+	public List<Lieferant> m_lieferanten;
 
 
-	protected MengeneinheitErstellen m_mengeneinheitErstellen;
-	protected ArtikelErstellen m_artikelErstellen;
-	protected KategorieErstellen m_kategorieErstellen;
+
 	
 
 	////////////////////////////////////
 	
 	
 	
-	protected HorizontalLayout durchschnittHL;
+	
 	
 	
 	
@@ -85,7 +93,6 @@ public class ArtikelverwaltungView extends ViewAbstract {
 			final String name, String width, boolean required, String descript,
 			Object object) {
 		select = new NativeSelect(name);
-		Object value = select.getValue();
 		select.setWidth(ArtikelverwaltungView.FULL);
 		if(required) {
 			select.addValidator(new Validator() {

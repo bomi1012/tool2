@@ -19,8 +19,6 @@ import com.vaadin.ui.CustomTable;
 import com.vaadin.ui.CustomTable.CellStyleGenerator;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.Window.CloseEvent;
-import com.vaadin.ui.Window.CloseListener;
 
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
@@ -39,7 +37,7 @@ public class ArtikelAnzeigen extends OverAnzeigen implements View {
 	private static final Logger LOG = LoggerFactory.getLogger(ArtikelAnzeigen.class.getName());
 	private static final String ARTIKELN_ALL = "Alle Artikeln";
 	private HorizontalLayout m_filterControl;
-	private BeanItemContainer<Artikel> m_container;
+	private BeanItemContainer<Artikel> m_container = null;
 	
 	public ArtikelAnzeigen() {
 		super();
@@ -89,7 +87,7 @@ public class ArtikelAnzeigen extends OverAnzeigen implements View {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (m_artikel != null) {
-					windowModal(null);
+					windowModal(m_artikel);
 					//ViewHandler.getInstance().switchView(ArtikelErstellen.class, new ViewDataObject<Artikel>(m_artikel));
 				}
 				else {
@@ -123,17 +121,23 @@ public class ArtikelAnzeigen extends OverAnzeigen implements View {
 		win.setContent(m_artikelErstellen);
 		win.setModal(true);
 		UI.getCurrent().addWindow(win);
-		win.addCloseListener(new CloseListener() {						
+		m_artikelErstellen.m_speichernButton.addClickListener(new ClickListener() {					
 			@Override
-			public void windowClose(CloseEvent e) {
-				m_artikel.setName("AAAAA");
-				Artikel aaa = new Artikel();
-				aaa.setId(1111111111111L);
-				aaa.setName("AAAAAAAAAA");
-				m_container.addItem(aaa);
+			public void buttonClick(ClickEvent event) {	
+				m_container.addItem(m_artikelErstellen.m_artikel);
 				setTable();
 			}
-		});			
+		});
+		m_artikelErstellen.m_deaktivierenButton.addClickListener(new ClickListener() {					
+			@Override
+			public void buttonClick(ClickEvent event) {	
+				if(m_artikelErstellen.m_okRemove) {
+					m_container.removeItem(m_artikel);
+					setTable();
+					m_okRemove = false;
+				}
+			}
+		});	
 	}
 	
 	private void setTable() {
@@ -174,6 +178,5 @@ public class ArtikelAnzeigen extends OverAnzeigen implements View {
 	}
 	
 	@Override
-	public void getViewParam(ViewData data) {	
-	}
+	public void getViewParam(ViewData data) {	 }
 }

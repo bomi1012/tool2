@@ -2,6 +2,9 @@ package de.hska.awp.palaver2.gui.view.artikelverwaltung;
 
 import java.sql.SQLException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Alignment;
@@ -19,13 +22,16 @@ import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.gui.view.IErstellen;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.ViewHandler;
 
 public class KategorieErstellen extends OverErstellen implements View,
 ValueChangeListener, IErstellen  {
 	private static final long serialVersionUID = 115073498815246131L;
-	
+	private static final Logger LOG = LoggerFactory.getLogger(KategorieErstellen.class.getName());
 	public KategorieErstellen() {
 		super();
+		m_kategorie = new Kategorie(); 
+		m_create = true;	
 		layout(NEW_KATEGORIE);
 	}
 	public KategorieErstellen(Kategorie kategorie){
@@ -41,10 +47,10 @@ ValueChangeListener, IErstellen  {
 		this.setMargin(true);
 		m_headlineLabel = headLine(m_headlineLabel, text, STYLE_HEADLINE);		
 		/** Fields */
-		nameField = textFieldSettingKE(m_textField, KATEGORIE,
+		m_nameField = textFieldSettingKE(m_textField, KATEGORIE,
 				ArtikelverwaltungView.FULL, true, KATEGORIE, this);
 		if(!m_create) {
-			nameField.setValue(m_kategorie.getName());
+			m_nameField.setValue(m_kategorie.getName());
 		}	
 		m_control = controlErstellenPanel();
 		vertikalLayout = addToLayout(vertikalLayout, "450");
@@ -61,19 +67,12 @@ ValueChangeListener, IErstellen  {
 				if (validiereEingabe()) {
 					try {
 						sqlStatement(0);
-						win = (Window) KategorieErstellen.this.getParent();
-						win.close();	
+						close();
 						((Application) UI.getCurrent().getData()).showDialog(String.format(ArtikelverwaltungView.MESSAGE_SUSSEFULL_ARG_1, 
 								KATEGORIE));
-					} catch (ConnectException e) {
-						e.printStackTrace();
-					} catch (DAOException e) {
-						((Application) UI.getCurrent().getData())
-							.showDialog(String.format(ArtikelverwaltungView.MESSAGE_EXISTS_ARG_1, nameField.getValue()));
-						e.printStackTrace();
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
+					} catch (Exception e) {
+						LOG.error(e.toString());
+					} 
 				}
 			}
 		});
@@ -82,8 +81,7 @@ ValueChangeListener, IErstellen  {
 			private static final long serialVersionUID = -2701157762823717701L;
 			@Override
 			public void buttonClick(ClickEvent event) {
-				win = (Window) KategorieErstellen.this.getParent();
-				win.close();
+				close();
 			}
 		});
 		
@@ -94,10 +92,9 @@ ValueChangeListener, IErstellen  {
 				try {					
 					sqlStatement(1);
 					m_okRemove = true;
+					close();
 					((Application) UI.getCurrent().getData())
 	             		.showDialog("Kategorie <" + m_kategorie.getName() + "> wurde gelöscht");
-					win = (Window) KategorieErstellen.this.getParent();
-					win.close();
 				} catch (ConnectException e) {
 					e.printStackTrace();
 				} catch (DAOException e) {
@@ -105,8 +102,7 @@ ValueChangeListener, IErstellen  {
 					.showDialog("Die Kategorie <" + m_kategorie.getName() + "> darf nicht gelöscht werden, " +
                   	"weil sie an Artikeln hängt.");  
 					m_okRemove = false;
-					win = (Window) KategorieErstellen.this.getParent();
-					win.close();
+					close();
 					e.printStackTrace();
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -115,6 +111,16 @@ ValueChangeListener, IErstellen  {
 		});
 	}
 
+	private void close() {
+		if (KategorieErstellen.this.getParent() instanceof Window) {					
+			Window win = (Window) KategorieErstellen.this.getParent();
+			win.close();
+		} else {
+			ViewHandler.getInstance().switchView(KategorienAnzeigen.class);
+		}
+	}
+	
+	
 	@Override
 	public void valueChange(ValueChangeEvent event) { 
 	}
@@ -126,10 +132,10 @@ ValueChangeListener, IErstellen  {
 	public void sqlStatement(int i) throws ConnectException, DAOException, SQLException {
 		if(i == 0) {
 			if(!m_create) {
-				m_kategorie.setName(nameField.getValue());
+				m_kategorie.setName(m_nameField.getValue());
 				Kategorienverwaltung.getInstance().updateKategorie(m_kategorie);
 			} else {
-				m_kategorie = new Kategorie(nameField.getValue());
+				m_kategorie = new Kategorie(m_nameField.getValue());
 				Kategorienverwaltung.getInstance().createKategorie(m_kategorie);
 			}
 		} else if(i == 1) {
@@ -139,7 +145,7 @@ ValueChangeListener, IErstellen  {
 	
 	@Override
 	public boolean validiereEingabe() {
-		if (nameField.getValue().equals("")) {
+		if (m_nameField.getValue().equals("")) {
 			((Application) UI.getCurrent().getData()).showDialog(String.format(ArtikelverwaltungView.MESSAGE_LEER_ARG_1, "Name"));
 			return false;
 		}
@@ -153,7 +159,7 @@ ValueChangeListener, IErstellen  {
 		box.setSpacing(true);		
 		box.addComponent(m_headlineLabel);
 		box.addComponent(new Hr());
-		box.addComponent(nameField);	
+		box.addComponent(m_nameField);	
 		box.addComponent(m_control);
 		box.setComponentAlignment(m_control, Alignment.MIDDLE_RIGHT);
 		return box;

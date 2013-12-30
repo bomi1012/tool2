@@ -85,8 +85,7 @@ public class KategorienAnzeigen extends OverAnzeigen implements View {
 			public void buttonClick(ClickEvent event) {
 				windowModal(null);
 			}
-		});	
-		
+		});			
 	}
 
 	private void windowModal(Kategorie kategorie) {				
@@ -103,7 +102,7 @@ public class KategorienAnzeigen extends OverAnzeigen implements View {
 		m_kategorieErstellen.m_speichernButton.addClickListener(new ClickListener() {					
 			@Override
 			public void buttonClick(ClickEvent event) {	
-				m_container.addItem(m_kategorie);
+				m_container.addItem(m_kategorieErstellen.m_kategorie);
 				setTable();
 			}
 		});
@@ -113,6 +112,7 @@ public class KategorienAnzeigen extends OverAnzeigen implements View {
 				if(m_kategorieErstellen.m_okRemove) {
 					m_container.removeItem(m_kategorie);
 					setTable();
+					m_okRemove = false;
 				}
 			}
 		});
@@ -135,7 +135,5 @@ public class KategorienAnzeigen extends OverAnzeigen implements View {
 	}
 
 	@Override
-	public void getViewParam(ViewData data) {
-
-	}
+	public void getViewParam(ViewData data) { }
 }

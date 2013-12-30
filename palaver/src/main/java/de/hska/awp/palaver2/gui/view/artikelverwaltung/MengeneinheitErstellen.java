@@ -44,12 +44,12 @@ ValueChangeListener, IErstellen  {
 		this.setMargin(true);
 		m_headlineLabel = headLine(m_headlineLabel, text, STYLE_HEADLINE);		
 		/** Fields */
-		nameField = textFieldSettingME(m_textField, MENGENEINHEIT,
+		m_nameField = textFieldSettingME(m_textField, MENGENEINHEIT,
 				ArtikelverwaltungView.FULL, true, MENGENEINHEIT, this);
 		kurzField = textFieldSettingME(m_textField, MENGENEINHEIT_ABKUERZUNG,
 				ArtikelverwaltungView.FULL, true, MENGENEINHEIT_ABKUERZUNG, this);
 		if(!m_create) {
-			nameField.setValue(m_mengeneinheit.getName());
+			m_nameField.setValue(m_mengeneinheit.getName());
 			kurzField.setValue(m_mengeneinheit.getKurz());
 		}	
 		m_control = controlErstellenPanel();
@@ -75,7 +75,7 @@ ValueChangeListener, IErstellen  {
 						e.printStackTrace();
 					} catch (DAOException e) {
 						((Application) UI.getCurrent().getData())
-							.showDialog(String.format(ArtikelverwaltungView.MESSAGE_EXISTS_ARG_1, nameField.getValue()));
+							.showDialog(String.format(ArtikelverwaltungView.MESSAGE_EXISTS_ARG_1, m_nameField.getValue()));
 						e.printStackTrace();
 					} catch (SQLException e) {
 						e.printStackTrace();
@@ -134,11 +134,11 @@ ValueChangeListener, IErstellen  {
 	public void sqlStatement(int i) throws ConnectException, DAOException, SQLException {
 		if(i == 0) {
 			if(!m_create) {
-				m_mengeneinheit.setName(nameField.getValue());
+				m_mengeneinheit.setName(m_nameField.getValue());
 				m_mengeneinheit.setKurz(kurzField.getValue());
 				Mengeneinheitverwaltung.getInstance().updateMengeneinheit(m_mengeneinheit);
 			} else {
-				m_mengeneinheit = new Mengeneinheit(nameField.getValue(), kurzField.getValue());
+				m_mengeneinheit = new Mengeneinheit(m_nameField.getValue(), kurzField.getValue());
 				Mengeneinheitverwaltung.getInstance().createMengeneinheit(m_mengeneinheit);
 			}
 		} else if(i == 1) {
@@ -150,7 +150,7 @@ ValueChangeListener, IErstellen  {
 	@Override
 	public boolean validiereEingabe() {
 		boolean isTrue = true;
-		if (nameField.getValue().equals("")) {
+		if (m_nameField.getValue().equals("")) {
 			((Application) UI.getCurrent().getData()).showDialog(String.format(ArtikelverwaltungView.MESSAGE_LEER_ARG_1, "Name"));
 			isTrue = false;
 		}
@@ -170,7 +170,7 @@ ValueChangeListener, IErstellen  {
 		
 		box.addComponent(m_headlineLabel);
 		box.addComponent(new Hr());
-		box.addComponent(nameField);
+		box.addComponent(m_nameField);
 		box.addComponent(kurzField);
 	
 		box.addComponent(m_horizontalLayout);

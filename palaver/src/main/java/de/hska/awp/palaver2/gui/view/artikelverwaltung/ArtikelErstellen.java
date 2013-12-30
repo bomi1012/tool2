@@ -13,7 +13,6 @@ import org.vaadin.risto.stepper.IntStepper;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.server.Page;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -21,7 +20,6 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeSelect;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -45,8 +43,6 @@ import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
-import de.hska.awp.palaver2.util.ViewData;
-import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 
 /**
@@ -59,134 +55,147 @@ import de.hska.awp.palaver2.util.ViewHandler;
 @SuppressWarnings({ "serial" })
 public class ArtikelErstellen extends OverErstellen implements View,
 		ValueChangeListener {
-
-	private static final Logger log = LoggerFactory
-			.getLogger(ArtikelErstellen.class.getName());
-
-	
-	private HorizontalLayout newKomponent;
+	private HorizontalLayout m_durchschnittHL;
+	private static final Logger LOG = LoggerFactory.getLogger(ArtikelErstellen.class.getName());
 
 	/** TextFields */
-	private TextField artikelPreis;
-	private TextField artikelNummer;
-	private TextField gebinde;
-	private TextField notiz;
+	private TextField m_preisField;
+	private TextField m_nummerField;
+	private TextField m_gebindeField;
+	private TextField m_notizField;
 
 	/** NativeSelects */
-	private NativeSelect lieferantSelect;
-	private NativeSelect mengeneinheitSelect;
-	private NativeSelect kategorieSelect;
-	private NativeSelect lagerortSelect;
+	private NativeSelect m_lieferantSelect;
+	private NativeSelect m_mengeneinheitSelect;
+	private NativeSelect m_kategorieSelect;
+	private NativeSelect m_lagerortSelect;
 	
 	/** IntSteppers */
-	private IntStepper durchschnittLT1;
-	private IntStepper durchschnittLT2;
+	private IntStepper m_durchschnittLT1;
+	private IntStepper m_durchschnittLT2;
 
 	/** Buttons */
-	private Button addLieferant;
-	private Button addMengeneinheit;
-	private Button addKategorie;
-	private Button addLagerort;
-	private Button update = new Button(IConstants.BUTTON_SAVE);
+	private Button m_addLieferantButton;
+	private Button m_addMengeneinheitButton;
+	private Button m_addKategorieButton;
+	private Button m_addLagerortButton;
 
-	private CheckBox standard = new CheckBox("Standard");
-	private CheckBox grundbedarf = new CheckBox("Grundbedarf");
-	private CheckBox fuerRezepte = new CheckBox("Für Rezepte geeignet");
+	/** Checkbox */
+	private CheckBox m_standardCheckbox = new CheckBox("Standard");
+	private CheckBox m_grundbedarfCheckbox = new CheckBox("Grundbedarf");
+	private CheckBox m_fuerRezepteCheckbox = new CheckBox("Für Rezepte geeignet");
 
-	private Artikel artikel = new Artikel();
-	List<Mengeneinheit> mengen;
-	List<Kategorie> kategorien;
-	List<Lagerort> lagerorts;
-	List<Lieferant> lieferanten;
-
-	/**
-	 * Der Konstruktor wird automatisch von dem ViewHandler aufgerufen. Er
-	 * erzeugt das Layout, befuellt die Comboboxen und stellt die Funktionen
-	 * bereit.
-	 */
 	public ArtikelErstellen() {
 		super();
+		m_artikel = new Artikel();
+		m_create = true;
+		layout(NEW_ARTIKEL);
+		listener();		
+		load();
+	}
+	public ArtikelErstellen(Artikel artikel) {
+		super();
+		m_artikel = artikel;
+		m_create = false;
+		layout(EDIT_ARTIKEL);
+		m_deaktivierenButton.setVisible(true);
+		listener();		
+		load();
+		
+		m_nameField.setValue(artikel.getName());
+		m_nummerField.setValue(artikel.getArtikelnr());
+		m_preisField.setValue(String.valueOf(artikel.getPreis()));
+		m_lieferantSelect.select(artikel.getLieferant());
+		m_kategorieSelect.select(artikel.getKategorie());
+		m_lagerortSelect.select(artikel.getLagerort());
+		m_fuerRezepteCheckbox.setValue(artikel.isFuerRezept());
+		m_gebindeField.setValue(String.valueOf(artikel.getBestellgroesse()));
+		m_standardCheckbox.setValue(artikel.isStandard());
+		m_grundbedarfCheckbox.setValue(artikel.isGrundbedarf());
+		m_durchschnittLT1.setValue(artikel.getDurchschnittLT1());
+		m_durchschnittLT2.setValue(artikel.getDurchschnittLT2());
+		m_notizField.setValue(artikel.getNotiz());
+		m_mengeneinheitSelect.select(artikel.getMengeneinheit());
+	}
+	
+	private void layout(String text) {
 		this.setSizeFull();
 		this.setMargin(true);
 		/** TextFields */
-		nameField = textFieldSettingAE(nameField, ArtikelverwaltungView.ARTIKEL_NAME,
+		m_nameField = textFieldSettingAE(m_textField, ArtikelverwaltungView.ARTIKEL_NAME,
 				ArtikelverwaltungView.FULL, true, ArtikelverwaltungView.ARTIKEL_NAME, this);
-		artikelPreis = textFieldSettingAE(artikelPreis,
+		m_preisField = textFieldSettingAE(m_textField,
 				ArtikelverwaltungView.ARTIKEL_PREIS, ArtikelverwaltungView.FULL, false,
 				ArtikelverwaltungView.ARTIKEL_PREIS, this);
-		artikelNummer = textFieldSettingAE(artikelNummer,
+		m_nummerField = textFieldSettingAE(m_textField,
 				ArtikelverwaltungView.ARTIKEL_NUMMER, ArtikelverwaltungView.FULL, false,
 				ArtikelverwaltungView.ARTIKEL_NUMMER, this);
-		gebinde = textFieldSettingAE(gebinde, ArtikelverwaltungView.ARTIKEL_GEBINDE,
+		m_gebindeField = textFieldSettingAE(m_textField, ArtikelverwaltungView.ARTIKEL_GEBINDE,
 				ArtikelverwaltungView.FULL, true, ArtikelverwaltungView.ARTIKEL_GEBINDE,
 				this);
-		notiz = textFieldSettingAE(notiz, ArtikelverwaltungView.ARTIKEL_NOTIZ,
+		m_notizField = textFieldSettingAE(m_textField, ArtikelverwaltungView.ARTIKEL_NOTIZ,
 				ArtikelverwaltungView.FULL, false, ArtikelverwaltungView.ARTIKEL_NOTIZ,
 				this);
 
 		/** NativeSelects */
-		lieferantSelect = nativeSelectSetting(lieferantSelect, "Lieferant",
+		m_lieferantSelect = nativeSelectSetting(m_nativeSelect, "Lieferant",
 				ArtikelverwaltungView.FULL, true, "Lieferant", this);
-		mengeneinheitSelect = nativeSelectSetting(mengeneinheitSelect, "Mengeneinheit",
-				ArtikelverwaltungView.FULL, true, "Mengeneinheit", this);
-		kategorieSelect = nativeSelectSetting(kategorieSelect, "Kategorie",
-				ArtikelverwaltungView.FULL, true, "Kategorie", this);
-		lagerortSelect = nativeSelectSetting(lagerortSelect, "Lagerort", ArtikelverwaltungView.FULL,
+		m_mengeneinheitSelect = nativeSelectSetting(m_nativeSelect, MENGENEINHEIT,
+				ArtikelverwaltungView.FULL, true, MENGENEINHEIT, this);
+		m_kategorieSelect = nativeSelectSetting(m_nativeSelect, KATEGORIE,
+				ArtikelverwaltungView.FULL, true, KATEGORIE, this);
+		m_lagerortSelect = nativeSelectSetting(m_nativeSelect, "Lagerort", ArtikelverwaltungView.FULL,
 				true, "Lagerort", this);
 
 		/** Buttons */
-		addLieferant = buttonSetting(addLieferant, IConstants.BUTTON_NEW,
+		m_addLieferantButton = buttonSetting(m_button, IConstants.BUTTON_NEW,
 				IConstants.BUTTON_NEW_ICON, true, true);
-		addMengeneinheit = buttonSetting(addMengeneinheit, IConstants.BUTTON_NEW,
+		m_addMengeneinheitButton = buttonSetting(m_button, IConstants.BUTTON_NEW,
 				IConstants.BUTTON_NEW_ICON, true, true);
-		addKategorie = buttonSetting(addKategorie, IConstants.BUTTON_NEW,
+		m_addKategorieButton = buttonSetting(m_button, IConstants.BUTTON_NEW,
 				IConstants.BUTTON_NEW_ICON, true, true);
-		addLagerort = buttonSetting(addLagerort, IConstants.BUTTON_NEW,
+		m_addLagerortButton = buttonSetting(m_button, IConstants.BUTTON_NEW,
 				IConstants.BUTTON_NEW_ICON, true, true);
-		m_speichernButton = buttonSetting(m_speichernButton, IConstants.BUTTON_SAVE,
+		m_speichernButton = buttonSetting(m_button, IConstants.BUTTON_SAVE,
 				IConstants.BUTTON_SAVE_ICON, true, true);
-		m_verwerfenButton = buttonSetting(m_verwerfenButton, IConstants.BUTTON_DISCARD,
+		m_verwerfenButton = buttonSetting(m_button, IConstants.BUTTON_DISCARD,
 				IConstants.BUTTON_DISCARD_ICON, true, true);
-		m_deaktivierenButton = buttonSetting(m_deaktivierenButton, IConstants.BUTTON_DEAKTIVIEREN,
+		m_deaktivierenButton = buttonSetting(m_button, IConstants.BUTTON_DEAKTIVIEREN,
 				IConstants.BUTTON_DELETE_ICON, false, true);
 
 		/** IntSteppers */
-		durchschnittLT1 = intStepperSetting(durchschnittLT1, "Gebindeanzahl für den Termin 1",
+		m_durchschnittLT1 = intStepperSetting(m_intStepper, "Gebindeanzahl für den Termin 1",
 				"98%", 0, 70, "Gebindeanzahl1");
-		durchschnittLT2 = intStepperSetting(durchschnittLT2, "Gebindeanzahl für den Termin 2",
+		m_durchschnittLT2 = intStepperSetting(m_intStepper, "Gebindeanzahl für den Termin 2",
 				"98%", 0, 70, "Gebindeanzahl2");
 		
 		
+		m_durchschnittHL = new HorizontalLayout();
+		m_durchschnittHL.setWidth(FULL);
+		m_durchschnittHL.addComponent(m_durchschnittLT1);
+		m_durchschnittHL.addComponent(m_durchschnittLT2);
+		m_durchschnittHL.setExpandRatio(m_durchschnittLT1, 1);
+		m_durchschnittHL.setExpandRatio(m_durchschnittLT2, 1);
+		m_durchschnittHL.setComponentAlignment(m_durchschnittLT2, Alignment.BOTTOM_RIGHT);
 		
-		
-		durchschnittHL = new HorizontalLayout();
-		durchschnittHL.setWidth(FULL);
-		durchschnittHL.addComponent(durchschnittLT1);
-		durchschnittHL.addComponent(durchschnittLT2);
-		durchschnittHL.setExpandRatio(durchschnittLT1, 1);
-		durchschnittHL.setExpandRatio(durchschnittLT2, 1);
-		durchschnittHL.setComponentAlignment(durchschnittLT2, Alignment.BOTTOM_RIGHT);
-		
-		m_headlineLabel = headLine(m_headlineLabel, ArtikelverwaltungView.NEW_ARTIKEL, "ViewHeadline");
+		m_headlineLabel = headLine(m_headlineLabel, text, STYLE_HEADLINE);
 
 		/** ControlPanel */
-		m_horizontalLayout = new HorizontalLayout();
-		m_horizontalLayout.setSpacing(true);
-		m_horizontalLayout.addComponent(m_verwerfenButton);
-		m_horizontalLayout.addComponent(m_speichernButton);
-		m_horizontalLayout.addComponent(m_deaktivierenButton);
+		m_control = controlErstellenPanel();
 
 		/** Layout */
 		vertikalLayout = vLayout(vertikalLayout, "450");
 		this.addComponent(vertikalLayout);
 		this.setComponentAlignment(vertikalLayout, Alignment.MIDDLE_CENTER);
-		
+	}
+	
+	private void listener() {
 		/** ValueChangeListene */
-		grundbedarf.addValueChangeListener(new ValueChangeListener() {
+		m_grundbedarfCheckbox.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(final ValueChangeEvent event) {
-				durchschnittLT1.setVisible(!durchschnittLT1.isVisible());
-				durchschnittLT2.setVisible(!durchschnittLT2.isVisible());
+				m_durchschnittLT1.setVisible(!m_durchschnittLT1.isVisible());
+				m_durchschnittLT2.setVisible(!m_durchschnittLT2.isVisible());
 			}
 		});
 		
@@ -194,7 +203,10 @@ public class ArtikelErstellen extends OverErstellen implements View,
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (validiereEingabe()) {
-					addArtickelToDataBase(0);
+					sqlStatement(0);
+					((Application) UI.getCurrent().getData()).showDialog(String.format(MESSAGE_SUSSEFULL_ARG_1, 
+							ARTIKEL));		
+					close();					
 				}
 			}
 		});
@@ -202,94 +214,56 @@ public class ArtikelErstellen extends OverErstellen implements View,
 		m_verwerfenButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (ArtikelErstellen.this.getParent() instanceof Window) {
-					Window win = (Window) ArtikelErstellen.this.getParent();
-					win.close();
-				} else {
-					ViewHandler.getInstance().switchView(ArtikelAnzeigen.class,
-							new ViewDataObject<Artikel>(artikel));
-				}
+				close();
 			}
 		});
 		
 		m_deaktivierenButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				try {
-					Artikelverwaltung.getInstance().deaktivireArtikel(artikel);
-					((Application) UI.getCurrent().getData())
-							.showDialog(IConstants.INFO_ARTIKEL_DEAKTIVIEREN);
-					ViewHandler.getInstance().switchView(ArtikelAnzeigen.class,
-							new ViewDataObject<Artikel>(artikel));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+					sqlStatement(1);
+					m_okRemove = true;
+					((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_ARTIKEL_DEAKTIVIEREN);
+					close();
 			}
 		});
 
 		/** Adds */		
-		addLieferant.addClickListener(new ClickListener() {
+		m_addLieferantButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				addLieferant();
 			}
 		});
-		addMengeneinheit.addClickListener(new ClickListener() {
+		m_addMengeneinheitButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				addMengeneinheit();
 			}
 		});
-		addKategorie.addClickListener(new ClickListener() {
+		m_addKategorieButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				addKategorie();
 			}
 		});
-		addLagerort.addClickListener(new ClickListener() {
+		m_addLagerortButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				addLagerort();
-
 			}
-		});
-		load();
+		});		
 	}
 	
-	public ArtikelErstellen(Artikel artikel) {
-		// TODO Auto-generated constructor stub
+	private void close() {
+		if (ArtikelErstellen.this.getParent() instanceof Window) {					
+			Window win = (Window) ArtikelErstellen.this.getParent();
+			win.close();
+		} else {
+			ViewHandler.getInstance().switchView(ArtikelAnzeigen.class);
+		}
 	}
-
-	@Override
-	public void getViewParam(ViewData data) {
-//		artikel = (Artikel) ((ViewDataObject<?>) data).getData();
-//		m_deaktivierenButton.setVisible(true);
-//		m_horizontalLayout.replaceComponent(m_speichernButton, update);
-//		update.setIcon(new ThemeResource(IConstants.BUTTON_SAVE_ICON));
-//		update.addClickListener(new ClickListener() {
-//			@Override
-//			public void buttonClick(ClickEvent event) {
-//				addArtickelToDataBase(1);
-//			}
-//		});
-//
-//		m_headlineLabel.setValue("Artikel bearbeiten");
-//		nameField.setValue(artikel.getName());
-//		artikelNummer.setValue(artikel.getArtikelnr());
-//		artikelPreis.setValue(artikel.getPreis() + "");
-//		lieferantSelect.select(artikel.getLieferant());
-//		kategorieSelect.select(artikel.getKategorie());
-//		lagerortSelect.select(artikel.getLagerort());
-//		fuerRezepte.setValue(artikel.isFuerRezept());
-//		gebinde.setValue(artikel.getBestellgroesse() + "");
-//		standard.setValue(artikel.isStandard());
-//		grundbedarf.setValue(artikel.isGrundbedarf());
-//		durchschnittLT1.setValue(artikel.getDurchschnittLT1());
-//		durchschnittLT2.setValue(artikel.getDurchschnittLT2());
-//		notiz.setValue(artikel.getNotiz());
-//		mengeneinheitSelect.select(artikel.getMengeneinheit());
-	}
-
+	
 	@Override
 	public void valueChange(ValueChangeEvent event) {
 	}
@@ -300,9 +274,9 @@ public class ArtikelErstellen extends OverErstellen implements View,
 
 	private Boolean validiereEingabe() {
 		/** preis */
-		if (!artikelPreis.getValue().isEmpty()) {
+		if (!m_preisField.getValue().isEmpty()) {
 			try {
-				Float.parseFloat(artikelPreis.getValue());
+				Float.parseFloat(m_preisField.getValue());
 			} catch (NumberFormatException e) {
 				((Application) UI.getCurrent().getData())
 						.showDialog(IConstants.INFO_ARTIKEL_PREIS);
@@ -311,34 +285,34 @@ public class ArtikelErstellen extends OverErstellen implements View,
 		}
 		
 		try {
-			Double.parseDouble(gebinde.getValue());
+			Double.parseDouble(m_gebindeField.getValue());
 		} catch (NumberFormatException e) {
 			((Application) UI.getCurrent().getData())
 					.showDialog(IConstants.INFO_ARTIKEL_GEBINDE);
 			return false;
 		}
 
-		if (nameField.getValue() == "") {
+		if (m_nameField.getValue() == "") {
 			((Application) UI.getCurrent().getData())
 					.showDialog(IConstants.INFO_ARTIKEL_NAME);
 			return false;
 		}
 		
-		if (mengeneinheitSelect.getValue() == null) {
+		if (m_mengeneinheitSelect.getValue() == null) {
 			((Application) UI.getCurrent().getData())
 					.showDialog(IConstants.INFO_ARTIKEL_MENGENEINHEIT_B);
 			return false;
 		}
 		
-		if (kategorieSelect.getValue() == null) {
+		if (m_kategorieSelect.getValue() == null) {
 			((Application) UI.getCurrent().getData())
 					.showDialog(IConstants.INFO_ARTIKEL_KATEGORIE);
 			return false;
 		}
 		
-		if (!fuerRezepte.getValue()) {
-			if (gebinde.getValue() == null
-					|| Double.parseDouble(gebinde.getValue().toString()) < 0.1) {
+		if (!m_fuerRezepteCheckbox.getValue()) {
+			if (m_gebindeField.getValue() == null
+					|| Double.parseDouble(m_gebindeField.getValue().toString()) < 0.1) {
 				((Application) UI.getCurrent().getData())
 						.showDialog(IConstants.INFO_ARTIKEL_GEBINDE);
 				return false;
@@ -347,63 +321,60 @@ public class ArtikelErstellen extends OverErstellen implements View,
 		return true;
 
 	}
-	private void addArtickelToDataBase(int action) {
-		artikel.setName(nameField.getValue());// name
-		artikel.setArtikelnr(artikelNummer.getValue()); // nr
-		artikel.setPreis((artikelPreis.getValue() == "") ? 0F : 
-				Float.parseFloat(artikelPreis.getValue().replace(',', '.')));// price
-		artikel.setNotiz(notiz.getValue());// Notiz
-		artikel.setDurchschnittLT1(durchschnittLT1.getValue()); // GebindeAnzahl
-		artikel.setDurchschnittLT2(durchschnittLT2.getValue()); // GebindeAnzahl
-		artikel.setKategorie((Kategorie) kategorieSelect.getValue()); // kategorie
-		artikel.setLieferant((Lieferant) lieferantSelect.getValue()); // Lieferant
-		artikel.setLagerort((Lagerort) lagerortSelect.getValue());
-		artikel.setMengeneinheit((Mengeneinheit) mengeneinheitSelect
-				.getValue()); 
-		artikel.setBestellgroesse(Double.parseDouble(gebinde.getValue()));
-		artikel.setGrundbedarf(grundbedarf.getValue()); // grundbedarf
-		artikel.setStandard(standard.getValue());
-		artikel.setFuerRezept(fuerRezepte.getValue());
+	private void sqlStatement(int i) {
 		try {
-			String message = null;
-			if (action == 0) {
-				Artikelverwaltung.getInstance().createArtikel(artikel);
-				message = "Artikel Wurde gespeichert";
-			} else if (action == 1) {
-				Artikelverwaltung.getInstance().updateArtikel(artikel);
-				message = "Artikel Wurde geändert";
+			if(i == 0) {
+				m_artikel.setName(m_nameField.getValue());// name
+				m_artikel.setArtikelnr(m_nummerField.getValue()); // nr
+				m_artikel.setPreis((m_preisField.getValue() == "") ? 0F : 
+						Float.parseFloat(m_preisField.getValue().replace(',', '.')));// price
+				m_artikel.setNotiz(m_notizField.getValue());// Notiz
+				m_artikel.setDurchschnittLT1(m_durchschnittLT1.getValue()); // GebindeAnzahl
+				m_artikel.setDurchschnittLT2(m_durchschnittLT2.getValue()); // GebindeAnzahl
+				m_artikel.setKategorie((Kategorie) m_kategorieSelect.getValue()); // kategorie
+				m_artikel.setLieferant((Lieferant) m_lieferantSelect.getValue()); // Lieferant
+				m_artikel.setLagerort((Lagerort) m_lagerortSelect.getValue());
+				m_artikel.setMengeneinheit((Mengeneinheit) m_mengeneinheitSelect
+						.getValue()); 
+				m_artikel.setBestellgroesse(Double.parseDouble(m_gebindeField.getValue()));
+				m_artikel.setGrundbedarf(m_grundbedarfCheckbox.getValue()); // grundbedarf
+				m_artikel.setStandard(m_standardCheckbox.getValue());
+				m_artikel.setFuerRezept(m_fuerRezepteCheckbox.getValue());				
+					if (m_create) {
+						Artikelverwaltung.getInstance().createArtikel(m_artikel);
+					} else {
+						Artikelverwaltung.getInstance().updateArtikel(m_artikel);
+					}	
+			} else {
+					Artikelverwaltung.getInstance().deaktivireArtikel(m_artikel);	
 			}
-			Notification notification = new Notification(message);
-			notification.setDelayMsec(2000);
-			notification.show(Page.getCurrent());
-			ViewHandler.getInstance().switchView(ArtikelAnzeigen.class);
-		} catch (Exception e) {
-			log.error(e.toString());
+		}catch (Exception e) {
+			LOG.error(e.toString());
 		}
 	}
 	
 	private void allKategories(List<Kategorie> kategorien) {
-		kategorieSelect.removeAllItems();
+		m_kategorieSelect.removeAllItems();
 		for (Kategorie e : kategorien) {
-			kategorieSelect.addItem(e);
+			m_kategorieSelect.addItem(e);
 		}
 	}
 	private void allLieferanten(List<Lieferant> lieferanten) {
-		lieferantSelect.removeAllItems();
+		m_lieferantSelect.removeAllItems();
 		for (Lieferant e : lieferanten) {
-			lieferantSelect.addItem(e);
+			m_lieferantSelect.addItem(e);
 		}
 	}
 	private void allMengeneinheiten(List<Mengeneinheit> mengeneinheiten) {
-		mengeneinheitSelect.removeAllItems();
+		m_mengeneinheitSelect.removeAllItems();
 		for (Mengeneinheit e : mengeneinheiten) {
-			mengeneinheitSelect.addItem(e);
+			m_mengeneinheitSelect.addItem(e);
 		}
 	}
 	private void allLagerorte(List<Lagerort> lagerorte) {
-		lagerortSelect.removeAllItems();
+		m_lagerortSelect.removeAllItems();
 		for (Lagerort e : lagerorte) {
-			lagerortSelect.addItem(e);
+			m_lagerortSelect.addItem(e);
 		}
 	}
 	
@@ -414,11 +385,11 @@ public class ArtikelErstellen extends OverErstellen implements View,
 			allMengeneinheiten(Mengeneinheitverwaltung.getInstance().getAllMengeneinheiten());
 			allLagerorte(Lagerortverwaltung.getInstance().getAllLagerorts());
 		} catch (Exception e) {
-			log.error(e.toString());
+			LOG.error(e.toString());
 		}
 	}
 	private void addMengeneinheit() {		
-		win = windowUI(win, "Neuer Mengeneinheit", "500", "350");
+		win = windowUI(win, NEW_MENGENEINHEIT, "500", "350");
 		MengeneinheitErstellen me = new MengeneinheitErstellen();
 		addComponent(me);
 		win.setContent(me);
@@ -428,13 +399,9 @@ public class ArtikelErstellen extends OverErstellen implements View,
 			public void windowClose(CloseEvent e) {
 				try {
 					allMengeneinheiten(Mengeneinheitverwaltung.getInstance().getAllMengeneinheiten());
-				} catch (ConnectException e1) {
-					e1.printStackTrace();
-				} catch (DAOException e1) {
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}	
+				} catch (Exception e1) {
+					LOG.error(e.toString());
+				} 	
 			}
 		});
 	}
@@ -446,7 +413,7 @@ public class ArtikelErstellen extends OverErstellen implements View,
 		UI.getCurrent().addWindow(win);
 	}
 	private void addKategorie() {
-		win = windowUI(win, "Neuer Kategorie", "500", "250");
+		win = windowUI(win, NEW_KATEGORIE, "500", "250");
 		KategorieErstellen ke = new KategorieErstellen();
 		addComponent(ke);
 		win.setContent(ke);
@@ -467,7 +434,7 @@ public class ArtikelErstellen extends OverErstellen implements View,
 		});
 	}
 	private void addLagerort() {
-		win = windowUI(win, "Neuer Lagerort", "500", "250");
+		win = windowUI(win, NEW_LAGERORT, "500", "250");
 		LagerortErstellen loe = new LagerortErstellen();
 		addComponent(loe);
 		win.setContent(loe);
@@ -495,27 +462,27 @@ public class ArtikelErstellen extends OverErstellen implements View,
 
 		box.addComponent(m_headlineLabel);
 		box.addComponent(new Hr());
-		box.addComponent(nameField);
-		box.addComponent(artikelNummer);
-		box.addComponent(artikelPreis);
-		box.addComponent(notiz);
-		box.addComponent(newKomponent(newKomponent, lieferantSelect,
-				addLieferant, ArtikelverwaltungView.FULL));
-		box.addComponent(newKomponent(newKomponent, kategorieSelect,
-				addKategorie, ArtikelverwaltungView.FULL));
-		box.addComponent(newKomponent(newKomponent, lagerortSelect, addLagerort,
+		box.addComponent(m_nameField);
+		box.addComponent(m_nummerField);
+		box.addComponent(m_preisField);
+		box.addComponent(m_notizField);
+		box.addComponent(newKomponent(m_horizontalLayout, m_lieferantSelect,
+				m_addLieferantButton, ArtikelverwaltungView.FULL));
+		box.addComponent(newKomponent(m_horizontalLayout, m_kategorieSelect,
+				m_addKategorieButton, ArtikelverwaltungView.FULL));
+		box.addComponent(newKomponent(m_horizontalLayout, m_lagerortSelect, m_addLagerortButton,
 				ArtikelverwaltungView.FULL));
-		box.addComponent(standard);
-		box.addComponent(fuerRezepte);
-		box.addComponent(gebinde);
-		box.addComponent(newKomponent(newKomponent, mengeneinheitSelect,
-				addMengeneinheit, ArtikelverwaltungView.FULL));
-		box.addComponent(grundbedarf);
-		box.addComponent(durchschnittHL);
+		box.addComponent(m_standardCheckbox);
+		box.addComponent(m_fuerRezepteCheckbox);
+		box.addComponent(m_gebindeField);
+		box.addComponent(newKomponent(m_horizontalLayout, m_mengeneinheitSelect,
+				m_addMengeneinheitButton, ArtikelverwaltungView.FULL));
+		box.addComponent(m_grundbedarfCheckbox);
+		box.addComponent(m_durchschnittHL);
 		box.addComponent(new Hr());
 
-		box.addComponent(m_horizontalLayout);
-		box.setComponentAlignment(m_horizontalLayout, Alignment.MIDDLE_RIGHT);
+		box.addComponent(m_control);
+		box.setComponentAlignment(m_control, Alignment.MIDDLE_RIGHT);
 
 		return box;
 	}

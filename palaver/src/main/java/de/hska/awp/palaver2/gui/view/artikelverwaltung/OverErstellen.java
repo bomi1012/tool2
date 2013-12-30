@@ -18,7 +18,7 @@ ValueChangeListener {
 	protected Button m_verwerfenButton;
 	protected Button m_deaktivierenButton;
 	protected HorizontalLayout m_control;
-	protected TextField nameField;
+	protected TextField m_nameField;
 		
 	protected HorizontalLayout controlErstellenPanel() {	
 		m_deaktivierenButton = buttonSetting(m_button, IConstants.BUTTON_DELETE,

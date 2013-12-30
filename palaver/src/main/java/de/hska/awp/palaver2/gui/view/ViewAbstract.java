@@ -1,6 +1,7 @@
 package de.hska.awp.palaver2.gui.view;
 
 import org.tepi.filtertable.FilterTable;
+import org.vaadin.risto.stepper.IntStepper;
 
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.ThemeResource;
@@ -30,8 +31,10 @@ public class ViewAbstract extends VerticalLayout {
 	protected Table m_table;
 	protected FilterTable m_filterTable; 
 	protected TextField m_textField; 
+	protected NativeSelect m_nativeSelect;
+	protected IntStepper m_intStepper;
 
-	public boolean m_create = true;
+	public boolean m_create;
 	public boolean m_okRemove = false;
 	
 	

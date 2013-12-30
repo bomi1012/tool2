@@ -75,7 +75,7 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/test?user=root&password
 	String		BUTTON_DEAKTIVIEREN = "Deaktivieren";
 	String		BUTTON_DISCARD = "Verwerfen";
 	String		BUTTON_ADD = "Hinzufügen";
-	String		BUTTON_NEW = "Erstellen";
+	String		BUTTON_NEW = "Anlegen";
 	String		BUTTON_EDIT = "Bearbeiten";
 	String		BUTTON_OK = "OK";
 	String		BUTTON_DELETE = "Löschen";
