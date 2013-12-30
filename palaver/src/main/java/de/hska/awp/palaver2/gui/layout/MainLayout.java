@@ -50,7 +50,10 @@ import de.hska.awp.palaver2.gui.view.NachrichtAnzeigen;
 import de.hska.awp.palaver2.gui.view.RollenAnzeigen;
 import de.hska.awp.palaver2.gui.view.artikelverwaltung.ArtikelAnzeigen;
 import de.hska.awp.palaver2.gui.view.artikelverwaltung.ArtikelErstellen;
+import de.hska.awp.palaver2.gui.view.artikelverwaltung.KategorieErstellen;
 import de.hska.awp.palaver2.gui.view.artikelverwaltung.KategorienAnzeigen;
+import de.hska.awp.palaver2.gui.view.artikelverwaltung.LagerortErstellen;
+import de.hska.awp.palaver2.gui.view.artikelverwaltung.MengeneinheitErstellen;
 import de.hska.awp.palaver2.gui.view.artikelverwaltung.MengeneinheitenAnzeigen;
 import de.hska.awp.palaver2.gui.view.bestellverwaltung.GrundbedarfGenerierenAnsicht;
 import de.hska.awp.palaver2.gui.view.lieferantenverwaltung.LieferantAnzeigen;
@@ -107,17 +110,33 @@ public class MainLayout extends VerticalLayout implements Command {
 		menu.setWidth("100%");
 		
 		/** Artikel */
-		MenuItem artikelItem = menu.addItem(IConstants.MENU_ARTIKEL_HEADLINE,
-				null);
-		MenuItem aShow = artikelItem.addItem(IConstants.MENU_ARTIKEL_ANZEIGEN, this);
-		MenuItem aNew = artikelItem.addItem(IConstants.MENU_ARTIKEL_NEU, this);
-		aNew.setIcon(new ThemeResource(IConstants.BUTTON_NEW_ICON));
-		aShow.setIcon(new ThemeResource(IConstants.BUTTON_SHOW_ICON));
+		MenuItem artikelItem = menu.addItem(IConstants.MENU_ARTIKEL_HEADLINE, null);
+		/** 1 Level */
+		MenuItem artikelAnzeigenItem = artikelItem.addItem(IConstants.MENU_ARTIKEL_ANZEIGEN, this);
+		MenuItem artikelAnlegenItem = artikelItem.addItem(IConstants.MENU_ARTIKEL_NEU, this);
 		artikelItem.addSeparator();
-		MenuItem aOther = artikelItem.addItem(IConstants.MENU_SONSTIGES, null);
-		aOther.setIcon(new ThemeResource(IConstants.BUTTON_FOLDER_ICON));
-		aOther.addItem(IConstants.MENU_KATEGORIE_ANZEIGEN, this);
-		aOther.addItem(IConstants.MENU_MENGENEINHEIT_ANZEIGEN, this);
+		MenuItem kategorieItem = artikelItem.addItem(IConstants.MENU_KATEGORIE_HEADLINE, null);
+		MenuItem mengeneinheitItem = artikelItem.addItem(IConstants.MENU_MENGENEINHEIT_HEADLINE, null);
+		MenuItem lagerortItem = artikelItem.addItem(IConstants.MENU_LAGERORT_HEADLINE, null);		
+		/** 2 Level */		
+		MenuItem kategorieAnzeigenItem = kategorieItem.addItem(IConstants.MENU_KATEGORIE_ANZEIGEN, this);
+		MenuItem kategorieAnlegenItem = kategorieItem.addItem(IConstants.MENU_KATEGORIE_NEU, this);		
+		MenuItem mengeneinheitAnzeigenItem = mengeneinheitItem.addItem(IConstants.MENU_MENGENEINHEIT_ANZEIGEN, this);
+		MenuItem mengeneinheitAnlegenItem = mengeneinheitItem.addItem(IConstants.MENU_MENGENEINHEIT_NEU, this);		
+		MenuItem lagerortAnzeigenItem = lagerortItem.addItem(IConstants.MENU_LAGERORT_ANZEIGEN, this);
+		MenuItem lagerortAnlegenItem = lagerortItem.addItem(IConstants.MENU_LAGERORT_NEU, this);		
+		/** Icons */
+		artikelAnzeigenItem.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_LUPE));
+		artikelAnlegenItem.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_ADD));		
+		kategorieItem.setIcon(new ThemeResource(IConstants.ICON_FOLDER_PAGE_WHITE));
+		kategorieAnzeigenItem.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_LUPE));
+		kategorieAnlegenItem.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_ADD));		
+		mengeneinheitItem.setIcon(new ThemeResource(IConstants.ICON_FOLDER_PAGE_WHITE));
+		mengeneinheitAnzeigenItem.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_LUPE));
+		mengeneinheitAnlegenItem.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_ADD));		
+		lagerortItem.setIcon(new ThemeResource(IConstants.ICON_FOLDER_PAGE_WHITE));
+		lagerortAnzeigenItem.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_LUPE));
+		lagerortAnlegenItem.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_ADD));
 
 		/** Lieferant */
 		MenuItem lieferantItem = menu.addItem(
@@ -210,30 +229,38 @@ public class MainLayout extends VerticalLayout implements Command {
 		if (((Application) UI.getCurrent().getData()).getCahnge() == false) {
 			if (selectedItem.getText().equals(IConstants.MENU_ARTIKEL_NEU)) {
 				ViewHandler.getInstance().switchView(ArtikelErstellen.class);
-			} else if (selectedItem.getText().equals(
+			} else if (selectedItem.getText().equals(IConstants.MENU_ARTIKEL_ANZEIGEN)) {
+				ViewHandler.getInstance().switchView(ArtikelAnzeigen.class);
+			} else if (selectedItem.getText().equals(IConstants.MENU_MENGENEINHEIT_ANZEIGEN)) {
+				ViewHandler.getInstance().switchView(MengeneinheitenAnzeigen.class);
+			} else if (selectedItem.getText().equals(IConstants.MENU_KATEGORIE_ANZEIGEN)) {
+				ViewHandler.getInstance().switchView(KategorienAnzeigen.class);
+			} else if (selectedItem.getText().equals(IConstants.MENU_LAGERORT_ANZEIGEN)) {
+				//ViewHandler.getInstance().switchView(LagerortAnzeigen.class);
+			} else if (selectedItem.getText().equals(IConstants.MENU_MENGENEINHEIT_NEU)) {
+				ViewHandler.getInstance().switchView(MengeneinheitErstellen.class);
+			} else if (selectedItem.getText().equals(IConstants.MENU_KATEGORIE_NEU)) {
+				ViewHandler.getInstance().switchView(KategorieErstellen.class);
+			} else if (selectedItem.getText().equals(IConstants.MENU_LAGERORT_NEU)) {
+				ViewHandler.getInstance().switchView(LagerortErstellen.class);
+			}
+			
+			
+			
+			else if (selectedItem.getText().equals(
 					IConstants.MENU_LIEFERANT_NEW)) {
 				ViewHandler.getInstance().switchView(LieferantErstellen.class);
 			} else if (selectedItem.getText().equals(
 					IConstants.MENU_MITARBEITER_NEU)) {
 				ViewHandler.getInstance()
 						.switchView(MitarbeiterErstellen.class);
-			} else if (selectedItem.getText().equals(
-					IConstants.MENU_ARTIKEL_ANZEIGEN)) {
-				ViewHandler.getInstance().switchView(ArtikelAnzeigen.class);
-			} else if (selectedItem.getText().equals(
+			}  else if (selectedItem.getText().equals(
 					IConstants.MENU_LIEFERANT_ANZEIGEN)) {
 				ViewHandler.getInstance().switchView(LieferantAnzeigen.class);
 			} else if (selectedItem.getText().equals(
 					IConstants.MENU_MITARBEITER_ANZEIGEN)) {
 				ViewHandler.getInstance().switchView(MitarbeiterAnzeigen.class);
-			} else if (selectedItem.getText().equals(
-					IConstants.MENU_MENGENEINHEIT_ANZEIGEN)) {
-				ViewHandler.getInstance().switchView(
-						MengeneinheitenAnzeigen.class);
-			} else if (selectedItem.getText().equals(
-					IConstants.MENU_KATEGORIE_ANZEIGEN)) {
-				ViewHandler.getInstance().switchView(KategorienAnzeigen.class);
-			} else if (selectedItem.getText().equals(IConstants.MENU_LOGOUT)) {
+			}   else if (selectedItem.getText().equals(IConstants.MENU_LOGOUT)) {
 				UI.getCurrent().setContent(new LoginForm());
 				UI.getCurrent().getSession().close();
 				UI.getCurrent().close();

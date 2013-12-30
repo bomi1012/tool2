@@ -71,13 +71,13 @@ ValueChangeListener, IErstellen  {
 						((Application) UI.getCurrent().getData()).showDialog(String.format(ArtikelverwaltungView.MESSAGE_SUSSEFULL_ARG_1, 
 								KATEGORIE));
 					} catch (ConnectException e) {
-						e.printStackTrace();
+						LOG.error(e.toString());
 					} catch (DAOException e) {
 						((Application) UI.getCurrent().getData())
 							.showDialog(String.format(MESSAGE_EXISTS_ARG_1, m_nameField.getValue()));
-						e.printStackTrace();
+						LOG.error(e.toString());
 					} catch (SQLException e) {
-						e.printStackTrace();
+						LOG.error(e.toString());
 					}
 				}
 			}
@@ -102,16 +102,16 @@ ValueChangeListener, IErstellen  {
 					((Application) UI.getCurrent().getData())
 	             		.showDialog("Kategorie <" + m_kategorie.getName() + "> wurde gelöscht");
 				} catch (ConnectException e) {
-					e.printStackTrace();
+					LOG.error(e.toString());
 				} catch (DAOException e) {
 					((Application) UI.getCurrent().getData())
 					.showDialog("Die Kategorie <" + m_kategorie.getName() + "> darf nicht gelöscht werden, " +
                   	"weil sie an Artikeln hängt.");  
 					m_okRemove = false;
 					close();
-					e.printStackTrace();
+					LOG.error(e.toString());
 				} catch (SQLException e) {
-					e.printStackTrace();
+					LOG.error(e.toString());
 				}
 			}
 		});
@@ -136,17 +136,21 @@ ValueChangeListener, IErstellen  {
 	
 	@Override
 	public void sqlStatement(int i) throws ConnectException, DAOException, SQLException {
-		if(i == 0) {
-			if(!m_create) {
-				m_kategorie.setName(m_nameField.getValue());
-				Kategorienverwaltung.getInstance().updateKategorie(m_kategorie);
-			} else {
-				m_kategorie = new Kategorie(m_nameField.getValue());
-				Kategorienverwaltung.getInstance().createKategorie(m_kategorie);
-			}
-		} else if(i == 1) {
-			Kategorienverwaltung.getInstance().deleteKategorie(m_kategorie.getId());
-		} 
+		try {
+			if(i == 0) {
+				if(!m_create) {
+					m_kategorie.setName(m_nameField.getValue());
+					Kategorienverwaltung.getInstance().updateKategorie(m_kategorie);
+				} else {
+					m_kategorie = new Kategorie(m_nameField.getValue());
+					Kategorienverwaltung.getInstance().createKategorie(m_kategorie);
+				}
+			} else if(i == 1) {
+				Kategorienverwaltung.getInstance().deleteKategorie(m_kategorie.getId());
+			} 
+		} catch (Exception e) {
+			LOG.error(e.toString());
+		}
 	}
 	
 	@Override

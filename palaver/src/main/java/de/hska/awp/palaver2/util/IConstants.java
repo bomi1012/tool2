@@ -19,6 +19,12 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/test?user=root&password
 	
 	// Menuepunkte mit Unterpunkten
 	String		MENU_ARTIKEL_HEADLINE = "Artikel";
+	String		MENU_MENGENEINHEIT_HEADLINE = "Mengeneinheit";
+	String		MENU_KATEGORIE_HEADLINE = "Kategorie";
+	String 		MENU_KATEGORIE_NEU = "Kategorie anlegen";
+	String		MENU_LAGERORT_HEADLINE = "Lagerort";
+	String 		MENU_LAGERORT_ANZEIGEN = "Alle Lagerorte anzeigen";
+	String 		MENU_LAGERORT_NEU = "Lagerort anlegen";
 	String		MENU_SONSTIGES = "Sonstiges...";
 	String		MENU_ARTIKEL_NEU = "Artikel anlegen";
 	String		MENU_ARTIKEL_ANZEIGEN = "Alle Artikel anzeigen";
@@ -38,9 +44,9 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/test?user=root&password
 	String		MENU_NACHRICHT_ANZEIGEN = "Nachrichten anzeigen";
 	String		MENU_NACHRICHT_NEU = "Nachricht erstellen";
 	String		MENU_NACHRICHT_HEADLINE = "Nachrichten";
-	String		MENU_MENGENEINHEIT_ANZEIGEN = "Mengeneinheiten";
+	String		MENU_MENGENEINHEIT_ANZEIGEN = "Alle Mengeneinheiten anzeigen";
 	String		MENU_MENGENEINHEIT_NEU = "Mengeneinheit anlegen";
-	String		MENU_KATEGORIE_ANZEIGEN = "Kategorien";
+	String		MENU_KATEGORIE_ANZEIGEN = "Alle Kategorien anzeigen";
 	String		MENU_ROLLEN_ANZEIGEN = "Rollen anzeigen";
 	String 		MENU_REZEPT_HEADLINE = "Rezept";
 	String 		MENU_REZEPT_NEU = "Rezept anlegen";
@@ -114,6 +120,9 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/test?user=root&password
 	String 		ICON_PAGE_DELETE = "icons/page_delete.png";
 	String 		ICON_PAGE_REFRESH = "icons/page_refresh.png";
 	String 		ICON_PAGE_SAVE = "icons/page_save.png";
+	String 		ICON_FOLDER_PAGE_WHITE = "icons/folder_page_white.png";
+	String 		ICON_PAGE_WHITE_LUPE = "icons/page_white_magnify.png";
+	String 		ICON_PAGE_WHITE_ADD = "icons/page_white_add.png";
 	
 	
 	String		ICON_YES = "img/tick_circle.ico";
@@ -266,6 +275,10 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/test?user=root&password
 
 	// Fußnoten Menueplan 
 	String 		FUSSNOTEN_MENUEPLAN = "<div align=center>ohne Gewähr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (v) = vegan &nbsp;&nbsp; (vm) = vegan mögl. &nbsp;&nbsp; (veg.m) = vegetarisch mögl. &nbsp;&nbsp; (Z) = ohne Zwiebel &nbsp;&nbsp; (Zm) = ohne Zwiebel mögl. <BR> (K) = ohne Knoblauch &nbsp;&nbsp; (Km) = ohne Knoblauch mögl. &nbsp;&nbsp; (W) = ohne Weizen &nbsp;&nbsp; (Wm) = ohne Weizen mögl. &nbsp;&nbsp; (M) = ohne KuhMilch &nbsp;&nbsp; (Mm) = ohne KuhMilch mögl.</div>";
+
+
+
+
 
 
 
