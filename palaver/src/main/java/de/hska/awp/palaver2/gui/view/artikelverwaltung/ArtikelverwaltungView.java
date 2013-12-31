@@ -21,6 +21,7 @@ public class ArtikelverwaltungView extends ViewAbstract {
 	protected static final String ARTIKEL = "Artikel";	
 	protected static final String MENGENEINHEIT = "Mengeneinheit";
 	protected static final String KATEGORIE = "Kategorie";
+	protected static final String LAGERORT = "Lagerort";
 	
 	
 	protected static final String FIELD_KURZ = "kurz";
@@ -48,6 +49,7 @@ public class ArtikelverwaltungView extends ViewAbstract {
 	protected static final String EDIT_ARTIKEL = "Artikel bearbeiten";
 	protected static final String EDIT_KATEGORIE = "Kategorie bearbeiten";
 	protected static final String EDIT_MENGENEINHEIT = "Mengeneinheit bearbeiten";
+	protected static final String EDIT_LAGERORT = "Lagerort bearbeiten";
 	
 	protected static final String NEW_ARTIKEL = "Neuer Artikel";
 	protected static final String NEW_MENGENEINHEIT = "Neue Mengeeinheit";
@@ -62,6 +64,7 @@ public class ArtikelverwaltungView extends ViewAbstract {
 	public MengeneinheitErstellen m_mengeneinheitErstellen;
 	public ArtikelErstellen m_artikelErstellen;
 	public KategorieErstellen m_kategorieErstellen;
+	public LagerortErstellen m_lagerortErstellen;
 	
 	public List<Mengeneinheit> m_mengen;
 	public List<Kategorie> m_kategorien;

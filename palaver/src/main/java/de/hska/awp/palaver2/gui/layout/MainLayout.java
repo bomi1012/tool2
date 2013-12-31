@@ -53,6 +53,7 @@ import de.hska.awp.palaver2.gui.view.artikelverwaltung.ArtikelErstellen;
 import de.hska.awp.palaver2.gui.view.artikelverwaltung.KategorieErstellen;
 import de.hska.awp.palaver2.gui.view.artikelverwaltung.KategorienAnzeigen;
 import de.hska.awp.palaver2.gui.view.artikelverwaltung.LagerortErstellen;
+import de.hska.awp.palaver2.gui.view.artikelverwaltung.LagerorteAnzeigen;
 import de.hska.awp.palaver2.gui.view.artikelverwaltung.MengeneinheitErstellen;
 import de.hska.awp.palaver2.gui.view.artikelverwaltung.MengeneinheitenAnzeigen;
 import de.hska.awp.palaver2.gui.view.bestellverwaltung.GrundbedarfGenerierenAnsicht;
@@ -236,7 +237,7 @@ public class MainLayout extends VerticalLayout implements Command {
 			} else if (selectedItem.getText().equals(IConstants.MENU_KATEGORIE_ANZEIGEN)) {
 				ViewHandler.getInstance().switchView(KategorienAnzeigen.class);
 			} else if (selectedItem.getText().equals(IConstants.MENU_LAGERORT_ANZEIGEN)) {
-				//ViewHandler.getInstance().switchView(LagerortAnzeigen.class);
+				ViewHandler.getInstance().switchView(LagerorteAnzeigen.class);
 			} else if (selectedItem.getText().equals(IConstants.MENU_MENGENEINHEIT_NEU)) {
 				ViewHandler.getInstance().switchView(MengeneinheitErstellen.class);
 			} else if (selectedItem.getText().equals(IConstants.MENU_KATEGORIE_NEU)) {

@@ -47,8 +47,7 @@ ValueChangeListener, IErstellen  {
 		this.setMargin(true);
 		m_headlineLabel = headLine(m_headlineLabel, text, STYLE_HEADLINE);		
 		/** Fields */
-		m_nameField = textFieldSettingKE(m_textField, KATEGORIE,
-				ArtikelverwaltungView.FULL, true, KATEGORIE, this);
+		m_nameField = textFieldSettingKE(m_textField, KATEGORIE, FULL, true, KATEGORIE, this);
 		if(!m_create) {
 			m_nameField.setValue(m_kategorie.getName());
 		}	

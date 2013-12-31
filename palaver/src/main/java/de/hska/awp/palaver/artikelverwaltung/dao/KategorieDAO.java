@@ -1,5 +1,6 @@
 package de.hska.awp.palaver.artikelverwaltung.dao;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class KategorieDAO extends AbstractDAO {
 		kategories = new ArrayList<Kategorie>();
 		set = getManaged(GET_ALL_KATEGORIES);
 		while (set.next()) {
-			kategories.add(new Kategorie(set.getLong(FIELD_ID), set.getString(FIELD_NAME)));
+			kategories.add(setKategorie(set));
 		}
 		return kategories;
 	}
@@ -55,7 +56,7 @@ public class KategorieDAO extends AbstractDAO {
 			DAOException, SQLException {
 		set = getManaged(MessageFormat.format(GET_KATEGORIE_BY_ID, id));
 		while (set.next()) {
-			kategorie = new Kategorie(set.getLong(FIELD_ID), set.getString(FIELD_NAME));
+			kategorie = setKategorie(set);
 		}
 		return kategorie;
 	}
@@ -72,5 +73,9 @@ public class KategorieDAO extends AbstractDAO {
 
 	public void deleteKategorie(Long id) throws ConnectException, DAOException {
 		putManaged(MessageFormat.format(DELETE_QUERY, id));		
+	}
+	
+	private Kategorie setKategorie(ResultSet set) throws ConnectException, DAOException, SQLException {
+		return 	new Kategorie(set.getLong(FIELD_ID),  set.getString(FIELD_NAME));	
 	}
 }

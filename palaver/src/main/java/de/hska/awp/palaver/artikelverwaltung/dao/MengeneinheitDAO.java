@@ -1,5 +1,6 @@
 package de.hska.awp.palaver.artikelverwaltung.dao;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -57,8 +58,7 @@ public class MengeneinheitDAO extends AbstractDAO {
 		list = new ArrayList<Mengeneinheit>();
 		set = getManaged(GET_ALL_MENGENEINHEITEN);
 		while (set.next()) {
-			list.add(new Mengeneinheit(set.getLong(FIELD_ID), set
-					.getString(FIELD_NAME), set.getString(FIELD_KURZ)));
+			list.add(setMengeneinheit(set));
 		}
 		return list;
 	}
@@ -68,9 +68,9 @@ public class MengeneinheitDAO extends AbstractDAO {
 		mengeneinheit = null;
 		set = getManaged(MessageFormat.format(GET_MENGENEINHEIT_BY_ID, id));
 		while (set.next()) {
-			mengeneinheit = new Mengeneinheit(set.getLong("id"),
-					set.getString("name"), set.getString("kurz"));
+			mengeneinheit = setMengeneinheit(set);
 		}
+		
 		return mengeneinheit;
 	}
 
@@ -79,8 +79,7 @@ public class MengeneinheitDAO extends AbstractDAO {
 		list = new ArrayList<Mengeneinheit>();
 		set = getManaged(MessageFormat.format(GET_MENGENEINHEIT_BY_NAME, name));
 		while (set.next()) {
-			list.add(new Mengeneinheit(set.getLong(FIELD_ID), set
-					.getString(FIELD_NAME), set.getString(FIELD_KURZ)));
+			list.add(setMengeneinheit(set));
 		}
 		return list;
 	}
@@ -103,5 +102,9 @@ public class MengeneinheitDAO extends AbstractDAO {
 	public void deleteMengeneinheit(Long id) throws ConnectException, DAOException {
 		putManaged(MessageFormat.format(DELETE_QUERY, id));	
 		
+	}
+	
+	private Mengeneinheit setMengeneinheit(ResultSet set) throws ConnectException, DAOException, SQLException {
+		return 	new Mengeneinheit(set.getLong(FIELD_ID),  set.getString(FIELD_NAME), set.getString(FIELD_KURZ));	
 	}
 }
