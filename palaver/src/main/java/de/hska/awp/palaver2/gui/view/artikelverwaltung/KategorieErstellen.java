@@ -67,7 +67,7 @@ ValueChangeListener, IErstellen  {
 					try {
 						sqlStatement(0);
 						close();
-						((Application) UI.getCurrent().getData()).showDialog(String.format(ArtikelverwaltungView.MESSAGE_SUSSEFULL_ARG_1, 
+						((Application) UI.getCurrent().getData()).showDialog(String.format(OverAVView.MESSAGE_SUSSEFULL_ARG_1, 
 								KATEGORIE));
 					} catch (ConnectException e) {
 						LOG.error(e.toString());
@@ -155,7 +155,7 @@ ValueChangeListener, IErstellen  {
 	@Override
 	public boolean validiereEingabe() {
 		if (m_nameField.getValue().equals("")) {
-			((Application) UI.getCurrent().getData()).showDialog(String.format(ArtikelverwaltungView.MESSAGE_LEER_ARG_1, "Name"));
+			((Application) UI.getCurrent().getData()).showDialog(String.format(OverAVView.MESSAGE_LEER_ARG_1, "Name"));
 			return false;
 		}
 		return true;

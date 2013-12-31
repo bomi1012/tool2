@@ -17,7 +17,7 @@ import de.hska.awp.palaver2.util.customFilter;
 import de.hska.awp.palaver2.util.customFilterDecorator;
 
 @SuppressWarnings("serial")
-public class OverAnzeigen extends ArtikelverwaltungView implements View  {
+public class OverAnzeigen extends OverAVView implements View  {
 
 	protected Button m_createButton;
 	protected Button m_editButton;

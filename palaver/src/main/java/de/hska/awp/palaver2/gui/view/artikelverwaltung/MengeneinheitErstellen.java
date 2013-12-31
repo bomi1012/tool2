@@ -48,9 +48,9 @@ ValueChangeListener, IErstellen  {
 		m_headlineLabel = headLine(m_headlineLabel, text, STYLE_HEADLINE);		
 		/** Fields */
 		m_nameField = textFieldSettingME(m_textField, MENGENEINHEIT,
-				ArtikelverwaltungView.FULL, true, MENGENEINHEIT, this);
+				OverAVView.FULL, true, MENGENEINHEIT, this);
 		kurzField = textFieldSettingME(m_textField, MENGENEINHEIT_ABKUERZUNG,
-				ArtikelverwaltungView.FULL, true, MENGENEINHEIT_ABKUERZUNG, this);
+				OverAVView.FULL, true, MENGENEINHEIT_ABKUERZUNG, this);
 		if(!m_create) {
 			m_nameField.setValue(m_mengeneinheit.getName());
 			kurzField.setValue(m_mengeneinheit.getKurz());
@@ -71,7 +71,7 @@ ValueChangeListener, IErstellen  {
 					try {
 						sqlStatement(0);
 						close();
-						((Application) UI.getCurrent().getData()).showDialog(String.format(ArtikelverwaltungView.MESSAGE_SUSSEFULL_ARG_1, 
+						((Application) UI.getCurrent().getData()).showDialog(String.format(OverAVView.MESSAGE_SUSSEFULL_ARG_1, 
 								MENGENEINHEIT));	
 					} catch (ConnectException e) {
 						e.printStackTrace();
@@ -159,12 +159,12 @@ ValueChangeListener, IErstellen  {
 	public boolean validiereEingabe() {
 		boolean isTrue = true;
 		if (m_nameField.getValue().equals("")) {
-			((Application) UI.getCurrent().getData()).showDialog(String.format(ArtikelverwaltungView.MESSAGE_LEER_ARG_1, "Name"));
+			((Application) UI.getCurrent().getData()).showDialog(String.format(OverAVView.MESSAGE_LEER_ARG_1, "Name"));
 			isTrue = false;
 		}
 		if (kurzField.getValue().equals("")) {
 			kurzField.setValidationVisible(true);
-			((Application) UI.getCurrent().getData()).showDialog(String.format(ArtikelverwaltungView.MESSAGE_LEER_ARG_1, "Abkürzung"));
+			((Application) UI.getCurrent().getData()).showDialog(String.format(OverAVView.MESSAGE_LEER_ARG_1, "Abkürzung"));
 			isTrue = false;
 		}
 		return isTrue;

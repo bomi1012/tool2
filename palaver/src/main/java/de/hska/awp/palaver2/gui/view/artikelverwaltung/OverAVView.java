@@ -17,7 +17,7 @@ import de.hska.awp.palaver2.gui.view.ViewAbstract;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 @SuppressWarnings("serial")
-public class ArtikelverwaltungView extends ViewAbstract {
+public class OverAVView extends ViewAbstract {
 	protected static final String ARTIKEL = "Artikel";	
 	protected static final String MENGENEINHEIT = "Mengeneinheit";
 	protected static final String KATEGORIE = "Kategorie";
@@ -84,11 +84,11 @@ public class ArtikelverwaltungView extends ViewAbstract {
 	
 	
 	
-	protected ArtikelverwaltungView() {
+	protected OverAVView() {
 		super();
 	}
 
-	protected ArtikelverwaltungView(Component... children) {
+	protected OverAVView(Component... children) {
 		super(children);
 	}
 	
@@ -96,7 +96,7 @@ public class ArtikelverwaltungView extends ViewAbstract {
 			final String name, String width, boolean required, String descript,
 			Object object) {
 		select = new NativeSelect(name);
-		select.setWidth(ArtikelverwaltungView.FULL);
+		select.setWidth(OverAVView.FULL);
 		if(required) {
 			select.addValidator(new Validator() {
 				private static final long serialVersionUID = 1972800127752278750L;
