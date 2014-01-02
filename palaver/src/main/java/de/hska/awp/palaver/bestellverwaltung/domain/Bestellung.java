@@ -24,8 +24,8 @@ public class Bestellung implements java.io.Serializable {
 	private Date m_lieferdatum;
 	private Date m_lieferdatum2;
 	private List<Bestellposition> m_bestellpositionen;
-	private boolean m_status;
-
+	private boolean m_status; 
+	
 	public Bestellung() {
 		super();
 	}
