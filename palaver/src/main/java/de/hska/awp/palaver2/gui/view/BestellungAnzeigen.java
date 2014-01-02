@@ -22,12 +22,12 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver.Application;
+import de.hska.awp.palaver.bestellverwaltung.domain.Bestellposition;
+import de.hska.awp.palaver.bestellverwaltung.domain.Bestellung;
+import de.hska.awp.palaver.bestellverwaltung.service.Bestellpositionverwaltung;
+import de.hska.awp.palaver.bestellverwaltung.service.Bestellverwaltung;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
-import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
-import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
-import de.hska.awp.palaver2.bestellverwaltung.service.Bestellpositionverwaltung;
-import de.hska.awp.palaver2.bestellverwaltung.service.Bestellverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;

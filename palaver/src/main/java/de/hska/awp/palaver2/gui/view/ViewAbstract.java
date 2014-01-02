@@ -43,7 +43,7 @@ public class ViewAbstract extends VerticalLayout {
 	protected static final String MESSAGE_SUSSEFULL_ARG_1 = "%s wurde erfolgreich gespeichert";
 	
 	
-	public Button m_auswaehlenButton;
+
 	
 	protected TextField textFieldSetting(TextField field, String name,
 			String width, boolean required, String descript) {		

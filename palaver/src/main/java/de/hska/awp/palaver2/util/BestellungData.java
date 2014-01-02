@@ -14,7 +14,7 @@ import com.vaadin.ui.UI;
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver.artikelverwaltung.domain.Kategorie;
-import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
+import de.hska.awp.palaver.bestellverwaltung.domain.Bestellposition;
 
 public class BestellungData implements java.io.Serializable {
 	

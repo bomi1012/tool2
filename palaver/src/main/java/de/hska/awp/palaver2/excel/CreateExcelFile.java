@@ -10,9 +10,9 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
-import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
-import de.hska.awp.palaver2.bestellverwaltung.service.Bestellpositionverwaltung;
+import de.hska.awp.palaver.bestellverwaltung.domain.Bestellposition;
+import de.hska.awp.palaver.bestellverwaltung.domain.Bestellung;
+import de.hska.awp.palaver.bestellverwaltung.service.Bestellpositionverwaltung;
 
 public class CreateExcelFile {
 

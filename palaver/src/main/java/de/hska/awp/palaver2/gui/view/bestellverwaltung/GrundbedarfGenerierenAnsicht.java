@@ -14,10 +14,12 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeSelect;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
@@ -25,7 +27,9 @@ import de.hska.awp.palaver.artikelverwaltung.service.Artikelverwaltung;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.gui.components.Grundbedarf;
+import de.hska.awp.palaver2.gui.view.artikelverwaltung.ArtikelErstellen;
 import de.hska.awp.palaver2.gui.view.artikelverwaltung.KategorienAnzeigen;
+import de.hska.awp.palaver2.gui.view.artikelverwaltung.OverArtikelverwaltungView;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
@@ -35,32 +39,31 @@ import de.hska.awp.palaver2.util.customFilter;
 import de.hska.awp.palaver2.util.customFilterDecorator;
 
 @SuppressWarnings("serial")
-public class GrundbedarfGenerierenAnsicht extends BestellverwaltungView implements View,
+public class GrundbedarfGenerierenAnsicht extends OverBestellverwaltungView implements View,
 ValueChangeListener {
-	private static final Logger log = LoggerFactory.getLogger(KategorienAnzeigen.class.getName());
+	private static final Logger LOG = LoggerFactory.getLogger(KategorienAnzeigen.class.getName());
 	private BeanItemContainer<Grundbedarf> container;
 	private NativeSelect m_lieferantSelect;
+	private OverArtikelverwaltungView m_overArtikelverwaltungView = new OverArtikelverwaltungView();
+	private Button m_vorschauButton;
+	private Button m_generierenButton;
 	public GrundbedarfGenerierenAnsicht() throws SQLException, ConnectException, DAOException {
 		super();
 		template();
 		listeners();
-		beans(null);
 	}
 	
 	private void template() throws SQLException, ConnectException, DAOException {
 		this.setSizeFull();
 		this.setMargin(true);
-		m_headlineLabel = headLine(m_headlineLabel, "Grundbedarf generieren", "ViewHeadline");
-		m_auswaehlenButton = buttonSetting(m_auswaehlenButton, "Vorschau", IConstants.ICON_ZOOM, true, true);
+		m_headlineLabel = headLine(m_headlineLabel, "Grundbedarf generieren", STYLE_HEADLINE);
+		m_vorschauButton = buttonSetting(m_button, "Vorschau", IConstants.ICON_ZOOM, true, true);
+		m_generierenButton = buttonSetting(m_button, "Grundbedarf generieren", IConstants.ICON_BASKET_ADD, true, true);
 
 		m_lieferantSelect = nativeSelectSetting(m_lieferantSelect, "Lieferant",
 				"80%", false, "Lieferant", this);
 		m_lieferantSelect.setNullSelectionAllowed(false);
-		
 		m_lieferanten = Lieferantenverwaltung.getInstance().getLieferantenByGrundbedarf(true);
-		
-		allLieferanten(m_lieferanten);
-		
 		m_filterTable = new FilterTable();
 		m_filterTable.setWidth("95%");
 		m_filterTable.setSelectable(true);
@@ -79,12 +82,13 @@ ValueChangeListener {
 		m_horizontalLayout.setExpandRatio(m_filterTable, 5);
 		m_horizontalLayout.setComponentAlignment(m_filterTable, Alignment.TOP_RIGHT);
 		
-		
 		/** ControlPanel */
 		m_control = new HorizontalLayout();
 		m_control.setSpacing(true);
-		m_control.addComponent(m_auswaehlenButton);
+		m_control.addComponent(m_generierenButton);
+		m_control.addComponent(m_vorschauButton);
 			
+		allLieferanten(m_lieferanten);
 		vertikalLayout = vLayout(vertikalLayout, FULL);
 		this.addComponent(vertikalLayout);
 		this.setComponentAlignment(vertikalLayout, Alignment.MIDDLE_CENTER);
@@ -100,14 +104,11 @@ ValueChangeListener {
 					try {
 						beans((Lieferant) event.getProperty().getValue());
 					} catch (ConnectException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						LOG.error(e.toString());
 					} catch (DAOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						LOG.error(e.toString());
 					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						LOG.error(e.toString());
 					}
 
 //					for (Grundbedarf ggg : container.getItemIds()) {
@@ -122,12 +123,20 @@ ValueChangeListener {
 			public void itemClick(ItemClickEvent event) {
 				if(event.isDoubleClick()) {
 					//TODO: save in Artikel
-					System.out.println(((Grundbedarf) event.getItemId()).getArtikelId());
+					try {
+						windowModal(Artikelverwaltung.getInstance().getArtikelById(((Grundbedarf) event.getItemId()).getArtikelId()));
+					} catch (ConnectException e) {
+						e.printStackTrace();
+					} catch (DAOException e) {
+						e.printStackTrace();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		});
 		
-		m_auswaehlenButton.addClickListener(new ClickListener() {			
+		m_vorschauButton.addClickListener(new ClickListener() {			
 			@Override
 			public void buttonClick(ClickEvent event) {
 				//TODO: switch to vorschau				
@@ -136,11 +145,13 @@ ValueChangeListener {
 		
 	}
 
-	private void allLieferanten(List<Lieferant> lieferanten) {
-		m_lieferantSelect.removeAllItems();
+	private void allLieferanten(List<Lieferant> lieferanten) throws ConnectException, DAOException, SQLException {
+		m_lieferantSelect.removeAllItems();		
 		for (Lieferant e : lieferanten) {
 			m_lieferantSelect.addItem(e);
 		}
+		m_lieferantSelect.setValue(lieferanten.get(0));
+		beans(lieferanten.get(0));
 	}
 	
 	@SuppressWarnings({ "static-access", "deprecation" })
@@ -161,10 +172,10 @@ ValueChangeListener {
 		try {
 			container = new BeanItemContainer<Grundbedarf>(Grundbedarf.class, gb);
 			m_filterTable.setContainerDataSource(container);
-			m_filterTable.setVisibleColumns(new Object[] { "lieferantName", "artikelName", "gebinde", 
+			m_filterTable.setVisibleColumns(new Object[] { "artikelName", "gebinde", 
 					"liefertermin1", "summe1", "liefertermin2", "summe2",
 					"mengeneinheit", "remove"});
-			m_filterTable.sort(new Object[] { "lieferantName", "artikelName" }, new boolean[] { true });
+			m_filterTable.sort(new Object[] { "artikelName" }, new boolean[] { true });
 			m_filterTable.setColumnWidth("remove", 40);
 			m_filterTable.setColumnHeader("remove", "ignorieren");	
 			m_filterTable.setColumnWidth("gebinde", 60);
@@ -178,16 +189,26 @@ ValueChangeListener {
 			m_filterTable.setColumnAlignment("mengeneinheit", m_filterTable.ALIGN_CENTER);
 			m_filterTable.setColumnAlignment("gebinde", m_filterTable.ALIGN_CENTER);
 		} catch (Exception e) {
-			
-			
-			log.error(e.toString());
+			LOG.error(e.toString());
 		}		
+	}
+	
+	private void windowModal(Artikel artikel) {
+		win = windowUI(win, OverArtikelverwaltungView.ARTIKEL, "90%", "95%");		
+		if(artikel != null) {
+			m_overArtikelverwaltungView.m_artikelErstellen = new ArtikelErstellen(artikel);
+		} else {
+			m_overArtikelverwaltungView.m_artikelErstellen = new ArtikelErstellen();
+	}
+		addComponent(m_overArtikelverwaltungView.m_artikelErstellen);
+		win.setContent(m_overArtikelverwaltungView.m_artikelErstellen);
+		win.setModal(true);
+		UI.getCurrent().addWindow(win);		
 	}
 	
 	private VerticalLayout vLayout(VerticalLayout box, String width) {
 		box = new VerticalLayout();
 		box.setWidth(width);
-		box.setSpacing(true);
 		box.setMargin(true);
 		box.setSpacing(true);
 
@@ -206,8 +227,5 @@ ValueChangeListener {
 	public void getViewParam(ViewData data) { }
 
 	@Override
-	public void valueChange(ValueChangeEvent event) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void valueChange(ValueChangeEvent event) { }
 }

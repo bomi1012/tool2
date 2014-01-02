@@ -2,7 +2,7 @@
  * Created by Christian Barth
  * 06.05.2013 - 10:43:40
  */
-package de.hska.awp.palaver2.bestellverwaltung.service;
+package de.hska.awp.palaver.bestellverwaltung.service;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -19,10 +19,10 @@ import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver.artikelverwaltung.dao.ArtikelDAO;
 import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver.artikelverwaltung.service.Artikelverwaltung;
+import de.hska.awp.palaver.bestellverwaltung.domain.Bestellposition;
+import de.hska.awp.palaver.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
-import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
-import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.data.BestellungDAO;
 import de.hska.awp.palaver2.data.LieferantDAO;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;

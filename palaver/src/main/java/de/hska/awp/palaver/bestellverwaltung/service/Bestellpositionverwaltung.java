@@ -2,18 +2,18 @@
  * Created by Elena W
  */
 
-package de.hska.awp.palaver2.bestellverwaltung.service;
+package de.hska.awp.palaver.bestellverwaltung.service;
 
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hska.awp.palaver.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.data.BestellpositionDAO;
 import de.hska.awp.palaver2.util.BestellungData;
-import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellposition;
 
 /**
  * Die Klasse ermöglicht die Verwaltung der BEstellpositionen und stellt für die GUI

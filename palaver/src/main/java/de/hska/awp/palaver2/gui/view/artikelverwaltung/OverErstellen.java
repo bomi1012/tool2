@@ -11,7 +11,7 @@ import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 
 @SuppressWarnings("serial")
-public class OverErstellen extends OverAVView implements View,
+public class OverErstellen extends OverArtikelverwaltungView implements View,
 ValueChangeListener {
 
 	protected Button m_speichernButton;

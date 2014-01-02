@@ -24,8 +24,8 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver2.bestellverwaltung.domain.Bestellung;
-import de.hska.awp.palaver2.bestellverwaltung.service.Bestellverwaltung;
+import de.hska.awp.palaver.bestellverwaltung.domain.Bestellung;
+import de.hska.awp.palaver.bestellverwaltung.service.Bestellverwaltung;
 import de.hska.awp.palaver2.emailversand.Mail;
 import de.hska.awp.palaver2.excel.CreateExcelFile;
 import de.hska.awp.palaver2.util.IConstants;

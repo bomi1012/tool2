@@ -1,4 +1,4 @@
-package de.hska.awp.palaver2.bestellverwaltung.domain;
+package de.hska.awp.palaver.bestellverwaltung.domain;
 
 import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
 

@@ -123,6 +123,7 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/test?user=root&password
 	String 		ICON_FOLDER_PAGE_WHITE = "icons/folder_page_white.png";
 	String 		ICON_PAGE_WHITE_LUPE = "icons/page_white_magnify.png";
 	String 		ICON_PAGE_WHITE_ADD = "icons/page_white_add.png";
+	String 		ICON_BASKET_ADD = "icons/basket_add.png";
 	
 	
 	String		ICON_YES = "img/tick_circle.ico";

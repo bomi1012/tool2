@@ -17,44 +17,44 @@ import de.hska.awp.palaver2.gui.view.ViewAbstract;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 @SuppressWarnings("serial")
-public class OverAVView extends ViewAbstract {
-	protected static final String ARTIKEL = "Artikel";	
-	protected static final String MENGENEINHEIT = "Mengeneinheit";
-	protected static final String KATEGORIE = "Kategorie";
-	protected static final String LAGERORT = "Lagerort";
+public class OverArtikelverwaltungView extends ViewAbstract {
+	public static final String ARTIKEL = "Artikel";	
+	public static final String MENGENEINHEIT = "Mengeneinheit";
+	public static final String KATEGORIE = "Kategorie";
+	public static final String LAGERORT = "Lagerort";
 	
 	
-	protected static final String FIELD_KURZ = "kurz";
-	protected static final String FIELD_ARTIKEL_NR = "artikelnr";
-	protected static final String FIELD_LIEFERANT = "lieferant";
-	protected static final String FIELD_KATEGORIE = "kategorie";
-	protected static final String FIELD_LAGERORT = "lagerort";
-	protected static final String FIELD_PREIS = "preis";
-	protected static final String FIELD_STANDARD = "standard";
-	protected static final String FIELD_GRUNDBEDARF = "grundbedarf";
-	protected static final String FIELD_BESTELLGROESSE = "bestellgroesse";
-	protected static final String FIELD_NOTIZ = "notiz";
+	public static final String FIELD_KURZ = "kurz";
+	public static final String FIELD_ARTIKEL_NR = "artikelnr";
+	public static final String FIELD_LIEFERANT = "lieferant";
+	public static final String FIELD_KATEGORIE = "kategorie";
+	public static final String FIELD_LAGERORT = "lagerort";
+	public static final String FIELD_PREIS = "preis";
+	public static final String FIELD_STANDARD = "standard";
+	public static final String FIELD_GRUNDBEDARF = "grundbedarf";
+	public static final String FIELD_BESTELLGROESSE = "bestellgroesse";
+	public static final String FIELD_NOTIZ = "notiz";
 	
 
-	protected static final String ARTIKEL_NAME = "Artikelname";
-	protected static final String ARTIKEL_PREIS = "Preis";
-	protected static final String ARTIKEL_NUMMER = "Artikelnummer";
-	protected static final String ARTIKEL_GEBINDE = "Gebinde";
-	protected static final String ARTIKEL_NOTIZ = "Notiz";
-	protected static final String ARTIKEL_STANDARD = "Standard";
-	protected static final String ARTIKEL_GRUNDBEDARF = "Grundbedarf";
+	public static final String ARTIKEL_NAME = "Artikelname";
+	public static final String ARTIKEL_PREIS = "Preis";
+	public static final String ARTIKEL_NUMMER = "Artikelnummer";
+	public static final String ARTIKEL_GEBINDE = "Gebinde";
+	public static final String ARTIKEL_NOTIZ = "Notiz";
+	public static final String ARTIKEL_STANDARD = "Standard";
+	public static final String ARTIKEL_GRUNDBEDARF = "Grundbedarf";
 	
-	protected static final String MENGENEINHEIT_ABKUERZUNG = "Abkürzung";
+	public static final String MENGENEINHEIT_ABKUERZUNG = "Abkürzung";
 
-	protected static final String EDIT_ARTIKEL = "Artikel bearbeiten";
-	protected static final String EDIT_KATEGORIE = "Kategorie bearbeiten";
-	protected static final String EDIT_MENGENEINHEIT = "Mengeneinheit bearbeiten";
-	protected static final String EDIT_LAGERORT = "Lagerort bearbeiten";
+	public static final String EDIT_ARTIKEL = "Artikel bearbeiten";
+	public static final String EDIT_KATEGORIE = "Kategorie bearbeiten";
+	public static final String EDIT_MENGENEINHEIT = "Mengeneinheit bearbeiten";
+	public static final String EDIT_LAGERORT = "Lagerort bearbeiten";
 	
-	protected static final String NEW_ARTIKEL = "Neuer Artikel";
-	protected static final String NEW_MENGENEINHEIT = "Neue Mengeeinheit";
-	protected static final String NEW_KATEGORIE = "Neue Kategorie";
-	protected static final String NEW_LAGERORT = "Neuer Lagerort";
+	public static final String NEW_ARTIKEL = "Neuer Artikel";
+	public static final String NEW_MENGENEINHEIT = "Neue Mengeeinheit";
+	public static final String NEW_KATEGORIE = "Neue Kategorie";
+	public static final String NEW_LAGERORT = "Neuer Lagerort";
 	
 	
 	public Mengeneinheit m_mengeneinheit;
@@ -84,11 +84,11 @@ public class OverAVView extends ViewAbstract {
 	
 	
 	
-	protected OverAVView() {
+	public OverArtikelverwaltungView() {
 		super();
 	}
 
-	protected OverAVView(Component... children) {
+	protected OverArtikelverwaltungView(Component... children) {
 		super(children);
 	}
 	
@@ -96,7 +96,7 @@ public class OverAVView extends ViewAbstract {
 			final String name, String width, boolean required, String descript,
 			Object object) {
 		select = new NativeSelect(name);
-		select.setWidth(OverAVView.FULL);
+		select.setWidth(OverArtikelverwaltungView.FULL);
 		if(required) {
 			select.addValidator(new Validator() {
 				private static final long serialVersionUID = 1972800127752278750L;

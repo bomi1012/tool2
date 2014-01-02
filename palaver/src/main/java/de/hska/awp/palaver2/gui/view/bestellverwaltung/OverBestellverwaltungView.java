@@ -7,18 +7,22 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeSelect;
 
+import de.hska.awp.palaver.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver2.gui.view.ViewAbstract;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
-public class BestellverwaltungView extends ViewAbstract {
+public class OverBestellverwaltungView extends ViewAbstract {
 	private static final long serialVersionUID = 2853996004535479919L;
-	protected List<Lieferant> m_lieferanten;
+	public List<Lieferant> m_lieferanten;
 	protected HorizontalLayout m_control;
-	protected BestellverwaltungView() {
+	
+	public Bestellung m_bestellung;
+	
+	protected OverBestellverwaltungView() {
 		super();
 	}
 
-	protected BestellverwaltungView(Component... children) {
+	protected OverBestellverwaltungView(Component... children) {
 		super(children);
 	}
 	
@@ -27,7 +31,6 @@ public class BestellverwaltungView extends ViewAbstract {
 			final String name, String width, boolean required, String descript,
 			Object object) {
 		select = new NativeSelect(name);
-		Object value = select.getValue();
 		select.setWidth(FULL);
 		if(required) {
 			select.addValidator(new Validator() {

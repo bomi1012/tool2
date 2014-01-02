@@ -122,29 +122,29 @@ public class ArtikelErstellen extends OverErstellen implements View,
 		this.setSizeFull();
 		this.setMargin(true);
 		/** TextFields */
-		m_nameField = textFieldSettingAE(m_textField, OverAVView.ARTIKEL_NAME,
-				OverAVView.FULL, true, OverAVView.ARTIKEL_NAME, this);
+		m_nameField = textFieldSettingAE(m_textField, OverArtikelverwaltungView.ARTIKEL_NAME,
+				OverArtikelverwaltungView.FULL, true, OverArtikelverwaltungView.ARTIKEL_NAME, this);
 		m_preisField = textFieldSettingAE(m_textField,
-				OverAVView.ARTIKEL_PREIS, OverAVView.FULL, false,
-				OverAVView.ARTIKEL_PREIS, this);
+				OverArtikelverwaltungView.ARTIKEL_PREIS, OverArtikelverwaltungView.FULL, false,
+				OverArtikelverwaltungView.ARTIKEL_PREIS, this);
 		m_nummerField = textFieldSettingAE(m_textField,
-				OverAVView.ARTIKEL_NUMMER, OverAVView.FULL, false,
-				OverAVView.ARTIKEL_NUMMER, this);
-		m_gebindeField = textFieldSettingAE(m_textField, OverAVView.ARTIKEL_GEBINDE,
-				OverAVView.FULL, true, OverAVView.ARTIKEL_GEBINDE,
+				OverArtikelverwaltungView.ARTIKEL_NUMMER, OverArtikelverwaltungView.FULL, false,
+				OverArtikelverwaltungView.ARTIKEL_NUMMER, this);
+		m_gebindeField = textFieldSettingAE(m_textField, OverArtikelverwaltungView.ARTIKEL_GEBINDE,
+				OverArtikelverwaltungView.FULL, true, OverArtikelverwaltungView.ARTIKEL_GEBINDE,
 				this);
-		m_notizField = textFieldSettingAE(m_textField, OverAVView.ARTIKEL_NOTIZ,
-				OverAVView.FULL, false, OverAVView.ARTIKEL_NOTIZ,
+		m_notizField = textFieldSettingAE(m_textField, OverArtikelverwaltungView.ARTIKEL_NOTIZ,
+				OverArtikelverwaltungView.FULL, false, OverArtikelverwaltungView.ARTIKEL_NOTIZ,
 				this);
 
 		/** NativeSelects */
 		m_lieferantSelect = nativeSelectSetting(m_nativeSelect, "Lieferant",
-				OverAVView.FULL, true, "Lieferant", this);
+				OverArtikelverwaltungView.FULL, true, "Lieferant", this);
 		m_mengeneinheitSelect = nativeSelectSetting(m_nativeSelect, MENGENEINHEIT,
-				OverAVView.FULL, true, MENGENEINHEIT, this);
+				OverArtikelverwaltungView.FULL, true, MENGENEINHEIT, this);
 		m_kategorieSelect = nativeSelectSetting(m_nativeSelect, KATEGORIE,
-				OverAVView.FULL, true, KATEGORIE, this);
-		m_lagerortSelect = nativeSelectSetting(m_nativeSelect, "Lagerort", OverAVView.FULL,
+				OverArtikelverwaltungView.FULL, true, KATEGORIE, this);
+		m_lagerortSelect = nativeSelectSetting(m_nativeSelect, "Lagerort", OverArtikelverwaltungView.FULL,
 				true, "Lagerort", this);
 
 		/** Buttons */
@@ -467,16 +467,16 @@ public class ArtikelErstellen extends OverErstellen implements View,
 		box.addComponent(m_preisField);
 		box.addComponent(m_notizField);
 		box.addComponent(newKomponent(m_horizontalLayout, m_lieferantSelect,
-				m_addLieferantButton, OverAVView.FULL));
+				m_addLieferantButton, OverArtikelverwaltungView.FULL));
 		box.addComponent(newKomponent(m_horizontalLayout, m_kategorieSelect,
-				m_addKategorieButton, OverAVView.FULL));
+				m_addKategorieButton, OverArtikelverwaltungView.FULL));
 		box.addComponent(newKomponent(m_horizontalLayout, m_lagerortSelect, m_addLagerortButton,
-				OverAVView.FULL));
+				OverArtikelverwaltungView.FULL));
 		box.addComponent(m_standardCheckbox);
 		box.addComponent(m_fuerRezepteCheckbox);
 		box.addComponent(m_gebindeField);
 		box.addComponent(newKomponent(m_horizontalLayout, m_mengeneinheitSelect,
-				m_addMengeneinheitButton, OverAVView.FULL));
+				m_addMengeneinheitButton, OverArtikelverwaltungView.FULL));
 		box.addComponent(m_grundbedarfCheckbox);
 		box.addComponent(m_durchschnittHL);
 		box.addComponent(new Hr());
