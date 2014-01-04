@@ -27,8 +27,8 @@ import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver.artikelverwaltung.domain.Mengeneinheit;
-import de.hska.awp.palaver.artikelverwaltung.service.Artikelverwaltung;
-import de.hska.awp.palaver.artikelverwaltung.service.Mengeneinheitverwaltung;
+import de.hska.awp.palaver.artikelverwaltung.service.ArtikelService;
+import de.hska.awp.palaver.artikelverwaltung.service.MengeneinheitService;
 import de.hska.awp.palaver.dao.AbstractDAO;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
@@ -95,8 +95,8 @@ public class MenueplanDAO extends AbstractDAO {
 			
 			menge = menge * (portion/100);
 			
-			Artikel artikel = Artikelverwaltung.getInstance().getArtikelById(artikelId);
-			Mengeneinheit einheit = Mengeneinheitverwaltung.getInstance().getMengeneinheitById(einheitId);
+			Artikel artikel = ArtikelService.getInstance().getArtikelById(artikelId);
+			Mengeneinheit einheit = MengeneinheitService.getInstance().getMengeneinheitById(einheitId);
 			
 			ArtikelBedarf ab = new ArtikelBedarf(artikel, menge, einheit, tag);
 			

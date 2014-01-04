@@ -1,7 +1,7 @@
 /**
  * Created by Elena W
  */
-package de.hska.awp.palaver2.data;
+package de.hska.awp.palaver.bestellverwaltung.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,12 +10,10 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hska.awp.palaver.artikelverwaltung.dao.ArtikelDAO;
 import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver.artikelverwaltung.domain.Kategorie;
 import de.hska.awp.palaver.artikelverwaltung.domain.Mengeneinheit;
 import de.hska.awp.palaver.bestellverwaltung.domain.Bestellposition;
-import de.hska.awp.palaver.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver.dao.AbstractDAO;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
@@ -87,19 +85,19 @@ public class BestellpositionDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public Bestellposition getBestellpositionById(Long id) throws ConnectException, DAOException, SQLException {
-
-		Bestellposition bp = null;
-		ResultSet set = getManaged(MessageFormat.format(GET_BESTELLPOSITION_BY_ID, id));
-
-		while (set.next()) {
-			bp = new Bestellposition(set.getLong(ID), ArtikelDAO.getInstance().getArtikelById(set.getLong(ARTIKEL_FK)), BestellungDAO.getInstance()
-					.getBestellungById(set.getLong(BESTELLUNG_FK)), set.getInt(DURCHSCHNITT), set.getInt(KANTINE), set.getInt(GESAMT),
-					set.getInt(FREITAG), set.getInt(MONTAG), set.getBoolean(GELIEFERT), set.getDouble(SUMME));
-		}
-
-		return bp;
-	}
+//	public Bestellposition getBestellpositionById(Long id) throws ConnectException, DAOException, SQLException {
+//
+//		Bestellposition bp = null;
+//		ResultSet set = getManaged(MessageFormat.format(GET_BESTELLPOSITION_BY_ID, id));
+//
+//		while (set.next()) {
+//			bp = new Bestellposition(set.getLong(ID), ArtikelDAO.getInstance().getArtikelById(set.getLong(ARTIKEL_FK)), BestellungDAO.getInstance()
+//					.getBestellungById(set.getLong(BESTELLUNG_FK)), set.getInt(DURCHSCHNITT), set.getInt(KANTINE), set.getInt(GESAMT),
+//					set.getInt(FREITAG), set.getInt(MONTAG), set.getBoolean(GELIEFERT), set.getDouble(SUMME));
+//		}
+//
+//		return bp;
+//	}
 
 	/**
 	 * Die Methode liefert alle Bestellpositionen zur einer Bestellung zurück.
@@ -117,8 +115,7 @@ public class BestellpositionDAO extends AbstractDAO {
 		ResultSet set = getManaged(MessageFormat.format(GET_BESTELLPOSITIONEN_BY_BESTELLUNGID, id));
 		openConnection();
 		while (set.next()) {
-			list.add(new Bestellposition(set.getLong(ID), getArtikelById(set.getLong(ARTIKEL_FK)), getBestellungByIdWithoutBP(set
-					.getLong(BESTELLUNG_FK)), set.getInt(DURCHSCHNITT), set.getInt(KANTINE), set.getInt(GESAMT), set.getInt(FREITAG), set
+			list.add(new Bestellposition(set.getLong(ID), getArtikelById(set.getLong(ARTIKEL_FK)), null, set.getInt(DURCHSCHNITT), set.getInt(KANTINE), set.getInt(GESAMT), set.getInt(FREITAG), set
 					.getInt(MONTAG), set.getBoolean(GELIEFERT), set.getDouble(SUMME)));
 		}
 		closeConnection();
@@ -272,16 +269,16 @@ public class BestellpositionDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	private Bestellung getBestellungByIdWithoutBP(Long id) throws ConnectException, DAOException, SQLException {
-
-		Bestellung bestellung = null;
-		ResultSet set = getMany(MessageFormat.format(GET_BESTELLUNG_BY_ID, id));
-
-		while (set.next()) {
-			bestellung = new Bestellung(set.getLong(ID), getLieferantById(set.getLong(LIEFERANT_FK)), set.getDate(DATUM), set.getDate(LIEFERDATUM),
-					set.getDate(LIEFERDATUM2), set.getBoolean(BESTELLT));
-		}
-
-		return bestellung;
-	}
+//	private Bestellung getBestellungByIdWithoutBP(Long id) throws ConnectException, DAOException, SQLException {
+//
+//		Bestellung bestellung = null;
+//		ResultSet set = getMany(MessageFormat.format(GET_BESTELLUNG_BY_ID, id));
+//
+//		while (set.next()) {
+//			bestellung = new Bestellung(set.getLong(ID), getLieferantById(set.getLong(LIEFERANT_FK)), set.getDate(DATUM), set.getDate(LIEFERDATUM),
+//					set.getDate(LIEFERDATUM2), set.getBoolean(BESTELLT));
+//		}
+//
+//		return bestellung;
+//	}
 }

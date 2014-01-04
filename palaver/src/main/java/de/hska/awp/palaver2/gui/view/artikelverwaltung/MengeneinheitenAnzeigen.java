@@ -15,7 +15,7 @@ import com.vaadin.ui.UI;
 
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver.artikelverwaltung.domain.Mengeneinheit;
-import de.hska.awp.palaver.artikelverwaltung.service.Mengeneinheitverwaltung;
+import de.hska.awp.palaver.artikelverwaltung.service.MengeneinheitService;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -131,7 +131,7 @@ public class MengeneinheitenAnzeigen extends OverAnzeigen implements View {
 	private void beans() {	
 		try {
 			m_container = new BeanItemContainer<Mengeneinheit>(Mengeneinheit.class,
-					Mengeneinheitverwaltung.getInstance().getAllMengeneinheiten());
+					MengeneinheitService.getInstance().getAllMengeneinheiten());
 			setTable();			
 		} catch (Exception e) {
 			LOG.error(e.toString());

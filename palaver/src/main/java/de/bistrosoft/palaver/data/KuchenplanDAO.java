@@ -15,8 +15,8 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 import de.bistrosoft.palaver.util.Week;
 import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver.artikelverwaltung.domain.Mengeneinheit;
-import de.hska.awp.palaver.artikelverwaltung.service.Artikelverwaltung;
-import de.hska.awp.palaver.artikelverwaltung.service.Mengeneinheitverwaltung;
+import de.hska.awp.palaver.artikelverwaltung.service.ArtikelService;
+import de.hska.awp.palaver.artikelverwaltung.service.MengeneinheitService;
 import de.hska.awp.palaver.dao.AbstractDAO;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
@@ -90,10 +90,10 @@ public class KuchenplanDAO extends AbstractDAO {
 					GET_ARTIKEL_BY_WEEK, week.getWeek(), week.getYear(), zeichen, tag));
 
 			while (set.next()) {
-				Artikel art = Artikelverwaltung.getInstance().getArtikelById(
+				Artikel art = ArtikelService.getInstance().getArtikelById(
 						set.getLong("artikel_fk"));
 				Double menge = set.getDouble("menge");
-				Mengeneinheit einheit = Mengeneinheitverwaltung.getInstance()
+				Mengeneinheit einheit = MengeneinheitService.getInstance()
 						.getMengeneinheitById(set.getLong("einheit"));
 
 				ab.add(new RezeptHasArtikel(art, einheit, menge));

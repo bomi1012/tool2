@@ -14,7 +14,7 @@ import com.vaadin.ui.Window;
 
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver.artikelverwaltung.domain.Mengeneinheit;
-import de.hska.awp.palaver.artikelverwaltung.service.Mengeneinheitverwaltung;
+import de.hska.awp.palaver.artikelverwaltung.service.MengeneinheitService;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.gui.view.IErstellen;
@@ -144,13 +144,13 @@ ValueChangeListener, IErstellen  {
 			if(!m_create) {
 				m_mengeneinheit.setName(m_nameField.getValue());
 				m_mengeneinheit.setKurz(kurzField.getValue());
-				Mengeneinheitverwaltung.getInstance().updateMengeneinheit(m_mengeneinheit);
+				MengeneinheitService.getInstance().updateMengeneinheit(m_mengeneinheit);
 			} else {
 				m_mengeneinheit = new Mengeneinheit(m_nameField.getValue(), kurzField.getValue());
-				Mengeneinheitverwaltung.getInstance().createMengeneinheit(m_mengeneinheit);
+				MengeneinheitService.getInstance().createMengeneinheit(m_mengeneinheit);
 			}
 		} else if(i == 1) {
-			Mengeneinheitverwaltung.getInstance().deleteMengeneinheit(m_mengeneinheit.getId());
+			MengeneinheitService.getInstance().deleteMengeneinheit(m_mengeneinheit.getId());
 		} 
 		
 	}

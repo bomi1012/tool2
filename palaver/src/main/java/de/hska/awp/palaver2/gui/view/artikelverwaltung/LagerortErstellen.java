@@ -17,7 +17,7 @@ import com.vaadin.ui.Window;
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver.artikelverwaltung.domain.Kategorie;
 import de.hska.awp.palaver.artikelverwaltung.domain.Lagerort;
-import de.hska.awp.palaver.artikelverwaltung.service.Lagerortverwaltung;
+import de.hska.awp.palaver.artikelverwaltung.service.LagerorService;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.gui.view.IErstellen;
@@ -139,13 +139,13 @@ ValueChangeListener, IErstellen  {
 		if(i == 0) {
 			if(!m_create) {
 				m_lagerort.setName(m_nameField.getValue());
-				Lagerortverwaltung.getInstance().updateLagerort(m_lagerort);
+				LagerorService.getInstance().updateLagerort(m_lagerort);
 			} else {
 				m_lagerort = new Lagerort(m_nameField.getValue());
-				Lagerortverwaltung.getInstance().createLagerort(m_lagerort);
+				LagerorService.getInstance().createLagerort(m_lagerort);
 			}
 		} else if(i == 1) {
-			Lagerortverwaltung.getInstance().deleteLagerort(m_lagerort.getId());
+			LagerorService.getInstance().deleteLagerort(m_lagerort.getId());
 		} 
 	}
 	

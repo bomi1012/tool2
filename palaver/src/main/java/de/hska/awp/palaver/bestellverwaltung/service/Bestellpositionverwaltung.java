@@ -9,10 +9,10 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hska.awp.palaver.bestellverwaltung.dao.BestellpositionDAO;
 import de.hska.awp.palaver.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
-import de.hska.awp.palaver2.data.BestellpositionDAO;
 import de.hska.awp.palaver2.util.BestellungData;
 
 /**
@@ -89,11 +89,11 @@ public class Bestellpositionverwaltung extends BestellpositionDAO {
 	 * @throws DAOException
 	 * @throws ConnectException
 	 */
-	public Bestellposition getBestellpositionById(Long id) throws ConnectException,
-			DAOException, SQLException {
-		Bestellposition bestellposition = super.getBestellpositionById(id);
-		return bestellposition;
-	}
+//	public Bestellposition getBestellpositionById(Long id) throws ConnectException,
+//			DAOException, SQLException {
+//		Bestellposition bestellposition = super.getBestellpositionById(id);
+//		return bestellposition;
+//	}
 	
 	/**
 	 * Die Methode wandelt eine Liste von BestellungData Objekten um in eine Liste mit Bestellpositionen. 

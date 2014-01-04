@@ -15,7 +15,7 @@ import com.vaadin.ui.UI;
 
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver.artikelverwaltung.domain.Lagerort;
-import de.hska.awp.palaver.artikelverwaltung.service.Lagerortverwaltung;
+import de.hska.awp.palaver.artikelverwaltung.service.LagerorService;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -128,7 +128,7 @@ public class LagerorteAnzeigen extends OverAnzeigen implements View {
 	private void beans() {	
 		try {
 			m_container = new BeanItemContainer<Lagerort>(Lagerort.class,
-					Lagerortverwaltung.getInstance().getAllLagerorts());
+					LagerorService.getInstance().getAllLagerorts());
 			setTable();
 		} catch (Exception e) {
 			LOG.error(e.toString());

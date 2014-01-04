@@ -52,8 +52,8 @@ public class CreateExcelFile {
 			if (mehrereliefertermine == true) {
 				// Lieferdatum1			
 				HSSFRow rowLieferdatum1 = sheet.createRow((short) 2);
-				rowLieferdatum1.createCell((short) 0).setCellValue(
-						"1.Lieferdatum: " + dateFormat.format(bestellung.getLieferdatum()));
+//				rowLieferdatum1.createCell((short) 0).setCellValue(
+//						"1.Lieferdatum: " + dateFormat.format(bestellung.getLieferdatum()));
 				// Lieferdatum2
 				HSSFRow rowLieferdatum2 = sheet.createRow((short) 3);
 				rowLieferdatum2.createCell((short) 0).setCellValue(
@@ -62,8 +62,8 @@ public class CreateExcelFile {
 			else{
 				// Lieferdatum
 				HSSFRow rowLieferdatum1 = sheet.createRow((short) 2);
-				rowLieferdatum1.createCell((short) 0).setCellValue(
-						"Lieferdatum: " + dateFormat.format(bestellung.getLieferdatum()));
+//				rowLieferdatum1.createCell((short) 0).setCellValue(
+//						"Lieferdatum: " + dateFormat.format(bestellung.getLieferdatum()));
 			}	
 			// Header
 			HSSFRow rowhead = sheet.createRow((short) 5);

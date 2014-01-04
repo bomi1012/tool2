@@ -8,16 +8,16 @@ import de.hska.awp.palaver.artikelverwaltung.domain.Kategorie;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
 
-public class Kategorienverwaltung extends KategorieDAO {
+public class KategorieService extends KategorieDAO {
 	
-	private static Kategorienverwaltung instance = null;
-	public Kategorienverwaltung() {
+	private static KategorieService instance = null;
+	public KategorieService() {
 		super();
 	}
 	
-	public static Kategorienverwaltung getInstance() {
+	public static KategorieService getInstance() {
 		if (instance == null) {
-			instance = new Kategorienverwaltung();
+			instance = new KategorieService();
 		}
 		return instance;
 	}

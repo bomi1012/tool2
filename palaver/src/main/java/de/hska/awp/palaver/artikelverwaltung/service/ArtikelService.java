@@ -12,16 +12,16 @@ import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
 
-public class Artikelverwaltung extends ArtikelDAO {
-	private static Artikelverwaltung instance = null;
+public class ArtikelService extends ArtikelDAO {
+	private static ArtikelService instance = null;
 	
-	private Artikelverwaltung() {
+	private ArtikelService() {
 		super();
 	}
 
-	public static Artikelverwaltung getInstance() {
+	public static ArtikelService getInstance() {
 		if (instance == null) {
-			instance = new Artikelverwaltung();
+			instance = new ArtikelService();
 		}
 		return instance;
 	}

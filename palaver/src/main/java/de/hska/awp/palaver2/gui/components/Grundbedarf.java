@@ -102,8 +102,8 @@ public class Grundbedarf implements Serializable{
 		
 		m_liefertermin1.setValue(artikel.getDurchschnittLT1());
 		m_liefertermin2.setValue(artikel.getDurchschnittLT2());
-		m_liefertermin1.setWidth("50");
-		m_liefertermin2.setWidth("50");
+		m_liefertermin1.setWidth("65");
+		m_liefertermin2.setWidth("65");
 		
 		m_mengeneinheit.setValue(artikel.getMengeneinheit().getKurz());
 		m_mengeneinheit.setDescription(artikel.getMengeneinheit().getName());

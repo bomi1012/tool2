@@ -16,7 +16,7 @@ import com.vaadin.ui.Window;
 
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver.artikelverwaltung.domain.Kategorie;
-import de.hska.awp.palaver.artikelverwaltung.service.Kategorienverwaltung;
+import de.hska.awp.palaver.artikelverwaltung.service.KategorieService;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.gui.view.IErstellen;
@@ -139,13 +139,13 @@ ValueChangeListener, IErstellen  {
 			if(i == 0) {
 				if(!m_create) {
 					m_kategorie.setName(m_nameField.getValue());
-					Kategorienverwaltung.getInstance().updateKategorie(m_kategorie);
+					KategorieService.getInstance().updateKategorie(m_kategorie);
 				} else {
 					m_kategorie = new Kategorie(m_nameField.getValue());
-					Kategorienverwaltung.getInstance().createKategorie(m_kategorie);
+					KategorieService.getInstance().createKategorie(m_kategorie);
 				}
 			} else if(i == 1) {
-				Kategorienverwaltung.getInstance().deleteKategorie(m_kategorie.getId());
+				KategorieService.getInstance().deleteKategorie(m_kategorie.getId());
 			} 
 		} catch (Exception e) {
 			LOG.error(e.toString());

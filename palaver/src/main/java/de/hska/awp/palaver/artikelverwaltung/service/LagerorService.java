@@ -8,16 +8,16 @@ import de.hska.awp.palaver.artikelverwaltung.domain.Lagerort;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
 
-public class Lagerortverwaltung extends LagerortDAO {
-	private static Lagerortverwaltung instance = null;
+public class LagerorService extends LagerortDAO {
+	private static LagerorService instance = null;
 	
-	private Lagerortverwaltung() {
+	private LagerorService() {
 		super();
 	}
 
-	public static Lagerortverwaltung getInstance() {
+	public static LagerorService getInstance() {
 		if (instance == null) {
-			instance = new Lagerortverwaltung();
+			instance = new LagerorService();
 		}
 		return instance;
 	}

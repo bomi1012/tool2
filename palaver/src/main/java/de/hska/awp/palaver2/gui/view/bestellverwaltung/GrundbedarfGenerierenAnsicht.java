@@ -23,7 +23,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver.artikelverwaltung.service.Artikelverwaltung;
+import de.hska.awp.palaver.artikelverwaltung.service.ArtikelService;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.gui.components.Grundbedarf;
@@ -124,7 +124,7 @@ ValueChangeListener {
 				if(event.isDoubleClick()) {
 					//TODO: save in Artikel
 					try {
-						windowModal(Artikelverwaltung.getInstance().getArtikelById(((Grundbedarf) event.getItemId()).getArtikelId()));
+						windowModal(ArtikelService.getInstance().getArtikelById(((Grundbedarf) event.getItemId()).getArtikelId()));
 					} catch (ConnectException e) {
 						e.printStackTrace();
 					} catch (DAOException e) {
@@ -160,9 +160,9 @@ ValueChangeListener {
 		List<Grundbedarf> gb = new ArrayList<Grundbedarf>();
 		List<Artikel> m_arList = new ArrayList<Artikel>();
 		if(lieferant == null) {
-			m_arList = Artikelverwaltung.getInstance().getArtikelByGrundbedarf();
+			m_arList = ArtikelService.getInstance().getArtikelByGrundbedarf();
 		} else {
-			m_arList = Artikelverwaltung.getInstance().getGrundbedarfByLieferantId(lieferant.getId());
+			m_arList = ArtikelService.getInstance().getGrundbedarfByLieferantId(lieferant.getId());
 		}
 		for (Artikel artikel : m_arList) {		
 			Grundbedarf g = new Grundbedarf(artikel);
@@ -176,14 +176,14 @@ ValueChangeListener {
 					"liefertermin1", "summe1", "liefertermin2", "summe2",
 					"mengeneinheit", "remove"});
 			m_filterTable.sort(new Object[] { "artikelName" }, new boolean[] { true });
-			m_filterTable.setColumnWidth("remove", 40);
+			m_filterTable.setColumnWidth("remove", 70);
 			m_filterTable.setColumnHeader("remove", "ignorieren");	
 			m_filterTable.setColumnWidth("gebinde", 60);
 			m_filterTable.setColumnWidth("summe1", 60);
 			m_filterTable.setColumnWidth("summe2", 60);
 			m_filterTable.setColumnWidth("mengeneinheit", 45);
-			m_filterTable.setColumnWidth("liefertermin1", 70);
-			m_filterTable.setColumnWidth("liefertermin2", 70);
+			m_filterTable.setColumnWidth("liefertermin1", 80);
+			m_filterTable.setColumnWidth("liefertermin2", 80);
 			m_filterTable.setColumnAlignment("summe1", m_filterTable.ALIGN_CENTER);
 			m_filterTable.setColumnAlignment("summe2", m_filterTable.ALIGN_CENTER);
 			m_filterTable.setColumnAlignment("mengeneinheit", m_filterTable.ALIGN_CENTER);

@@ -18,8 +18,8 @@ import de.hska.awp.palaver.artikelverwaltung.dao.ArtikelDAO;
 import de.hska.awp.palaver.artikelverwaltung.dao.MengeneinheitDAO;
 import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver.artikelverwaltung.domain.Mengeneinheit;
-import de.hska.awp.palaver.artikelverwaltung.service.Artikelverwaltung;
-import de.hska.awp.palaver.artikelverwaltung.service.Mengeneinheitverwaltung;
+import de.hska.awp.palaver.artikelverwaltung.service.ArtikelService;
+import de.hska.awp.palaver.artikelverwaltung.service.MengeneinheitService;
 import de.hska.awp.palaver.dao.AbstractDAO;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
@@ -379,10 +379,10 @@ public class RezeptDAO extends AbstractDAO {
 			RezeptHasArtikel a = new RezeptHasArtikel();
 			a.setRezept(rez);
 			a.setMenge(set.getDouble("menge"));
-			Artikel artikel = Artikelverwaltung.getInstance().getArtikelById(
+			Artikel artikel = ArtikelService.getInstance().getArtikelById(
 					set.getLong("artikel_fk"));
 			a.setArtike(artikel);
-			Mengeneinheit me = Mengeneinheitverwaltung.getInstance()
+			Mengeneinheit me = MengeneinheitService.getInstance()
 					.getMengeneinheitById(set.getLong("einheit"));
 			a.setMengeneinheit(me);
 			rha.add(a);

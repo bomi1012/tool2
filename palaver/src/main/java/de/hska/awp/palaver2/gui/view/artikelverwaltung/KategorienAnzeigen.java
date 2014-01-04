@@ -15,7 +15,7 @@ import com.vaadin.ui.UI;
 
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver.artikelverwaltung.domain.Kategorie;
-import de.hska.awp.palaver.artikelverwaltung.service.Kategorienverwaltung;
+import de.hska.awp.palaver.artikelverwaltung.service.KategorieService;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -127,7 +127,7 @@ public class KategorienAnzeigen extends OverAnzeigen implements View {
 	private void beans() {	
 		try {
 			m_container = new BeanItemContainer<Kategorie>(Kategorie.class,
-					Kategorienverwaltung.getInstance().getAllKategories());
+					KategorieService.getInstance().getAllKategories());
 			setTable();
 		} catch (Exception e) {
 			LOG.error(e.toString());

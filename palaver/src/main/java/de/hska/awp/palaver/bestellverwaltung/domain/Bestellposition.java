@@ -5,8 +5,6 @@ import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
 /**
  * Die Klasse Bestellposition spiegelt den Bestellposition aus der Datenbank
  * wieder.
- * 
- * @author Elena W
  */
 
 public class Bestellposition implements java.io.Serializable {

@@ -39,10 +39,6 @@ import de.bistrosoft.palaver.gui.view.RezeptAnlegen;
 import de.bistrosoft.palaver.gui.view.RezeptAnzeigenTabelle;
 import de.bistrosoft.palaver.gui.view.ZubereitungEinst;
 import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver2.gui.view.BestellungAnzeigen;
-import de.hska.awp.palaver2.gui.view.BestellungBearbeitenAuswaehlen;
-import de.hska.awp.palaver2.gui.view.BestellungGenerieren;
-import de.hska.awp.palaver2.gui.view.BestellungLieferantAuswaehlen;
 import de.hska.awp.palaver2.gui.view.EmailOhneBestellung;
 import de.hska.awp.palaver2.gui.view.MitarbeiterAnzeigen;
 import de.hska.awp.palaver2.gui.view.MitarbeiterErstellen;
@@ -268,18 +264,20 @@ public class MainLayout extends VerticalLayout implements Command {
 				log.info("**************************************************************");
 				log.info("LOGOUT");
 				log.info("**************************************************************");
-			} else if (selectedItem.getText().equals(
-					IConstants.MENU_BESTELLUNG_NEW_RANDOM)) {
-				ViewHandler.getInstance().switchView(
-						BestellungLieferantAuswaehlen.class);
-			} else if (selectedItem.getText().equals(
-					IConstants.MENU_BESTELLUNG_BEARBEITEN)) {
-				ViewHandler.getInstance().switchView(
-						BestellungBearbeitenAuswaehlen.class);
-			} else if (selectedItem.getText().equals(
-					IConstants.MENU_BESTELLUNG_ANZEIGEN)) {
-				ViewHandler.getInstance().switchView(BestellungAnzeigen.class);
-			} else if (selectedItem.getText().equals(
+			} 
+//			else if (selectedItem.getText().equals(
+//					IConstants.MENU_BESTELLUNG_NEW_RANDOM)) {
+//				ViewHandler.getInstance().switchView(
+//						BestellungLieferantAuswaehlen.class);
+//			} else if (selectedItem.getText().equals(
+//					IConstants.MENU_BESTELLUNG_BEARBEITEN)) {
+//				ViewHandler.getInstance().switchView(
+//						BestellungBearbeitenAuswaehlen.class);
+//			} else if (selectedItem.getText().equals(
+//					IConstants.MENU_BESTELLUNG_ANZEIGEN)) {
+//				ViewHandler.getInstance().switchView(BestellungAnzeigen.class);
+//			} 
+			else if (selectedItem.getText().equals(
 					IConstants.MENU_REZEPT_ANZEIGEN)) {
 				ViewHandler.getInstance().switchView(
 						RezeptAnzeigenTabelle.class);
@@ -334,8 +332,8 @@ public class MainLayout extends VerticalLayout implements Command {
 				ViewHandler.getInstance().switchView(RollenAnzeigen.class);
 			} else if (selectedItem.getText().equals(
 					IConstants.MENU_BESTELLUNG_GENERATE)) {
-				ViewHandler.getInstance()
-						.switchView(BestellungGenerieren.class);
+//				ViewHandler.getInstance()
+//						.switchView(BestellungGenerieren.class);
 			} else if (selectedItem.getText().equals(IConstants.MENU_HEADER)) {
 				setHeaderVisible(!this.header.isVisible());
 			} else if(selectedItem.getText().equals("Grundbedarf generieren")) {

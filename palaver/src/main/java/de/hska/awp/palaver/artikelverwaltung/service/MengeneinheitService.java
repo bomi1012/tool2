@@ -8,17 +8,17 @@ import de.hska.awp.palaver.artikelverwaltung.domain.Mengeneinheit;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
 
-public class Mengeneinheitverwaltung extends MengeneinheitDAO {
+public class MengeneinheitService extends MengeneinheitDAO {
 
-	private static Mengeneinheitverwaltung instance = null;
+	private static MengeneinheitService instance = null;
 
-	private Mengeneinheitverwaltung() {
+	private MengeneinheitService() {
 		super();
 	}
 
-	public static Mengeneinheitverwaltung getInstance() {
+	public static MengeneinheitService getInstance() {
 		if (instance == null) {
-			instance = new Mengeneinheitverwaltung();
+			instance = new MengeneinheitService();
 		}
 		return instance;
 	}

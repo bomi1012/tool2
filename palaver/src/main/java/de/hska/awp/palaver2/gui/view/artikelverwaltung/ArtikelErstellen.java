@@ -32,10 +32,10 @@ import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver.artikelverwaltung.domain.Kategorie;
 import de.hska.awp.palaver.artikelverwaltung.domain.Lagerort;
 import de.hska.awp.palaver.artikelverwaltung.domain.Mengeneinheit;
-import de.hska.awp.palaver.artikelverwaltung.service.Artikelverwaltung;
-import de.hska.awp.palaver.artikelverwaltung.service.Kategorienverwaltung;
-import de.hska.awp.palaver.artikelverwaltung.service.Lagerortverwaltung;
-import de.hska.awp.palaver.artikelverwaltung.service.Mengeneinheitverwaltung;
+import de.hska.awp.palaver.artikelverwaltung.service.ArtikelService;
+import de.hska.awp.palaver.artikelverwaltung.service.KategorieService;
+import de.hska.awp.palaver.artikelverwaltung.service.LagerorService;
+import de.hska.awp.palaver.artikelverwaltung.service.MengeneinheitService;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.gui.view.lieferantenverwaltung.LieferantErstellen;
@@ -341,12 +341,12 @@ public class ArtikelErstellen extends OverErstellen implements View,
 				m_artikel.setStandard(m_standardCheckbox.getValue());
 				m_artikel.setFuerRezept(m_fuerRezepteCheckbox.getValue());				
 					if (m_create) {
-						Artikelverwaltung.getInstance().createArtikel(m_artikel);
+						ArtikelService.getInstance().createArtikel(m_artikel);
 					} else {
-						Artikelverwaltung.getInstance().updateArtikel(m_artikel);
+						ArtikelService.getInstance().updateArtikel(m_artikel);
 					}	
 			} else {
-					Artikelverwaltung.getInstance().deaktivireArtikel(m_artikel);	
+					ArtikelService.getInstance().deaktivireArtikel(m_artikel);	
 			}
 		}catch (Exception e) {
 			LOG.error(e.toString());
@@ -381,9 +381,9 @@ public class ArtikelErstellen extends OverErstellen implements View,
 	private void load() {
 		try {			
 			allLieferanten(Lieferantenverwaltung.getInstance().getAllLieferanten());
-			allKategories(Kategorienverwaltung.getInstance().getAllKategories());
-			allMengeneinheiten(Mengeneinheitverwaltung.getInstance().getAllMengeneinheiten());
-			allLagerorte(Lagerortverwaltung.getInstance().getAllLagerorts());
+			allKategories(KategorieService.getInstance().getAllKategories());
+			allMengeneinheiten(MengeneinheitService.getInstance().getAllMengeneinheiten());
+			allLagerorte(LagerorService.getInstance().getAllLagerorts());
 		} catch (Exception e) {
 			LOG.error(e.toString());
 		}
@@ -398,7 +398,7 @@ public class ArtikelErstellen extends OverErstellen implements View,
 			@Override
 			public void windowClose(CloseEvent e) {
 				try {
-					allMengeneinheiten(Mengeneinheitverwaltung.getInstance().getAllMengeneinheiten());
+					allMengeneinheiten(MengeneinheitService.getInstance().getAllMengeneinheiten());
 				} catch (Exception e1) {
 					LOG.error(e.toString());
 				} 	
@@ -422,7 +422,7 @@ public class ArtikelErstellen extends OverErstellen implements View,
 			@Override
 			public void windowClose(CloseEvent e) {
 				try {
-					allKategories(Kategorienverwaltung.getInstance().getAllKategories());
+					allKategories(KategorieService.getInstance().getAllKategories());
 				} catch (ConnectException e1) {
 					e1.printStackTrace();
 				} catch (DAOException e1) {
@@ -443,7 +443,7 @@ public class ArtikelErstellen extends OverErstellen implements View,
 			@Override
 			public void windowClose(CloseEvent e) {
 				try {
-					allLagerorte(Lagerortverwaltung.getInstance().getAllLagerorts());
+					allLagerorte(LagerorService.getInstance().getAllLagerorts());
 				} catch (ConnectException e1) {
 					e1.printStackTrace();
 				} catch (DAOException e1) {

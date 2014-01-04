@@ -1,152 +1,132 @@
 package de.hska.awp.palaver.bestellverwaltung.domain;
 
 import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 
 /**
  * Die Klasse Bestellung spiegelt den Bestellung aus der Datenbank wieder.
- * 
- * @author Elena W
  */
 
 public class Bestellung implements java.io.Serializable {
-
 	private static final long serialVersionUID = -4115989551813492575L;
 
 	private Long m_id;
 	private Lieferant m_lieferant;
+	private Mitarbeiter m_mitarbeiter;
 	private Date m_datum;
-	private Date m_lieferdatum;
+	private Date m_lieferdatum1;
 	private Date m_lieferdatum2;
 	private List<Bestellposition> m_bestellpositionen;
-	private boolean m_status; 
+	private boolean m_status;  	
+	private int m_kategorie; 	/** 0: grundbedarf, 1: kantine, 3: 1+2 ... */
 	
 	public Bestellung() {
 		super();
 	}
-
-	public Bestellung(Long id, Lieferant lieferant, Date datum, Date lieferdatum, Date lieferdatum2, boolean bestellt) {
+	
+	public Bestellung(Long id, Lieferant lieferant, Mitarbeiter mitarbeiter,
+			Date datum, Date lieferdatum1, Date lieferdatum2,
+			List<Bestellposition> bestellpositionen, boolean status, int kategorie) {
 		super();
-		this.m_id = id;
-		this.m_lieferant = lieferant;
-		this.m_datum = datum;
-		this.m_lieferdatum = lieferdatum;
-		this.m_status = bestellt;
-		this.m_lieferdatum2 = lieferdatum2;
-	}
-
-	/**
-	 * @author Christian Barth
-	 * @param id
-	 * @param lieferant
-	 * @param datum
-	 * @param lieferdatum
-	 * @param lieferdatum2
-	 * @param bestellpositionen
-	 * @param bestellt
-	 */
-	public Bestellung(Long id, Lieferant lieferant, Date datum, Date lieferdatum, Date lieferdatum2, List<Bestellposition> bestellpositionen,
-			boolean bestellt) {
-		super();
-		this.m_id = id;
-		this.m_lieferant = lieferant;
-		this.m_datum = datum;
-		this.m_lieferdatum = lieferdatum;
-		this.m_bestellpositionen = bestellpositionen;
-		this.m_status = bestellt;
-		this.m_lieferdatum2 = lieferdatum2;
+		m_id = id;
+		m_lieferant = lieferant;
+		m_mitarbeiter = mitarbeiter;
+		m_datum = datum;
+		m_lieferdatum1 = lieferdatum1;
+		m_lieferdatum2 = lieferdatum2;
+		m_bestellpositionen = bestellpositionen;
+		m_status = status;
+		m_kategorie = kategorie;
 	}
 
 	public Long getId() {
-		return this.m_id;
+		return m_id;
 	}
-
+	public void setId(Long id) {
+		m_id = id;
+	}
+	
 	public Lieferant getLieferant() {
-		return this.m_lieferant;
+		return m_lieferant;
+	}
+	public void setLieferant(Lieferant lieferant) {
+		m_lieferant = lieferant;
 	}
 
-	public void setLieferant(Lieferant lieferant) {
-		this.m_lieferant = lieferant;
+	public Mitarbeiter getMitarbeiter() {
+		return m_mitarbeiter;
+	}
+	public void setMitarbeiter(Mitarbeiter mitarbeiter) {
+		m_mitarbeiter = mitarbeiter;
 	}
 
 	public Date getDatum() {
-		return this.m_datum;
+		return m_datum;
 	}
-	
-	public String getDatumS() {
-		DateFormat df=new SimpleDateFormat("dd.MM.yy");
-		Date date = m_datum;
-		String s=df.format(date); 
-		return s;
-	}
-
 	public void setDatum(Date datum) {
-		this.m_datum = datum;
+		m_datum = datum;
 	}
 
-	public Date getLieferdatum() {
-		return m_lieferdatum;
+	public Date getLieferdatum1() {
+		return m_lieferdatum1;
 	}
-	
-	public String getLieferdatumS() {
-		DateFormat df=new SimpleDateFormat("dd.MM.yy");
-		Date date = m_lieferdatum;
-		String s=df.format(date); 
-		return s;
-	}
-
-	public void setLieferdatum(Date lieferdatum) {
-		this.m_lieferdatum = lieferdatum;
-	}
-
-	public List<Bestellposition> getBestellpositionen() {
-		return m_bestellpositionen;
-	}
-
-	public void setBestellpositionen(List<Bestellposition> bestellpositionen) {
-		this.m_bestellpositionen = bestellpositionen;
-	}
-
-	public Bestellung addBestellposition(Bestellposition bestellposition) {
-		if (m_bestellpositionen == null) {
-			m_bestellpositionen = new ArrayList<Bestellposition>();
-		}
-		m_bestellpositionen.add(bestellposition);
-		return this;
-	}
-
-	public boolean isBestellt() {
-		return m_status;
-	}
-
-	public void setBestellt(boolean bestellt) {
-		this.m_status = bestellt;
+	public void setLieferdatum1(Date lieferdatum1) {
+		m_lieferdatum1 = lieferdatum1;
 	}
 
 	public Date getLieferdatum2() {
 		return m_lieferdatum2;
 	}
-	
-	public String getLieferdatum2S() {
-		DateFormat df=new SimpleDateFormat("dd.MM.yy");
-		Date date = m_lieferdatum2;
-		String s=df.format(date); 
-		return s;
+	public void setLieferdatum2(Date lieferdatum2) {
+		m_lieferdatum2 = lieferdatum2;
 	}
 
-	public void setLieferdatum2(Date lieferdatum2) {
-		this.m_lieferdatum2 = lieferdatum2;
+	public List<Bestellposition> getBestellpositionen() {
+		return m_bestellpositionen;
+	}
+	public void setBestellpositionen(List<Bestellposition> bestellpositionen) {
+		m_bestellpositionen = bestellpositionen;
+	}
+
+	public boolean getStatus() {
+		return m_status;
+	}
+	public void setStatus(boolean status) {
+		m_status = status;
+	}
+
+	public int getKategorie() {
+		return m_kategorie;
+	}
+	public void setKategorie(int kategorie) {
+		m_kategorie = kategorie;
 	}
 
 	@Override
-	public String toString() {
-		return "Bestellung [id=" + m_id + ", lieferant=" + m_lieferant + ", datum=" + m_datum + ", lieferdatum=" + m_lieferdatum + ", lieferdatum2="
-				+ m_lieferdatum2 + ", bestellt=" + m_status + "]";
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((m_id == null) ? 0 : m_id.hashCode());
+		return result;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Bestellung other = (Bestellung) obj;
+		if (m_id == null) {
+			if (other.m_id != null)
+				return false;
+		} else if (!m_id.equals(other.m_id))
+			return false;
+		return true;
+	}
 }
