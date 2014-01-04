@@ -13,13 +13,23 @@ import de.hska.awp.palaver2.data.MitarbeiterDAO;
 
 public class AbstractBestellungDAO extends AbstractDAO {
 	protected static final String TABLE_B = "bestellung";
+	protected static final String TABLE_BP = "bestellposition";
+	
 	protected static final String FIELD_LIEFERANT_FK = "lieferant_fk";
 	protected static final String FIELD_MITARBEITER_FK = "mitarbeiter_fk";
+	protected final static String FIELD_ARTIKEL_FK = "artikel_fk";
+	protected final static String FIELD_BESTELLUNG_FK = "bestellung_fk";
+	
 	protected static final String FIELD_DATUM = "datum";
 	protected static final String FIELD_LIEFERDATUM1 = "lieferdatum1";
 	protected static final String FIELD_LIEFERDATUM2 = "lieferdatum2";
+	protected static final String FIELD_LIEFERMENGE1 = "liefermenge1";
+	protected static final String FIELD_LIEFERMENGE2 = "liefermenge2";
 	protected static final String FIELD_STATUS = "status";
 	protected static final String FIELD_KATEGORIE = "kategorie";
+	
+	
+
 //	private static final String TABLE2 = "bestellposition";
 //	private static final String ARTIKEL_FK = "artikel_fk";
 //	private static final String BESTELLUNG_FK = "bestellung_fk";
@@ -59,7 +69,6 @@ public class AbstractBestellungDAO extends AbstractDAO {
 				set.getDate(FIELD_DATUM), 
 				set.getDate(FIELD_LIEFERDATUM1), 
 				set.getDate(FIELD_LIEFERDATUM2), 
-				BestellpositionDAO.getInstance().getBestellpositionenByBestellungId(set.getLong(FIELD_ID)), 
 				set.getBoolean(FIELD_STATUS),
 				set.getInt(FIELD_KATEGORIE));	
 	}

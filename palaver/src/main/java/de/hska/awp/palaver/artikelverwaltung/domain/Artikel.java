@@ -33,8 +33,8 @@ public class Artikel extends EntityName implements java.io.Serializable {
 
 	public Artikel(Long id, String name) {
 		super();
-		this.id = id;
-		this.name = name;
+		m_id = id;
+		m_name = name;
 	}
 
 	/**
@@ -59,13 +59,11 @@ public class Artikel extends EntityName implements java.io.Serializable {
 			String name, Double bestellgroesse, Float preis,
 			Integer durchschnittLT1, Integer durchschnittLT2, String notiz, boolean standard, boolean grundbedarf, 
 			boolean fuerRezept,Lagerort lagerort) throws ConnectException, DAOException, SQLException {
-		super();
-		this.id = id;
+		super(id, name);
 		this.mengeneinheit = mengeneinheit;
 		this.kategorie = kategorie;
 		this.lieferant = lieferant;
 		this.artikelnr = artikelnr;
-		this.name = name;
 		this.bestellgroesse = bestellgroesse;
 		this.durchschnittLT1 = durchschnittLT1;
 		this.durchschnittLT2 = durchschnittLT2;
@@ -186,7 +184,7 @@ public class Artikel extends EntityName implements java.io.Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((m_id == null) ? 0 : m_id.hashCode());
 		return result;
 	}
 
@@ -200,10 +198,10 @@ public class Artikel extends EntityName implements java.io.Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Artikel other = (Artikel) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (m_id == null) {
+			if (other.m_id != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!m_id.equals(other.m_id))
 			return false;
 		return true;
 	}
@@ -211,6 +209,6 @@ public class Artikel extends EntityName implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return this.name;
+		return this.m_name;
 	}
 }

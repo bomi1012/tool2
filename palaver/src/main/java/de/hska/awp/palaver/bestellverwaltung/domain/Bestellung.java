@@ -1,8 +1,8 @@
 package de.hska.awp.palaver.bestellverwaltung.domain;
 
 import java.sql.Date;
-import java.util.List;
 
+import de.hska.awp.palaver.EntityId;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 
@@ -10,16 +10,14 @@ import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
  * Die Klasse Bestellung spiegelt den Bestellung aus der Datenbank wieder.
  */
 
-public class Bestellung implements java.io.Serializable {
+public class Bestellung extends EntityId implements java.io.Serializable {
 	private static final long serialVersionUID = -4115989551813492575L;
 
-	private Long m_id;
 	private Lieferant m_lieferant;
 	private Mitarbeiter m_mitarbeiter;
 	private Date m_datum;
 	private Date m_lieferdatum1;
 	private Date m_lieferdatum2;
-	private List<Bestellposition> m_bestellpositionen;
 	private boolean m_status;  	
 	private int m_kategorie; 	/** 0: grundbedarf, 1: kantine, 3: 1+2 ... */
 	
@@ -28,27 +26,17 @@ public class Bestellung implements java.io.Serializable {
 	}
 	
 	public Bestellung(Long id, Lieferant lieferant, Mitarbeiter mitarbeiter,
-			Date datum, Date lieferdatum1, Date lieferdatum2,
-			List<Bestellposition> bestellpositionen, boolean status, int kategorie) {
-		super();
-		m_id = id;
+			Date datum, Date lieferdatum1, Date lieferdatum2, boolean status, int kategorie) {
+		super(id);
 		m_lieferant = lieferant;
 		m_mitarbeiter = mitarbeiter;
 		m_datum = datum;
 		m_lieferdatum1 = lieferdatum1;
 		m_lieferdatum2 = lieferdatum2;
-		m_bestellpositionen = bestellpositionen;
 		m_status = status;
 		m_kategorie = kategorie;
 	}
 
-	public Long getId() {
-		return m_id;
-	}
-	public void setId(Long id) {
-		m_id = id;
-	}
-	
 	public Lieferant getLieferant() {
 		return m_lieferant;
 	}
@@ -82,13 +70,6 @@ public class Bestellung implements java.io.Serializable {
 	}
 	public void setLieferdatum2(Date lieferdatum2) {
 		m_lieferdatum2 = lieferdatum2;
-	}
-
-	public List<Bestellposition> getBestellpositionen() {
-		return m_bestellpositionen;
-	}
-	public void setBestellpositionen(List<Bestellposition> bestellpositionen) {
-		m_bestellpositionen = bestellpositionen;
 	}
 
 	public boolean getStatus() {

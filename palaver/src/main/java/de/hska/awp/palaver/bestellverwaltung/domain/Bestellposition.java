@@ -1,5 +1,6 @@
 package de.hska.awp.palaver.bestellverwaltung.domain;
 
+import de.hska.awp.palaver.EntityId;
 import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
 
 /**
@@ -7,179 +8,89 @@ import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
  * wieder.
  */
 
-public class Bestellposition implements java.io.Serializable {
+public class Bestellposition extends EntityId implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1291141881234373163L;
 
-	private Long id;
-	private Artikel artikel;
-	private Bestellung bestellung;
-	private Integer durchschnitt;
-	private Integer kantine;
-	private Integer gesamt;
-	private Integer freitag;
-	private Integer montag;
-	private boolean geliefert;
-	private double summe;
-	
-	
+	private Artikel m_artikel;
+	private Bestellung m_bestellung;
+	private Double m_liefermenge1;
+	private Double m_liefermenge2;
+	private boolean m_status;
+		
+
+	public Artikel getArtikel() {
+		return m_artikel;
+	}
+	public void setArtikel(Artikel artikel) {
+		this.m_artikel = artikel;
+	}
+
+	public Bestellung getBestellung() {
+		return m_bestellung;
+	}
+	public void setBestellung(Bestellung bestellung) {
+		this.m_bestellung = bestellung;
+	}
+
+	public Double getLiefermenge1() {
+		return m_liefermenge1;
+	}
+	public void setLiefermenge1(Double liefermenge1) {
+		this.m_liefermenge1 = liefermenge1;
+	}
+
+	public Double getLiefermenge2() {
+		return m_liefermenge2;
+	}
+	public void setLiefermenge2(Double liefermenge2) {
+		this.m_liefermenge2 = liefermenge2;
+	}
+
+	public boolean isStatus() {
+		return m_status;
+	}
+	public void setStatus(boolean status) {
+		this.m_status = status;
+	}
+
 
 	public Bestellposition() {
 		super();
 	}
-
-	/**
-	 * @author Christian Barth
-	 * @param id
-	 * @param artikel
-	 * @param bestellung
-	 * @param durchschnitt
-	 * @param kantine
-	 * @param gesamt
-	 * @param freitag
-	 * @param montag
-	 * @param geliefert
-	 */
-	public Bestellposition(Long id, Artikel artikel, Bestellung bestellung, Integer durchschnitt, Integer kantine, Integer gesamt, Integer freitag,
-			Integer montag, boolean geliefert, double summe) {
-		super();
-		this.id = id;
-		this.artikel = artikel;
-		this.bestellung = bestellung;
-		this.durchschnitt = durchschnitt;
-		this.kantine = kantine;
-		this.gesamt = gesamt;
-		this.freitag = freitag;
-		this.montag = montag;
-		this.geliefert = geliefert;
-		this.summe = summe;
+	public Bestellposition(Long id, Artikel artikel, Bestellung bestellung,
+			Double liefertermin1, Double liefertermin2, boolean status) {
+		super(id);
+		m_artikel = artikel;
+		m_bestellung = bestellung;
+		m_liefermenge1 = liefertermin1;
+		m_liefermenge2 = liefertermin2;
+		m_status = status;
 	}
 
-	/**
-	 * @author Christian Barth
-	 * @param id
-	 * @param artikel
-	 * @param durchschnitt
-	 * @param kantine
-	 * @param gesamt
-	 * @param freitag
-	 * @param montag
-	 * @param geliefert
-	 */
-	public Bestellposition(Long id, Artikel artikel, Integer durchschnitt, Integer kantine, Integer gesamt, Integer freitag, Integer montag,
-			boolean geliefert, double summe) {
-		this.id = id;
-		this.artikel = artikel;
-		this.durchschnitt = durchschnitt;
-		this.kantine = kantine;
-		this.gesamt = gesamt;
-		this.freitag = freitag;
-		this.montag = montag;
-		this.geliefert = geliefert;
-		this.summe = summe;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((m_id == null) ? 0 : m_id.hashCode());
+		return result;
 	}
 
-	public Long getId() {
-		return this.id;
-	}
 
-	public void setId(Long id) {
-		this.id = id;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Bestellposition other = (Bestellposition) obj;
+		if (m_id == null) {
+			if (other.m_id != null)
+				return false;
+		} else if (!m_id.equals(other.m_id))
+			return false;
+		return true;
 	}
-
-	public Artikel getArtikel() {
-		return this.artikel;
-	}
-
-	public void setArtikel(Artikel artikel) {
-		this.artikel = artikel;
-	}
-
-	public String getArtikelName() {
-		return this.artikel.getName();
-	}
-
-	public Double getBestellgroesse() {
-		return this.artikel.getBestellgroesse();
-	}
-
-	public Bestellung getBestellung() {
-		return this.bestellung;
-	}
-
-	public void setBestellung(Bestellung bestellung) {
-		this.bestellung = bestellung;
-	}
-
-	public Integer getDurchschnitt() {
-		if (durchschnitt == null) {
-			durchschnitt = 0;
-		}
-		return durchschnitt;
-	}
-
-	public void setDurchschnitt(Integer durchschnitt) {
-		this.durchschnitt = durchschnitt;
-	}
-
-	public Integer getKantine() {
-		if (kantine == null) {
-			kantine = 0;
-		}
-		return kantine;
-	}
-
-	public void setKantine(Integer kantine) {
-		this.kantine = kantine;
-	}
-
-	public Integer getGesamt() {
-		if (gesamt == null) {
-			gesamt = 0;
-		}
-		return gesamt;
-	}
-
-	public void setGesamt(Integer gesamt) {
-		this.gesamt = gesamt;
-	}
-
-	public Integer getFreitag() {
-		if (freitag == null) {
-			freitag = 0;
-		}
-		return freitag;
-	}
-
-	public void setFreitag(Integer freitag) {
-		this.freitag = freitag;
-	}
-
-	public Integer getMontag() {
-		if (montag == null) {
-			montag = 0;
-		}
-		return montag;
-	}
-
-	public void setMontag(Integer montag) {
-		this.montag = montag;
-	}
-
-	public boolean isGeliefert() {
-		return geliefert;
-	}
-
-	public void setGeliefert(boolean geliefert) {
-		this.geliefert = geliefert;
-	}
-
-	public double getSumme() {
-		return summe;
-	}
-
-	public void setSumme(double summe) {
-		this.summe = summe;
-	}
-
 }

@@ -1,16 +1,22 @@
 package de.hska.awp.palaver;
 
-public class EntityName {
+public class EntityName extends EntityId {
+	protected String m_name;
+	
 	public EntityName() {
 		super();
 	}
 	
-	protected Long id;
-	protected String name;
-	
-	public Long getId() { return this.id; }
-	public void setId(Long id) { this.id = id; }
+	public EntityName(Long id, String name) {
+		super(id);
+		m_name = name;
+	}
 
-	public String getName() { return this.name; }
-	public void setName(String name) { this.name = name; }
+	public EntityName(String name) {
+		m_name = name;
+	}
+
+	public String getName() { return m_name; }
+	public void setName(String name) { m_name = name; }
+
 }
