@@ -56,9 +56,9 @@ public class MengeneinheitDAO extends AbstractDAO {
 	public List<Mengeneinheit> getAllMengeneinheiten() throws ConnectException,
 			DAOException, SQLException {
 		list = new ArrayList<Mengeneinheit>();
-		set = getManaged(GET_ALL_MENGENEINHEITEN);
-		while (set.next()) {
-			list.add(setMengeneinheit(set));
+		m_set = getManaged(GET_ALL_MENGENEINHEITEN);
+		while (m_set.next()) {
+			list.add(setMengeneinheit(m_set));
 		}
 		return list;
 	}
@@ -66,9 +66,9 @@ public class MengeneinheitDAO extends AbstractDAO {
 	public Mengeneinheit getMengeneinheitById(Long id) throws ConnectException,
 			DAOException, SQLException {
 		mengeneinheit = null;
-		set = getManaged(MessageFormat.format(GET_MENGENEINHEIT_BY_ID, id));
-		while (set.next()) {
-			mengeneinheit = setMengeneinheit(set);
+		m_set = getManaged(MessageFormat.format(GET_MENGENEINHEIT_BY_ID, id));
+		while (m_set.next()) {
+			mengeneinheit = setMengeneinheit(m_set);
 		}
 		
 		return mengeneinheit;
@@ -77,9 +77,9 @@ public class MengeneinheitDAO extends AbstractDAO {
 	public List<Mengeneinheit> getMengeneinheitByName(String name)
 			throws ConnectException, DAOException, SQLException {
 		list = new ArrayList<Mengeneinheit>();
-		set = getManaged(MessageFormat.format(GET_MENGENEINHEIT_BY_NAME, name));
-		while (set.next()) {
-			list.add(setMengeneinheit(set));
+		m_set = getManaged(MessageFormat.format(GET_MENGENEINHEIT_BY_NAME, name));
+		while (m_set.next()) {
+			list.add(setMengeneinheit(m_set));
 		}
 		return list;
 	}

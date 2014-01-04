@@ -37,6 +37,20 @@ public class Bestellung extends EntityId implements java.io.Serializable {
 		m_kategorie = kategorie;
 	}
 
+	public Bestellung(Lieferant lieferant, Mitarbeiter mitarbeiter,
+			Date lieferdatum1, Date lieferdatum2, boolean status, int kategorie) {
+		super();
+		m_lieferant = lieferant;
+		m_mitarbeiter = mitarbeiter;
+		m_lieferdatum1 = lieferdatum1;
+		m_lieferdatum2 = lieferdatum2;
+		m_status = status;
+		m_kategorie = kategorie;
+	}
+
+
+
+
 	public Lieferant getLieferant() {
 		return m_lieferant;
 	}

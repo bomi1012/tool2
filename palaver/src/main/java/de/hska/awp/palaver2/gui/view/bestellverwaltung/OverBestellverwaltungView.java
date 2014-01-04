@@ -1,22 +1,35 @@
 package de.hska.awp.palaver2.gui.view.bestellverwaltung;
 
+import java.util.Date;
 import java.util.List;
 
 import com.vaadin.data.Validator;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeSelect;
 
+import de.hska.awp.palaver.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver.bestellverwaltung.domain.Bestellung;
+import de.hska.awp.palaver.bestellverwaltung.service.BestellpositionService;
+import de.hska.awp.palaver.bestellverwaltung.service.BestellungService;
+import de.hska.awp.palaver2.gui.components.Grundbedarf;
 import de.hska.awp.palaver2.gui.view.ViewAbstract;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 
 public class OverBestellverwaltungView extends ViewAbstract {
 	private static final long serialVersionUID = 2853996004535479919L;
 	public List<Lieferant> m_lieferanten;
+	public List<Grundbedarf> m_grundbedarfe;
 	protected HorizontalLayout m_control;
 	
+	public Bestellposition m_bestellposition;
+	public List<Bestellposition> m_bestellpositions;
+	public BestellpositionService m_bestellpositionService;
+	
+	public List<Bestellung> m_bestellungs;
 	public Bestellung m_bestellung;
+	public BestellungService m_bestellungService;
 	
 	protected OverBestellverwaltungView() {
 		super();
@@ -26,6 +39,15 @@ public class OverBestellverwaltungView extends ViewAbstract {
 		super(children);
 	}
 	
+	protected DateField dateField(String name, String format, String width,
+			Date date, boolean week) {
+		m_date = new DateField(name);
+		m_date.setWidth(width);
+		m_date.setDateFormat(format);
+		m_date.setValue(date);
+		m_date.setShowISOWeekNumbers(week);
+		return m_date;
+	}
 	
 	protected NativeSelect nativeSelectSetting(NativeSelect select,
 			final String name, String width, boolean required, String descript,

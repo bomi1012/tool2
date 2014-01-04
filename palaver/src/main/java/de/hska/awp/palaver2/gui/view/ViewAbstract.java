@@ -8,6 +8,7 @@ import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
@@ -24,7 +25,7 @@ public class ViewAbstract extends VerticalLayout {
 	protected static final String STYLE_HEADLINE = "ViewHeadline";
 	protected static final String FIELD_NAME = "name";
 	protected Label m_headlineLabel;
-	protected VerticalLayout vertikalLayout;
+	protected VerticalLayout m_vertikalLayout;
 	protected HorizontalLayout m_horizontalLayout;
 	protected Button m_button;
 	protected Window win;
@@ -33,6 +34,7 @@ public class ViewAbstract extends VerticalLayout {
 	protected TextField m_textField; 
 	protected NativeSelect m_nativeSelect;
 	protected IntStepper m_intStepper;
+	protected DateField m_date;
 
 	public boolean m_create;
 	public boolean m_okRemove = false;

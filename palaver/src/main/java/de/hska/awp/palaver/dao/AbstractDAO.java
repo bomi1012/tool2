@@ -9,22 +9,25 @@ package de.hska.awp.palaver.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import com.sun.rowset.*;
-
 
 import javax.sql.rowset.CachedRowSet;
+
+import com.mysql.jdbc.PreparedStatement;
+import com.sun.rowset.CachedRowSetImpl;
 
 public abstract class AbstractDAO
 {
 	protected static final String FIELD_ID = "id";
 	protected static final String FIELD_NAME = "name";
-	private Connector conn;	
-	private Statement statement;
-	protected ResultSet set;
+	protected Connector m_connector;	
+	private Statement m_statement;
+	private PreparedStatement m_ps;
+	protected ResultSet m_set;
+	protected long m_lastId;
 	
 	public AbstractDAO() {
 		super();
-		conn = new Connector();
+		m_connector = new Connector();
 	}
 	
 	@SuppressWarnings({ "resource", "restriction" })
@@ -34,7 +37,7 @@ public abstract class AbstractDAO
 		ResultSet result = null;
 		CachedRowSet cache = new CachedRowSetImpl();
 		try  {
-			result = statement.executeQuery(querry);
+			result = m_statement.executeQuery(querry);
 			cache.populate(result);	
 		} 
 		catch (Exception e) {
@@ -55,7 +58,7 @@ public abstract class AbstractDAO
 		ResultSet result = null;
 		CachedRowSet cache = new CachedRowSetImpl();
 		try  {
-			result = statement.executeQuery(querry);
+			result = m_statement.executeQuery(querry);
 			cache.populate(result);	
 		} 
 		catch (Exception e)  {
@@ -65,10 +68,13 @@ public abstract class AbstractDAO
 		return cache.getOriginal();
 	}
 	
-	protected synchronized void putManaged(String querry) throws ConnectException, DAOException  {
+	protected synchronized Long putManaged(String querry) throws ConnectException, DAOException  {
 		openConnection();
 		try  {
-			statement.executeUpdate(querry);
+			m_statement.executeUpdate(querry, Statement.RETURN_GENERATED_KEYS);
+			m_set = m_statement.getGeneratedKeys();
+			m_set.next();
+			m_lastId = m_set.getLong(1);
 		} 
 		catch (Exception e)  {
 			throw new DAOException("Statement error: " + querry);
@@ -76,12 +82,13 @@ public abstract class AbstractDAO
 		finally {
 			closeConnection();	
 		}
+		return m_lastId;
 	}
 	
 	protected synchronized void putMany(String querry) throws ConnectException, DAOException  {
 		
 		try  {
-			statement.executeUpdate(querry);
+			m_statement.executeUpdate(querry);
 		} 
 		catch (Exception e)  {
 			throw new DAOException("Statement error: " + querry);
@@ -92,20 +99,20 @@ public abstract class AbstractDAO
 	@Deprecated
 	protected ResultSet get(String querry) throws SQLException {
 		ResultSet result = null;
-		result = statement.executeQuery(querry);
+		result = m_statement.executeQuery(querry);
 		
 		return result;
 	}
 	
 	protected void openConnection() throws ConnectException {
-		conn.connect();
-		statement = conn.getStmt();
+		m_connector.connect();
+		m_statement = m_connector.getStmt();
 	}
 	
 	protected void closeConnection() throws ConnectException, DAOException {
-		conn.disconnect();
+		m_connector.disconnect();
 		try {
-			statement.close();
+			m_statement.close();
 		}
 		catch (SQLException e) {
 			throw new DAOException(e.toString());

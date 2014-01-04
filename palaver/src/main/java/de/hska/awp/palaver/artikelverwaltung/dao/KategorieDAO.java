@@ -41,9 +41,9 @@ public class KategorieDAO extends AbstractDAO {
 	 */
 	public List<Kategorie> getAllKategories() throws ConnectException, DAOException, SQLException {
 		kategories = new ArrayList<Kategorie>();
-		set = getManaged(GET_ALL_KATEGORIES);
-		while (set.next()) {
-			kategories.add(setKategorie(set));
+		m_set = getManaged(GET_ALL_KATEGORIES);
+		while (m_set.next()) {
+			kategories.add(setKategorie(m_set));
 		}
 		return kategories;
 	}
@@ -54,9 +54,9 @@ public class KategorieDAO extends AbstractDAO {
 	 */
 	public Kategorie getKategorieById(Long id) throws ConnectException,
 			DAOException, SQLException {
-		set = getManaged(MessageFormat.format(GET_KATEGORIE_BY_ID, id));
-		while (set.next()) {
-			kategorie = setKategorie(set);
+		m_set = getManaged(MessageFormat.format(GET_KATEGORIE_BY_ID, id));
+		while (m_set.next()) {
+			kategorie = setKategorie(m_set);
 		}
 		return kategorie;
 	}

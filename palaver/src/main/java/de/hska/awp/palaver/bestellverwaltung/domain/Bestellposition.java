@@ -68,6 +68,15 @@ public class Bestellposition extends EntityId implements java.io.Serializable {
 		m_status = status;
 	}
 
+	public Bestellposition(Artikel artikel, Bestellung bestellung,
+			Double liefermenge1, Double liefermenge2, boolean status) {
+		super();
+		m_artikel = artikel;
+		m_bestellung = bestellung;
+		m_liefermenge1 = liefermenge1;
+		m_liefermenge2 = liefermenge2;
+		m_status = status;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;

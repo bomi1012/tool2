@@ -42,10 +42,10 @@ public class KategorienAnzeigen extends OverAnzeigen implements View {
 		m_headlineLabel = headLine(m_headlineLabel, KATEGORIE_ALL, STYLE_HEADLINE);
 		m_table = table();
 		m_control = controlPanelEditAndNew();		
-		vertikalLayout = addToLayoutTableAndControl(vertikalLayout, LAYOUT);
+		m_vertikalLayout = addToLayoutTableAndControl(m_vertikalLayout, LAYOUT);
 			
-		this.addComponent(vertikalLayout);
-		this.setComponentAlignment(vertikalLayout, Alignment.MIDDLE_CENTER);
+		this.addComponent(m_vertikalLayout);
+		this.setComponentAlignment(m_vertikalLayout, Alignment.MIDDLE_CENTER);
 	}
 	
 	

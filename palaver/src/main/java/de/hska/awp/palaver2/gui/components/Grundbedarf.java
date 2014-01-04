@@ -13,6 +13,7 @@ import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
 
 public class Grundbedarf implements Serializable{
 	private static final long serialVersionUID = 3583052471410219992L;
+	private Artikel m_artikel;
 	private long m_artikelId;
 	private Label m_lieferantName = new Label();
 	private Label m_artikelName = new Label();
@@ -24,6 +25,13 @@ public class Grundbedarf implements Serializable{
 	private Label m_summe2 = new Label();
 	private CheckBox m_remove = new CheckBox();
 
+	public Artikel getArtikel() {
+		return m_artikel;
+	}
+	public void serArtikel(Artikel artikel) {
+		m_artikel = artikel;
+	}
+	
 	public long getArtikelId() {
 		return m_artikelId;
 	}
@@ -95,6 +103,8 @@ public class Grundbedarf implements Serializable{
 	@SuppressWarnings({ "serial"})
 	public Grundbedarf(final Artikel artikel) {
 		super();
+		m_artikel = artikel;
+		
 		m_artikelId = artikel.getId();
 		
 		m_lieferantName.setValue(artikel.getLieferant().getName());
@@ -117,8 +127,12 @@ public class Grundbedarf implements Serializable{
 		
 		m_summe1.setSizeUndefined();
 		m_summe2.setSizeUndefined();
+		
+		mehrereliefertermine(artikel);
 
 		m_remove.setValue(false);
+		
+		
 		
 		m_liefertermin1.addValueChangeListener(new ValueChangeListener() {	
 			@Override
@@ -146,11 +160,20 @@ public class Grundbedarf implements Serializable{
 				m_summe2.setEnabled(!value);
 				m_mengeneinheit.setEnabled(!value);
 				m_gebinde.setEnabled(!value);
+				if(!value) {
+					mehrereliefertermine(artikel);
+				}
 				
 			}
 		});
 	}
 	
+	private void mehrereliefertermine(Artikel artikel) {
+		if(!artikel.getLieferant().getMehrereliefertermine()) {
+			m_summe2.setEnabled(false);
+			m_liefertermin2.setEnabled(false);
+		}
+	}
 	
 	private double sum(int lt, double gebinde) {
 		return lt * gebinde;

@@ -31,8 +31,8 @@ public class BestellungService extends BestellungDAO {
 		return super.getAllBestellungen();
 	}
 	
-	public void createBestellung(Bestellung bestellung) throws ConnectException, DAOException {
-		super.createBestellung(bestellung);
+	public Long createBestellung(Bestellung bestellung) throws ConnectException, DAOException {
+		return super.createBestellung(bestellung);
 	}
 	
 	

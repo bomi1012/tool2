@@ -38,17 +38,17 @@ public class LagerortDAO extends AbstractDAO {
 	public List<Lagerort> getAllLagerorts() throws ConnectException,
 			DAOException, SQLException {
 		list = new ArrayList<Lagerort>();
-		set = getManaged(GET_ALL_LAGERORTS);
-		while (set.next()) {
-			list.add(setLagerort(set));
+		m_set = getManaged(GET_ALL_LAGERORTS);
+		while (m_set.next()) {
+			list.add(setLagerort(m_set));
 		}
 		return list;
 	}
 	
 	public Lagerort getLagerortById(long id) throws ConnectException, DAOException, SQLException {
-		set = getManaged(MessageFormat.format(GET_LAGERORT_BY_ID, id));
-		while (set.next()) {
-			lagerort = setLagerort(set);
+		m_set = getManaged(MessageFormat.format(GET_LAGERORT_BY_ID, id));
+		while (m_set.next()) {
+			lagerort = setLagerort(m_set);
 		}
 		return lagerort;
 	}

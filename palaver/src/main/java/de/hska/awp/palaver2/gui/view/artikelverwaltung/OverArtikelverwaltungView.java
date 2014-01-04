@@ -66,6 +66,7 @@ public class OverArtikelverwaltungView extends ViewAbstract {
 	public KategorieErstellen m_kategorieErstellen;
 	public LagerortErstellen m_lagerortErstellen;
 	
+	public List<Artikel> m_artikeln;
 	public List<Mengeneinheit> m_mengen;
 	public List<Kategorie> m_kategorien;
 	public List<Lagerort> m_lagerorts;

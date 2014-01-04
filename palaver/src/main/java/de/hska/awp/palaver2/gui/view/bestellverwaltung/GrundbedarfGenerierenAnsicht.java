@@ -17,13 +17,17 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver.artikelverwaltung.service.ArtikelService;
+import de.hska.awp.palaver.bestellverwaltung.domain.Bestellposition;
+import de.hska.awp.palaver.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.gui.components.Grundbedarf;
@@ -32,7 +36,9 @@ import de.hska.awp.palaver2.gui.view.artikelverwaltung.KategorienAnzeigen;
 import de.hska.awp.palaver2.gui.view.artikelverwaltung.OverArtikelverwaltungView;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
+import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.util.IConstants;
+import de.hska.awp.palaver2.util.Util;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.customFilter;
@@ -47,6 +53,10 @@ ValueChangeListener {
 	private OverArtikelverwaltungView m_overArtikelverwaltungView = new OverArtikelverwaltungView();
 	private Button m_vorschauButton;
 	private Button m_generierenButton;
+	private DateField m_termin1;
+	private DateField m_termin2;
+	private java.sql.Date m_d1;
+	private java.sql.Date m_d2;
 	public GrundbedarfGenerierenAnsicht() throws SQLException, ConnectException, DAOException {
 		super();
 		template();
@@ -60,10 +70,24 @@ ValueChangeListener {
 		m_vorschauButton = buttonSetting(m_button, "Vorschau", IConstants.ICON_ZOOM, true, true);
 		m_generierenButton = buttonSetting(m_button, "Grundbedarf generieren", IConstants.ICON_BASKET_ADD, true, true);
 
+	
+		
 		m_lieferantSelect = nativeSelectSetting(m_lieferantSelect, "Lieferant",
-				"80%", false, "Lieferant", this);
+				FULL, false, "Lieferant", this);
 		m_lieferantSelect.setNullSelectionAllowed(false);
 		m_lieferanten = Lieferantenverwaltung.getInstance().getLieferantenByGrundbedarf(true);
+			
+		
+		m_termin1 = dateField("Liefertermin 1", "dd.MM.yyyy", FULL, Util.getDate(2, 7), true);
+		m_termin2 = dateField("Liefertermin 2", "dd.MM.yyyy", FULL, Util.getDate(6, 7), true);
+	
+		m_vertikalLayout = new VerticalLayout();
+		m_vertikalLayout.setWidth("95%");
+		m_vertikalLayout.addComponent(m_lieferantSelect);
+		m_vertikalLayout.addComponent(m_termin1);
+		m_vertikalLayout.addComponent(m_termin2);
+		m_vertikalLayout.setSpacing(true);
+		
 		m_filterTable = new FilterTable();
 		m_filterTable.setWidth("95%");
 		m_filterTable.setSelectable(true);
@@ -72,13 +96,12 @@ ValueChangeListener {
 		m_filterTable.setFilterDecorator(new customFilterDecorator());
 		m_filterTable.setSelectable(true);
 		
-
 		m_horizontalLayout = new HorizontalLayout();
 		m_horizontalLayout.setWidth(FULL);
 		m_horizontalLayout.setHeight(FULL);
-		m_horizontalLayout.addComponent(m_lieferantSelect);
+		m_horizontalLayout.addComponent(m_vertikalLayout);
 		m_horizontalLayout.addComponent(m_filterTable);
-		m_horizontalLayout.setExpandRatio(m_lieferantSelect, 1);
+		m_horizontalLayout.setExpandRatio(m_vertikalLayout, 1);
 		m_horizontalLayout.setExpandRatio(m_filterTable, 5);
 		m_horizontalLayout.setComponentAlignment(m_filterTable, Alignment.TOP_RIGHT);
 		
@@ -89,11 +112,13 @@ ValueChangeListener {
 		m_control.addComponent(m_vorschauButton);
 			
 		allLieferanten(m_lieferanten);
-		vertikalLayout = vLayout(vertikalLayout, FULL);
-		this.addComponent(vertikalLayout);
-		this.setComponentAlignment(vertikalLayout, Alignment.MIDDLE_CENTER);
+		m_vertikalLayout = vLayout(m_vertikalLayout, FULL);
+		this.addComponent(m_vertikalLayout);
+		this.setComponentAlignment(m_vertikalLayout, Alignment.MIDDLE_CENTER);
 		
 	}
+
+
 
 
 	private void listeners() {
@@ -103,6 +128,7 @@ ValueChangeListener {
 			public void valueChange(ValueChangeEvent event) {				
 					try {
 						beans((Lieferant) event.getProperty().getValue());
+						mehrereliefertermine((Lieferant) event.getProperty().getValue());
 					} catch (ConnectException e) {
 						LOG.error(e.toString());
 					} catch (DAOException e) {
@@ -110,11 +136,6 @@ ValueChangeListener {
 					} catch (SQLException e) {
 						LOG.error(e.toString());
 					}
-
-//					for (Grundbedarf ggg : container.getItemIds()) {
-//						System.out.println(ggg.getArtikelName() + " " + ggg.getSumme());
-//					}
-
 			}
 		});
 		
@@ -143,6 +164,34 @@ ValueChangeListener {
 			}
 		});
 		
+		m_generierenButton.addClickListener(new ClickListener() {			
+			@SuppressWarnings("static-access")
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if(validiereEingabe()) {
+					m_bestellung = new Bestellung(
+							(Lieferant) m_lieferantSelect.getValue(), 
+							(Mitarbeiter) ((Application) UI.getCurrent().getData()).getUser(), 
+							m_d1, m_d2, false, 0);
+					try {
+						m_bestellung.setId(m_bestellungService.getInstance().createBestellung(m_bestellung));
+						for (Grundbedarf gb : container.getItemIds()) {
+							if(!(Boolean) gb.getRemove().getValue().booleanValue()) {
+								m_bestellposition = new Bestellposition(
+										gb.getArtikel(), m_bestellung, 
+										Double.valueOf(gb.getSumme1().getValue()), 
+										Double.valueOf(gb.getSumme2().getValue()), false);
+								m_bestellpositionService.getInstance().createBestellposition(m_bestellposition);
+							}
+						}	
+					} catch (ConnectException e) {
+						e.printStackTrace();
+					} catch (DAOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});		
 	}
 
 	private void allLieferanten(List<Lieferant> lieferanten) throws ConnectException, DAOException, SQLException {
@@ -157,20 +206,19 @@ ValueChangeListener {
 	@SuppressWarnings({ "static-access", "deprecation" })
 	private void beans(Lieferant lieferant) throws ConnectException, DAOException, SQLException {
 		m_filterTable.removeAllItems();	
-		List<Grundbedarf> gb = new ArrayList<Grundbedarf>();
-		List<Artikel> m_arList = new ArrayList<Artikel>();
+		m_grundbedarfe = new ArrayList<Grundbedarf>();
 		if(lieferant == null) {
-			m_arList = ArtikelService.getInstance().getArtikelByGrundbedarf();
+			m_overArtikelverwaltungView.m_artikeln = ArtikelService.getInstance().getArtikelByGrundbedarf();
 		} else {
-			m_arList = ArtikelService.getInstance().getGrundbedarfByLieferantId(lieferant.getId());
+			m_overArtikelverwaltungView.m_artikeln = ArtikelService.getInstance().getGrundbedarfByLieferantId(lieferant.getId());
 		}
-		for (Artikel artikel : m_arList) {		
+		for (Artikel artikel : m_overArtikelverwaltungView.m_artikeln) {		
 			Grundbedarf g = new Grundbedarf(artikel);
-			gb.add(g);
+			m_grundbedarfe.add(g);
 		}
 		
 		try {
-			container = new BeanItemContainer<Grundbedarf>(Grundbedarf.class, gb);
+			container = new BeanItemContainer<Grundbedarf>(Grundbedarf.class, m_grundbedarfe);
 			m_filterTable.setContainerDataSource(container);
 			m_filterTable.setVisibleColumns(new Object[] { "artikelName", "gebinde", 
 					"liefertermin1", "summe1", "liefertermin2", "summe2",
@@ -216,12 +264,34 @@ ValueChangeListener {
 		box.setComponentAlignment(m_headlineLabel, Alignment.MIDDLE_LEFT);
 		box.addComponent(m_horizontalLayout);
 		box.setComponentAlignment(m_horizontalLayout, Alignment.MIDDLE_CENTER);
+
 		box.addComponent(m_control);
 		box.setComponentAlignment(m_control, Alignment.MIDDLE_RIGHT);
 		return box;
 	}
 
-
+	private boolean validiereEingabe() {
+		boolean isValid = true;
+		if(m_termin1.getValue() == null) {
+			//TODO: meldung
+			isValid = false;
+		} else {
+			m_d1 = new java.sql.Date(m_termin1.getValue().getTime());
+		}
+		if(m_termin2.getValue() == null) {
+			m_d2 = null;
+		} else {
+			m_d2 = new java.sql.Date(m_termin2.getValue().getTime());
+		}
+		return isValid;
+	}
+	
+	private void mehrereliefertermine(Lieferant lieferant) {
+		if(!lieferant.getMehrereliefertermine()) {
+			m_termin2.setVisible(false);
+			m_termin2.setValue(null);
+		}
+	}
 
 	@Override
 	public void getViewParam(ViewData data) { }

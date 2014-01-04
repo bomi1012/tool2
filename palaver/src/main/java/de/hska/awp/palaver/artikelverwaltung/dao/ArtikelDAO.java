@@ -88,10 +88,10 @@ public class ArtikelDAO extends AbstractDAO {
 	 */
 	public List<Artikel> getActiveArtikeln() throws ConnectException, DAOException, SQLException {
 		list = new ArrayList<Artikel>();
-		set = getManaged(GET_ALL_ACTIVE_ARTIKLES);
+		m_set = getManaged(GET_ALL_ACTIVE_ARTIKLES);
 		openConnection();
-		while (set.next()) {
-			list.add(setArtikel(set));
+		while (m_set.next()) {
+			list.add(setArtikel(m_set));
 		}		
 		closeConnection();
 		return list;
@@ -103,10 +103,10 @@ public class ArtikelDAO extends AbstractDAO {
 	 */
 	public List<Artikel> getActiveArtikelByLieferantId(Long id) throws ConnectException, DAOException, SQLException {
 		list = new ArrayList<Artikel>();
-		set = getManaged(MessageFormat.format(GET_ACTIVE_ARTIKLES_BY_LIEFERANT_ID, id));
+		m_set = getManaged(MessageFormat.format(GET_ACTIVE_ARTIKLES_BY_LIEFERANT_ID, id));
 		openConnection();
-		while (set.next()) {
-			list.add(setArtikel(set));
+		while (m_set.next()) {
+			list.add(setArtikel(m_set));
 		}
 		closeConnection();
 		return list;
@@ -114,9 +114,9 @@ public class ArtikelDAO extends AbstractDAO {
 	
 	public List<Artikel> getActiveArtikelnByKategorieId(Long id) throws ConnectException, DAOException, SQLException {
 		list = new ArrayList<Artikel>();
-		set = getManaged(MessageFormat.format(GET_ACTIVE_ARTIKEL_BY_KATEGORIE, id));
-		while (set.next()) {
-			list.add(setArtikel(set));
+		m_set = getManaged(MessageFormat.format(GET_ACTIVE_ARTIKEL_BY_KATEGORIE, id));
+		while (m_set.next()) {
+			list.add(setArtikel(m_set));
 		}
 		return list;
 	}
@@ -127,10 +127,10 @@ public class ArtikelDAO extends AbstractDAO {
 	 */
 	public Artikel getArtikelById(Long id) throws ConnectException, DAOException, SQLException {
 		artikel = null;
-		set = getManaged(MessageFormat.format(GET_ARTIKEL_BY_ID, id));
+		m_set = getManaged(MessageFormat.format(GET_ARTIKEL_BY_ID, id));
 		openConnection();
-		while (set.next()) {
-			artikel = setArtikel(set);
+		while (m_set.next()) {
+			artikel = setArtikel(m_set);
 		}
 		closeConnection();
 		return artikel;
@@ -142,9 +142,9 @@ public class ArtikelDAO extends AbstractDAO {
 	 */
 	public List<Artikel> getArtikelByName(String name) throws ConnectException, DAOException, SQLException {
 		List<Artikel> list = new ArrayList<Artikel>();
-		set = getManaged(MessageFormat.format(GET_ACTIVE_ARTIKELS_BY_NAME, name));
-		while (set.next()) {
-			list.add(setArtikel(set));
+		m_set = getManaged(MessageFormat.format(GET_ACTIVE_ARTIKELS_BY_NAME, name));
+		while (m_set.next()) {
+			list.add(setArtikel(m_set));
 		}
 		return list;
 	}
@@ -155,9 +155,9 @@ public class ArtikelDAO extends AbstractDAO {
 	 */
 	public List<Artikel> getArtikelByGrundbedarf() throws ConnectException, DAOException, SQLException {
 		list = new ArrayList<Artikel>();
-		set = getManaged(GET_ACTIVE_ARTIKELS_BY_GRUNDBEDARF);
-		while (set.next()) {
-			list.add(setArtikel(set));
+		m_set = getManaged(GET_ACTIVE_ARTIKELS_BY_GRUNDBEDARF);
+		while (m_set.next()) {
+			list.add(setArtikel(m_set));
 		}
 		return list;
 	}
@@ -168,9 +168,9 @@ public class ArtikelDAO extends AbstractDAO {
 	 */
 	public List<Artikel> getArtikelByStandard() throws ConnectException, DAOException, SQLException {
 		list = new ArrayList<Artikel>();
-		set = getManaged(GET_ACTIVE_ARTIKELS_BY_STANDARD);
-		while (set.next()) {
-			list.add(setArtikel(set));
+		m_set = getManaged(GET_ACTIVE_ARTIKELS_BY_STANDARD);
+		while (m_set.next()) {
+			list.add(setArtikel(m_set));
 		}
 		return list;
 	}
@@ -236,10 +236,10 @@ public class ArtikelDAO extends AbstractDAO {
 
 	public List<Artikel> getGrundbedarfByLieferantId(Long id) throws ConnectException, DAOException, SQLException {
 		list = new ArrayList<Artikel>();
-		set = getManaged(MessageFormat.format(GET_ACTIVE_GRUNDBEDARF_BY_LIEFERANT_ID, id));
+		m_set = getManaged(MessageFormat.format(GET_ACTIVE_GRUNDBEDARF_BY_LIEFERANT_ID, id));
 		openConnection();
-		while (set.next()) {
-			list.add(setArtikel(set));
+		while (m_set.next()) {
+			list.add(setArtikel(m_set));
 		}
 		closeConnection();
 		return list;

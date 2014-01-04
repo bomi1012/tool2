@@ -45,23 +45,29 @@ public class BestellungDAO extends AbstractBestellverwaltungDAO {
 	 */
 	public List<Bestellung> getAllBestellungen() throws ConnectException, DAOException, SQLException {
 		listBestellung = new ArrayList<Bestellung>();
-		set = getManaged(GET_ALL_BESTELLUNGEN);
-		while (set.next()) {
-			listBestellung.add(setBestellung(set));
+		m_set = getManaged(GET_ALL_BESTELLUNGEN);
+		while (m_set.next()) {
+			listBestellung.add(setBestellung(m_set));
 		}
 		return listBestellung;
 	}
 
-	public void createBestellung(Bestellung bestellung) throws ConnectException, DAOException {
-		putManaged(MessageFormat.format(				
+	public Long createBestellung(Bestellung bestellung) throws ConnectException, DAOException {
+		String lieferdatum2;
+		if(bestellung.getLieferdatum2() == null) {
+			lieferdatum2 = null;
+		} else {
+			lieferdatum2 = "'" + bestellung.getLieferdatum1() + "'";
+		}
+		return putManaged(MessageFormat.format(				
 				INSERT_QUERY, 
 				bestellung.getLieferant().getId(),
 				bestellung.getMitarbeiter().getId(),
-				bestellung.getLieferdatum1(),
-				bestellung.getLieferdatum2(),
+				"'" + bestellung.getLieferdatum1() + "'",
+				lieferdatum2,
 				Util.convertBoolean(bestellung.getStatus()),
-				bestellung.getKategorie()));	
-		
+				bestellung.getKategorie()));
+
 	}
 
 //	/**

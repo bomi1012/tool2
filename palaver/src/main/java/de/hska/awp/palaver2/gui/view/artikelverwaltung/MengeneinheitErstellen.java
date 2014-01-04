@@ -56,9 +56,9 @@ ValueChangeListener, IErstellen  {
 			kurzField.setValue(m_mengeneinheit.getKurz());
 		}	
 		m_control = controlErstellenPanel();
-		vertikalLayout = addToLayout(vertikalLayout, "450");
-		this.addComponent(vertikalLayout);
-		this.setComponentAlignment(vertikalLayout, Alignment.MIDDLE_CENTER);
+		m_vertikalLayout = addToLayout(m_vertikalLayout, "450");
+		this.addComponent(m_vertikalLayout);
+		this.setComponentAlignment(m_vertikalLayout, Alignment.MIDDLE_CENTER);
 		listener();
 	}
 	

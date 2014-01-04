@@ -22,7 +22,7 @@ public class BestellpositionDAO extends AbstractBestellverwaltungDAO {
 
 	private static BestellpositionDAO instance = null;
 
-	private final static String INSERT_QUERY = "INSERT INTO " + TABLE_B + "(" 
+	private final static String INSERT_QUERY = "INSERT INTO " + TABLE_BP + "(" 
 			+ "`" + FIELD_ARTIKEL_FK + "`, " + "`" + FIELD_BESTELLUNG_FK + "`, " + "`" + FIELD_LIEFERMENGE1 + "`, " 
 			+ "`" + FIELD_LIEFERMENGE2 + "`, " + "`" + FIELD_STATUS + "`)" +
 					" VALUES({0},{1},{2},{3},{4})";
