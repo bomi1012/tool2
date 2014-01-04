@@ -3,6 +3,13 @@
  */
 package de.hska.awp.palaver.bestellverwaltung.dao;
 
+import java.text.MessageFormat;
+
+import de.hska.awp.palaver.bestellverwaltung.domain.Bestellposition;
+import de.hska.awp.palaver.dao.ConnectException;
+import de.hska.awp.palaver.dao.DAOException;
+import de.hska.awp.palaver2.util.Util;
+
 
 /**
  * Klasse BestellungpositionDAO. Die Klasse stellt für die Bestellung alle
@@ -11,39 +18,29 @@ package de.hska.awp.palaver.bestellverwaltung.dao;
  * @author Elena W
  * 
  */
-public class BestellpositionDAO extends AbstractBestellungDAO {
+public class BestellpositionDAO extends AbstractBestellverwaltungDAO {
 
 	private static BestellpositionDAO instance = null;
 
-	private final static String TABLE = "bestellposition";
-	private final static String ID = "id";
-	private final static String ARTIKEL_FK = "artikel_fk";
-	private final static String BESTELLUNG_FK = "bestellung_fk";
-	private final static String DURCHSCHNITT = "durchschnitt";
-	private final static String KANTINE = "kantine";
-	private final static String GESAMT = "gesamt";
-	private final static String FREITAG = "freitag";
-	private final static String MONTAG = "montag";
-	private final static String GELIEFERT = "geliefert";
-	private final static String SUMME = "summe";
+	private final static String INSERT_QUERY = "INSERT INTO " + TABLE_B + "(" 
+			+ "`" + FIELD_ARTIKEL_FK + "`, " + "`" + FIELD_BESTELLUNG_FK + "`, " + "`" + FIELD_LIEFERMENGE1 + "`, " 
+			+ "`" + FIELD_LIEFERMENGE2 + "`, " + "`" + FIELD_STATUS + "`)" +
+					" VALUES({0},{1},{2},{3},{4})";
+	
+	
+	
+	
+//	private static final String GET_BESTELLPOSITION_BY_ID = "SELECT * FROM " + TABLE + " WHERE " + ID + "= {0}";
+//
+//	private static final String GET_BESTELLPOSITIONEN_BY_BESTELLUNGID = "SELECT * FROM " + TABLE + " WHERE " + BESTELLUNG_FK + "= {0}";
+//	private static final String DELETE_BESTELLPOSITION = "DELETE FROM " + TABLE + " WHERE id = {0}";
+//
+//	private final static String GET_ARTIKEL_BY_ID = "SELECT * FROM artikel where id = {0}";
+//	private final static String GET_LIEFERANT_BY_ID = "SELECT * FROM lieferant WHERE id = {0}";
+//	private final static String GET_KATEGORIE_BY_ID = "SELECT * FROM kategorie WHERE id = {0}";
+//	private final static String GET_MENGENEINHEIT_BY_ID = "SELECT * FROM mengeneinheit WHERE id = {0}";
 
-	private static final String GET_BESTELLPOSITION_BY_ID = "SELECT * FROM " + TABLE + " WHERE " + ID + "= {0}";
 
-	private static final String GET_BESTELLPOSITIONEN_BY_BESTELLUNGID = "SELECT * FROM " + TABLE + " WHERE " + BESTELLUNG_FK + "= {0}";
-	private static final String DELETE_BESTELLPOSITION = "DELETE FROM " + TABLE + " WHERE id = {0}";
-
-	private final static String GET_ARTIKEL_BY_ID = "SELECT * FROM artikel where id = {0}";
-	private final static String GET_LIEFERANT_BY_ID = "SELECT * FROM lieferant WHERE id = {0}";
-	private final static String GET_KATEGORIE_BY_ID = "SELECT * FROM kategorie WHERE id = {0}";
-	private final static String GET_MENGENEINHEIT_BY_ID = "SELECT * FROM mengeneinheit WHERE id = {0}";
-
-	private final static String LIEFERANT_FK = "lieferant_fk";
-	private final static String DATUM = "datum";
-	private final static String LIEFERDATUM = "lieferdatum";
-	private final static String LIEFERDATUM2 = "lieferdatum2";
-	private final static String BESTELLT = "bestellt";
-
-	private final static String GET_BESTELLUNG_BY_ID = "SELECT * FROM bestellung WHERE " + ID + "= {0}";
 
 	public BestellpositionDAO() {
 		super();
@@ -57,6 +54,17 @@ public class BestellpositionDAO extends AbstractBestellungDAO {
 			instance = new BestellpositionDAO();
 		}
 		return instance;
+	}
+
+	public void createBestellposition(Bestellposition bestellposition) throws ConnectException, DAOException {
+		putManaged(MessageFormat.format(				
+				INSERT_QUERY, 
+				bestellposition.getArtikel().getId(),
+				bestellposition.getBestellung().getId(),
+				bestellposition.getLiefermenge1(),
+				bestellposition.getLiefermenge2(),
+				Util.convertBoolean(bestellposition.isStatus())));	
+		
 	}
 
 	

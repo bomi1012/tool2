@@ -5,6 +5,9 @@
 package de.hska.awp.palaver.bestellverwaltung.service;
 
 import de.hska.awp.palaver.bestellverwaltung.dao.BestellpositionDAO;
+import de.hska.awp.palaver.bestellverwaltung.domain.Bestellposition;
+import de.hska.awp.palaver.dao.ConnectException;
+import de.hska.awp.palaver.dao.DAOException;
 
 /**
  * Die Klasse ermöglicht die Verwaltung der BEstellpositionen und stellt für die GUI
@@ -13,20 +16,32 @@ import de.hska.awp.palaver.bestellverwaltung.dao.BestellpositionDAO;
  * @author Elena W
  */
 
-public class Bestellpositionverwaltung extends BestellpositionDAO {
+public class BestellpositionService extends BestellpositionDAO {
 	
-	private static Bestellpositionverwaltung instance = null;
+	private static BestellpositionService instance = null;
 
-	private Bestellpositionverwaltung() {
+	private BestellpositionService() {
 		super();
 	}
 
-	public static Bestellpositionverwaltung getInstance() {
+	public static BestellpositionService getInstance() {
 		if (instance == null) {
-			instance = new Bestellpositionverwaltung();
+			instance = new BestellpositionService();
 		}
 		return instance;
 	}
+	
+		
+	public void createBestellposition(Bestellposition bestellposition) throws ConnectException, DAOException {
+		super.createBestellposition(bestellposition);
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 //	/**
 //	 * Die Methode erzeugt eine Bestellposition.

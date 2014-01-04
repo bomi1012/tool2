@@ -26,13 +26,17 @@ public class BestellungService extends BestellungDAO {
 		return instance;
 	}
 	
-	/**
-	 * Die Methode liefert alle Bestellungen zurück.
-	 */
 	public List<Bestellung> getAllBestellungen() throws ConnectException,
 			DAOException, SQLException {
 		return super.getAllBestellungen();
 	}
+	
+	public void createBestellung(Bestellung bestellung) throws ConnectException, DAOException {
+		super.createBestellung(bestellung);
+	}
+	
+	
+	///////////////////////////////////////////////////
 
 //	/**
 //	 * Die Methode erzeugt eine Bestellung mit seinen Bestellposition.

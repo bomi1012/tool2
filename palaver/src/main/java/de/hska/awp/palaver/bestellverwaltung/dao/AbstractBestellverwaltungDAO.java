@@ -11,7 +11,7 @@ import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.data.LieferantDAO;
 import de.hska.awp.palaver2.data.MitarbeiterDAO;
 
-public class AbstractBestellungDAO extends AbstractDAO {
+public class AbstractBestellverwaltungDAO extends AbstractDAO {
 	protected static final String TABLE_B = "bestellung";
 	protected static final String TABLE_BP = "bestellposition";
 	
@@ -57,7 +57,7 @@ public class AbstractBestellungDAO extends AbstractDAO {
 //	private static final String SUMME = "summe";
 	protected List<Bestellung> listBestellung;
 	
-	protected AbstractBestellungDAO() {
+	protected AbstractBestellverwaltungDAO() {
 		super();
 	}
 	

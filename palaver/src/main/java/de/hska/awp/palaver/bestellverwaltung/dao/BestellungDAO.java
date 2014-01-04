@@ -1,12 +1,14 @@
 package de.hska.awp.palaver.bestellverwaltung.dao;
 
 import java.sql.SQLException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.hska.awp.palaver.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
+import de.hska.awp.palaver2.util.Util;
 
 /**
  * Klasse BestellungDAO. Die Klasse stellt für die Bestellung alle notwendigen
@@ -15,11 +17,16 @@ import de.hska.awp.palaver.dao.DAOException;
  * @author Elena W
  * 
  */
-public class BestellungDAO extends AbstractBestellungDAO {
+public class BestellungDAO extends AbstractBestellverwaltungDAO {
 
 	private static BestellungDAO instance = null;	
 	
 	private static final String GET_ALL_BESTELLUNGEN = "SELECT * FROM " + TABLE_B;
+	private final static String INSERT_QUERY = "INSERT INTO " + TABLE_B + "(" 
+			+ "`" + FIELD_LIEFERANT_FK + "`, " + "`" + FIELD_MITARBEITER_FK + "`, " + "`" + FIELD_LIEFERDATUM1 + "`, " 
+			+ "`" + FIELD_LIEFERDATUM2 + "`, " + "`" + FIELD_STATUS + "`, " + "`" + FIELD_KATEGORIE + "`)" +
+					" VALUES({0},{1},{2},{3},{4},{5})";
+	
 	
 	public BestellungDAO() {
 		super();
@@ -43,6 +50,18 @@ public class BestellungDAO extends AbstractBestellungDAO {
 			listBestellung.add(setBestellung(set));
 		}
 		return listBestellung;
+	}
+
+	public void createBestellung(Bestellung bestellung) throws ConnectException, DAOException {
+		putManaged(MessageFormat.format(				
+				INSERT_QUERY, 
+				bestellung.getLieferant().getId(),
+				bestellung.getMitarbeiter().getId(),
+				bestellung.getLieferdatum1(),
+				bestellung.getLieferdatum2(),
+				Util.convertBoolean(bestellung.getStatus()),
+				bestellung.getKategorie()));	
+		
 	}
 
 //	/**
