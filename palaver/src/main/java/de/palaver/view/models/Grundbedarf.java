@@ -100,10 +100,9 @@ public class Grundbedarf implements Serializable{
 		super();
 	}
 	
-	@SuppressWarnings({ "serial"})
-	public Grundbedarf(final Artikel artikel) {
-		super();
-		m_artikel = artikel;
+	@SuppressWarnings("serial")
+	public void init(final Artikel artikel) {
+m_artikel = artikel;
 		
 		m_artikelId = artikel.getId();
 		
@@ -168,6 +167,12 @@ public class Grundbedarf implements Serializable{
 		});
 	}
 	
+
+	public Grundbedarf(final Artikel artikel) {
+		super();
+		init(artikel);
+	}
+	
 	private void mehrereliefertermine(Artikel artikel) {
 		if(!artikel.getLieferant().getMehrereliefertermine()) {
 			m_summe2.setEnabled(false);
@@ -178,5 +183,4 @@ public class Grundbedarf implements Serializable{
 	private double sum(int lt, double gebinde) {
 		return lt * gebinde;
 	}
-	
 }

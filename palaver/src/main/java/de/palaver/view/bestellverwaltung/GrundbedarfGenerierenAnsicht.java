@@ -30,6 +30,8 @@ import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.Util;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.ViewDataObject;
+import de.hska.awp.palaver2.util.ViewHandler;
 import de.hska.awp.palaver2.util.customFilter;
 import de.hska.awp.palaver2.util.customFilterDecorator;
 import de.palaver.Application;
@@ -55,7 +57,7 @@ ValueChangeListener {
 	private static final String LIFERTERMIN = "Liefertermin ";
 	private static final String DATE_FORMAT = "dd.MM.yyyy";
 	
-	private BeanItemContainer<Grundbedarf> container;
+	private BeanItemContainer<Grundbedarf> m_container;
 	private NativeSelect m_lieferantSelect;
 	private OverArtikelverwaltungView m_overArtikelverwaltungView = new OverArtikelverwaltungView();
 	private Button m_erstellenButton;
@@ -142,7 +144,6 @@ ValueChangeListener {
 			@Override
 			public void itemClick(ItemClickEvent event) {
 				if(event.isDoubleClick()) {
-					//TODO: save in Artikel
 					try {
 						windowModal(ArtikelService.getInstance().getArtikelById(((Grundbedarf) event.getItemId()).getArtikelId()));
 					} catch (ConnectException e) {
@@ -167,18 +168,20 @@ ValueChangeListener {
 							m_d1, m_d2, false, GRUNDBEDARF);
 					try {
 						m_bestellung.setId(m_bestellungService.getInstance().createBestellung(m_bestellung));
-						for (Grundbedarf gb : container.getItemIds()) {
+						for (Grundbedarf gb : m_container.getItemIds()) {
 							if(!(Boolean) gb.getIgnore().getValue().booleanValue()) {
 								m_bestellposition = new Bestellposition(
 										gb.getArtikel(), m_bestellung, 
 										Double.valueOf(gb.getSumme1().getValue()), 
 										Double.valueOf(gb.getSumme2().getValue()), false);
 								m_bestellpositionService.getInstance().createBestellposition(m_bestellposition);
+								((Application) UI.getCurrent().getData()).showDialog(String.format(
+										"Die Bestellung für den Lieferant <%s> wurde generiert!", gb.getLieferantName().getValue()));
+								ViewHandler.getInstance().switchView(BestellungenAnzeigen.class,
+								new ViewDataObject<Grundbedarf>(gb));
 							}
 						}	
-						//TODO Switch
-//						ViewHandler.getInstance().switchView(BestellungAnzeigen.class,
-//						new ViewDataObject<Bestellung>(m_bestellung));
+
 					} catch (ConnectException e) {
 						e.printStackTrace();
 					} catch (DAOException e) {
@@ -198,9 +201,7 @@ ValueChangeListener {
 		beans(lieferanten.get(0));
 	}
 	
-	@SuppressWarnings({ "static-access", "deprecation" })
 	private void beans(Lieferant lieferant) throws ConnectException, DAOException, SQLException {
-		m_filterTable.removeAllItems();	
 		m_grundbedarfe = new ArrayList<Grundbedarf>();
 		if(lieferant == null) {
 			m_overArtikelverwaltungView.m_artikeln = ArtikelService.getInstance().getArtikelByGrundbedarf();
@@ -213,40 +214,59 @@ ValueChangeListener {
 		}
 		
 		try {
-			container = new BeanItemContainer<Grundbedarf>(Grundbedarf.class, m_grundbedarfe);
-			m_filterTable.setContainerDataSource(container);
-			m_filterTable.setVisibleColumns(new Object[] { FIELD_ARTIKEL_NAME, FIELD_BESTELLGROESSE, 
-					FIELD_LIEFERDATUM_1, FIELD_SUMME_1, FIELD_LIEFERDATUM_2, FIELD_SUMME_2,
-					FIELD_MENGENEINHEIT, FIELD_IGNORE});
-			m_filterTable.sort(new Object[] { FIELD_ARTIKEL_NAME }, new boolean[] { true });
-			m_filterTable.setColumnWidth(FIELD_IGNORE, 70);
-			m_filterTable.setColumnHeader(FIELD_IGNORE, "ignorieren");	
-			m_filterTable.setColumnWidth(FIELD_BESTELLGROESSE, 60);
-			m_filterTable.setColumnWidth(FIELD_SUMME_1, 60);
-			m_filterTable.setColumnWidth(FIELD_SUMME_2, 60);
-			m_filterTable.setColumnWidth(FIELD_MENGENEINHEIT, 45);
-			m_filterTable.setColumnWidth(FIELD_LIEFERDATUM_1, 80);
-			m_filterTable.setColumnWidth(FIELD_LIEFERDATUM_2, 80);
-			m_filterTable.setColumnAlignment(FIELD_SUMME_1, m_filterTable.ALIGN_CENTER);
-			m_filterTable.setColumnAlignment(FIELD_SUMME_2, m_filterTable.ALIGN_CENTER);
-			m_filterTable.setColumnAlignment(FIELD_MENGENEINHEIT, m_filterTable.ALIGN_CENTER);
-			m_filterTable.setColumnAlignment(FIELD_BESTELLGROESSE, m_filterTable.ALIGN_CENTER);
+			m_container = new BeanItemContainer<Grundbedarf>(Grundbedarf.class, m_grundbedarfe);
+			setTable();
 		} catch (Exception e) {
 			LOG.error(e.toString());
 		}		
 	}
 	
-	private void windowModal(Artikel artikel) {
+	@SuppressWarnings({ "static-access", "deprecation" })
+	private void setTable() {
+		m_filterTable.setContainerDataSource(m_container);
+		m_filterTable.setVisibleColumns(new Object[] { FIELD_ARTIKEL_NAME, FIELD_BESTELLGROESSE, 
+				FIELD_LIEFERDATUM_1, FIELD_SUMME_1, FIELD_LIEFERDATUM_2, FIELD_SUMME_2,
+				FIELD_MENGENEINHEIT, FIELD_IGNORE});
+		m_filterTable.sort(new Object[] { FIELD_ARTIKEL_NAME }, new boolean[] { true });
+		m_filterTable.setColumnWidth(FIELD_IGNORE, 70);
+		m_filterTable.setColumnHeader(FIELD_IGNORE, "ignorieren");	
+		m_filterTable.setColumnWidth(FIELD_BESTELLGROESSE, 60);
+		m_filterTable.setColumnWidth(FIELD_SUMME_1, 60);
+		m_filterTable.setColumnWidth(FIELD_SUMME_2, 60);
+		m_filterTable.setColumnWidth(FIELD_MENGENEINHEIT, 45);
+		m_filterTable.setColumnWidth(FIELD_LIEFERDATUM_1, 80);
+		m_filterTable.setColumnWidth(FIELD_LIEFERDATUM_2, 80);
+		m_filterTable.setColumnAlignment(FIELD_SUMME_1, m_filterTable.ALIGN_CENTER);
+		m_filterTable.setColumnAlignment(FIELD_SUMME_2, m_filterTable.ALIGN_CENTER);
+		m_filterTable.setColumnAlignment(FIELD_MENGENEINHEIT, m_filterTable.ALIGN_CENTER);
+		m_filterTable.setColumnAlignment(FIELD_BESTELLGROESSE, m_filterTable.ALIGN_CENTER);
+		
+	}
+
+	private void windowModal(final Artikel artikel) {
 		win = windowUI(win, OverArtikelverwaltungView.ARTIKEL, "90%", "95%");		
 		if(artikel != null) {
 			m_overArtikelverwaltungView.m_artikelErstellen = new ArtikelErstellen(artikel);
 		} else {
 			m_overArtikelverwaltungView.m_artikelErstellen = new ArtikelErstellen();
-	}
+		}
 		addComponent(m_overArtikelverwaltungView.m_artikelErstellen);
 		win.setContent(m_overArtikelverwaltungView.m_artikelErstellen);
 		win.setModal(true);
-		UI.getCurrent().addWindow(win);		
+		UI.getCurrent().addWindow(win);	
+		m_overArtikelverwaltungView.m_artikelErstellen.m_speichernButton.addClickListener(
+		new ClickListener() {			
+			@Override
+			public void buttonClick(ClickEvent event) {	
+				
+				for (Grundbedarf gb : m_grundbedarfe) {
+					if(gb.getArtikelId() == artikel.getId()) {
+						gb.init(artikel);
+					}
+				}
+				setTable();				
+			}
+		});
 	}
 	
 	private VerticalLayout vLayout(VerticalLayout box, String width) {

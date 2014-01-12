@@ -14,11 +14,11 @@ import de.hska.awp.palaver2.util.ViewData;
 public class OverErstellen extends OverArtikelverwaltungView implements View,
 ValueChangeListener {
 
-	protected Button m_speichernButton;
-	protected Button m_verwerfenButton;
-	protected Button m_deaktivierenButton;
-	protected HorizontalLayout m_control;
-	protected TextField m_nameField;
+	public Button m_speichernButton;
+	public Button m_verwerfenButton;
+	public Button m_deaktivierenButton;
+	public HorizontalLayout m_control;
+	public TextField m_nameField;
 		
 	protected HorizontalLayout controlErstellenPanel() {	
 		m_deaktivierenButton = buttonSetting(m_button, IConstants.BUTTON_DELETE,
