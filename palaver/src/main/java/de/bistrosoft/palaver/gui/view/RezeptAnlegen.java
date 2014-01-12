@@ -57,7 +57,7 @@ import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.domain.artikelverwaltung.Artikel;
-import de.palaver2.view.artikelverwaltung.ArtikelErstellen;
+import de.palaver.view.artikelverwaltung.ArtikelErstellen;
 
 /**
  * @author Jan Lauinger, Michael Marschall
