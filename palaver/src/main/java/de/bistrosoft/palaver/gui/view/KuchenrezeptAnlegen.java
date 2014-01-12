@@ -41,14 +41,14 @@ import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenrezeptHasFussno
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Fussnotekuchenverwaltung;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Kuchenrezeptverwaltung;
 import de.bistrosoft.palaver.util.TwinColTouch;
-import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver.dao.ConnectException;
-import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
+import de.palaver.Application;
+import de.palaver.dao.ConnectException;
+import de.palaver.dao.DAOException;
 import de.palaver.domain.artikelverwaltung.Artikel;
 import de.palaver.service.artikelverwaltung.ArtikelService;
 import de.palaver.view.artikelverwaltung.ArtikelErstellen;

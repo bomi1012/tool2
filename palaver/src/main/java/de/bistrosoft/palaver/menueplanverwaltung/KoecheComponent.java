@@ -8,10 +8,10 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.VerticalLayout;
 
-import de.hska.awp.palaver.dao.ConnectException;
-import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
+import de.palaver.dao.ConnectException;
+import de.palaver.dao.DAOException;
 
 public class KoecheComponent extends CustomComponent {
 

@@ -34,7 +34,7 @@ public class customFilter implements FilterGenerator {
 
 	@Override
 	public void filterRemoved(Object propertyId) {
-
+		System.out.println(propertyId);
 	}
 
 	@Override

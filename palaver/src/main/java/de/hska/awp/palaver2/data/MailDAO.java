@@ -4,10 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
 
-import de.hska.awp.palaver.dao.AbstractDAO;
-import de.hska.awp.palaver.dao.ConnectException;
-import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.emailversand.MailModel;
+import de.palaver.dao.AbstractDAO;
+import de.palaver.dao.ConnectException;
+import de.palaver.dao.DAOException;
 
 /**
  * 

@@ -13,10 +13,10 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.UI;
 
-import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.palaver.Application;
 import de.palaver.domain.artikelverwaltung.Mengeneinheit;
 import de.palaver.service.artikelverwaltung.MengeneinheitService;
 

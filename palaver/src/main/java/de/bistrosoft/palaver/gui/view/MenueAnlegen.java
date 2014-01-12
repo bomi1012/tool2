@@ -45,9 +45,6 @@ import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.TwinColTouch;
-import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver.dao.ConnectException;
-import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
@@ -55,6 +52,9 @@ import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
+import de.palaver.Application;
+import de.palaver.dao.ConnectException;
+import de.palaver.dao.DAOException;
 
 /**
  * @author Jasmin Baumgartner, Eike Becher, Michael Marschall

@@ -6,12 +6,12 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hska.awp.palaver.dao.AbstractDAO;
-import de.hska.awp.palaver.dao.ConnectException;
-import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
+import de.palaver.dao.AbstractDAO;
+import de.palaver.dao.ConnectException;
+import de.palaver.dao.DAOException;
 
 /**
  * Die Klasse stellt Methoden für den Datenbankzugriff für das Objekt Rollen

@@ -19,6 +19,7 @@ public class BestellungenAnzeigen extends OverBestellverwaltungView implements V
 ValueChangeListener {
 
 	private static final Logger LOG = LoggerFactory.getLogger(BestellungenAnzeigen.class.getName());
+	private static final String BESTELLUNG_ALL = "Alle Bestellungen";	
 	private BeanItemContainer<Bestellung> m_container;
 	
 	public BestellungenAnzeigen() {
@@ -31,7 +32,7 @@ ValueChangeListener {
 	private void template() {
 		this.setSizeFull();
 		this.setMargin(true);
-		m_headlineLabel = headLine(m_headlineLabel, "Alle Bestellungen", STYLE_HEADLINE);
+		m_headlineLabel = headLine(m_headlineLabel, BESTELLUNG_ALL, STYLE_HEADLINE);
 		m_filterTable = filterTable();
 		
 		this.setSpacing(true);				
@@ -39,7 +40,7 @@ ValueChangeListener {
 	}
 	
 	private void listeners() {
-				
+				//TODO:
 	}
 	
 	private void beans() {
@@ -51,33 +52,34 @@ ValueChangeListener {
 		}		
 	}
 
+	@SuppressWarnings({ "static-access", "deprecation" })
 	private void setTable() {
 		m_filterTable.setContainerDataSource(m_container);
-		m_filterTable.setVisibleColumns(new Object[] { "lieferant", "kategorie", 
-				"lieferdatum1", "lieferdatum2", "datum", "mitarbeiter", "status"});			
-		m_filterTable.sort(new Object[] { "lieferant" }, new boolean[] { true });			
+		m_filterTable.setVisibleColumns(new Object[] { FIELD_LIEFERANT, FIELD_KATEGORIE, 
+				FIELD_LIEFERDATUM_1, FIELD_LIEFERDATUM_2, FIELD_DATUM, FIELD_MITARBEITER, FIELD_STATUS});			
+		m_filterTable.sort(new Object[] { FIELD_LIEFERANT }, new boolean[] { true });			
 		m_filterTable.setCellStyleGenerator(new CellStyleGenerator() {
 			@Override
 			public String getStyle(CustomTable source, Object itemId, Object propertyId) {
 				Bestellung bestellung = (Bestellung) itemId;
-				if ("status".equals(propertyId)) {
+				if (FIELD_STATUS.equals(propertyId)) {
 					return bestellung.getStatus() ? "check" : "cross";
 				}
-				return "";				}
+				return "";				
+			}
 		});
 		
-		m_filterTable.setColumnHeader("lieferdatum1", "liefertermin1");
-		m_filterTable.setColumnHeader("lieferdatum2", "liefertermin2");
-		m_filterTable.setColumnHeader("datum", "erstellt");
-		m_filterTable.setColumnHeader("status", "bestellt");
-		m_filterTable.setColumnHeader("mitarbeiter", "erstellt von...");
-		m_filterTable.setColumnWidth("status", 50);
-		m_filterTable.setColumnWidth("mitarbeiter", 180);
-		m_filterTable.setColumnWidth("datum", 140);
-		m_filterTable.setColumnWidth("lieferdatum1", 140);
-		m_filterTable.setColumnWidth("lieferdatum2", 140);
-		m_filterTable.setColumnAlignment("status", m_filterTable.ALIGN_CENTER);
-		
+		m_filterTable.setColumnHeader(FIELD_LIEFERDATUM_1, "liefertermin1");
+		m_filterTable.setColumnHeader(FIELD_LIEFERDATUM_2, "liefertermin2");
+		m_filterTable.setColumnHeader(FIELD_DATUM, "erstellt");
+		m_filterTable.setColumnHeader(FIELD_STATUS, "bestellt");
+		m_filterTable.setColumnHeader(FIELD_MITARBEITER, "erstellt von...");
+		m_filterTable.setColumnWidth(FIELD_STATUS, 50);
+		m_filterTable.setColumnWidth(FIELD_MITARBEITER, 180);
+		m_filterTable.setColumnWidth(FIELD_DATUM, 140);
+		m_filterTable.setColumnWidth(FIELD_LIEFERDATUM_1, 140);
+		m_filterTable.setColumnWidth(FIELD_LIEFERDATUM_2, 140);
+		m_filterTable.setColumnAlignment(FIELD_STATUS, m_filterTable.ALIGN_CENTER);		
 	}
 
 	@Override

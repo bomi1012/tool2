@@ -5,9 +5,9 @@ package de.palaver.domain.artikelverwaltung;
 
 import java.sql.SQLException;
 
-import de.hska.awp.palaver.dao.ConnectException;
-import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
+import de.palaver.dao.ConnectException;
+import de.palaver.dao.DAOException;
 import de.palaver.domain.EntityName;
 
 public class Artikel extends EntityName implements java.io.Serializable {

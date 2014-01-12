@@ -23,6 +23,29 @@ import de.hska.awp.palaver2.util.customFilterDecorator;
 
 @SuppressWarnings("serial")
 public class ViewAbstract extends VerticalLayout {
+	
+	public static final String FIELD_KURZ = "kurz";
+	public static final String FIELD_ARTIKEL_NR = "artikelnr";
+	public static final String FIELD_ARTIKEL_NAME = "artikelName";
+	public static final String FIELD_LIEFERANT = "lieferant";
+	public static final String FIELD_KATEGORIE = "kategorie";
+	public static final String FIELD_LAGERORT = "lagerort";
+	public static final String FIELD_MITARBEITER = "mitarbeiter";
+	public static final String FIELD_MENGENEINHEIT = "mengeneinheit";
+	public static final String FIELD_PREIS = "preis";
+	public static final String FIELD_STANDARD = "standard";
+	public static final String FIELD_GRUNDBEDARF = "grundbedarf";
+	public static final String FIELD_BESTELLGROESSE = "bestellgroesse";
+	public static final String FIELD_LIEFERDATUM_1 = "lieferdatum1";
+	public static final String FIELD_LIEFERDATUM_2 = "lieferdatum2";
+	public static final String FIELD_DATUM = "datum";
+	public static final String FIELD_NOTIZ = "notiz";
+	public static final String FIELD_STATUS = "status";
+	public static final String FIELD_SUMME_1 = "summe1";
+	public static final String FIELD_SUMME_2 = "summe2";
+	public static final String FIELD_IGNORE = "ignore";
+	
+	
 	protected static final String FULL = "100%";
 	protected static final String STYLE_HEADLINE = "ViewHeadline";
 	protected static final String FIELD_NAME = "name";

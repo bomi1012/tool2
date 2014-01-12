@@ -5,8 +5,8 @@ import java.util.List;
 
 import de.bistrosoft.palaver.data.FussnoteDAO;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
-import de.hska.awp.palaver.dao.ConnectException;
-import de.hska.awp.palaver.dao.DAOException;
+import de.palaver.dao.ConnectException;
+import de.palaver.dao.DAOException;
 
 /**
  * @author Michael Marschall

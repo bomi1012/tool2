@@ -24,7 +24,7 @@ import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
-import de.hska.awp.palaver.Application;
+import de.palaver.Application;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
 /**

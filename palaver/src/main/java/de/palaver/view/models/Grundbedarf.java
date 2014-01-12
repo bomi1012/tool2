@@ -1,4 +1,4 @@
-package de.hska.awp.palaver2.gui.components;
+package de.palaver.view.models;
 
 import java.io.Serializable;
 
@@ -51,16 +51,16 @@ public class Grundbedarf implements Serializable{
 	public void setArtikelName(Label artikelName) {
 		m_artikelName = artikelName;
 	}
-	public IntStepper getLiefertermin1() {
+	public IntStepper getLieferdatum1() {
 		return m_liefertermin1;
 	}
-	public void setLiefertermin1(IntStepper liefertermin1) {
+	public void setLiefertdatum1(IntStepper liefertermin1) {
 		m_liefertermin1 = liefertermin1;
 	}
-	public IntStepper getLiefertermin2() {
+	public IntStepper getLieferdatum2() {
 		return m_liefertermin2;
 	}
-	public void setLiefertermin2(IntStepper liefertermin2) {
+	public void setLieferdatum2(IntStepper liefertermin2) {
 		m_liefertermin2 = liefertermin2;
 	}
 	public Label getMengeneinheit() {
@@ -69,10 +69,10 @@ public class Grundbedarf implements Serializable{
 	public void setMengeneinheit(Label mengeneinheit) {
 		m_mengeneinheit = mengeneinheit;
 	}
-	public Label getGebinde() {
+	public Label getBestellgroesse() {
 		return m_gebinde;
 	}
-	public void setGebinde(Label gebinde) {
+	public void setBestellgroesse(Label gebinde) {
 		m_gebinde = gebinde;
 	}
 	public Label getSumme1() {
@@ -89,10 +89,10 @@ public class Grundbedarf implements Serializable{
 		m_summe2 = summe;
 	}
 	
-	public CheckBox getRemove() {
+	public CheckBox getIgnore() {
 		return m_remove;
 	}
-	public void setRemove(CheckBox remove) {
+	public void setIgnore(CheckBox remove) {
 		m_remove = remove;
 	}
 	

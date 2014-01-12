@@ -5,9 +5,9 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hska.awp.palaver.dao.ConnectException;
-import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.util.Util;
+import de.palaver.dao.ConnectException;
+import de.palaver.dao.DAOException;
 import de.palaver.domain.bestellverwaltung.Bestellung;
 
 /**

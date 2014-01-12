@@ -21,10 +21,10 @@ import de.bistrosoft.palaver.kuchenrezeptverwaltung.KuchenplanLayout;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Kuchenplanverwaltung;
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
-import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.palaver.Application;
 
 /**
  * @author Christine Hartkorn

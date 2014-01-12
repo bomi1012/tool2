@@ -1,10 +1,4 @@
-/*
- * DAO.java
- *
- * created at 28.11.2012 09:12:11  by Sebastian Walz
- *
- */
-package de.hska.awp.palaver.dao;
+package de.palaver.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

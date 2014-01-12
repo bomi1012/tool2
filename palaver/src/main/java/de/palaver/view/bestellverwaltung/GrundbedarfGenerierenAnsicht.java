@@ -23,10 +23,6 @@ import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver.dao.ConnectException;
-import de.hska.awp.palaver.dao.DAOException;
-import de.hska.awp.palaver2.gui.components.Grundbedarf;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
@@ -36,6 +32,9 @@ import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.customFilter;
 import de.hska.awp.palaver2.util.customFilterDecorator;
+import de.palaver.Application;
+import de.palaver.dao.ConnectException;
+import de.palaver.dao.DAOException;
 import de.palaver.domain.artikelverwaltung.Artikel;
 import de.palaver.domain.bestellverwaltung.Bestellposition;
 import de.palaver.domain.bestellverwaltung.Bestellung;
@@ -43,12 +42,19 @@ import de.palaver.service.artikelverwaltung.ArtikelService;
 import de.palaver.view.artikelverwaltung.ArtikelErstellen;
 import de.palaver.view.artikelverwaltung.KategorienAnzeigen;
 import de.palaver.view.artikelverwaltung.OverArtikelverwaltungView;
+import de.palaver.view.models.Grundbedarf;
 
 @SuppressWarnings("serial")
 public class GrundbedarfGenerierenAnsicht extends OverBestellverwaltungView implements View,
 ValueChangeListener {
 	private static final Logger LOG = LoggerFactory.getLogger(KategorienAnzeigen.class.getName());
 	private static final String GRUNDBEDARF = "Grundbedarf";
+	private static final String GRUNDBEDARF_GENERIEREN = "Grundbedarf generieren";
+	private static final String BESTELLUNG_ERSTELLEN = "Bestellung erstellen";
+	private static final String LIFERANT = "Lieferant";
+	private static final String LIFERTERMIN = "Liefertermin ";
+	private static final String DATE_FORMAT = "dd.MM.yyyy";
+	
 	private BeanItemContainer<Grundbedarf> container;
 	private NativeSelect m_lieferantSelect;
 	private OverArtikelverwaltungView m_overArtikelverwaltungView = new OverArtikelverwaltungView();
@@ -66,17 +72,17 @@ ValueChangeListener {
 	private void template() throws SQLException, ConnectException, DAOException {
 		this.setSizeFull();
 		this.setMargin(true);
-		m_headlineLabel = headLine(m_headlineLabel, "Grundbedarf generieren", STYLE_HEADLINE);
-		m_erstellenButton = buttonSetting(m_button, "Bestellung erstellen", IConstants.ICON_BASKET_ADD, true, true);
+		m_headlineLabel = headLine(m_headlineLabel, GRUNDBEDARF_GENERIEREN, STYLE_HEADLINE);
+		m_erstellenButton = buttonSetting(m_button, BESTELLUNG_ERSTELLEN, IConstants.ICON_BASKET_ADD, true, true);
 		
-		m_lieferantSelect = nativeSelectSetting(m_lieferantSelect, "Lieferant",
-				FULL, false, "Lieferant", this);
+		m_lieferantSelect = nativeSelectSetting(m_lieferantSelect, LIFERANT,
+				FULL, false, LIFERANT, this);
 		m_lieferantSelect.setNullSelectionAllowed(false);
 		m_lieferanten = Lieferantenverwaltung.getInstance().getLieferantenByGrundbedarf(true);
 			
 		
-		m_termin1 = dateField("Liefertermin 1", "dd.MM.yyyy", FULL, Util.getDate(2, 7), true);
-		m_termin2 = dateField("Liefertermin 2", "dd.MM.yyyy", FULL, Util.getDate(6, 7), true);
+		m_termin1 = dateField(LIFERTERMIN + 1, DATE_FORMAT, FULL, Util.getDate(2, 7), true);
+		m_termin2 = dateField(LIFERTERMIN + 2, DATE_FORMAT, FULL, Util.getDate(6, 7), true);
 	
 		m_vertikalLayout = new VerticalLayout();
 		m_vertikalLayout.setWidth("95%");
@@ -113,9 +119,6 @@ ValueChangeListener {
 		this.setComponentAlignment(m_vertikalLayout, Alignment.MIDDLE_CENTER);
 		
 	}
-
-
-
 
 	private void listeners() {
 		m_lieferantSelect.addValueChangeListener(new ValueChangeListener() {			
@@ -165,7 +168,7 @@ ValueChangeListener {
 					try {
 						m_bestellung.setId(m_bestellungService.getInstance().createBestellung(m_bestellung));
 						for (Grundbedarf gb : container.getItemIds()) {
-							if(!(Boolean) gb.getRemove().getValue().booleanValue()) {
+							if(!(Boolean) gb.getIgnore().getValue().booleanValue()) {
 								m_bestellposition = new Bestellposition(
 										gb.getArtikel(), m_bestellung, 
 										Double.valueOf(gb.getSumme1().getValue()), 
@@ -212,22 +215,22 @@ ValueChangeListener {
 		try {
 			container = new BeanItemContainer<Grundbedarf>(Grundbedarf.class, m_grundbedarfe);
 			m_filterTable.setContainerDataSource(container);
-			m_filterTable.setVisibleColumns(new Object[] { "artikelName", "gebinde", 
-					"liefertermin1", "summe1", "liefertermin2", "summe2",
-					"mengeneinheit", "remove"});
-			m_filterTable.sort(new Object[] { "artikelName" }, new boolean[] { true });
-			m_filterTable.setColumnWidth("remove", 70);
-			m_filterTable.setColumnHeader("remove", "ignorieren");	
-			m_filterTable.setColumnWidth("gebinde", 60);
-			m_filterTable.setColumnWidth("summe1", 60);
-			m_filterTable.setColumnWidth("summe2", 60);
-			m_filterTable.setColumnWidth("mengeneinheit", 45);
-			m_filterTable.setColumnWidth("liefertermin1", 80);
-			m_filterTable.setColumnWidth("liefertermin2", 80);
-			m_filterTable.setColumnAlignment("summe1", m_filterTable.ALIGN_CENTER);
-			m_filterTable.setColumnAlignment("summe2", m_filterTable.ALIGN_CENTER);
-			m_filterTable.setColumnAlignment("mengeneinheit", m_filterTable.ALIGN_CENTER);
-			m_filterTable.setColumnAlignment("gebinde", m_filterTable.ALIGN_CENTER);
+			m_filterTable.setVisibleColumns(new Object[] { FIELD_ARTIKEL_NAME, FIELD_BESTELLGROESSE, 
+					FIELD_LIEFERDATUM_1, FIELD_SUMME_1, FIELD_LIEFERDATUM_2, FIELD_SUMME_2,
+					FIELD_MENGENEINHEIT, FIELD_IGNORE});
+			m_filterTable.sort(new Object[] { FIELD_ARTIKEL_NAME }, new boolean[] { true });
+			m_filterTable.setColumnWidth(FIELD_IGNORE, 70);
+			m_filterTable.setColumnHeader(FIELD_IGNORE, "ignorieren");	
+			m_filterTable.setColumnWidth(FIELD_BESTELLGROESSE, 60);
+			m_filterTable.setColumnWidth(FIELD_SUMME_1, 60);
+			m_filterTable.setColumnWidth(FIELD_SUMME_2, 60);
+			m_filterTable.setColumnWidth(FIELD_MENGENEINHEIT, 45);
+			m_filterTable.setColumnWidth(FIELD_LIEFERDATUM_1, 80);
+			m_filterTable.setColumnWidth(FIELD_LIEFERDATUM_2, 80);
+			m_filterTable.setColumnAlignment(FIELD_SUMME_1, m_filterTable.ALIGN_CENTER);
+			m_filterTable.setColumnAlignment(FIELD_SUMME_2, m_filterTable.ALIGN_CENTER);
+			m_filterTable.setColumnAlignment(FIELD_MENGENEINHEIT, m_filterTable.ALIGN_CENTER);
+			m_filterTable.setColumnAlignment(FIELD_BESTELLGROESSE, m_filterTable.ALIGN_CENTER);
 		} catch (Exception e) {
 			LOG.error(e.toString());
 		}		

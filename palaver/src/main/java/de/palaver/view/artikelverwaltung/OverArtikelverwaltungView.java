@@ -22,19 +22,6 @@ public class OverArtikelverwaltungView extends ViewAbstract {
 	public static final String MENGENEINHEIT = "Mengeneinheit";
 	public static final String KATEGORIE = "Kategorie";
 	public static final String LAGERORT = "Lagerort";
-	
-	
-	public static final String FIELD_KURZ = "kurz";
-	public static final String FIELD_ARTIKEL_NR = "artikelnr";
-	public static final String FIELD_LIEFERANT = "lieferant";
-	public static final String FIELD_KATEGORIE = "kategorie";
-	public static final String FIELD_LAGERORT = "lagerort";
-	public static final String FIELD_PREIS = "preis";
-	public static final String FIELD_STANDARD = "standard";
-	public static final String FIELD_GRUNDBEDARF = "grundbedarf";
-	public static final String FIELD_BESTELLGROESSE = "bestellgroesse";
-	public static final String FIELD_NOTIZ = "notiz";
-	
 
 	public static final String ARTIKEL_NAME = "Artikelname";
 	public static final String ARTIKEL_PREIS = "Preis";

@@ -3,8 +3,8 @@ package de.palaver.service.artikelverwaltung;
 import java.sql.SQLException;
 import java.util.List;
 
-import de.hska.awp.palaver.dao.ConnectException;
-import de.hska.awp.palaver.dao.DAOException;
+import de.palaver.dao.ConnectException;
+import de.palaver.dao.DAOException;
 import de.palaver.dao.artikelverwaltung.KategorieDAO;
 import de.palaver.domain.artikelverwaltung.Kategorie;
 

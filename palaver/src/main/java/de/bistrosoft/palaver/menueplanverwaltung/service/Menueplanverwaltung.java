@@ -9,8 +9,8 @@ import de.bistrosoft.palaver.menueplanverwaltung.KochInMenueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
 import de.bistrosoft.palaver.util.Week;
-import de.hska.awp.palaver.dao.ConnectException;
-import de.hska.awp.palaver.dao.DAOException;
+import de.palaver.dao.ConnectException;
+import de.palaver.dao.DAOException;
 
 public class Menueplanverwaltung extends MenueplanDAO {
 

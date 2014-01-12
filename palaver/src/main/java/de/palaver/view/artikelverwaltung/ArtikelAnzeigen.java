@@ -20,10 +20,10 @@ import com.vaadin.ui.CustomTable.CellStyleGenerator;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.UI;
 
-import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.palaver.Application;
 import de.palaver.domain.artikelverwaltung.Artikel;
 import de.palaver.service.artikelverwaltung.ArtikelService;
 

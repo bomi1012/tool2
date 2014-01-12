@@ -1,7 +1,7 @@
 /**
  * Created by S.Walz
  */
-package de.hska.awp.palaver;
+package de.palaver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

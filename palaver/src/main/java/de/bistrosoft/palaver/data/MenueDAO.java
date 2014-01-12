@@ -17,11 +17,11 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.Util;
-import de.hska.awp.palaver.dao.AbstractDAO;
-import de.hska.awp.palaver.dao.ConnectException;
-import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.data.MitarbeiterDAO;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.palaver.dao.AbstractDAO;
+import de.palaver.dao.ConnectException;
+import de.palaver.dao.DAOException;
 
 public class MenueDAO extends AbstractDAO {
 	private static MenueDAO instance;

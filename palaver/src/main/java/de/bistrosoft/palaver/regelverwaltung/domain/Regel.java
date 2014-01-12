@@ -11,8 +11,8 @@ import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
-import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver2.util.IConstants;
+import de.palaver.Application;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
 public class Regel {
