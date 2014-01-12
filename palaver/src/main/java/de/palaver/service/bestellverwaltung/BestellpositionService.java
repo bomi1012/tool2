@@ -16,7 +16,7 @@ import de.palaver.domain.bestellverwaltung.Bestellposition;
  * @author Elena W
  */
 
-public class BestellpositionService extends BestellpositionDAO {
+public class BestellpositionService {
 	
 	private static BestellpositionService instance = null;
 
@@ -33,7 +33,7 @@ public class BestellpositionService extends BestellpositionDAO {
 	
 		
 	public void createBestellposition(Bestellposition bestellposition) throws ConnectException, DAOException {
-		super.createBestellposition(bestellposition);
+		BestellpositionDAO.getInstance().createBestellposition(bestellposition);
 	}
 	
 	

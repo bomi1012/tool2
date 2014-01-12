@@ -8,7 +8,7 @@ import de.palaver.dao.DAOException;
 import de.palaver.dao.artikelverwaltung.LagerortDAO;
 import de.palaver.domain.artikelverwaltung.Lagerort;
 
-public class LagerorService extends LagerortDAO {
+public class LagerorService {
 	private static LagerorService instance = null;
 	
 	private LagerorService() {
@@ -24,10 +24,18 @@ public class LagerorService extends LagerortDAO {
 
 	public List<Lagerort> getAllLagerorts() throws ConnectException,
 			DAOException, SQLException {
-		return super.getInstance().getAllLagerorts();
+		return LagerortDAO.getInstance().getAllLagerorts();
 	}
 
 	public void createLagerort(Lagerort lagerort) throws ConnectException, DAOException {
-		super.getInstance().createLagerort(lagerort);		
+		LagerortDAO.getInstance().createLagerort(lagerort);		
+	}
+
+	public void updateLagerort(Lagerort lagerort) throws ConnectException, DAOException, SQLException {
+		LagerortDAO.getInstance().updateLagerort(lagerort);
+	}
+
+	public void deleteLagerort(Long id) throws ConnectException, DAOException {
+		LagerortDAO.getInstance().deleteLagerort(id);
 	}
 }

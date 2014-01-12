@@ -12,7 +12,7 @@ import de.palaver.domain.bestellverwaltung.Bestellung;
  * Die Klasse ermöglicht die Verwaltung der Bestellung und stellt für die GUI
  * Methoden bereit.
  */
-public class BestellungService extends BestellungDAO {
+public class BestellungService {
 	private static BestellungService instance = null;
 
 	public BestellungService() {
@@ -28,11 +28,11 @@ public class BestellungService extends BestellungDAO {
 	
 	public List<Bestellung> getAllBestellungen() throws ConnectException,
 			DAOException, SQLException {
-		return super.getAllBestellungen();
+		return BestellungDAO.getInstance().getAllBestellungen();
 	}
 	
 	public Long createBestellung(Bestellung bestellung) throws ConnectException, DAOException {
-		return super.createBestellung(bestellung);
+		return BestellungDAO.getInstance().createBestellung(bestellung);
 	}
 	
 	

@@ -8,7 +8,7 @@ import de.palaver.dao.DAOException;
 import de.palaver.dao.artikelverwaltung.KategorieDAO;
 import de.palaver.domain.artikelverwaltung.Kategorie;
 
-public class KategorieService extends KategorieDAO {
+public class KategorieService {
 	
 	private static KategorieService instance = null;
 	public KategorieService() {
@@ -28,7 +28,7 @@ public class KategorieService extends KategorieDAO {
 	 */
 	public List<Kategorie> getAllKategories() throws ConnectException,
 			DAOException, SQLException {
-		return super.getAllKategories();
+		return KategorieDAO.getInstance().getAllKategories();
 	}
 
 	/**
@@ -38,20 +38,20 @@ public class KategorieService extends KategorieDAO {
 	 */
 	public Kategorie getKategorieById(Long id) throws ConnectException,
 			DAOException, SQLException {
-		return super.getKategorieById(id);
+		return KategorieDAO.getInstance().getKategorieById(id);
 	}
 	
 	public void createKategorie(Kategorie kategorie)
 			throws ConnectException, DAOException, SQLException {
-		super.createKategorie(kategorie);
+		KategorieDAO.getInstance().createKategorie(kategorie);
 	}
 
 	public void updateKategorie(Kategorie kategorie) throws ConnectException,
 			DAOException, SQLException {
-		super.updateKategorie(kategorie);
+		KategorieDAO.getInstance().updateKategorie(kategorie);
 	}
 	
 	public void deleteKategorie(Long id) throws ConnectException, DAOException {
-		super.deleteKategorie(id); 		
+		KategorieDAO.getInstance().deleteKategorie(id); 		
 	}
 }

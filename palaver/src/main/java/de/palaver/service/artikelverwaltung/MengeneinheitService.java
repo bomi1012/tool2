@@ -8,7 +8,7 @@ import de.palaver.dao.DAOException;
 import de.palaver.dao.artikelverwaltung.MengeneinheitDAO;
 import de.palaver.domain.artikelverwaltung.Mengeneinheit;
 
-public class MengeneinheitService extends MengeneinheitDAO {
+public class MengeneinheitService {
 
 	private static MengeneinheitService instance = null;
 
@@ -27,31 +27,31 @@ public class MengeneinheitService extends MengeneinheitDAO {
 	 * Die Methode liefert alle Mengeneinheiten zurück.
 	 */
 	public List<Mengeneinheit> getAllMengeneinheiten() throws ConnectException, DAOException, SQLException {
-		return super.getAllMengeneinheiten();
+		return MengeneinheitDAO.getInstance().getAllMengeneinheiten();
 	}
 
 	/**
 	 * Die Methode liefert eine Mengeneinheit anhand des Parameter id zurück.
 	 */
 	public Mengeneinheit getMengeneinheitById(Long id) throws ConnectException, DAOException, SQLException {
-		return super.getMengeneinheitById(id);
+		return MengeneinheitDAO.getInstance().getMengeneinheitById(id);
 	}
 
 	/**
 	 * Die Methode liefert eine Mengeneinheit anhand des Parameter name zurück.
 	 */
 	public List<Mengeneinheit> getMengeneinheitByName(String name) throws ConnectException, DAOException, SQLException {
-		return super.getMengeneinheitByName(name);
+		return MengeneinheitDAO.getInstance().getMengeneinheitByName(name);
 	}
 
 	public void createMengeneinheit(Mengeneinheit mengeneinheit) throws ConnectException, DAOException, SQLException {
-		super.createMengeneinheit(mengeneinheit);
+		MengeneinheitDAO.getInstance().createMengeneinheit(mengeneinheit);
 	}
 	public void updateMengeneinheit(Mengeneinheit mengeneinheit) throws ConnectException, DAOException, SQLException {
-		super.updateMengeneinheit(mengeneinheit);
+		MengeneinheitDAO.getInstance().updateMengeneinheit(mengeneinheit);
 	}
 	public void deleteMengeneinheit(Long id) throws ConnectException, DAOException {
-		super.deleteMengeneinheit(id);
+		MengeneinheitDAO.getInstance().deleteMengeneinheit(id);
 		
 	}
 }
