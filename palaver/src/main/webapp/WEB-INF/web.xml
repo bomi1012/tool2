@@ -12,7 +12,7 @@
         <init-param>
             <description>Vaadin UI to display</description>
             <param-name>UI</param-name>
-            <param-value>de.hska.awp.palaver.Application</param-value>
+            <param-value>de.palaver.Application</param-value>
         </init-param>
                 <init-param>
             <description>Application widgetset</description>
