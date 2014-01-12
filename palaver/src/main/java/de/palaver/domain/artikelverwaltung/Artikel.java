@@ -1,14 +1,14 @@
 /**
  * Created by Sebastian Walz
  */
-package de.hska.awp.palaver.artikelverwaltung.domain;
+package de.palaver.domain.artikelverwaltung;
 
 import java.sql.SQLException;
 
-import de.hska.awp.palaver.EntityName;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
+import de.palaver.domain.EntityName;
 
 public class Artikel extends EntityName implements java.io.Serializable {
 	private static final long serialVersionUID = 6557876739298794189L;
@@ -177,38 +177,5 @@ public class Artikel extends EntityName implements java.io.Serializable {
 
 	public void setLagerort(Lagerort lagerort) {
 		this.lagerort = lagerort;
-	}
-	
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((m_id == null) ? 0 : m_id.hashCode());
-		return result;
-	}
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Artikel other = (Artikel) obj;
-		if (m_id == null) {
-			if (other.m_id != null)
-				return false;
-		} else if (!m_id.equals(other.m_id))
-			return false;
-		return true;
-	}
-
-
-	@Override
-	public String toString() {
-		return this.m_name;
 	}
 }

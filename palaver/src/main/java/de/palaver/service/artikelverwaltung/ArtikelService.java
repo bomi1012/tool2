@@ -2,15 +2,15 @@
  * Created by Sebastian Walz
  * 24.04.2013 16:08:18
  */
-package de.hska.awp.palaver.artikelverwaltung.service;
+package de.palaver.service.artikelverwaltung;
 
 import java.sql.SQLException;
 import java.util.List;
 
-import de.hska.awp.palaver.artikelverwaltung.dao.ArtikelDAO;
-import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
+import de.palaver.dao.artikelverwaltung.ArtikelDAO;
+import de.palaver.domain.artikelverwaltung.Artikel;
 
 public class ArtikelService extends ArtikelDAO {
 	private static ArtikelService instance = null;

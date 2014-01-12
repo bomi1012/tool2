@@ -1,7 +1,7 @@
-package de.hska.awp.palaver.bestellverwaltung.domain;
+package de.palaver.domain.bestellverwaltung;
 
-import de.hska.awp.palaver.EntityId;
-import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
+import de.palaver.domain.EntityId;
+import de.palaver.domain.artikelverwaltung.Artikel;
 
 /**
  * Die Klasse Bestellposition spiegelt den Bestellposition aus der Datenbank

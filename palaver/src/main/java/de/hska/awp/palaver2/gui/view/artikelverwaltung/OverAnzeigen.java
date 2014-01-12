@@ -1,7 +1,5 @@
 package de.hska.awp.palaver2.gui.view.artikelverwaltung;
 
-import org.tepi.filtertable.FilterTable;
-
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -13,8 +11,6 @@ import com.vaadin.ui.VerticalLayout;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
-import de.hska.awp.palaver2.util.customFilter;
-import de.hska.awp.palaver2.util.customFilterDecorator;
 
 @SuppressWarnings("serial")
 public class OverAnzeigen extends OverArtikelverwaltungView implements View  {
@@ -51,16 +47,6 @@ public class OverAnzeigen extends OverArtikelverwaltungView implements View  {
 		m_table.setSelectable(true);
 		return m_table;
 	}
-	protected FilterTable filterTable() {
-		m_filterTable = new FilterTable();
-		m_filterTable.setSizeFull();
-		m_filterTable.setFilterBarVisible(true);
-		m_filterTable.setFilterGenerator(new customFilter());
-		m_filterTable.setFilterDecorator(new customFilterDecorator());
-		m_filterTable.setSelectable(true);
-		return m_filterTable;
-	}
-	
 
 	protected HorizontalLayout filterLayout(Label headlineLabel) {			
 		m_filterButton = new Button(IConstants.BUTTON_CLEAR_FILTER);

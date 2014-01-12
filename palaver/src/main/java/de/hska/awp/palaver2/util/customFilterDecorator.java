@@ -9,7 +9,7 @@ import org.tepi.filtertable.numberfilter.NumberFilterPopupConfig;
 import com.vaadin.server.Resource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.datefield.Resolution;
-
+//https://github.com/tepi/FilteringTable/blob/master/src/org/tepi/filtertable/demo/DemoFilterDecorator.java
 public class customFilterDecorator implements FilterDecorator {
 
 	@Override
@@ -48,12 +48,12 @@ public class customFilterDecorator implements FilterDecorator {
 
 	@Override
 	public String getFromCaption() {
-		return null;
+		return "Start date:";
 	}
 
 	@Override
 	public String getToCaption() {
-		return null;
+		return "End date:";
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class customFilterDecorator implements FilterDecorator {
 
 	@Override
 	public Resolution getDateFieldResolution(Object propertyId) {
-		return Resolution.YEAR;
+		return Resolution.DAY;
 	}
 
 	public DateFormat getDateFormat(Object propertyId) {
@@ -87,7 +87,7 @@ public class customFilterDecorator implements FilterDecorator {
 
 	@Override
 	public Locale getLocale() {
-		return null;
+		return Locale.GERMANY;
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 package de.bistrosoft.palaver.kuchenrezeptverwaltung.domain;
 
-import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver.artikelverwaltung.domain.Mengeneinheit;
+import de.palaver.domain.artikelverwaltung.Artikel;
+import de.palaver.domain.artikelverwaltung.Mengeneinheit;
 
 /**
  * 

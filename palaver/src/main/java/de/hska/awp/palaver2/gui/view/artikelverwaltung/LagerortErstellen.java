@@ -15,15 +15,15 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver.artikelverwaltung.domain.Kategorie;
-import de.hska.awp.palaver.artikelverwaltung.domain.Lagerort;
-import de.hska.awp.palaver.artikelverwaltung.service.LagerorService;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.gui.view.IErstellen;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewHandler;
+import de.palaver.domain.artikelverwaltung.Kategorie;
+import de.palaver.domain.artikelverwaltung.Lagerort;
+import de.palaver.service.artikelverwaltung.LagerorService;
 
 public class LagerortErstellen extends OverErstellen implements View,
 ValueChangeListener, IErstellen  {

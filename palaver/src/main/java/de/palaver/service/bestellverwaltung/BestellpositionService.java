@@ -2,12 +2,12 @@
  * Created by Elena W
  */
 
-package de.hska.awp.palaver.bestellverwaltung.service;
+package de.palaver.service.bestellverwaltung;
 
-import de.hska.awp.palaver.bestellverwaltung.dao.BestellpositionDAO;
-import de.hska.awp.palaver.bestellverwaltung.domain.Bestellposition;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
+import de.palaver.dao.bestellverwaltung.BestellpositionDAO;
+import de.palaver.domain.bestellverwaltung.Bestellposition;
 
 /**
  * Die Klasse ermöglicht die Verwaltung der BEstellpositionen und stellt für die GUI

@@ -13,13 +13,13 @@ import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenrezept;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Fussnotekuchenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 import de.bistrosoft.palaver.util.Week;
-import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver.artikelverwaltung.domain.Mengeneinheit;
-import de.hska.awp.palaver.artikelverwaltung.service.ArtikelService;
-import de.hska.awp.palaver.artikelverwaltung.service.MengeneinheitService;
 import de.hska.awp.palaver.dao.AbstractDAO;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
+import de.palaver.domain.artikelverwaltung.Artikel;
+import de.palaver.domain.artikelverwaltung.Mengeneinheit;
+import de.palaver.service.artikelverwaltung.ArtikelService;
+import de.palaver.service.artikelverwaltung.MengeneinheitService;
 
 /**
  * @author Christine Hartkorn, Eike Becher

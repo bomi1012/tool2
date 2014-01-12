@@ -28,14 +28,6 @@ import com.vaadin.ui.Window.CloseEvent;
 import com.vaadin.ui.Window.CloseListener;
 
 import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver.artikelverwaltung.domain.Kategorie;
-import de.hska.awp.palaver.artikelverwaltung.domain.Lagerort;
-import de.hska.awp.palaver.artikelverwaltung.domain.Mengeneinheit;
-import de.hska.awp.palaver.artikelverwaltung.service.ArtikelService;
-import de.hska.awp.palaver.artikelverwaltung.service.KategorieService;
-import de.hska.awp.palaver.artikelverwaltung.service.LagerorService;
-import de.hska.awp.palaver.artikelverwaltung.service.MengeneinheitService;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.gui.view.lieferantenverwaltung.LieferantErstellen;
@@ -44,6 +36,14 @@ import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewHandler;
+import de.palaver.domain.artikelverwaltung.Artikel;
+import de.palaver.domain.artikelverwaltung.Kategorie;
+import de.palaver.domain.artikelverwaltung.Lagerort;
+import de.palaver.domain.artikelverwaltung.Mengeneinheit;
+import de.palaver.service.artikelverwaltung.ArtikelService;
+import de.palaver.service.artikelverwaltung.KategorieService;
+import de.palaver.service.artikelverwaltung.LagerorService;
+import de.palaver.service.artikelverwaltung.MengeneinheitService;
 
 /**
  * @author Sebastian Walz Diese Klasse ist eine Eingabeform fuer das Erstellen

@@ -14,11 +14,11 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.UI;
 
 import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver.artikelverwaltung.domain.Lagerort;
-import de.hska.awp.palaver.artikelverwaltung.service.LagerorService;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.palaver.domain.artikelverwaltung.Lagerort;
+import de.palaver.service.artikelverwaltung.LagerorService;
 
 @SuppressWarnings("serial")
 public class LagerorteAnzeigen extends OverAnzeigen implements View {

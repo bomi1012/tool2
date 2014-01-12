@@ -52,6 +52,7 @@ import de.hska.awp.palaver2.gui.view.artikelverwaltung.LagerortErstellen;
 import de.hska.awp.palaver2.gui.view.artikelverwaltung.LagerorteAnzeigen;
 import de.hska.awp.palaver2.gui.view.artikelverwaltung.MengeneinheitErstellen;
 import de.hska.awp.palaver2.gui.view.artikelverwaltung.MengeneinheitenAnzeigen;
+import de.hska.awp.palaver2.gui.view.bestellverwaltung.BestellungenAnzeigen;
 import de.hska.awp.palaver2.gui.view.bestellverwaltung.GrundbedarfGenerierenAnsicht;
 import de.hska.awp.palaver2.gui.view.lieferantenverwaltung.LieferantAnzeigen;
 import de.hska.awp.palaver2.gui.view.lieferantenverwaltung.LieferantErstellen;
@@ -134,7 +135,30 @@ public class MainLayout extends VerticalLayout implements Command {
 		lagerortItem.setIcon(new ThemeResource(IConstants.ICON_FOLDER_PAGE_WHITE));
 		lagerortAnzeigenItem.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_LUPE));
 		lagerortAnlegenItem.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_ADD));
-
+		
+		/** Bestellung */
+		if (((Application) UI.getCurrent().getData()).userHasPersmission(Rollen.ADMINISTRATOR)
+				|| ((Application) UI.getCurrent().getData()).userHasPersmission(Rollen.BESTELLER)) {
+			/** Bestellung */
+			MenuItem bestellungItem = menu.addItem(IConstants.MENU_BESTELLUNG_HEADLINE, null);
+			/** 1 Level */
+			MenuItem bestellungeAnzeigen = bestellungItem.addItem(IConstants.MENU_BESTELLUNG_ANZEIGEN, this);
+			MenuItem bestellungWählenItem = bestellungItem.addItem(IConstants.MENU_BESTELLUNG_GENERIEREN, null);
+			/** 2 Level */
+			MenuItem grundbedarfGenerierenItem = bestellungWählenItem.addItem(IConstants.MENU_GRUNDBEDARF, this);
+			
+			/** Icons */
+			bestellungWählenItem.setIcon(new ThemeResource(IConstants.ICON_FOLDER_PAGE_WHITE));
+			bestellungeAnzeigen.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_LUPE));
+			grundbedarfGenerierenItem.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_ADD));
+			
+//			bestellungItem.addItem(IConstants.MENU_BESTELLUNG_NEW_RANDOM, this);
+//			bestellungItem.addItem(IConstants.MENU_BESTELLUNG_GENERATE, this);
+//		
+//		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_BEARBEITEN, this);
+//		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_ANZEIGEN, this);
+		}
+		
 		/** Lieferant */
 		MenuItem lieferantItem = menu.addItem(
 				IConstants.MENU_LIEFERANT_HEADLINE, null);
@@ -169,20 +193,20 @@ public class MainLayout extends VerticalLayout implements Command {
 				this);
 		kuchenverwaltungItem.addItem(IConstants.MENU_KUCHENPLAN_AKTUELL, this);
 
-		MenuItem bestellungItem = menu.addItem(
-				IConstants.MENU_BESTELLUNG_HEADLINE, null);
-		if (((Application) UI.getCurrent().getData())
-				.userHasPersmission(Rollen.ADMINISTRATOR)
-				|| ((Application) UI.getCurrent().getData())
-						.userHasPersmission(Rollen.BESTELLER)) {
-			
-			bestellungItem.addItem("Grundbedarf generieren", this);
-			
-			bestellungItem.addItem(IConstants.MENU_BESTELLUNG_NEW_RANDOM, this);
-			bestellungItem.addItem(IConstants.MENU_BESTELLUNG_GENERATE, this);
-		}
-		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_BEARBEITEN, this);
-		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_ANZEIGEN, this);
+//		MenuItem bestellungItem = menu.addItem(
+//				IConstants.MENU_BESTELLUNG_HEADLINE, null);
+//		if (((Application) UI.getCurrent().getData())
+//				.userHasPersmission(Rollen.ADMINISTRATOR)
+//				|| ((Application) UI.getCurrent().getData())
+//						.userHasPersmission(Rollen.BESTELLER)) {
+//			
+//			bestellungItem.addItem("Grundbedarf generieren", this);
+//			
+//			bestellungItem.addItem(IConstants.MENU_BESTELLUNG_NEW_RANDOM, this);
+//			bestellungItem.addItem(IConstants.MENU_BESTELLUNG_GENERATE, this);
+//		}
+//		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_BEARBEITEN, this);
+//		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_ANZEIGEN, this);
 
 		MenuItem einstellungItem = menu.addItem(
 				IConstants.MENU_EINSTELLUNGEN_HEADLINE, null);
@@ -240,6 +264,10 @@ public class MainLayout extends VerticalLayout implements Command {
 				ViewHandler.getInstance().switchView(KategorieErstellen.class);
 			} else if (selectedItem.getText().equals(IConstants.MENU_LAGERORT_NEU)) {
 				ViewHandler.getInstance().switchView(LagerortErstellen.class);
+			} else if(selectedItem.getText().equals(IConstants.MENU_BESTELLUNG_ANZEIGEN)) {
+				ViewHandler.getInstance().switchView(BestellungenAnzeigen.class);
+			} else if(selectedItem.getText().equals(IConstants.MENU_GRUNDBEDARF)) {
+				ViewHandler.getInstance().switchView(GrundbedarfGenerierenAnsicht.class);
 			}
 			
 			
@@ -336,9 +364,7 @@ public class MainLayout extends VerticalLayout implements Command {
 //						.switchView(BestellungGenerieren.class);
 			} else if (selectedItem.getText().equals(IConstants.MENU_HEADER)) {
 				setHeaderVisible(!this.header.isVisible());
-			} else if(selectedItem.getText().equals("Grundbedarf generieren")) {
-				ViewHandler.getInstance().switchView(GrundbedarfGenerierenAnsicht.class);
-			}
+			} 
 			// else if (selectedItem.getText().equals(IConstants.MENU_INFO))
 			// {
 			// showInfo();

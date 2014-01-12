@@ -14,18 +14,18 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Zubereitungverwaltung;
-import de.hska.awp.palaver.artikelverwaltung.dao.ArtikelDAO;
-import de.hska.awp.palaver.artikelverwaltung.dao.MengeneinheitDAO;
-import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver.artikelverwaltung.domain.Mengeneinheit;
-import de.hska.awp.palaver.artikelverwaltung.service.ArtikelService;
-import de.hska.awp.palaver.artikelverwaltung.service.MengeneinheitService;
 import de.hska.awp.palaver.dao.AbstractDAO;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.data.MitarbeiterDAO;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
+import de.palaver.dao.artikelverwaltung.ArtikelDAO;
+import de.palaver.dao.artikelverwaltung.MengeneinheitDAO;
+import de.palaver.domain.artikelverwaltung.Artikel;
+import de.palaver.domain.artikelverwaltung.Mengeneinheit;
+import de.palaver.service.artikelverwaltung.ArtikelService;
+import de.palaver.service.artikelverwaltung.MengeneinheitService;
 
 public class RezeptDAO extends AbstractDAO {
 

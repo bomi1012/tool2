@@ -1,12 +1,12 @@
-package de.hska.awp.palaver.bestellverwaltung.service;
+package de.palaver.service.bestellverwaltung;
 
 import java.sql.SQLException;
 import java.util.List;
 
-import de.hska.awp.palaver.bestellverwaltung.dao.BestellungDAO;
-import de.hska.awp.palaver.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
+import de.palaver.dao.bestellverwaltung.BestellungDAO;
+import de.palaver.domain.bestellverwaltung.Bestellung;
 
 /**
  * Die Klasse ermöglicht die Verwaltung der Bestellung und stellt für die GUI

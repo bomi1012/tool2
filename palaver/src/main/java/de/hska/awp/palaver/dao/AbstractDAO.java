@@ -12,7 +12,6 @@ import java.sql.Statement;
 
 import javax.sql.rowset.CachedRowSet;
 
-import com.mysql.jdbc.PreparedStatement;
 import com.sun.rowset.CachedRowSetImpl;
 
 public abstract class AbstractDAO
@@ -21,7 +20,6 @@ public abstract class AbstractDAO
 	protected static final String FIELD_NAME = "name";
 	protected Connector m_connector;	
 	private Statement m_statement;
-	private PreparedStatement m_ps;
 	protected ResultSet m_set;
 	protected long m_lastId;
 	
@@ -83,17 +81,6 @@ public abstract class AbstractDAO
 			closeConnection();	
 		}
 		return m_lastId;
-	}
-	
-	protected synchronized void putMany(String querry) throws ConnectException, DAOException  {
-		
-		try  {
-			m_statement.executeUpdate(querry);
-		} 
-		catch (Exception e)  {
-			throw new DAOException("Statement error: " + querry);
-		}
-		
 	}
 	
 	@Deprecated

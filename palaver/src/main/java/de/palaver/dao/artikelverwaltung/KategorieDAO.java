@@ -1,4 +1,4 @@
-package de.hska.awp.palaver.artikelverwaltung.dao;
+package de.palaver.dao.artikelverwaltung;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -6,10 +6,10 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hska.awp.palaver.artikelverwaltung.domain.Kategorie;
 import de.hska.awp.palaver.dao.AbstractDAO;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
+import de.palaver.domain.artikelverwaltung.Kategorie;
 
 public class KategorieDAO extends AbstractDAO {
 

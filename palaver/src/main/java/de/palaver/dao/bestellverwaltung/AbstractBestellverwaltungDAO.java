@@ -1,15 +1,15 @@
-package de.hska.awp.palaver.bestellverwaltung.dao;
+package de.palaver.dao.bestellverwaltung;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import de.hska.awp.palaver.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver.dao.AbstractDAO;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.data.LieferantDAO;
 import de.hska.awp.palaver2.data.MitarbeiterDAO;
+import de.palaver.domain.bestellverwaltung.Bestellung;
 
 public class AbstractBestellverwaltungDAO extends AbstractDAO {
 	protected static final String TABLE_B = "bestellung";
@@ -70,6 +70,6 @@ public class AbstractBestellverwaltungDAO extends AbstractDAO {
 				set.getDate(FIELD_LIEFERDATUM1), 
 				set.getDate(FIELD_LIEFERDATUM2), 
 				set.getBoolean(FIELD_STATUS),
-				set.getInt(FIELD_KATEGORIE));	
+				set.getString(FIELD_KATEGORIE));	
 	}
 }

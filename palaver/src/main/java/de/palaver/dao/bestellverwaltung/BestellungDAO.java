@@ -1,14 +1,14 @@
-package de.hska.awp.palaver.bestellverwaltung.dao;
+package de.palaver.dao.bestellverwaltung;
 
 import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hska.awp.palaver.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.util.Util;
+import de.palaver.domain.bestellverwaltung.Bestellung;
 
 /**
  * Klasse BestellungDAO. Die Klasse stellt für die Bestellung alle notwendigen
@@ -66,7 +66,7 @@ public class BestellungDAO extends AbstractBestellverwaltungDAO {
 				"'" + bestellung.getLieferdatum1() + "'",
 				lieferdatum2,
 				Util.convertBoolean(bestellung.getStatus()),
-				bestellung.getKategorie()));
+				"'" + bestellung.getKategorie() + "'"));
 
 	}
 

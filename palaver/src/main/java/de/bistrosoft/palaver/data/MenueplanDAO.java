@@ -25,15 +25,15 @@ import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.Week;
-import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver.artikelverwaltung.domain.Mengeneinheit;
-import de.hska.awp.palaver.artikelverwaltung.service.ArtikelService;
-import de.hska.awp.palaver.artikelverwaltung.service.MengeneinheitService;
 import de.hska.awp.palaver.dao.AbstractDAO;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
+import de.palaver.domain.artikelverwaltung.Artikel;
+import de.palaver.domain.artikelverwaltung.Mengeneinheit;
+import de.palaver.service.artikelverwaltung.ArtikelService;
+import de.palaver.service.artikelverwaltung.MengeneinheitService;
 
 /**
  * @author Eike

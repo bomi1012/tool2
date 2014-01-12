@@ -37,7 +37,9 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/test?user=root&password
 	String		MENU_EINSTELLUNGEN_HEADLINE = "Einstellungen";
 	String		MENU_BESTELLUNG_HEADLINE = "Bestellung";
 	String		MENU_BESTELLUNG_NEW_RANDOM = "Bestellung anlegen";
+	String 		MENU_GRUNDBEDARF = "Grundbedarf";
 	String		MENU_BESTELLUNG_NEW = "Neue Bestellung";
+	String 		MENU_BESTELLUNG_GENERIEREN = "Bestellung generieren";
 	String 		MENU_BESTELLUNG_BEARBEITEN = "Bestellung bearbeiten";
 	String 		MENU_BESTELLUNG_ANZEIGEN = "Alle Bestellungen anzeigen";
 	String		MENU_BESTELLUNG_GENERATE = "Bestellungen generieren";
@@ -114,7 +116,6 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/test?user=root&password
 	String		BUTTON_EMAILVERSAND_ICON = "img/mail.ico";
 	
 	
-	String 		ICON_ZOOM = "icons/zoom.png";
 	String 		ICON_PAGE_EDIT = "icons/page_edit.png";
 	String 		ICON_PAGE_ADD = "icons/page_add.png";
 	String 		ICON_PAGE_DELETE = "icons/page_delete.png";
@@ -278,6 +279,10 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/test?user=root&password
 	String 		FUSSNOTEN_MENUEPLAN = "<div align=center>ohne Gewähr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (v) = vegan &nbsp;&nbsp; (vm) = vegan mögl. &nbsp;&nbsp; (veg.m) = vegetarisch mögl. &nbsp;&nbsp; (Z) = ohne Zwiebel &nbsp;&nbsp; (Zm) = ohne Zwiebel mögl. <BR> (K) = ohne Knoblauch &nbsp;&nbsp; (Km) = ohne Knoblauch mögl. &nbsp;&nbsp; (W) = ohne Weizen &nbsp;&nbsp; (Wm) = ohne Weizen mögl. &nbsp;&nbsp; (M) = ohne KuhMilch &nbsp;&nbsp; (Mm) = ohne KuhMilch mögl.</div>";
 
 	String INFO_LAGERORT_AUSWAEHLEN = "Bitte Lagerort auswählen";
+
+
+
+	
 
 
 

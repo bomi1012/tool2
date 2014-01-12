@@ -9,7 +9,7 @@ import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Label;
 
-import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
+import de.palaver.domain.artikelverwaltung.Artikel;
 
 public class Grundbedarf implements Serializable{
 	private static final long serialVersionUID = 3583052471410219992L;

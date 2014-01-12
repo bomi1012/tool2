@@ -24,10 +24,6 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver.artikelverwaltung.service.ArtikelService;
-import de.hska.awp.palaver.bestellverwaltung.domain.Bestellposition;
-import de.hska.awp.palaver.bestellverwaltung.domain.Bestellung;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
 import de.hska.awp.palaver2.gui.components.Grundbedarf;
@@ -43,16 +39,20 @@ import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.customFilter;
 import de.hska.awp.palaver2.util.customFilterDecorator;
+import de.palaver.domain.artikelverwaltung.Artikel;
+import de.palaver.domain.bestellverwaltung.Bestellposition;
+import de.palaver.domain.bestellverwaltung.Bestellung;
+import de.palaver.service.artikelverwaltung.ArtikelService;
 
 @SuppressWarnings("serial")
 public class GrundbedarfGenerierenAnsicht extends OverBestellverwaltungView implements View,
 ValueChangeListener {
 	private static final Logger LOG = LoggerFactory.getLogger(KategorienAnzeigen.class.getName());
+	private static final String GRUNDBEDARF = "Grundbedarf";
 	private BeanItemContainer<Grundbedarf> container;
 	private NativeSelect m_lieferantSelect;
 	private OverArtikelverwaltungView m_overArtikelverwaltungView = new OverArtikelverwaltungView();
-	private Button m_vorschauButton;
-	private Button m_generierenButton;
+	private Button m_erstellenButton;
 	private DateField m_termin1;
 	private DateField m_termin2;
 	private java.sql.Date m_d1;
@@ -67,10 +67,7 @@ ValueChangeListener {
 		this.setSizeFull();
 		this.setMargin(true);
 		m_headlineLabel = headLine(m_headlineLabel, "Grundbedarf generieren", STYLE_HEADLINE);
-		m_vorschauButton = buttonSetting(m_button, "Vorschau", IConstants.ICON_ZOOM, true, true);
-		m_generierenButton = buttonSetting(m_button, "Grundbedarf generieren", IConstants.ICON_BASKET_ADD, true, true);
-
-	
+		m_erstellenButton = buttonSetting(m_button, "Bestellung erstellen", IConstants.ICON_BASKET_ADD, true, true);
 		
 		m_lieferantSelect = nativeSelectSetting(m_lieferantSelect, "Lieferant",
 				FULL, false, "Lieferant", this);
@@ -108,8 +105,7 @@ ValueChangeListener {
 		/** ControlPanel */
 		m_control = new HorizontalLayout();
 		m_control.setSpacing(true);
-		m_control.addComponent(m_generierenButton);
-		m_control.addComponent(m_vorschauButton);
+		m_control.addComponent(m_erstellenButton);
 			
 		allLieferanten(m_lieferanten);
 		m_vertikalLayout = vLayout(m_vertikalLayout, FULL);
@@ -156,15 +152,8 @@ ValueChangeListener {
 				}
 			}
 		});
-		
-		m_vorschauButton.addClickListener(new ClickListener() {			
-			@Override
-			public void buttonClick(ClickEvent event) {
-				//TODO: switch to vorschau				
-			}
-		});
-		
-		m_generierenButton.addClickListener(new ClickListener() {			
+	
+		m_erstellenButton.addClickListener(new ClickListener() {			
 			@SuppressWarnings("static-access")
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -172,7 +161,7 @@ ValueChangeListener {
 					m_bestellung = new Bestellung(
 							(Lieferant) m_lieferantSelect.getValue(), 
 							(Mitarbeiter) ((Application) UI.getCurrent().getData()).getUser(), 
-							m_d1, m_d2, false, 0);
+							m_d1, m_d2, false, GRUNDBEDARF);
 					try {
 						m_bestellung.setId(m_bestellungService.getInstance().createBestellung(m_bestellung));
 						for (Grundbedarf gb : container.getItemIds()) {
@@ -184,6 +173,9 @@ ValueChangeListener {
 								m_bestellpositionService.getInstance().createBestellposition(m_bestellposition);
 							}
 						}	
+						//TODO Switch
+//						ViewHandler.getInstance().switchView(BestellungAnzeigen.class,
+//						new ViewDataObject<Bestellung>(m_bestellung));
 					} catch (ConnectException e) {
 						e.printStackTrace();
 					} catch (DAOException e) {

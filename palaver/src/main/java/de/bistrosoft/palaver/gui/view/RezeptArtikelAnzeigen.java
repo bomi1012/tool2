@@ -9,10 +9,10 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.VerticalLayout;
 
-import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver.artikelverwaltung.service.ArtikelService;
 import de.hska.awp.palaver2.util.customFilter;
 import de.hska.awp.palaver2.util.customFilterDecorator;
+import de.palaver.domain.artikelverwaltung.Artikel;
+import de.palaver.service.artikelverwaltung.ArtikelService;
 
 /**
  * 

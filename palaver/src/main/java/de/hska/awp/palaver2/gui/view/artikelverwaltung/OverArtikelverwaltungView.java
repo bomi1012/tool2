@@ -9,12 +9,12 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.TextField;
 
-import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
-import de.hska.awp.palaver.artikelverwaltung.domain.Kategorie;
-import de.hska.awp.palaver.artikelverwaltung.domain.Lagerort;
-import de.hska.awp.palaver.artikelverwaltung.domain.Mengeneinheit;
 import de.hska.awp.palaver2.gui.view.ViewAbstract;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
+import de.palaver.domain.artikelverwaltung.Artikel;
+import de.palaver.domain.artikelverwaltung.Kategorie;
+import de.palaver.domain.artikelverwaltung.Lagerort;
+import de.palaver.domain.artikelverwaltung.Mengeneinheit;
 
 @SuppressWarnings("serial")
 public class OverArtikelverwaltungView extends ViewAbstract {

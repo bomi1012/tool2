@@ -14,11 +14,11 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.UI;
 
 import de.hska.awp.palaver.Application;
-import de.hska.awp.palaver.artikelverwaltung.domain.Mengeneinheit;
-import de.hska.awp.palaver.artikelverwaltung.service.MengeneinheitService;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.palaver.domain.artikelverwaltung.Mengeneinheit;
+import de.palaver.service.artikelverwaltung.MengeneinheitService;
 
 @SuppressWarnings("serial")
 public class MengeneinheitenAnzeigen extends OverAnzeigen implements View {

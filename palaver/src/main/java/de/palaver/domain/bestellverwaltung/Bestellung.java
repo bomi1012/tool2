@@ -1,10 +1,11 @@
-package de.hska.awp.palaver.bestellverwaltung.domain;
+package de.palaver.domain.bestellverwaltung;
 
 import java.sql.Date;
+import java.util.List;
 
-import de.hska.awp.palaver.EntityId;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.palaver.domain.EntityId;
 
 /**
  * Die Klasse Bestellung spiegelt den Bestellung aus der Datenbank wieder.
@@ -19,14 +20,16 @@ public class Bestellung extends EntityId implements java.io.Serializable {
 	private Date m_lieferdatum1;
 	private Date m_lieferdatum2;
 	private boolean m_status;  	
-	private int m_kategorie; 	/** 0: grundbedarf, 1: kantine, 3: 1+2 ... */
+	private String m_kategorie; 
+	
+	private List<Bestellposition> m_bestellpositions;
 	
 	public Bestellung() {
 		super();
 	}
 	
 	public Bestellung(Long id, Lieferant lieferant, Mitarbeiter mitarbeiter,
-			Date datum, Date lieferdatum1, Date lieferdatum2, boolean status, int kategorie) {
+			Date datum, Date lieferdatum1, Date lieferdatum2, boolean status, String kategorie) {
 		super(id);
 		m_lieferant = lieferant;
 		m_mitarbeiter = mitarbeiter;
@@ -38,7 +41,7 @@ public class Bestellung extends EntityId implements java.io.Serializable {
 	}
 
 	public Bestellung(Lieferant lieferant, Mitarbeiter mitarbeiter,
-			Date lieferdatum1, Date lieferdatum2, boolean status, int kategorie) {
+			Date lieferdatum1, Date lieferdatum2, boolean status, String kategorie) {
 		super();
 		m_lieferant = lieferant;
 		m_mitarbeiter = mitarbeiter;
@@ -93,10 +96,10 @@ public class Bestellung extends EntityId implements java.io.Serializable {
 		m_status = status;
 	}
 
-	public int getKategorie() {
+	public String getKategorie() {
 		return m_kategorie;
 	}
-	public void setKategorie(int kategorie) {
+	public void setKategorie(String kategorie) {
 		m_kategorie = kategorie;
 	}
 

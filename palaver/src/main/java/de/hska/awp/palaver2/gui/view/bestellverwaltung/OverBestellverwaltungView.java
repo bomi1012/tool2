@@ -9,13 +9,13 @@ import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeSelect;
 
-import de.hska.awp.palaver.bestellverwaltung.domain.Bestellposition;
-import de.hska.awp.palaver.bestellverwaltung.domain.Bestellung;
-import de.hska.awp.palaver.bestellverwaltung.service.BestellpositionService;
-import de.hska.awp.palaver.bestellverwaltung.service.BestellungService;
 import de.hska.awp.palaver2.gui.components.Grundbedarf;
 import de.hska.awp.palaver2.gui.view.ViewAbstract;
 import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
+import de.palaver.domain.bestellverwaltung.Bestellposition;
+import de.palaver.domain.bestellverwaltung.Bestellung;
+import de.palaver.service.bestellverwaltung.BestellpositionService;
+import de.palaver.service.bestellverwaltung.BestellungService;
 
 public class OverBestellverwaltungView extends ViewAbstract {
 	private static final long serialVersionUID = 2853996004535479919L;

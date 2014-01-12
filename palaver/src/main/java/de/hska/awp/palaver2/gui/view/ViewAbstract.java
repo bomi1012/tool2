@@ -18,6 +18,8 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 import de.hska.awp.palaver2.util.IConstants;
+import de.hska.awp.palaver2.util.customFilter;
+import de.hska.awp.palaver2.util.customFilterDecorator;
 
 @SuppressWarnings("serial")
 public class ViewAbstract extends VerticalLayout {
@@ -94,6 +96,16 @@ public class ViewAbstract extends VerticalLayout {
 		win.setHeight(h);
 		
 		return win;
+	}
+	
+	protected FilterTable filterTable() {
+		m_filterTable = new FilterTable();
+		m_filterTable.setSizeFull();
+		m_filterTable.setFilterBarVisible(true);
+		m_filterTable.setFilterGenerator(new customFilter());
+		m_filterTable.setFilterDecorator(new customFilterDecorator());
+		m_filterTable.setSelectable(true);
+		return m_filterTable;
 	}
 
 	protected Label headLine(Label lable, String title, String style) {		

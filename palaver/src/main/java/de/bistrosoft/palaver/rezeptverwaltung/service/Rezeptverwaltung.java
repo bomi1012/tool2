@@ -7,10 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hska.awp.palaver.artikelverwaltung.dao.ArtikelDAO;
-import de.hska.awp.palaver.artikelverwaltung.domain.Artikel;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
+import de.palaver.dao.artikelverwaltung.ArtikelDAO;
+import de.palaver.domain.artikelverwaltung.Artikel;
 import de.bistrosoft.palaver.data.FussnoteDAO;
 import de.bistrosoft.palaver.data.GeschmackDAO;
 import de.bistrosoft.palaver.data.RezeptDAO;
