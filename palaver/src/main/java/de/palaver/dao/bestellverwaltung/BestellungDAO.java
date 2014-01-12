@@ -59,7 +59,7 @@ public class BestellungDAO extends AbstractBestellverwaltungDAO {
 		} else {
 			lieferdatum2 = "'" + bestellung.getLieferdatum1() + "'";
 		}
-		return putManaged(MessageFormat.format(				
+		return insert(MessageFormat.format(				
 				INSERT_QUERY, 
 				bestellung.getLieferant().getId(),
 				bestellung.getMitarbeiter().getId(),

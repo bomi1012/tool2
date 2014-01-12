@@ -48,7 +48,6 @@ import de.bistrosoft.palaver.util.TwinColTouch;
 import de.hska.awp.palaver.Application;
 import de.hska.awp.palaver.dao.ConnectException;
 import de.hska.awp.palaver.dao.DAOException;
-import de.hska.awp.palaver2.gui.view.artikelverwaltung.ArtikelErstellen;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
@@ -58,6 +57,7 @@ import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.domain.artikelverwaltung.Artikel;
+import de.palaver2.view.artikelverwaltung.ArtikelErstellen;
 
 /**
  * @author Jan Lauinger, Michael Marschall
