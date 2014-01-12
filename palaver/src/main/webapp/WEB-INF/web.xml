@@ -17,7 +17,7 @@
                 <init-param>
             <description>Application widgetset</description>
             <param-name>widgetset</param-name>
-            <param-value>de.hska.awp.palaver.AppWidgetSet</param-value>
+            <param-value>de.palaver.AppWidgetSet</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>
