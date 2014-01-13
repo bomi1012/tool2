@@ -5,7 +5,6 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver2.util.IConstants;
@@ -41,12 +40,7 @@ public class OverAnzeigen extends OverArtikelverwaltungView implements View  {
 		return m_horizontalLayout;
 	}
 	
-	protected Table table() {
-		m_table = new Table();
-		m_table.setSizeFull();
-		m_table.setSelectable(true);
-		return m_table;
-	}
+
 
 	protected HorizontalLayout filterLayout(Label headlineLabel) {			
 		m_filterButton = new Button(IConstants.BUTTON_CLEAR_FILTER);

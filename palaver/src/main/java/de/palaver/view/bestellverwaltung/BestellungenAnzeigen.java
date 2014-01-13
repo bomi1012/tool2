@@ -11,6 +11,7 @@ import com.vaadin.ui.CustomTable.CellStyleGenerator;
 
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.ViewDataObject;
 import de.palaver.domain.bestellverwaltung.Bestellung;
 import de.palaver.service.bestellverwaltung.BestellungService;
 
@@ -86,7 +87,14 @@ ValueChangeListener {
 	public void valueChange(ValueChangeEvent event) { }
 
 	@Override
-	public void getViewParam(ViewData data) {
-		
+	public void getViewParam(ViewData data) {		
+		if(((ViewDataObject<?>) data).getData() instanceof Bestellung) {
+			m_bestellung = (Bestellung) ((ViewDataObject<?>) data).getData();
+			
+			m_filterTable.setFilterFieldValue(FIELD_LIEFERANT, m_bestellung.getLieferant().getName());
+			m_filterTable.setFilterFieldValue(FIELD_MITARBEITER, m_bestellung.getMitarbeiter().getVorname());
+			m_filterTable.setFilterFieldValue(FIELD_KATEGORIE, m_bestellung.getKategorie());
+			
+		} 
 	}
 }

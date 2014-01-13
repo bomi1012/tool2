@@ -175,13 +175,13 @@ ValueChangeListener {
 										Double.valueOf(gb.getSumme1().getValue()), 
 										Double.valueOf(gb.getSumme2().getValue()), false);
 								m_bestellpositionService.getInstance().createBestellposition(m_bestellposition);
-								((Application) UI.getCurrent().getData()).showDialog(String.format(
-										"Die Bestellung für den Lieferant <%s> wurde generiert!", gb.getLieferantName().getValue()));
-								ViewHandler.getInstance().switchView(BestellungenAnzeigen.class,
-								new ViewDataObject<Grundbedarf>(gb));
 							}
 						}	
-
+						((Application) UI.getCurrent().getData()).showDialog(String.format(
+								"Die Bestellung für den Lieferant <%s> wurde generiert!", m_bestellung.getLieferant().getName()));
+						ViewHandler.getInstance().switchView(BestellungenAnzeigen.class,
+						new ViewDataObject<Bestellung>(m_bestellung));
+						
 					} catch (ConnectException e) {
 						e.printStackTrace();
 					} catch (DAOException e) {
@@ -239,8 +239,7 @@ ValueChangeListener {
 		m_filterTable.setColumnAlignment(FIELD_SUMME_1, m_filterTable.ALIGN_CENTER);
 		m_filterTable.setColumnAlignment(FIELD_SUMME_2, m_filterTable.ALIGN_CENTER);
 		m_filterTable.setColumnAlignment(FIELD_MENGENEINHEIT, m_filterTable.ALIGN_CENTER);
-		m_filterTable.setColumnAlignment(FIELD_BESTELLGROESSE, m_filterTable.ALIGN_CENTER);
-		
+		m_filterTable.setColumnAlignment(FIELD_BESTELLGROESSE, m_filterTable.ALIGN_CENTER);	
 	}
 
 	private void windowModal(final Artikel artikel) {

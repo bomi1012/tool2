@@ -121,6 +121,13 @@ public class ViewAbstract extends VerticalLayout {
 		return win;
 	}
 	
+	protected Table table() {
+		m_table = new Table();
+		m_table.setSizeFull();
+		m_table.setSelectable(true);
+		return m_table;
+	}
+	
 	protected FilterTable filterTable() {
 		m_filterTable = new FilterTable();
 		m_filterTable.setSizeFull();
