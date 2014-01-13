@@ -304,7 +304,10 @@ ValueChangeListener {
 	private void mehrereliefertermine(Lieferant lieferant) {
 		if(!lieferant.getMehrereliefertermine()) {
 			m_termin2.setVisible(false);
-			m_termin2.setValue(null);
+			//m_termin2.setValue(null);
+		} else {
+			m_termin2.setVisible(true);
+			//m_termin2 = dateField(LIFERTERMIN + 2, DATE_FORMAT, FULL, Util.getDate(6, 7), true);
 		}
 	}
 

@@ -54,10 +54,10 @@ public class BestellungDAO extends AbstractBestellverwaltungDAO {
 
 	public Long createBestellung(Bestellung bestellung) throws ConnectException, DAOException {
 		String lieferdatum2;
-		if(bestellung.getLieferdatum2() == null) {
+		if(!bestellung.getLieferant().getMehrereliefertermine()) {
 			lieferdatum2 = null;
 		} else {
-			lieferdatum2 = "'" + bestellung.getLieferdatum1() + "'";
+			lieferdatum2 = "'" + bestellung.getLieferdatum2() + "'";
 		}
 		return insert(MessageFormat.format(				
 				INSERT_QUERY, 
