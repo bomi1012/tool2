@@ -5,7 +5,6 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hska.awp.palaver2.util.Util;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
 import de.palaver.domain.bestellverwaltung.Bestellung;
@@ -26,6 +25,10 @@ public class BestellungDAO extends AbstractBestellverwaltungDAO {
 			+ "`" + FIELD_LIEFERANT_FK + "`, " + "`" + FIELD_MITARBEITER_FK + "`, " + "`" + FIELD_LIEFERDATUM1 + "`, " 
 			+ "`" + FIELD_LIEFERDATUM2 + "`, " + "`" + FIELD_STATUS + "`, " + "`" + FIELD_KATEGORIE + "`)" +
 					" VALUES({0},{1},{2},{3},{4},{5})";
+	private static final String GET_BESTELLUNG_BY_ID =  "SELECT * FROM " + TABLE_B 
+			+ " WHERE " + FIELD_ID + " = {0}";
+
+
 	
 	
 	public BestellungDAO() {
@@ -44,12 +47,12 @@ public class BestellungDAO extends AbstractBestellverwaltungDAO {
 	 * Bestellungen zurück ohne Bestellpositionen.
 	 */
 	public List<Bestellung> getAllBestellungen() throws ConnectException, DAOException, SQLException {
-		listBestellung = new ArrayList<Bestellung>();
+		m_listBestellung = new ArrayList<Bestellung>();
 		m_set = getManaged(GET_ALL_BESTELLUNGEN);
 		while (m_set.next()) {
-			listBestellung.add(setBestellung(m_set));
+			m_listBestellung.add(setBestellung(m_set));
 		}
-		return listBestellung;
+		return m_listBestellung;
 	}
 
 	public Long createBestellung(Bestellung bestellung) throws ConnectException, DAOException {
@@ -65,9 +68,18 @@ public class BestellungDAO extends AbstractBestellverwaltungDAO {
 				bestellung.getMitarbeiter().getId(),
 				"'" + bestellung.getLieferdatum1() + "'",
 				lieferdatum2,
-				Util.convertBoolean(bestellung.getStatus()),
+				bestellung.getStatus(),
 				"'" + bestellung.getKategorie() + "'"));
 
+	}
+
+	public Bestellung getBestellungById(long id) throws ConnectException, DAOException, SQLException {
+		m_bestellung = null;
+		m_set = getManaged(MessageFormat.format(GET_BESTELLUNG_BY_ID, id));
+		while (m_set.next()) {
+			m_bestellung = setBestellung(m_set);
+		}
+		return m_bestellung;
 	}
 
 //	/**

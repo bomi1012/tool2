@@ -117,6 +117,7 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/test?user=root&password
 	
 	
 	String 		ICON_PAGE_EDIT = "icons/page_edit.png";
+	String 		ICON_PAGE_BACK = "icons/door_out.png";
 	String 		ICON_PAGE_ADD = "icons/page_add.png";
 	String 		ICON_PAGE_DELETE = "icons/page_delete.png";
 	String 		ICON_PAGE_REFRESH = "icons/page_refresh.png";

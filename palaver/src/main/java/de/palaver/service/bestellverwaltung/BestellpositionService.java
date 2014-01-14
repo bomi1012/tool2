@@ -4,6 +4,9 @@
 
 package de.palaver.service.bestellverwaltung;
 
+import java.sql.SQLException;
+import java.util.List;
+
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
 import de.palaver.dao.bestellverwaltung.BestellpositionDAO;
@@ -34,6 +37,10 @@ public class BestellpositionService {
 		
 	public void createBestellposition(Bestellposition bestellposition) throws ConnectException, DAOException {
 		BestellpositionDAO.getInstance().createBestellposition(bestellposition);
+	}
+
+	public List<Bestellposition> getBestellpositionenByBestellungId(Long id) throws ConnectException, DAOException, SQLException {
+		return BestellpositionDAO.getInstance().getBestellpositionenByBestellungId(id);
 	}
 	
 	

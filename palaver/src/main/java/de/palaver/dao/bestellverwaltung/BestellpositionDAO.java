@@ -3,7 +3,10 @@
  */
 package de.palaver.dao.bestellverwaltung;
 
+import java.sql.SQLException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import de.hska.awp.palaver2.util.Util;
 import de.palaver.dao.ConnectException;
@@ -22,6 +25,10 @@ public class BestellpositionDAO extends AbstractBestellverwaltungDAO {
 
 	private static BestellpositionDAO instance = null;
 
+	private final static String GET_BESTELLPOSITIONEN_BY_BESTELLUNG_ID = "SELECT * FROM " + TABLE_BP + " JOIN " +
+			TABLE_B + " ON " + TABLE_BP + "." + FIELD_BESTELLUNG_FK + " = " + TABLE_B + "." + FIELD_ID + " WHERE " +
+			TABLE_BP + "." + FIELD_BESTELLUNG_FK + " = {0}";
+	
 	private final static String INSERT_QUERY = "INSERT INTO " + TABLE_BP + "(" 
 			+ "`" + FIELD_ARTIKEL_FK + "`, " + "`" + FIELD_BESTELLUNG_FK + "`, " + "`" + FIELD_LIEFERMENGE1 + "`, " 
 			+ "`" + FIELD_LIEFERMENGE2 + "`, " + "`" + FIELD_STATUS + "`)" +
@@ -67,9 +74,14 @@ public class BestellpositionDAO extends AbstractBestellverwaltungDAO {
 		
 	}
 
-	
-	
-	
+	public List<Bestellposition> getBestellpositionenByBestellungId(Long id) throws ConnectException, DAOException, SQLException {
+		m_listBestellposition = new ArrayList<Bestellposition>();
+		m_set = getManaged(MessageFormat.format(GET_BESTELLPOSITIONEN_BY_BESTELLUNG_ID, id));
+		while (m_set.next()) {
+			m_listBestellposition.add(setBestellposition(m_set));
+		}
+		return m_listBestellposition;
+	}
 	
 //	/**
 //	 * Die Methode liefert eine Bestellposition zurück.

@@ -8,7 +8,9 @@ import de.hska.awp.palaver2.data.MitarbeiterDAO;
 import de.palaver.dao.AbstractDAO;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
+import de.palaver.dao.artikelverwaltung.ArtikelDAO;
 import de.palaver.dao.person.lieferantenverwaltung.LieferantDAO;
+import de.palaver.domain.bestellverwaltung.Bestellposition;
 import de.palaver.domain.bestellverwaltung.Bestellung;
 
 public class AbstractBestellverwaltungDAO extends AbstractDAO {
@@ -55,7 +57,9 @@ public class AbstractBestellverwaltungDAO extends AbstractDAO {
 
 //	private static final int TAGEZURUECK = -22;
 //	private static final String SUMME = "summe";
-	protected List<Bestellung> listBestellung;
+	protected List<Bestellung> m_listBestellung;
+	protected Bestellung m_bestellung;
+	protected List<Bestellposition> m_listBestellposition;
 	
 	protected AbstractBestellverwaltungDAO() {
 		super();
@@ -71,5 +75,15 @@ public class AbstractBestellverwaltungDAO extends AbstractDAO {
 				set.getDate(FIELD_LIEFERDATUM2), 
 				set.getBoolean(FIELD_STATUS),
 				set.getString(FIELD_KATEGORIE));	
+	}
+	
+	protected Bestellposition setBestellposition(ResultSet set) throws ConnectException, DAOException, SQLException {
+		return 	new Bestellposition(
+				set.getLong(FIELD_ID), 
+				ArtikelDAO.getInstance().getArtikelById(set.getLong(FIELD_ARTIKEL_FK)), 
+				BestellungDAO.getInstance().getBestellungById(set.getLong(FIELD_BESTELLUNG_FK)), 
+				set.getDouble(FIELD_LIEFERMENGE1), 
+				set.getDouble(FIELD_LIEFERMENGE2), 
+				set.getBoolean(FIELD_STATUS));	
 	}
 }

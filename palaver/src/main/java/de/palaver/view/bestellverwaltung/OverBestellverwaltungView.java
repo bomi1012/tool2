@@ -29,6 +29,7 @@ public class OverBestellverwaltungView extends ViewAbstract {
 	public Bestellposition m_bestellposition;
 	public List<Bestellposition> m_bestellpositions;
 	public BestellpositionService m_bestellpositionService;
+	protected BestellpositionenVorschau m_bestellpositionVorschau;
 	
 	public List<Bestellung> m_bestellungs;
 	public Bestellung m_bestellung;
@@ -37,6 +38,9 @@ public class OverBestellverwaltungView extends ViewAbstract {
 	protected Button m_deleteButton;
 	protected Button m_editButton;
 	protected Button m_vorschauButton;
+	protected Button m_closeButton;
+	protected Button m_verwaltenButton;
+	
 	
 	protected OverBestellverwaltungView() {
 		super();
@@ -80,16 +84,31 @@ public class OverBestellverwaltungView extends ViewAbstract {
 	
 	protected HorizontalLayout controlAlleBestellungenPanel() {	
 		m_deleteButton = deleteButton(true, true);
-		m_editButton = editButton(true, true);
-		m_vorschauButton = buttonSetting(m_button, "Vorschau",
+		m_verwaltenButton = buttonSetting(m_button, "Verwalten",
+				IConstants.ICON_PAGE_EDIT, true, true);
+		m_vorschauButton = buttonSetting(m_button, "Vorschau / Bearbeiten",
 				IConstants.ICON_PAGE_WHITE_LUPE, true, true);
 		
 		m_horizontalLayout = new HorizontalLayout();
 		m_horizontalLayout.setSpacing(true);
 		m_horizontalLayout.addComponent(m_vorschauButton);
-		m_horizontalLayout.addComponent(m_editButton);
+		m_horizontalLayout.addComponent(m_verwaltenButton);
 		m_horizontalLayout.addComponent(m_deleteButton);
 		m_horizontalLayout.setEnabled(false);
+		return m_horizontalLayout;
+	}
+	
+	protected HorizontalLayout controlBestellpositionenVorschau() {	
+		m_editButton = editButton(true, true);
+		m_closeButton = buttonSetting(m_button, "Zurück",
+				IConstants.ICON_PAGE_BACK, true, true);
+
+		
+		m_horizontalLayout = new HorizontalLayout();
+		m_horizontalLayout.setSpacing(true);
+		m_horizontalLayout.addComponent(m_closeButton);
+		m_horizontalLayout.addComponent(m_editButton);
+		m_horizontalLayout.setEnabled(true);
 		return m_horizontalLayout;
 	}
 	

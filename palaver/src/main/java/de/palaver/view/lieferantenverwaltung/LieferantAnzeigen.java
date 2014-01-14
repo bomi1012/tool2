@@ -61,8 +61,7 @@ ValueChangeListener {
 		this.addComponent(m_filterTable);
 		this.setExpandRatio(m_filterTable, 1);
 		this.addComponent(m_control);
-		this.setComponentAlignment(m_control, Alignment.BOTTOM_RIGHT);
-		
+		this.setComponentAlignment(m_control, Alignment.BOTTOM_RIGHT);		
 	}
 	
 	private void listeners() {
@@ -112,8 +111,7 @@ ValueChangeListener {
 			setTable();
 		} catch (Exception e) {
 			log.error(e.toString());
-		}
-		
+		}		
 	}
 
 	private void setTable() {
