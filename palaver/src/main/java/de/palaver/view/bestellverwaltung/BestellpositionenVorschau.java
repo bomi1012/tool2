@@ -7,8 +7,12 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomTable;
 import com.vaadin.ui.CustomTable.CellStyleGenerator;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.Window;
 
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -49,13 +53,44 @@ ValueChangeListener{
 	}
 	
 	private void listeners() {
-		
 		//close
+		m_closeButton.addClickListener(new ClickListener() {			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				Window win = (Window) BestellpositionenVorschau.this.getParent();
+				win.close();				
+			}
+		});
 		
-		//edit
-		
+		m_filterTable.addValueChangeListener(new ValueChangeListener() {
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				if (event.getProperty().getValue() != null) {
+					m_editButton.setEnabled(true);
+					m_bestellposition = (Bestellposition) event.getProperty().getValue();
+				}
+			}
+		});
+
+		m_editButton.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if (m_bestellposition != null) {
+					windowModal(m_bestellposition);
+				}
+			}
+		});	
 	}
 
+	private void windowModal(Bestellposition bestellposition) {
+		win = windowUI(win, "Bestellpositionen bearbeiten", "500", "250");		
+		m_bestellpositionBearbeiten = new BestellpositionBearbeiten(bestellposition);
+		addComponent(m_bestellpositionBearbeiten);
+		win.setContent(m_bestellpositionBearbeiten);
+		win.setModal(true);
+		UI.getCurrent().addWindow(win);
+		
+	}
 	private void beans() {
 		try {
 			m_container = new BeanItemContainer<Bestellposition>(Bestellposition.class, 

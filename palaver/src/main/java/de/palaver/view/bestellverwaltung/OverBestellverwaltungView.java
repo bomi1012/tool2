@@ -29,7 +29,8 @@ public class OverBestellverwaltungView extends ViewAbstract {
 	public Bestellposition m_bestellposition;
 	public List<Bestellposition> m_bestellpositions;
 	public BestellpositionService m_bestellpositionService;
-	protected BestellpositionenVorschau m_bestellpositionVorschau;
+	public BestellpositionenVorschau m_bestellpositionVorschau;
+	public BestellpositionBearbeiten m_bestellpositionBearbeiten;
 	
 	public List<Bestellung> m_bestellungs;
 	public Bestellung m_bestellung;
