@@ -1,4 +1,4 @@
-package de.palaver.view.bestellverwaltung;
+package de.palaver.view.bestellverwaltung.popup;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +19,7 @@ import de.hska.awp.palaver2.util.ViewData;
 import de.palaver.domain.bestellverwaltung.Bestellposition;
 import de.palaver.domain.bestellverwaltung.Bestellung;
 import de.palaver.service.bestellverwaltung.BestellpositionService;
+import de.palaver.view.bestellverwaltung.OverBestellverwaltungView;
 
 @SuppressWarnings("serial")
 public class BestellpositionenVorschau extends OverBestellverwaltungView implements View,

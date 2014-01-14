@@ -1,4 +1,4 @@
-package de.palaver.view.bestellverwaltung;
+package de.palaver.view.bestellverwaltung.popup;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -9,6 +9,7 @@ import com.vaadin.ui.VerticalLayout;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.palaver.domain.bestellverwaltung.Bestellposition;
+import de.palaver.view.bestellverwaltung.OverBestellverwaltungView;
 
 @SuppressWarnings("serial")
 public class BestellpositionBearbeiten extends OverBestellverwaltungView implements View,

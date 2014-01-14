@@ -116,6 +116,9 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/test?user=root&password
 	String		BUTTON_EMAILVERSAND_ICON = "img/mail.ico";
 	
 	
+	
+	String 		ICON_EMAIL_ATTACH = "icons/email_attach.png";
+	String 		ICON_TELEPHONE = "icons/telephone.png";
 	String 		ICON_PAGE_EDIT = "icons/page_edit.png";
 	String 		ICON_PAGE_BACK = "icons/door_out.png";
 	String 		ICON_PAGE_ADD = "icons/page_add.png";

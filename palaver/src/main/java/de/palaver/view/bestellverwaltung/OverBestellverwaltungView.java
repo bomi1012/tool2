@@ -17,6 +17,8 @@ import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
 import de.palaver.service.bestellverwaltung.BestellpositionService;
 import de.palaver.service.bestellverwaltung.BestellungService;
 import de.palaver.view.ViewAbstract;
+import de.palaver.view.bestellverwaltung.popup.BestellpositionBearbeiten;
+import de.palaver.view.bestellverwaltung.popup.BestellpositionenVorschau;
 import de.palaver.view.models.GrundbedarfModel;
 
 public class OverBestellverwaltungView extends ViewAbstract {
@@ -38,9 +40,10 @@ public class OverBestellverwaltungView extends ViewAbstract {
 
 	protected Button m_deleteButton;
 	protected Button m_editButton;
-	protected Button m_vorschauButton;
 	protected Button m_closeButton;
-	protected Button m_verwaltenButton;
+	protected Button m_perEmailAttachButton;
+
+	private Button m_perTelefonButton;
 	
 	
 	protected OverBestellverwaltungView() {
@@ -85,15 +88,17 @@ public class OverBestellverwaltungView extends ViewAbstract {
 	
 	protected HorizontalLayout controlAlleBestellungenPanel() {	
 		m_deleteButton = deleteButton(true, true);
-		m_verwaltenButton = buttonSetting(m_button, "Verwalten",
-				IConstants.ICON_PAGE_EDIT, true, true);
-		m_vorschauButton = buttonSetting(m_button, "Vorschau / Bearbeiten",
-				IConstants.ICON_PAGE_WHITE_LUPE, true, true);
+		m_perEmailAttachButton = buttonSetting(m_button, "E-Mail-Bestellung",
+				IConstants.ICON_EMAIL_ATTACH, true, true);
+		m_perTelefonButton = buttonSetting(m_button, "Telefonbestellung",
+				IConstants.ICON_TELEPHONE, true, true);
+		m_editButton = editButton(true, true);
 		
 		m_horizontalLayout = new HorizontalLayout();
 		m_horizontalLayout.setSpacing(true);
-		m_horizontalLayout.addComponent(m_vorschauButton);
-		m_horizontalLayout.addComponent(m_verwaltenButton);
+		m_horizontalLayout.addComponent(m_editButton);
+		m_horizontalLayout.addComponent(m_perEmailAttachButton);
+		m_horizontalLayout.addComponent(m_perTelefonButton);
 		m_horizontalLayout.addComponent(m_deleteButton);
 		m_horizontalLayout.setEnabled(false);
 		return m_horizontalLayout;

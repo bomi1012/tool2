@@ -24,6 +24,7 @@ import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
 import de.palaver.domain.bestellverwaltung.Bestellung;
 import de.palaver.service.bestellverwaltung.BestellungService;
+import de.palaver.view.bestellverwaltung.popup.BestellpositionenVorschau;
 
 @SuppressWarnings("serial")
 public class BestellungenAnzeigenTable extends OverBestellverwaltungView implements View,
@@ -69,12 +70,12 @@ ValueChangeListener {
 			@Override
 			public void itemClick(ItemClickEvent event) {
 				if (event.isDoubleClick()) {
-					m_vorschauButton.click();
+					m_editButton.click();
 				}
 			}
 		});
 		
-		m_vorschauButton.addClickListener(new ClickListener() {
+		m_editButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (m_bestellung != null) {
@@ -100,6 +101,14 @@ ValueChangeListener {
 				}
 				
 			}
+		});
+		
+		m_perEmailAttachButton.addClickListener(new ClickListener() {			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				
+			}
+
 		});
 	}
 	
@@ -153,6 +162,7 @@ ValueChangeListener {
 		
 	}
 	
+
 	@Override
 	public void valueChange(ValueChangeEvent event) { }
 
