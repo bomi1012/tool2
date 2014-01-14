@@ -55,7 +55,7 @@ import de.palaver.view.artikelverwaltung.LagerortErstellen;
 import de.palaver.view.artikelverwaltung.LagerorteAnzeigen;
 import de.palaver.view.artikelverwaltung.MengeneinheitErstellen;
 import de.palaver.view.artikelverwaltung.MengeneinheitenAnzeigen;
-import de.palaver.view.bestellverwaltung.BestellungenAnzeigen;
+import de.palaver.view.bestellverwaltung.BestellungenAnzeigenTable;
 import de.palaver.view.bestellverwaltung.GrundbedarfGenerierenAnsicht;
 import de.palaver.view.lieferantenverwaltung.LieferantAnzeigen;
 
@@ -264,7 +264,7 @@ public class MainLayout extends VerticalLayout implements Command {
 			} else if (selectedItem.getText().equals(IConstants.MENU_LAGERORT_NEU)) {
 				ViewHandler.getInstance().switchView(LagerortErstellen.class);
 			} else if(selectedItem.getText().equals(IConstants.MENU_BESTELLUNG_ANZEIGEN)) {
-				ViewHandler.getInstance().switchView(BestellungenAnzeigen.class);
+				ViewHandler.getInstance().switchView(BestellungenAnzeigenTable.class);
 			} else if(selectedItem.getText().equals(IConstants.MENU_GRUNDBEDARF)) {
 				ViewHandler.getInstance().switchView(GrundbedarfGenerierenAnsicht.class);
 			}

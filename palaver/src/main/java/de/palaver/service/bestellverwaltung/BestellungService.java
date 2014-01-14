@@ -34,6 +34,12 @@ public class BestellungService {
 	public Long createBestellung(Bestellung bestellung) throws ConnectException, DAOException {
 		return BestellungDAO.getInstance().createBestellung(bestellung);
 	}
+
+	public void deleteBestellung(long id) throws ConnectException, DAOException {
+		BestellpositionService.getInstance().deleteBestellpositionenByBestellungId(id);
+		BestellungDAO.getInstance().deleteBestellung(id);
+		
+	}
 	
 	
 	///////////////////////////////////////////////////

@@ -20,18 +20,20 @@ import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.palaver.Application;
+import de.palaver.dao.ConnectException;
+import de.palaver.dao.DAOException;
 import de.palaver.domain.bestellverwaltung.Bestellung;
 import de.palaver.service.bestellverwaltung.BestellungService;
 
 @SuppressWarnings("serial")
-public class BestellungenAnzeigen extends OverBestellverwaltungView implements View,
+public class BestellungenAnzeigenTable extends OverBestellverwaltungView implements View,
 ValueChangeListener {
 
-	private static final Logger LOG = LoggerFactory.getLogger(BestellungenAnzeigen.class.getName());
+	private static final Logger LOG = LoggerFactory.getLogger(BestellungenAnzeigenTable.class.getName());
 	private static final String BESTELLUNG_ALL = "Alle Bestellungen";	
 	private BeanItemContainer<Bestellung> m_container;
 	
-	public BestellungenAnzeigen() {
+	public BestellungenAnzeigenTable() {
 		super();
 		layout();
 		listeners();
@@ -84,6 +86,23 @@ ValueChangeListener {
 					((Application) UI.getCurrent().getData())
 						.showDialog(IConstants.INFO_BESTELLUNG_AUSWAEHLEN);
 				}
+			}
+		});
+		
+		m_deleteButton.addClickListener(new ClickListener() {			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				try {
+					BestellungService.getInstance().deleteBestellung(m_bestellung.getId());
+					m_container.removeItem(m_bestellung);
+				} catch (ConnectException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (DAOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			}
 		});
 	}

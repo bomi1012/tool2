@@ -20,6 +20,8 @@ public class BestellungDAO extends AbstractBestellverwaltungDAO {
 
 	private static BestellungDAO instance = null;	
 	
+	
+	private static final String DELETE_BESTELLUNG = "DELETE FROM " + TABLE_B + " WHERE " + FIELD_ID + " = {0}";
 	private static final String GET_ALL_BESTELLUNGEN = "SELECT * FROM " + TABLE_B;
 	private final static String INSERT_QUERY = "INSERT INTO " + TABLE_B + "(" 
 			+ "`" + FIELD_LIEFERANT_FK + "`, " + "`" + FIELD_MITARBEITER_FK + "`, " + "`" + FIELD_LIEFERDATUM1 + "`, " 
@@ -80,6 +82,11 @@ public class BestellungDAO extends AbstractBestellverwaltungDAO {
 			m_bestellung = setBestellung(m_set);
 		}
 		return m_bestellung;
+	}
+
+	public void deleteBestellung(long id) throws ConnectException, DAOException {
+		putManaged(MessageFormat.format(DELETE_BESTELLUNG, id));	
+		
 	}
 
 //	/**

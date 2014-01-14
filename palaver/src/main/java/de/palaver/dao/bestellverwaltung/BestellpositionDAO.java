@@ -25,16 +25,16 @@ public class BestellpositionDAO extends AbstractBestellverwaltungDAO {
 
 	private static BestellpositionDAO instance = null;
 
-	private final static String GET_BESTELLPOSITIONEN_BY_BESTELLUNG_ID = "SELECT * FROM " + TABLE_BP + " JOIN " +
-			TABLE_B + " ON " + TABLE_BP + "." + FIELD_BESTELLUNG_FK + " = " + TABLE_B + "." + FIELD_ID + " WHERE " +
-			TABLE_BP + "." + FIELD_BESTELLUNG_FK + " = {0}";
+	private final static String GET_BESTELLPOSITIONEN_BY_BESTELLUNG_ID = "SELECT * FROM " + TABLE_BP + " WHERE " +
+			FIELD_BESTELLUNG_FK + " = {0}";
 	
 	private final static String INSERT_QUERY = "INSERT INTO " + TABLE_BP + "(" 
 			+ "`" + FIELD_ARTIKEL_FK + "`, " + "`" + FIELD_BESTELLUNG_FK + "`, " + "`" + FIELD_LIEFERMENGE1 + "`, " 
 			+ "`" + FIELD_LIEFERMENGE2 + "`, " + "`" + FIELD_STATUS + "`)" +
 					" VALUES({0},{1},{2},{3},{4})";
 	
-	
+	private final static String DELETE_BY_BESTELLUNG_ID = "DELETE FROM " + TABLE_BP + " WHERE " + 
+			FIELD_BESTELLUNG_FK + " = {0}";
 	
 	
 //	private static final String GET_BESTELLPOSITION_BY_ID = "SELECT * FROM " + TABLE + " WHERE " + ID + "= {0}";
@@ -81,6 +81,10 @@ public class BestellpositionDAO extends AbstractBestellverwaltungDAO {
 			m_listBestellposition.add(setBestellposition(m_set));
 		}
 		return m_listBestellposition;
+	}
+
+	public void deleteBestellpositionenByBestellungId(long id) throws ConnectException, DAOException {
+		putManaged(MessageFormat.format(DELETE_BY_BESTELLUNG_ID, id));			
 	}
 	
 //	/**

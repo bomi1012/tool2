@@ -179,7 +179,7 @@ ValueChangeListener {
 						}	
 						((Application) UI.getCurrent().getData()).showDialog(String.format(
 								"Die Bestellung für den Lieferant <%s> wurde generiert!", m_bestellung.getLieferant().getName()));
-						ViewHandler.getInstance().switchView(BestellungenAnzeigen.class,
+						ViewHandler.getInstance().switchView(BestellungenAnzeigenTable.class,
 						new ViewDataObject<Bestellung>(m_bestellung));
 						
 					} catch (ConnectException e) {

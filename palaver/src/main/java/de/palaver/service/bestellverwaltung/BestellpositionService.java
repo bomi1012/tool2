@@ -42,6 +42,11 @@ public class BestellpositionService {
 	public List<Bestellposition> getBestellpositionenByBestellungId(Long id) throws ConnectException, DAOException, SQLException {
 		return BestellpositionDAO.getInstance().getBestellpositionenByBestellungId(id);
 	}
+
+	public void deleteBestellpositionenByBestellungId(long id) throws ConnectException, DAOException {
+		BestellpositionDAO.getInstance().deleteBestellpositionenByBestellungId(id);
+		
+	}
 	
 	
 	
