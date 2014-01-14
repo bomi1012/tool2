@@ -69,9 +69,6 @@ public class ViewAbstract extends VerticalLayout {
 	protected static final String MESSAGE_EXISTS_ARG_1 = "Der Name %s ist bereits im System vorhanden";	
 	protected static final String MESSAGE_SUSSEFULL_ARG_1 = "%s wurde erfolgreich gespeichert";
 	
-	
-
-	
 	protected TextField textFieldSetting(TextField field, String name,
 			String width, boolean required, String descript) {		
 		field = new TextField(name);
@@ -90,6 +87,19 @@ public class ViewAbstract extends VerticalLayout {
 	
 	public ViewAbstract(Component... children) {
 		super(children);
+	}
+	
+	protected Button filterButton(boolean v, boolean e) {
+		return buttonSetting(m_button, IConstants.BUTTON_CLEAR_FILTER,
+				"icons/textfield_delete.png", v, e);
+	}
+	protected Button editButton(boolean v, boolean e) {
+		return buttonSetting(m_button, IConstants.BUTTON_EDIT,
+				IConstants.ICON_PAGE_EDIT, v, e);
+	}
+	protected Button deleteButton(boolean v, boolean e) {
+		return buttonSetting(m_button, IConstants.BUTTON_DELETE,
+				IConstants.ICON_PAGE_DELETE, v, e);
 	}
 	
 	protected Button buttonSetting(Button button, String title, String icon, boolean isVisible, boolean isEnable) {

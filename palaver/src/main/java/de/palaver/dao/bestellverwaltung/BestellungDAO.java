@@ -54,7 +54,7 @@ public class BestellungDAO extends AbstractBestellverwaltungDAO {
 
 	public Long createBestellung(Bestellung bestellung) throws ConnectException, DAOException {
 		String lieferdatum2;
-		if(!bestellung.getLieferant().getMehrereliefertermine()) {
+		if(!bestellung.getLieferant().isMehrereliefertermine()) {
 			lieferdatum2 = null;
 		} else {
 			lieferdatum2 = "'" + bestellung.getLieferdatum2() + "'";

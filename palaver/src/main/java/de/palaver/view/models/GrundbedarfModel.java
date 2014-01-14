@@ -11,7 +11,7 @@ import com.vaadin.ui.Label;
 
 import de.palaver.domain.artikelverwaltung.Artikel;
 
-public class Grundbedarf implements Serializable{
+public class GrundbedarfModel implements Serializable{
 	private static final long serialVersionUID = 3583052471410219992L;
 	private Artikel m_artikel;
 	private long m_artikelId;
@@ -96,7 +96,7 @@ public class Grundbedarf implements Serializable{
 		m_remove = remove;
 	}
 	
-	public Grundbedarf() {
+	public GrundbedarfModel() {
 		super();
 	}
 	
@@ -168,13 +168,13 @@ m_artikel = artikel;
 	}
 	
 
-	public Grundbedarf(final Artikel artikel) {
+	public GrundbedarfModel(final Artikel artikel) {
 		super();
 		init(artikel);
 	}
 	
 	private void mehrereliefertermine(Artikel artikel) {
-		if(!artikel.getLieferant().getMehrereliefertermine()) {
+		if(!artikel.getLieferant().isMehrereliefertermine()) {
 			m_summe2.setEnabled(false);
 			m_liefertermin2.setEnabled(false);
 		}

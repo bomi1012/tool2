@@ -5,10 +5,10 @@ package de.palaver.domain.artikelverwaltung;
 
 import java.sql.SQLException;
 
-import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
 import de.palaver.domain.EntityName;
+import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
 
 public class Artikel extends EntityName implements java.io.Serializable {
 	private static final long serialVersionUID = 6557876739298794189L;
@@ -32,9 +32,7 @@ public class Artikel extends EntityName implements java.io.Serializable {
 	}
 
 	public Artikel(Long id, String name) {
-		super();
-		m_id = id;
-		m_name = name;
+		super(id, name);
 	}
 
 	/**

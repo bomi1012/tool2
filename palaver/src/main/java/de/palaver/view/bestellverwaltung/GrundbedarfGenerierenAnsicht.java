@@ -23,8 +23,6 @@ import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
-import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.Util;
@@ -40,11 +38,13 @@ import de.palaver.dao.DAOException;
 import de.palaver.domain.artikelverwaltung.Artikel;
 import de.palaver.domain.bestellverwaltung.Bestellposition;
 import de.palaver.domain.bestellverwaltung.Bestellung;
+import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
 import de.palaver.service.artikelverwaltung.ArtikelService;
+import de.palaver.service.person.lieferantenverwaltung.LieferantenService;
 import de.palaver.view.artikelverwaltung.ArtikelErstellen;
 import de.palaver.view.artikelverwaltung.KategorienAnzeigen;
 import de.palaver.view.artikelverwaltung.OverArtikelverwaltungView;
-import de.palaver.view.models.Grundbedarf;
+import de.palaver.view.models.GrundbedarfModel;
 
 @SuppressWarnings("serial")
 public class GrundbedarfGenerierenAnsicht extends OverBestellverwaltungView implements View,
@@ -57,7 +57,7 @@ ValueChangeListener {
 	private static final String LIFERTERMIN = "Liefertermin ";
 	private static final String DATE_FORMAT = "dd.MM.yyyy";
 	
-	private BeanItemContainer<Grundbedarf> m_container;
+	private BeanItemContainer<GrundbedarfModel> m_container;
 	private NativeSelect m_lieferantSelect;
 	private OverArtikelverwaltungView m_overArtikelverwaltungView = new OverArtikelverwaltungView();
 	private Button m_erstellenButton;
@@ -67,11 +67,11 @@ ValueChangeListener {
 	private java.sql.Date m_d2;
 	public GrundbedarfGenerierenAnsicht() throws SQLException, ConnectException, DAOException {
 		super();
-		template();
+		layout();
 		listeners();
 	}
 	
-	private void template() throws SQLException, ConnectException, DAOException {
+	private void layout() throws SQLException, ConnectException, DAOException {
 		this.setSizeFull();
 		this.setMargin(true);
 		m_headlineLabel = headLine(m_headlineLabel, GRUNDBEDARF_GENERIEREN, STYLE_HEADLINE);
@@ -80,7 +80,7 @@ ValueChangeListener {
 		m_lieferantSelect = nativeSelectSetting(m_lieferantSelect, LIFERANT,
 				FULL, false, LIFERANT, this);
 		m_lieferantSelect.setNullSelectionAllowed(false);
-		m_lieferanten = Lieferantenverwaltung.getInstance().getLieferantenByGrundbedarf(true);
+		m_lieferanten = LieferantenService.getInstance().getLieferantenByGrundbedarf(true);
 			
 		
 		m_termin1 = dateField(LIFERTERMIN + 1, DATE_FORMAT, FULL, Util.getDate(2, 7), true);
@@ -145,7 +145,7 @@ ValueChangeListener {
 			public void itemClick(ItemClickEvent event) {
 				if(event.isDoubleClick()) {
 					try {
-						windowModal(ArtikelService.getInstance().getArtikelById(((Grundbedarf) event.getItemId()).getArtikelId()));
+						windowModal(ArtikelService.getInstance().getArtikelById(((GrundbedarfModel) event.getItemId()).getArtikelId()));
 					} catch (ConnectException e) {
 						e.printStackTrace();
 					} catch (DAOException e) {
@@ -168,7 +168,7 @@ ValueChangeListener {
 							m_d1, m_d2, false, GRUNDBEDARF);
 					try {
 						m_bestellung.setId(m_bestellungService.getInstance().createBestellung(m_bestellung));
-						for (Grundbedarf gb : m_container.getItemIds()) {
+						for (GrundbedarfModel gb : m_container.getItemIds()) {
 							if(!(Boolean) gb.getIgnore().getValue().booleanValue()) {
 								m_bestellposition = new Bestellposition(
 										gb.getArtikel(), m_bestellung, 
@@ -202,19 +202,19 @@ ValueChangeListener {
 	}
 	
 	private void beans(Lieferant lieferant) throws ConnectException, DAOException, SQLException {
-		m_grundbedarfe = new ArrayList<Grundbedarf>();
+		m_grundbedarfe = new ArrayList<GrundbedarfModel>();
 		if(lieferant == null) {
 			m_overArtikelverwaltungView.m_artikeln = ArtikelService.getInstance().getArtikelByGrundbedarf();
 		} else {
 			m_overArtikelverwaltungView.m_artikeln = ArtikelService.getInstance().getGrundbedarfByLieferantId(lieferant.getId());
 		}
 		for (Artikel artikel : m_overArtikelverwaltungView.m_artikeln) {		
-			Grundbedarf g = new Grundbedarf(artikel);
+			GrundbedarfModel g = new GrundbedarfModel(artikel);
 			m_grundbedarfe.add(g);
 		}
 		
 		try {
-			m_container = new BeanItemContainer<Grundbedarf>(Grundbedarf.class, m_grundbedarfe);
+			m_container = new BeanItemContainer<GrundbedarfModel>(GrundbedarfModel.class, m_grundbedarfe);
 			setTable();
 		} catch (Exception e) {
 			LOG.error(e.toString());
@@ -258,7 +258,7 @@ ValueChangeListener {
 			@Override
 			public void buttonClick(ClickEvent event) {	
 				
-				for (Grundbedarf gb : m_grundbedarfe) {
+				for (GrundbedarfModel gb : m_grundbedarfe) {
 					if(gb.getArtikelId() == artikel.getId()) {
 						gb.init(artikel);
 					}
@@ -301,7 +301,7 @@ ValueChangeListener {
 	}
 	
 	private void mehrereliefertermine(Lieferant lieferant) {
-		if(!lieferant.getMehrereliefertermine()) {
+		if(!lieferant.isMehrereliefertermine()) {
 			m_termin2.setVisible(false);
 			//m_termin2.setValue(null);
 		} else {

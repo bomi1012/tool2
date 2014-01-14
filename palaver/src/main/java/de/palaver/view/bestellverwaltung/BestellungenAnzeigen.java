@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CustomTable;
 import com.vaadin.ui.CustomTable.CellStyleGenerator;
 
@@ -25,19 +26,23 @@ ValueChangeListener {
 	
 	public BestellungenAnzeigen() {
 		super();
-		template();
+		layout();
 		listeners();
 		beans();
 	}
 	
-	private void template() {
+	private void layout() {
 		this.setSizeFull();
 		this.setMargin(true);
 		m_headlineLabel = headLine(m_headlineLabel, BESTELLUNG_ALL, STYLE_HEADLINE);
+		m_control = controlAlleBestellungenPanel();
 		m_filterTable = filterTable();
 		
 		this.setSpacing(true);				
 		this.addComponent(m_filterTable);
+		this.setExpandRatio(m_filterTable, 1);
+		this.addComponent(m_control);
+		this.setComponentAlignment(m_control, Alignment.BOTTOM_RIGHT);
 	}
 	
 	private void listeners() {

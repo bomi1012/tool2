@@ -2,107 +2,95 @@ package de.palaver.view.lieferantenverwaltung;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.tepi.filtertable.FilterTable;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
-import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 
-import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
-import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
-import de.hska.awp.palaver2.util.ViewDataObject;
-import de.hska.awp.palaver2.util.ViewHandler;
-import de.hska.awp.palaver2.util.customFilter;
-import de.hska.awp.palaver2.util.customFilterDecorator;
 import de.palaver.Application;
+import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
+import de.palaver.service.person.lieferantenverwaltung.LieferantenService;
 
 @SuppressWarnings("serial")
-public class LieferantAnzeigen extends VerticalLayout implements View {
-
+public class LieferantAnzeigen extends OverLieferantverwaltungView implements View,
+ValueChangeListener {
 	private static final Logger log = LoggerFactory.getLogger(LieferantAnzeigen.class.getName());
 
-	private FilterTable table;
-
-	private Button showFilter;
-	private Button auswaehlen;
-	private Label headline;
-
-	private HorizontalLayout head;
+	private Button m_showFilterButton;
+	private HorizontalLayout headLayout;
 	private Lieferant lieferant;
+	private BeanItemContainer<Lieferant> m_container;
 
 	public LieferantAnzeigen() {
 		super();
+		layout();
+		listeners();
+		beans();
+	}
 
+	private void layout() {
 		this.setSizeFull();
 		this.setMargin(true);
+		
+		m_filterTable = filterTable();	
+		m_showFilterButton = filterButton(true, true);			
+		m_control = controlLieferantenPanel();		
+		m_headlineLabel = headLine(m_headlineLabel, "Alle Lieferanten", STYLE_HEADLINE);
+	
+		headLayout = new HorizontalLayout();
+		headLayout.setWidth(FULL);
+		headLayout.addComponent(m_headlineLabel);
+		headLayout.setComponentAlignment(m_headlineLabel, Alignment.MIDDLE_LEFT);
+		headLayout.addComponent(m_showFilterButton);
+		headLayout.setComponentAlignment(m_showFilterButton, Alignment.MIDDLE_RIGHT);
+		headLayout.setExpandRatio(m_headlineLabel, 1);
 
-		showFilter = new Button(IConstants.BUTTON_CLEAR_FILTER);
-		showFilter.setIcon(new ThemeResource("img/disable_filter.ico"));
-
-		auswaehlen = new Button(IConstants.BUTTON_SELECT);
-		auswaehlen.setHeight("50px");
-
-		headline = new Label("Alle Lieferanten");
-		headline.setStyleName("ViewHeadline");
-
-		head = new HorizontalLayout();
-		head.setWidth("100%");
-
-		head.addComponent(headline);
-		head.setComponentAlignment(headline, Alignment.MIDDLE_LEFT);
-		head.addComponent(showFilter);
-		head.setComponentAlignment(showFilter, Alignment.MIDDLE_RIGHT);
-		head.setExpandRatio(headline, 1);
-
-		table = new FilterTable();
-		table.setStyleName("palaverTable");
-		table.setSizeFull();
-		table.setFilterBarVisible(true);
-		table.setFilterGenerator(new customFilter());
-		table.setFilterDecorator(new customFilterDecorator());
-		table.setSelectable(true);
-
-		table.addValueChangeListener(new ValueChangeListener() {
-
+		this.addComponent(headLayout);
+		this.setSpacing(true);
+		this.addComponent(m_filterTable);
+		this.setExpandRatio(m_filterTable, 1);
+		this.addComponent(m_control);
+		this.setComponentAlignment(m_control, Alignment.BOTTOM_RIGHT);
+		
+	}
+	
+	private void listeners() {
+		m_filterTable.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
 					lieferant = (Lieferant) event.getProperty().getValue();
-					auswaehlen.setEnabled(true);
+					m_control.setEnabled(true);
 				}
 			}
 		});
 
-		table.addItemClickListener(new ItemClickListener() {
+		m_filterTable.addItemClickListener(new ItemClickListener() {
 			@Override
 			public void itemClick(ItemClickEvent event) {
 				if (event.isDoubleClick()) {
-					auswaehlen.click();
+					m_auswaehlenButton.click();
 				}
-
 			}
 		});
 
-		auswaehlen.addClickListener(new ClickListener() {
-
+		m_auswaehlenButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (lieferant != null) {
-					ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
+					//TODO: Window
+					//ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
 				}
 				else {
 					((Application) UI.getCurrent().getData())
@@ -110,50 +98,33 @@ public class LieferantAnzeigen extends VerticalLayout implements View {
 				}
 			}
 		});
-
-		BeanItemContainer<Lieferant> container;
-		try {
-			container = new BeanItemContainer<Lieferant>(Lieferant.class, Lieferantenverwaltung.getInstance().getAllLieferanten());
-			table.setContainerDataSource(container);
-			table.setVisibleColumns(new Object[] { "name", "kundennummer", "bezeichnung", "strasse", "plz", "ort", "email", "telefon", "fax",
-					"notiz" });
-			table.sort(new Object[] { "name" }, new boolean[] { true });
-		} catch (Exception e) {
-			log.error(e.toString());
-		}
-
-		this.addComponent(head);
-		this.addComponent(table);
-		this.setExpandRatio(table, 1);
-		this.addComponent(auswaehlen);
-		this.setComponentAlignment(auswaehlen, Alignment.BOTTOM_RIGHT);
-
-		showFilter.addClickListener(new ClickListener() {
+		m_showFilterButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-//				if (table.isFilterBarVisible()) {
-//					table.setFilterBarVisible(false);
-//					table.resetFilters();
-//					showFilter.setCaption(IConstants.BUTTON_SHOW_FILTER);
-//					showFilter.setIcon(new ThemeResource("img/filter.ico"));
-//				} else {
-//					table.setFilterBarVisible(true);
-//					showFilter.setCaption(IConstants.BUTTON_HIDE_FILTER);
-//					showFilter.setIcon(new ThemeResource("img/disable_filter.ico"));
-//				}
-				table.resetFilters();
+				m_filterTable.resetFilters();
 			}
 		});
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.hska.awp.palaver2.util.View#getViewParam(de.hska.awp.palaver2.util
-	 * .ViewData)
-	 */
-	@Override
-	public void getViewParam(ViewData data) {
+	
+	private void beans() {		
+		try {
+			m_container = new BeanItemContainer<Lieferant>(Lieferant.class, LieferantenService.getInstance().getAllLieferanten());
+			setTable();
+		} catch (Exception e) {
+			log.error(e.toString());
+		}
+		
 	}
+
+	private void setTable() {
+		m_filterTable.setContainerDataSource(m_container);
+		m_filterTable.setVisibleColumns(new Object[] { "name", "lieferantnummer", "bezeichnung", "notiz" });
+		m_filterTable.sort(new Object[] { "name" }, new boolean[] { true });		
+	}
+
+	@Override
+	public void getViewParam(ViewData data) { }
+
+	@Override
+	public void valueChange(ValueChangeEvent event) { }
 }

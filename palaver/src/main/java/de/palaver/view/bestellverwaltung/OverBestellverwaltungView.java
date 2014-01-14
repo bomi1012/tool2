@@ -4,24 +4,26 @@ import java.util.Date;
 import java.util.List;
 
 import com.vaadin.data.Validator;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeSelect;
 
-import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
+import de.hska.awp.palaver2.util.IConstants;
 import de.palaver.domain.bestellverwaltung.Bestellposition;
 import de.palaver.domain.bestellverwaltung.Bestellung;
+import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
 import de.palaver.service.bestellverwaltung.BestellpositionService;
 import de.palaver.service.bestellverwaltung.BestellungService;
 import de.palaver.view.ViewAbstract;
-import de.palaver.view.models.Grundbedarf;
+import de.palaver.view.models.GrundbedarfModel;
 
 public class OverBestellverwaltungView extends ViewAbstract {
 	private static final long serialVersionUID = 2853996004535479919L;
 	
 	public List<Lieferant> m_lieferanten;
-	public List<Grundbedarf> m_grundbedarfe;
+	public List<GrundbedarfModel> m_grundbedarfe;
 	protected HorizontalLayout m_control;
 	
 	public Bestellposition m_bestellposition;
@@ -31,6 +33,10 @@ public class OverBestellverwaltungView extends ViewAbstract {
 	public List<Bestellung> m_bestellungs;
 	public Bestellung m_bestellung;
 	public BestellungService m_bestellungService;
+
+	protected Button m_deleteButton;
+	protected Button m_editButton;
+	protected Button m_vorschauButton;
 	
 	protected OverBestellverwaltungView() {
 		super();
@@ -71,4 +77,20 @@ public class OverBestellverwaltungView extends ViewAbstract {
 		select.setDescription(descript);
 		return select;
 	}
+	
+	protected HorizontalLayout controlAlleBestellungenPanel() {	
+		m_deleteButton = deleteButton(true, true);
+		m_editButton = editButton(true, true);
+		m_vorschauButton = buttonSetting(m_button, "Vorschau",
+				IConstants.ICON_PAGE_WHITE_LUPE, true, true);
+		
+		m_horizontalLayout = new HorizontalLayout();
+		m_horizontalLayout.setSpacing(true);
+		m_horizontalLayout.addComponent(m_vorschauButton);
+		m_horizontalLayout.addComponent(m_editButton);
+		m_horizontalLayout.addComponent(m_deleteButton);
+		m_horizontalLayout.setEnabled(false);
+		return m_horizontalLayout;
+	}
+	
 }

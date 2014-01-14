@@ -9,11 +9,11 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hska.awp.palaver2.data.LieferantDAO;
 import de.hska.awp.palaver2.util.Util;
 import de.palaver.dao.AbstractDAO;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
+import de.palaver.dao.person.lieferantenverwaltung.LieferantDAO;
 import de.palaver.domain.artikelverwaltung.Artikel;
 
 /**
@@ -66,8 +66,8 @@ public class ArtikelDAO extends AbstractDAO {
 			+ "`" + FIELD_NOTIZ + "`, " + "`" + FIELD_FUER_REZEPT + "`, " + "`" + FIELD_LAGERORT_FK + "`)" +
 					" VALUES({0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13})";
 	
-	private List<Artikel> list;
-	private Artikel artikel;
+	private List<Artikel> m_list;
+	private Artikel m_artikel;
 	
 	public ArtikelDAO() {
 		super();
@@ -87,14 +87,12 @@ public class ArtikelDAO extends AbstractDAO {
 	 * Die Methode getAllArtikel liefert aktive Artikeln zurück.
 	 */
 	public List<Artikel> getActiveArtikeln() throws ConnectException, DAOException, SQLException {
-		list = new ArrayList<Artikel>();
+		m_list = new ArrayList<Artikel>();
 		m_set = getManaged(GET_ALL_ACTIVE_ARTIKLES);
-		openConnection();
 		while (m_set.next()) {
-			list.add(setArtikel(m_set));
+			m_list.add(setArtikel(m_set));
 		}		
-		closeConnection();
-		return list;
+		return m_list;
 	}
 
 	/**
@@ -102,23 +100,21 @@ public class ArtikelDAO extends AbstractDAO {
 	 * der Suche nach einem Artikel anhang der LieferantId in der Datenbank.
 	 */
 	public List<Artikel> getActiveArtikelByLieferantId(Long id) throws ConnectException, DAOException, SQLException {
-		list = new ArrayList<Artikel>();
+		m_list = new ArrayList<Artikel>();
 		m_set = getManaged(MessageFormat.format(GET_ACTIVE_ARTIKLES_BY_LIEFERANT_ID, id));
-		openConnection();
 		while (m_set.next()) {
-			list.add(setArtikel(m_set));
+			m_list.add(setArtikel(m_set));
 		}
-		closeConnection();
-		return list;
+		return m_list;
 	}
 	
 	public List<Artikel> getActiveArtikelnByKategorieId(Long id) throws ConnectException, DAOException, SQLException {
-		list = new ArrayList<Artikel>();
+		m_list = new ArrayList<Artikel>();
 		m_set = getManaged(MessageFormat.format(GET_ACTIVE_ARTIKEL_BY_KATEGORIE, id));
 		while (m_set.next()) {
-			list.add(setArtikel(m_set));
+			m_list.add(setArtikel(m_set));
 		}
-		return list;
+		return m_list;
 	}
 
 	/**
@@ -126,14 +122,12 @@ public class ArtikelDAO extends AbstractDAO {
 	 * nach einem Artikel in der Datenbank.
 	 */
 	public Artikel getArtikelById(Long id) throws ConnectException, DAOException, SQLException {
-		artikel = null;
+		m_artikel = null;
 		m_set = getManaged(MessageFormat.format(GET_ARTIKEL_BY_ID, id));
-		openConnection();
 		while (m_set.next()) {
-			artikel = setArtikel(m_set);
+			m_artikel = setArtikel(m_set);
 		}
-		closeConnection();
-		return artikel;
+		return m_artikel;
 	}
 
 	/**
@@ -154,12 +148,12 @@ public class ArtikelDAO extends AbstractDAO {
 	 * Grundbedarf gilt z.B. Salami für die Belegte Brötchen auf der Menükarte.
 	 */
 	public List<Artikel> getArtikelByGrundbedarf() throws ConnectException, DAOException, SQLException {
-		list = new ArrayList<Artikel>();
+		m_list = new ArrayList<Artikel>();
 		m_set = getManaged(GET_ACTIVE_ARTIKELS_BY_GRUNDBEDARF);
 		while (m_set.next()) {
-			list.add(setArtikel(m_set));
+			m_list.add(setArtikel(m_set));
 		}
-		return list;
+		return m_list;
 	}
 
 	/**
@@ -167,12 +161,12 @@ public class ArtikelDAO extends AbstractDAO {
 	 * Standardbedarf gilt z.B. Pfeffer oder Salz.
 	 */
 	public List<Artikel> getArtikelByStandard() throws ConnectException, DAOException, SQLException {
-		list = new ArrayList<Artikel>();
+		m_list = new ArrayList<Artikel>();
 		m_set = getManaged(GET_ACTIVE_ARTIKELS_BY_STANDARD);
 		while (m_set.next()) {
-			list.add(setArtikel(m_set));
+			m_list.add(setArtikel(m_set));
 		}
-		return list;
+		return m_list;
 	}
 	
 	public void createArtikel(Artikel artikel) throws ConnectException, DAOException {
@@ -220,7 +214,7 @@ public class ArtikelDAO extends AbstractDAO {
 		return 	new Artikel(set.getLong(FIELD_ID), 
 				MengeneinheitDAO.getInstance().getMengeneinheitById(set.getLong(FIELD_MENGENEINHEIT_FK)),
 				KategorieDAO.getInstance().getKategorieById(set.getLong(FIELD_KATEGORIE_FK)), 
-				LieferantDAO.getInstance().getLieferantById(set.getLong(FIELD_LIEFERANT_FK)), 
+				LieferantDAO.getInstance().getActiveLieferantById(set.getLong(FIELD_LIEFERANT_FK)), 
 				set.getString(FIELD_ARTIKELNUMMER), 
 				set.getString(FIELD_NAME), 
 				set.getDouble(FIELD_BESTELLGROESSE), 
@@ -235,13 +229,13 @@ public class ArtikelDAO extends AbstractDAO {
 	}
 
 	public List<Artikel> getGrundbedarfByLieferantId(Long id) throws ConnectException, DAOException, SQLException {
-		list = new ArrayList<Artikel>();
+		m_list = new ArrayList<Artikel>();
 		m_set = getManaged(MessageFormat.format(GET_ACTIVE_GRUNDBEDARF_BY_LIEFERANT_ID, id));
 		openConnection();
 		while (m_set.next()) {
-			list.add(setArtikel(m_set));
+			m_list.add(setArtikel(m_set));
 		}
 		closeConnection();
-		return list;
+		return m_list;
 	}	
 }

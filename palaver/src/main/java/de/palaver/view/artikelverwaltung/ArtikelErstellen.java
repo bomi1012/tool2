@@ -27,8 +27,6 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.Window.CloseEvent;
 import com.vaadin.ui.Window.CloseListener;
 
-import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
-import de.hska.awp.palaver2.lieferantenverwaltung.service.Lieferantenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewHandler;
@@ -39,11 +37,12 @@ import de.palaver.domain.artikelverwaltung.Artikel;
 import de.palaver.domain.artikelverwaltung.Kategorie;
 import de.palaver.domain.artikelverwaltung.Lagerort;
 import de.palaver.domain.artikelverwaltung.Mengeneinheit;
+import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
 import de.palaver.service.artikelverwaltung.ArtikelService;
 import de.palaver.service.artikelverwaltung.KategorieService;
 import de.palaver.service.artikelverwaltung.LagerorService;
 import de.palaver.service.artikelverwaltung.MengeneinheitService;
-import de.palaver.view.lieferantenverwaltung.LieferantErstellen;
+import de.palaver.service.person.lieferantenverwaltung.LieferantenService;
 
 /**
  * @author Sebastian Walz Diese Klasse ist eine Eingabeform fuer das Erstellen
@@ -380,7 +379,7 @@ public class ArtikelErstellen extends OverErstellen implements View,
 	
 	private void load() {
 		try {			
-			allLieferanten(Lieferantenverwaltung.getInstance().getAllLieferanten());
+			allLieferanten(LieferantenService.getInstance().getAllLieferanten());
 			allKategories(KategorieService.getInstance().getAllKategories());
 			allMengeneinheiten(MengeneinheitService.getInstance().getAllMengeneinheiten());
 			allLagerorte(LagerorService.getInstance().getAllLagerorts());
@@ -406,11 +405,12 @@ public class ArtikelErstellen extends OverErstellen implements View,
 		});
 	}
 	private void addLieferant() {
-		win = windowUI(win, "Neuer Lieferant", "950", "500");
-		LieferantErstellen le = new LieferantErstellen();
-		addComponent(le);
-		win.setContent(le);
-		UI.getCurrent().addWindow(win);
+		//TODO: Lieferant erstellen
+//		win = windowUI(win, "Neuer Lieferant", "950", "500");
+//		LieferantErstellen le = new LieferantErstellen();
+//		addComponent(le);
+//		win.setContent(le);
+//		UI.getCurrent().addWindow(win);
 	}
 	private void addKategorie() {
 		win = windowUI(win, NEW_KATEGORIE, "500", "250");

@@ -1,9 +1,9 @@
 package de.palaver.view;
 
 import java.io.File;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -22,16 +22,14 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-
 import de.hska.awp.palaver2.emailversand.Mail;
-import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
-import de.palaver.view.lieferantenverwaltung.LieferantSuche;
+import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
 
 /**
  * 
@@ -161,8 +159,8 @@ public class EmailOhneBestellung extends VerticalLayout implements View {
 
 				if (lieferanten == false)
 					ViewHandler.getInstance().returnToDefault();
-				else
-					ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
+				//else
+					//ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
 			
 			}
 		});
@@ -171,7 +169,7 @@ public class EmailOhneBestellung extends VerticalLayout implements View {
 	@Override
 	public void getViewParam(ViewData data) {
 		lieferant = (Lieferant) ((ViewDataObject<?>) data).getData();
-		empfaengerInput = lieferant.getEmail();
+		empfaengerInput = lieferant.getKontakte().getEmail();
 		empfaenger.setValue(empfaengerInput);
 		lieferanten = true;
 

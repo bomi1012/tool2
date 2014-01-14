@@ -3,9 +3,9 @@ package de.palaver.domain.bestellverwaltung;
 import java.sql.Date;
 import java.util.List;
 
-import de.hska.awp.palaver2.lieferantenverwaltung.domain.Lieferant;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.palaver.domain.EntityId;
+import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
 
 /**
  * Die Klasse Bestellung spiegelt den Bestellung aus der Datenbank wieder.
