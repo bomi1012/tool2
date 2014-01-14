@@ -78,8 +78,6 @@ ValueChangeListener {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (m_bestellung != null) {
-					//TODO: Window
-					//ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
 					windowModal(m_bestellung);
 				}
 				else {
@@ -96,10 +94,8 @@ ValueChangeListener {
 					BestellungService.getInstance().deleteBestellung(m_bestellung.getId());
 					m_container.removeItem(m_bestellung);
 				} catch (ConnectException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (DAOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
