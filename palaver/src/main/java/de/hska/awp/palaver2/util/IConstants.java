@@ -117,6 +117,9 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/test?user=root&password
 	
 	
 	
+	
+	String 		ICON_EXCEL = "icons/page_excel.png";
+	String 		ICON_EMAIL_GO = "icons/email_go.png";
 	String 		ICON_EMAIL_ATTACH = "icons/email_attach.png";
 	String 		ICON_TELEPHONE = "icons/telephone.png";
 	String 		ICON_PAGE_EDIT = "icons/page_edit.png";
@@ -128,6 +131,7 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/test?user=root&password
 	String 		ICON_FOLDER_PAGE_WHITE = "icons/folder_page_white.png";
 	String 		ICON_PAGE_WHITE_LUPE = "icons/page_white_magnify.png";
 	String 		ICON_PAGE_WHITE_ADD = "icons/page_white_add.png";
+	String 		ICON_PAGE_GEAR = "icons/page_gear.png";
 	String 		ICON_BASKET_ADD = "icons/basket_add.png";
 	
 	

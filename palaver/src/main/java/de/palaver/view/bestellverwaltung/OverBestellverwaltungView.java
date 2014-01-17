@@ -9,6 +9,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeSelect;
+import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver2.util.IConstants;
 import de.palaver.domain.bestellverwaltung.Bestellposition;
@@ -41,9 +42,11 @@ public class OverBestellverwaltungView extends ViewAbstract {
 	protected Button m_deleteButton;
 	protected Button m_editButton;
 	protected Button m_closeButton;
-	protected Button m_perEmailAttachButton;
+	protected Button m_verwaltenButton;
 
-	private Button m_perTelefonButton;
+
+	protected Button m_emailBestellenButton;
+	protected Button m_telefonBestellenButton;
 	
 	
 	protected OverBestellverwaltungView() {
@@ -88,17 +91,14 @@ public class OverBestellverwaltungView extends ViewAbstract {
 	
 	protected HorizontalLayout controlAlleBestellungenPanel() {	
 		m_deleteButton = deleteButton(true, true);
-		m_perEmailAttachButton = buttonSetting(m_button, "E-Mail-Bestellung",
-				IConstants.ICON_EMAIL_ATTACH, true, true);
-		m_perTelefonButton = buttonSetting(m_button, "Telefonbestellung",
-				IConstants.ICON_TELEPHONE, true, true);
+		m_verwaltenButton = buttonSetting(m_button, "Bestelung verwalten",
+				IConstants.ICON_PAGE_GEAR, true, true);
 		m_editButton = editButton(true, true);
 		
 		m_horizontalLayout = new HorizontalLayout();
 		m_horizontalLayout.setSpacing(true);
 		m_horizontalLayout.addComponent(m_editButton);
-		m_horizontalLayout.addComponent(m_perEmailAttachButton);
-		m_horizontalLayout.addComponent(m_perTelefonButton);
+		m_horizontalLayout.addComponent(m_verwaltenButton);
 		m_horizontalLayout.addComponent(m_deleteButton);
 		m_horizontalLayout.setEnabled(false);
 		return m_horizontalLayout;
@@ -116,6 +116,21 @@ public class OverBestellverwaltungView extends ViewAbstract {
 		m_horizontalLayout.addComponent(m_editButton);
 		m_horizontalLayout.setEnabled(true);
 		return m_horizontalLayout;
+	}
+	
+	protected VerticalLayout controlVerwaltung() {	
+		m_emailBestellenButton = buttonSetting(m_button, "E-Mail-Bestellung",
+				IConstants.ICON_EMAIL_ATTACH, true, true);
+		m_telefonBestellenButton = buttonSetting(m_button, "Telefonbestellung",
+				IConstants.ICON_TELEPHONE, true, true);
+
+		
+		m_vertikalLayout = new VerticalLayout();
+		m_vertikalLayout.setSpacing(true);
+		m_vertikalLayout.addComponent(m_emailBestellenButton);
+		m_vertikalLayout.addComponent(m_telefonBestellenButton);
+		m_vertikalLayout.setEnabled(true);
+		return m_vertikalLayout;
 	}
 	
 }

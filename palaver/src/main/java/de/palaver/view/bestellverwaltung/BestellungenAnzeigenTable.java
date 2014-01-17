@@ -25,6 +25,7 @@ import de.palaver.dao.DAOException;
 import de.palaver.domain.bestellverwaltung.Bestellung;
 import de.palaver.service.bestellverwaltung.BestellungService;
 import de.palaver.view.bestellverwaltung.popup.BestellpositionenVorschau;
+import de.palaver.view.bestellverwaltung.popup.BestellungVerwalten;
 
 @SuppressWarnings("serial")
 public class BestellungenAnzeigenTable extends OverBestellverwaltungView implements View,
@@ -33,6 +34,7 @@ ValueChangeListener {
 	private static final Logger LOG = LoggerFactory.getLogger(BestellungenAnzeigenTable.class.getName());
 	private static final String BESTELLUNG_ALL = "Alle Bestellungen";	
 	private BeanItemContainer<Bestellung> m_container;
+	private BestellungVerwalten m_bestellungVerwalten;
 	
 	public BestellungenAnzeigenTable() {
 		super();
@@ -103,12 +105,11 @@ ValueChangeListener {
 			}
 		});
 		
-		m_perEmailAttachButton.addClickListener(new ClickListener() {			
+		m_verwaltenButton.addClickListener(new ClickListener() {			
 			@Override
 			public void buttonClick(ClickEvent event) {
-				
+				windowModal1(m_bestellung);
 			}
-
 		});
 	}
 	
@@ -157,6 +158,16 @@ ValueChangeListener {
 		m_bestellpositionVorschau = new BestellpositionenVorschau(bestellung);
 		addComponent(m_bestellpositionVorschau);
 		win.setContent(m_bestellpositionVorschau);
+		win.setModal(true);
+		UI.getCurrent().addWindow(win);
+		
+	}
+	
+	private void windowModal1(Bestellung bestellung) {
+		win = windowUI(win, "Verwaltung", "95%", "95%");		
+		m_bestellungVerwalten = new BestellungVerwalten(bestellung);
+		addComponent(m_bestellungVerwalten);
+		win.setContent(m_bestellungVerwalten);
 		win.setModal(true);
 		UI.getCurrent().addWindow(win);
 		
