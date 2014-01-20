@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 
 import com.vaadin.ui.UI;
 
-import de.hska.awp.palaver2.gui.layout.DefaultView;
 import de.palaver.Application;
+import de.palaver.view.layout.DefaultView;
 
 /**
  * @author Sebastian

@@ -2,7 +2,7 @@
  * Created by Sebastian
  * 17.04.2013 - 13:37:37
  */
-package de.hska.awp.palaver2.gui.layout;
+package de.palaver.view.layout;
 
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;

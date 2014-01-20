@@ -1,7 +1,7 @@
 /**
  * Sebastian Walz
  */
-package de.hska.awp.palaver2.gui.layout;
+package de.palaver.view.layout;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

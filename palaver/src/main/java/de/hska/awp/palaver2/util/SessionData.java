@@ -6,8 +6,8 @@ package de.hska.awp.palaver2.util;
 
 import java.io.Serializable;
 
-import de.hska.awp.palaver2.gui.layout.MainLayout;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.palaver.view.layout.MainLayout;
 
 /**
  * @author Sebastian

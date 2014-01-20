@@ -1,7 +1,7 @@
 /**
  * Created by S.Walz
  */
-package de.hska.awp.palaver2.gui.layout;
+package de.palaver.view.layout;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;

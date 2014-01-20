@@ -23,10 +23,10 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-import de.hska.awp.palaver2.gui.layout.LoginForm;
-import de.hska.awp.palaver2.gui.layout.MainLayout;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
+import de.palaver.view.layout.LoginForm;
+import de.palaver.view.layout.MainLayout;
 
 /**
  * The Application's "main" class
@@ -41,7 +41,7 @@ public class Application extends UI
     
     private Mitarbeiter						user;
     
-    private MainLayout						layout;
+    private de.palaver.view.layout.MainLayout						layout;
     
     /**
      * Zugriff auf "MAIN" Klasse und Session
