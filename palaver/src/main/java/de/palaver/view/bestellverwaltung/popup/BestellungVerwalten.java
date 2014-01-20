@@ -128,6 +128,7 @@ ValueChangeListener {
 		Image i = new Image();
 		i.setSource(new ThemeResource(IConstants.IMAGE_32_ANHANG));
 		i.addStyleName("cursor-hand");
+		i.setDescription("Bestellung als excel-Datei herunterladen");
 		
 		m_center.addComponent(m_headlineLabel);
 		m_center.addComponent(m_empafaengerField);
