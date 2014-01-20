@@ -116,7 +116,7 @@ ValueChangeListener {
 
 	private void setTable() {
 		m_filterTable.setContainerDataSource(m_container);
-		m_filterTable.setVisibleColumns(new Object[] { "name", "lieferantnummer", "bezeichnung", "notiz" });
+		m_filterTable.setVisibleColumns(new Object[] { "name", "adresse", "lieferantnummer", "bezeichnung", "notiz" });
 		m_filterTable.sort(new Object[] { "name" }, new boolean[] { true });		
 	}
 

@@ -54,7 +54,21 @@ public class Adresse extends EntityId {
 	}
 	@Override
 	public String toString() {
-		return "Adresse" + m_id;
+		String adresse = "";
+		if (m_stadt != null) {
+			adresse += m_stadt;
+		} 
+		if(m_strasse != null) {
+			if (adresse != "") {
+				adresse += ", " + m_strasse;
+			} else {
+				adresse += m_strasse;
+			}
+		}
+		if(m_hausnummer != null && m_strasse != null) {
+			adresse += " " + m_hausnummer;
+		}		
+		return adresse;
 	}	
 	
 	
