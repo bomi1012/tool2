@@ -1,6 +1,3 @@
-/**
- * Sebastian Walz
- */
 package de.palaver.view.layout;
 
 import org.slf4j.Logger;
@@ -59,10 +56,6 @@ import de.palaver.view.bestellverwaltung.BestellungenAnzeigenTable;
 import de.palaver.view.bestellverwaltung.GrundbedarfGenerierenAnsicht;
 import de.palaver.view.lieferantenverwaltung.LieferantAnzeigen;
 
-/**
- * @author Sebastian
- * 
- */
 @SuppressWarnings("serial")
 public class MainLayout extends VerticalLayout implements Command {
 	private HorizontalLayout header = new HorizontalLayout();
@@ -441,6 +434,7 @@ public class MainLayout extends VerticalLayout implements Command {
 		this.header.setVisible(arg0);
 	}
 
+	@SuppressWarnings("unused")
 	private void showInfo() {
 		final Window win = new Window();
 		win.center();

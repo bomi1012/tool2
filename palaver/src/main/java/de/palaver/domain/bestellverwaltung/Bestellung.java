@@ -1,7 +1,6 @@
 package de.palaver.domain.bestellverwaltung;
 
 import java.sql.Date;
-import java.util.List;
 
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.palaver.domain.EntityId;
@@ -21,8 +20,6 @@ public class Bestellung extends EntityId implements java.io.Serializable {
 	private Date m_lieferdatum2;
 	private boolean m_status;  	
 	private String m_kategorie; 
-	
-	private List<Bestellposition> m_bestellpositions;
 	
 	public Bestellung() {
 		super();

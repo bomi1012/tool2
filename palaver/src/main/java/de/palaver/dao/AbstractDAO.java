@@ -8,6 +8,7 @@ import javax.sql.rowset.CachedRowSet;
 
 import com.sun.rowset.CachedRowSetImpl;
 
+@SuppressWarnings("restriction")
 public abstract class AbstractDAO {
 	protected static final String FIELD_ID = "id";
 	protected static final String FIELD_NAME = "name";
@@ -21,7 +22,7 @@ public abstract class AbstractDAO {
 		m_connector = new Connector();
 	}
 
-	@SuppressWarnings({ "resource", "restriction" })
+	@SuppressWarnings({ "resource" })
 	protected synchronized ResultSet getManaged(String querry)
 			throws ConnectException, DAOException, SQLException {
 		openConnection();
@@ -43,7 +44,7 @@ public abstract class AbstractDAO {
 		return cache.getOriginal();
 	}
 
-	@SuppressWarnings({ "resource", "restriction" })
+	@SuppressWarnings({ "resource" })
 	protected synchronized ResultSet getMany(String querry)
 			throws ConnectException, DAOException, SQLException {
 		ResultSet result = null;
