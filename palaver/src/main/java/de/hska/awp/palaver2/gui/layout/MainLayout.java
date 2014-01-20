@@ -143,13 +143,21 @@ public class MainLayout extends VerticalLayout implements Command {
 			/** 1 Level */
 			MenuItem bestellungeAnzeigen = bestellungItem.addItem(IConstants.MENU_BESTELLUNG_ANZEIGEN, this);
 			MenuItem bestellungWählenItem = bestellungItem.addItem(IConstants.MENU_BESTELLUNG_GENERIEREN, null);
+			bestellungItem.addSeparator();
+			MenuItem lieferantItem = bestellungItem.addItem(IConstants.MENU_LIEFERANT_HEADLINE, null);
+			
 			/** 2 Level */
 			MenuItem grundbedarfGenerierenItem = bestellungWählenItem.addItem(IConstants.MENU_GRUNDBEDARF, this);
+			MenuItem lieferantAnzeigen = lieferantItem.addItem(IConstants.MENU_LIEFERANT_ANZEIGEN, this);
+			MenuItem lieferantAnlegen = lieferantItem.addItem(IConstants.MENU_LIEFERANT_NEW, this);
 			
 			/** Icons */
 			bestellungWählenItem.setIcon(new ThemeResource(IConstants.ICON_FOLDER_PAGE_WHITE));
 			bestellungeAnzeigen.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_LUPE));
 			grundbedarfGenerierenItem.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_ADD));
+			lieferantItem.setIcon(new ThemeResource(IConstants.ICON_FOLDER_PAGE_WHITE));
+			lieferantAnzeigen.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_LUPE));
+			lieferantAnlegen.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_ADD));
 			
 //			bestellungItem.addItem(IConstants.MENU_BESTELLUNG_NEW_RANDOM, this);
 //			bestellungItem.addItem(IConstants.MENU_BESTELLUNG_GENERATE, this);
@@ -158,12 +166,7 @@ public class MainLayout extends VerticalLayout implements Command {
 //		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_ANZEIGEN, this);
 		}
 		
-		/** Lieferant */
-		MenuItem lieferantItem = menu.addItem(
-				IConstants.MENU_LIEFERANT_HEADLINE, null);
-		lieferantItem.addItem(IConstants.MENU_LIEFERANT_NEW, this);
-		lieferantItem.addItem(IConstants.MENU_LIEFERANT_ANZEIGEN, this);
-
+		
 		MenuItem mitarbeiterItem = menu.addItem(
 				IConstants.MENU_MITARBEITER_HEADLINE, null);
 		if (((Application) UI.getCurrent().getData())
