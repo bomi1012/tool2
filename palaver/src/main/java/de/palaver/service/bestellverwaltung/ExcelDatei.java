@@ -32,13 +32,15 @@ public class ExcelDatei {
 		File file = null;
 		try {
 			boolean mehrereliefertermine = bestellung.getLieferant().isMehrereliefertermine();
+			//TODO: für Win 
 			String path = "/usr/share/palaver/";
+			
 			String filename = ("bestellung"
 					+ bestellung.getLieferant().getName() + "id"
 					+ bestellung.getId() + ".xls").replaceAll(" ", "").toLowerCase();
 
 			HSSFWorkbook hwb = new HSSFWorkbook();
-			HSSFSheet sheet = hwb.createSheet("Bestellung: Cafe Palaver");
+			HSSFSheet sheet = hwb.createSheet("Bestellung_Cafe_Palaver");
 
 			// Bestellung an ...
 			HSSFRow rowName = sheet.createRow((short) 0);
@@ -120,8 +122,9 @@ public class ExcelDatei {
 					" am " + dateFormat.format(new Date()) + " erfolgt.");
 			
 			//Create Excel
-			FileOutputStream fileOut = new FileOutputStream(path + filename);
 			file = new File(path + filename);
+			FileOutputStream fileOut = new FileOutputStream(file.getAbsolutePath());
+			
 			hwb.write(fileOut);
 			fileOut.close();
 			System.out.println("Your excel file has been generated!");

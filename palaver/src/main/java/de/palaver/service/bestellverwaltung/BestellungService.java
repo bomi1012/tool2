@@ -40,6 +40,10 @@ public class BestellungService {
 		BestellungDAO.getInstance().deleteBestellung(id);
 		
 	}
+
+	public String createExcel(Bestellung bestellung) {
+		return ExcelDatei.getInstance().create(bestellung);
+	}
 	
 	
 	///////////////////////////////////////////////////

@@ -15,6 +15,7 @@ import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.palaver.domain.bestellverwaltung.Bestellung;
+import de.palaver.service.bestellverwaltung.BestellungService;
 import de.palaver.view.bestellverwaltung.OverBestellverwaltungView;
 
 @SuppressWarnings("serial")
@@ -30,6 +31,7 @@ ValueChangeListener {
 	private Button m_senden;
 	private VerticalLayout m_right;
 	private Button m_excel;
+	private String m_excelPath;
 
 	public BestellungVerwalten() {
 		super();
@@ -95,6 +97,8 @@ ValueChangeListener {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				designEmail();
+				//TODO: excel
+				m_excelPath = BestellungService.getInstance().createExcel(m_bestellung);
 			}
 		});		
 	}
