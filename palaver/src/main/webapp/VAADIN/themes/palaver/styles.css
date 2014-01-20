@@ -50,7 +50,7 @@
 	background-repeat: no-repeat;
 	background-position: left top;
 	border: none;
-	cursor: default;
+	cursor: pointer;
 }
 
 .v-button-wrap,
@@ -285,4 +285,8 @@ height: 30px;
 
 .v-menubar, .v-menubar-submenu {
 	font-size: 14px;
+}
+
+.cursor-hand {
+	cursor: pointer;
 }

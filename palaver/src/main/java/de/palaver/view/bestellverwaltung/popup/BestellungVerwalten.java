@@ -2,11 +2,13 @@ package de.palaver.view.bestellverwaltung.popup;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -30,7 +32,6 @@ ValueChangeListener {
 	private TextArea m_nachricht;
 	private Button m_senden;
 	private VerticalLayout m_right;
-	private Button m_excel;
 	private String m_excelPath;
 
 	public BestellungVerwalten() {
@@ -119,21 +120,27 @@ ValueChangeListener {
 		m_nachricht.setWidth("100%");
 		m_nachricht.setHeight("85%");
 		
-		m_excel = buttonSetting(m_button, IConstants.BUTTON_DOWNLOAD,
-				IConstants.ICON_EXCEL, true, true);
 		m_senden = buttonSetting(m_button, "Senden",
 				IConstants.ICON_EMAIL_GO, true, true);
 		m_control = new HorizontalLayout();
-		m_control.addComponent(m_excel);
 		m_control.addComponent(m_senden);
+
+		Image i = new Image();
+		i.setSource(new ThemeResource(IConstants.IMAGE_32_ANHANG));
+		i.addStyleName("cursor-hand");
 		
 		m_center.addComponent(m_headlineLabel);
 		m_center.addComponent(m_empafaengerField);
 		m_center.addComponent(m_betreffField);
 		m_center.addComponent(m_nachricht);
 		m_center.addComponent(m_control);
+		m_center.addComponent(new Hr());
+		m_center.addComponent(i);
+		
 		m_center.setComponentAlignment(m_control, Alignment.TOP_RIGHT);
-		m_center.setSpacing(true);		
+		m_center.setSpacing(true);
+	
+		
 		////////////////////
 		setLayout();
 		////////////////////
