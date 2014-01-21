@@ -1,11 +1,15 @@
 package de.hska.awp.palaver2.emailversand;
 
 import java.security.Security;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
-import javax.mail.*;
+import javax.mail.MessagingException;
+
 import org.apache.commons.codec.binary.Base64;
+
 import de.hska.awp.palaver2.data.MailDAO;
+import de.palaver.dao.email.MailModel;
 
 /**
  * Klass wird für das Emailversand benötigt
@@ -85,6 +89,7 @@ public class Mail extends MailDAO {
 	 *            für Enum
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unused")
 	private void Verschlusseln(String plainText, String schlussel,
 			String getEnum) throws Exception {
 		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());

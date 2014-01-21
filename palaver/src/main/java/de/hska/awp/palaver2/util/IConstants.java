@@ -133,6 +133,7 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/test?user=root&password
 	String 		ICON_PAGE_WHITE_ADD = "icons/page_white_add.png";
 	String 		ICON_PAGE_GEAR = "icons/page_gear.png";
 	String 		ICON_BASKET_ADD = "icons/basket_add.png";
+	String 		ICON_BASKET = "icons/basket.png";
 	
 	String 		IMAGE_32_ANHANG = "32x32/anhang.png";
 	

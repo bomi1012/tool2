@@ -47,6 +47,8 @@ public class OverBestellverwaltungView extends ViewAbstract {
 
 	protected Button m_emailBestellenButton;
 	protected Button m_telefonBestellenButton;
+
+	private Button m_annahmeButton;
 	
 	
 	protected OverBestellverwaltungView() {
@@ -123,12 +125,19 @@ public class OverBestellverwaltungView extends ViewAbstract {
 				IConstants.ICON_EMAIL_ATTACH, true, true);
 		m_telefonBestellenButton = buttonSetting(m_button, "Telefonbestellung",
 				IConstants.ICON_TELEPHONE, true, true);
-
+		
+		m_annahmeButton = buttonSetting(m_button, "Warenannahme",
+				IConstants.ICON_BASKET, true, true);
+		
+		m_annahmeButton.setWidth("165");
+		m_telefonBestellenButton.setWidth("165");
+		m_emailBestellenButton.setWidth("165");
 		
 		m_vertikalLayout = new VerticalLayout();
 		m_vertikalLayout.setSpacing(true);
 		m_vertikalLayout.addComponent(m_emailBestellenButton);
 		m_vertikalLayout.addComponent(m_telefonBestellenButton);
+		m_vertikalLayout.addComponent(m_annahmeButton);
 		m_vertikalLayout.setEnabled(true);
 		return m_vertikalLayout;
 	}
