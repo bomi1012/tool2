@@ -33,6 +33,8 @@ ValueChangeListener {
 	private Button m_senden;
 	private VerticalLayout m_right;
 	private String m_excelPath;
+	private Image m_imageExcel;
+	private Button m_download;
 
 	public BestellungVerwalten() {
 		super();
@@ -58,6 +60,11 @@ ValueChangeListener {
 		
 		
 		/** content */
+		m_senden = buttonSetting(m_button, "Senden",
+				IConstants.ICON_EMAIL_GO, true, true);
+		m_download = buttonSetting(m_button, "Download",
+				IConstants.ICON_EMAIL_ATTACH, true, true);
+		
 		m_center = new VerticalLayout();
 		m_center.setWidth("95%");
 		m_center.setHeight("95%");
@@ -98,10 +105,19 @@ ValueChangeListener {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				designEmail();
-				//TODO: excel
+				//generieren excel
 				m_excelPath = BestellungService.getInstance().createExcel(m_bestellung);
 			}
-		});		
+		});	
+		
+		m_download.addClickListener(new ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				System.out.print(m_excelPath);
+				
+			}
+		});
 	}
 
 	
@@ -120,15 +136,19 @@ ValueChangeListener {
 		m_nachricht.setWidth("100%");
 		m_nachricht.setHeight("85%");
 		
-		m_senden = buttonSetting(m_button, "Senden",
-				IConstants.ICON_EMAIL_GO, true, true);
-		m_control = new HorizontalLayout();
-		m_control.addComponent(m_senden);
 
-		Image i = new Image();
-		i.setSource(new ThemeResource(IConstants.IMAGE_32_ANHANG));
-		i.addStyleName("cursor-hand");
-		i.setDescription("Bestellung als excel-Datei herunterladen");
+		
+		
+		m_control = new HorizontalLayout();
+		m_control.addComponent(m_download);
+		m_control.addComponent(m_senden);
+		
+
+	
+		m_imageExcel = new Image();
+		m_imageExcel.setSource(new ThemeResource(IConstants.IMAGE_32_ANHANG));
+		m_imageExcel.addStyleName("cursor-hand");
+		m_imageExcel.setDescription("Bestellung als excel-Datei herunterladen");
 		
 		m_center.addComponent(m_headlineLabel);
 		m_center.addComponent(m_empafaengerField);
@@ -136,7 +156,6 @@ ValueChangeListener {
 		m_center.addComponent(m_nachricht);
 		m_center.addComponent(m_control);
 		m_center.addComponent(new Hr());
-		m_center.addComponent(i);
 		
 		m_center.setComponentAlignment(m_control, Alignment.TOP_RIGHT);
 		m_center.setSpacing(true);
