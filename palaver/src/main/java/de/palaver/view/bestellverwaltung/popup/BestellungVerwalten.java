@@ -1,7 +1,12 @@
 package de.palaver.view.bestellverwaltung.popup;
 
+import java.io.File;
+
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.server.FileDownloader;
+import com.vaadin.server.FileResource;
+import com.vaadin.server.Resource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -18,6 +23,7 @@ import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.palaver.domain.bestellverwaltung.Bestellung;
 import de.palaver.service.bestellverwaltung.BestellungService;
+import de.palaver.service.emailversand.MailService;
 import de.palaver.view.bestellverwaltung.OverBestellverwaltungView;
 
 @SuppressWarnings("serial")
@@ -29,12 +35,12 @@ ValueChangeListener {
 	private TextField m_empafaengerField;
 	private VerticalLayout m_ttt;
 	private TextField m_betreffField;
-	private TextArea m_nachricht;
-	private Button m_senden;
+	private TextArea m_nachrichtArea;
+	private Button m_sendenButton;
 	private VerticalLayout m_right;
-	private String m_excelPath;
 	private Image m_imageExcel;
-	private Button m_download;
+	private Button m_downloadButton;
+	private String m_anhangPath;
 
 	public BestellungVerwalten() {
 		super();
@@ -60,9 +66,9 @@ ValueChangeListener {
 		
 		
 		/** content */
-		m_senden = buttonSetting(m_button, "Senden",
+		m_sendenButton = buttonSetting(m_button, "Senden",
 				IConstants.ICON_EMAIL_GO, true, true);
-		m_download = buttonSetting(m_button, "Download",
+		m_downloadButton = buttonSetting(m_button, "Download",
 				IConstants.ICON_EMAIL_ATTACH, true, true);
 		
 		m_center = new VerticalLayout();
@@ -105,25 +111,20 @@ ValueChangeListener {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				designEmail();
-				//generieren excel
-				m_excelPath = BestellungService.getInstance().createExcel(m_bestellung);
+				excelGenerieren(m_bestellung);
 			}
 		});	
 		
-		m_download.addClickListener(new ClickListener() {
-			
+		m_sendenButton.addClickListener(new ClickListener() {			
 			@Override
 			public void buttonClick(ClickEvent event) {
-				System.out.print(m_excelPath);
+				boolean result = MailService.getInstance().EmailVersand(m_empafaengerField.getValue(),
+						m_betreffField.getValue(), m_nachrichtArea.getValue(), m_anhangPath);
 				
 			}
 		});
+		
 	}
-
-	
-	
-	
-	
 
 	private void designEmail() {
 		m_headlineLabel = headLine(m_headlineLabel, "Bestellug per E-Mail an " + 
@@ -132,19 +133,14 @@ ValueChangeListener {
 		m_center.setWidth("95%");
 		m_empafaengerField = textFieldSettingE(m_textField, "Empfänger", "45%", true, "Empfänger", this);
 		m_betreffField = textFieldSettingE(m_textField, "Betreff", "45%", false, "Betreff", this);
-		m_nachricht = new TextArea("Nachricht");
-		m_nachricht.setWidth("100%");
-		m_nachricht.setHeight("85%");
-		
-
-		
+		m_nachrichtArea = new TextArea("Nachricht");
+		m_nachrichtArea.setWidth("100%");
+		m_nachrichtArea.setHeight("85%");
 		
 		m_control = new HorizontalLayout();
-		m_control.addComponent(m_download);
-		m_control.addComponent(m_senden);
-		
-
-	
+		m_control.addComponent(m_downloadButton);
+		m_control.addComponent(m_sendenButton);
+			
 		m_imageExcel = new Image();
 		m_imageExcel.setSource(new ThemeResource(IConstants.IMAGE_32_ANHANG));
 		m_imageExcel.addStyleName("cursor-hand");
@@ -153,7 +149,7 @@ ValueChangeListener {
 		m_center.addComponent(m_headlineLabel);
 		m_center.addComponent(m_empafaengerField);
 		m_center.addComponent(m_betreffField);
-		m_center.addComponent(m_nachricht);
+		m_center.addComponent(m_nachrichtArea);
 		m_center.addComponent(m_control);
 		m_center.addComponent(new Hr());
 		
@@ -169,6 +165,7 @@ ValueChangeListener {
 		}
 		m_betreffField.setValue("Bestellung - Muster");
 	}
+	
 	private TextField textFieldSettingE(TextField field, String name,
 			String width, boolean required, String descript,
 			BestellungVerwalten bestellungVerwalten) {
@@ -176,7 +173,14 @@ ValueChangeListener {
 		field.addValueChangeListener(bestellungVerwalten);
 		return field;
 	}
-
+	
+	private void excelGenerieren(Bestellung bestellung) {
+		m_anhangPath = BestellungService.getInstance().createExcel(bestellung);
+		Resource resource = new FileResource(new File(m_anhangPath));
+		FileDownloader fileDownloader = new FileDownloader(resource);
+		fileDownloader.extend(m_downloadButton);
+	}
+	
 	@Override
 	public void valueChange(ValueChangeEvent event) {
 		// TODO Auto-generated method stub

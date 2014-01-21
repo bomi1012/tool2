@@ -1,4 +1,4 @@
-package de.hska.awp.palaver2.emailversand;
+package de.palaver.service.emailversand;
 
 import java.security.Security;
 
@@ -8,48 +8,33 @@ import javax.mail.MessagingException;
 
 import org.apache.commons.codec.binary.Base64;
 
-import de.hska.awp.palaver2.data.MailDAO;
-import de.palaver.dao.email.MailModel;
+import de.palaver.dao.emailversand.MailDAO;
+import de.palaver.domain.emailversand.Mail;
 
-/**
- * Klass wird für das Emailversand benötigt
- * 
- * @author Mihail Boehm
- */
-public class Mail extends MailDAO {
-	private static Mail instance = null;
-	MailModel mail;
-	byte[] input;
-	byte[] keyBytes;
+public class MailService {
+	private static MailService instance = null;
+	private Mail m_mail;
+	private byte[] m_inputBytes;
+	private byte[] m_keyBytes;
 
-	public Mail() {
+	public MailService() {
 		super();
 	}
 
-	public static Mail getInstance() {
+	public static MailService getInstance() {
 		if (instance == null) {
-			instance = new Mail();
+			instance = new MailService();
 		}
 		return instance;
 	}
 
-	/**
-	 * @param to
-	 *            Empfanger
-	 * @param subject
-	 *            Thema
-	 * @param message
-	 *            Text
-	 */
 	public boolean EmailVersand(String to, String subject, String message,
 			String anhang) {
 		boolean ergebnis = false;
 		if (anhang == null || anhang == "") {
 			try {
-				MailActions.sendOhneAnhang(MailAccounts.NACHRICHT, to, subject,
-						message);
+				MailActions.sendOhneAnhang(MailAccounts.NACHRICHT, to, subject, message);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				System.out.print(e.toString());
 			} 
@@ -73,8 +58,8 @@ public class Mail extends MailDAO {
 	 * @throws Exception
 	 */
 	public String Password(String filter) throws Exception {
-		mail = super.getMailByEnum(filter);
-		return Enschlusseln(mail);
+		m_mail = MailDAO.getInstance().getMailByEnum(filter);
+		return Enschlusseln(m_mail);
 	}
 
 	/**
@@ -93,22 +78,22 @@ public class Mail extends MailDAO {
 	private void Verschlusseln(String plainText, String schlussel,
 			String getEnum) throws Exception {
 		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
-		input = plainText.getBytes();
-		keyBytes = schlussel.getBytes();
-		SecretKeySpec key = new SecretKeySpec(keyBytes, "ARC4");
+		m_inputBytes = plainText.getBytes();
+		m_keyBytes = schlussel.getBytes();
+		SecretKeySpec key = new SecretKeySpec(m_keyBytes, "ARC4");
 		Cipher cipher = Cipher.getInstance("ARC4", "BC");
-		byte[] cipherText = new byte[input.length];
+		byte[] cipherText = new byte[m_inputBytes.length];
 		cipher.init(Cipher.ENCRYPT_MODE, key);
-		int ctLength = cipher.update(input, 0, input.length, cipherText, 0);
+		int ctLength = cipher.update(m_inputBytes, 0, m_inputBytes.length, cipherText, 0);
 		ctLength += cipher.doFinal(cipherText, ctLength);
 
-		MailModel mail = new MailModel();
-		mail.setSchlussel(schlussel);
-		mail.setZweck(getEnum);
-		mail.setLength(ctLength);
-		mail.setPasswort(Base64.encodeBase64String(cipherText));
+		m_mail = new Mail();
+		m_mail.setKey(schlussel);
+		m_mail.setDescription(getEnum);
+		m_mail.setLength(ctLength);
+		m_mail.setPassword(Base64.encodeBase64String(cipherText));
 
-		super.setMail(mail);
+		MailDAO.getInstance().insertMail(m_mail);
 
 		/*
 		 * System.out.println("cipher text: " + new String(cipherText));
@@ -119,20 +104,14 @@ public class Mail extends MailDAO {
 		 */
 	}
 
-	/**
-	 * 
-	 * @param mail
-	 * @return
-	 * @throws Exception
-	 */
-	private String Enschlusseln(MailModel mail) throws Exception {
+	private String Enschlusseln(Mail mail) throws Exception {
 		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
-		keyBytes = mail.getSchlussel().getBytes();
-		SecretKeySpec key = new SecretKeySpec(keyBytes, "ARC4");
+		m_keyBytes = mail.getKey().getBytes();
+		SecretKeySpec key = new SecretKeySpec(m_keyBytes, "ARC4");
 		Cipher cipher = Cipher.getInstance("ARC4", "BC");
 		cipher.init(Cipher.DECRYPT_MODE, key);
 		byte[] plainText = new byte[(int) mail.getLength()];
-		int ptLength = cipher.update(Base64.decodeBase64(mail.getPasswort()),
+		int ptLength = cipher.update(Base64.decodeBase64(mail.getPassword()),
 				0, (int) mail.getLength(), plainText, 0);
 		ptLength += cipher.doFinal(plainText, ptLength);
 		return new String(plainText);

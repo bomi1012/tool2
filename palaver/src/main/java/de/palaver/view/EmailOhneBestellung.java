@@ -22,7 +22,6 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-import de.hska.awp.palaver2.emailversand.Mail;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -30,6 +29,7 @@ import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
 import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
+import de.palaver.service.emailversand.MailService;
 
 /**
  * 
@@ -130,8 +130,8 @@ public class EmailOhneBestellung extends VerticalLayout implements View {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (empfaenger.getValue() != "" && betreff.getValue() != "" && nachricht.getValue() != "") {
-					Mail mail = Mail.getInstance();
-					Boolean ergebniss = mail.EmailVersand(empfaengerInput, betreffInput, nachrichtInput, anhang);
+					MailService mailService = MailService.getInstance();
+					Boolean ergebniss = mailService.EmailVersand(empfaengerInput, betreffInput, nachrichtInput, anhang);
 					String message;
 					if (ergebniss == true) {
 						message = "Email wurde gesendet";

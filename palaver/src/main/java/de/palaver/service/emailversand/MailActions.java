@@ -1,4 +1,4 @@
-package de.hska.awp.palaver2.emailversand;
+package de.palaver.service.emailversand;
 
 import java.io.File;
 import java.net.ConnectException;
