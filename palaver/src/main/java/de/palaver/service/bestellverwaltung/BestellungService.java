@@ -44,6 +44,11 @@ public class BestellungService {
 	public String createExcel(Bestellung bestellung) {
 		return ExcelDatei.getInstance().create(bestellung);
 	}
+
+	public void updateBestellung(Bestellung bestellung) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 	///////////////////////////////////////////////////

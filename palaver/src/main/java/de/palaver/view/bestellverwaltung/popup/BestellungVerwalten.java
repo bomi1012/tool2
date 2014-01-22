@@ -33,7 +33,7 @@ ValueChangeListener {
 	private VerticalLayout m_left;
 	private VerticalLayout m_center;
 	private TextField m_empafaengerField;
-	private VerticalLayout m_ttt;
+	private VerticalLayout m_vLT;
 	private TextField m_betreffField;
 	private TextArea m_nachrichtArea;
 	private Button m_sendenButton;
@@ -61,8 +61,8 @@ ValueChangeListener {
 		m_left = new VerticalLayout();	
 		m_left.setWidth("95%");
 		m_left.setHeight("100%");
-		m_ttt = controlVerwaltung();
-		m_left.addComponent(m_ttt);
+		m_vLT = controlVerwaltung();
+		m_left.addComponent(m_vLT);
 		
 		
 		/** content */
@@ -116,14 +116,17 @@ ValueChangeListener {
 		});	
 		
 		m_sendenButton.addClickListener(new ClickListener() {			
+			@SuppressWarnings("static-access")
 			@Override
 			public void buttonClick(ClickEvent event) {
 				boolean result = MailService.getInstance().EmailVersand(m_empafaengerField.getValue(),
 						m_betreffField.getValue(), m_nachrichtArea.getValue(), m_anhangPath);
-				
+				if(result == true) {
+					m_bestellung.setStatus(true);
+					m_bestellungService.getInstance().updateBestellung(m_bestellung); //TODO
+				}				
 			}
-		});
-		
+		});		
 	}
 
 	private void designEmail() {

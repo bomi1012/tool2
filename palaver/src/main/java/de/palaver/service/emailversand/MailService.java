@@ -4,7 +4,6 @@ import java.security.Security;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
-import javax.mail.MessagingException;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -31,23 +30,17 @@ public class MailService {
 	public boolean EmailVersand(String to, String subject, String message,
 			String anhang) {
 		boolean ergebnis = false;
-		if (anhang == null || anhang == "") {
-			try {
-				MailActions.sendOhneAnhang(MailAccounts.NACHRICHT, to, subject, message);
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.print(e.toString());
-			} 
-			ergebnis = true;
-		} else {
-			try {
-				MailActions.sendMitAnhang(MailAccounts.NACHRICHT, to, subject,
-						message, anhang);
+		try {
+			if (anhang == null || anhang == "") {
+				MailActions.sendEmail(MailAccounts.NACHRICHT, to, subject, message, null);
+				ergebnis = true;			
+			} else {
+				MailActions.sendEmail(MailAccounts.NACHRICHT, to, subject, message, anhang);
 				ergebnis = true;
-			} catch (MessagingException e) {
-				e.printStackTrace();
 			}
-		}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
 		return ergebnis;
 	}
 

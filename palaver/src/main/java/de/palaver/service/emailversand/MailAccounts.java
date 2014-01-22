@@ -37,8 +37,7 @@ public enum MailAccounts {
 	        return m_smtpHost;
 	    }
 	     
-	    public MailAuthenticator getPasswordAuthentication()
-	    {
+	    public MailAuthenticator getPasswordAuthentication() {
 	        return new MailAuthenticator(m_username, m_password);
 	    }
 	     
