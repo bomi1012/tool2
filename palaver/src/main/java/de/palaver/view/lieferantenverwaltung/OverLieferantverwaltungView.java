@@ -13,6 +13,7 @@ public class OverLieferantverwaltungView extends ViewAbstract {
 	protected Button m_auswaehlenButton;
 	protected Button m_editButton;
 	protected HorizontalLayout m_control;
+
 	
 	protected OverLieferantverwaltungView() {
 		super();
@@ -34,4 +35,7 @@ public class OverLieferantverwaltungView extends ViewAbstract {
 		m_horizontalLayout.setEnabled(false);
 		return m_horizontalLayout;
 	}
+	
+	
+
 }

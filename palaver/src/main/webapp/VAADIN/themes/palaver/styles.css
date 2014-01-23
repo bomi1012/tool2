@@ -192,6 +192,10 @@ border-top: 1px solid rgb(50,205,50);
 
 }
 
+.lieferant .v-icon {
+	margin-bottom: -3px;
+}
+
 .menueplan-add .v-icon{
 display: block;
 margin-left: auto;
@@ -231,7 +235,7 @@ height: 30px;
 
 .v-button.v-button-link.v-disabled,
 .v-button.v-button-link.v-disabled .v-button-wrap {
-        cursor: default;
+        cursor: pointer;
         }
         
 .v-button-link .v-button-caption,
@@ -249,7 +253,12 @@ height: 30px;
         }
         
 .ViewHeadline {
-	font-size: 18px;
+	font-size: 20px;
+	padding-bottom: 10px;
+}
+
+.subHeadline {
+	font-size: 17px;
 	padding-bottom: 10px;
 }
 

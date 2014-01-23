@@ -55,6 +55,7 @@ import de.palaver.view.artikelverwaltung.MengeneinheitenAnzeigen;
 import de.palaver.view.bestellverwaltung.BestellungenAnzeigenTable;
 import de.palaver.view.bestellverwaltung.GrundbedarfGenerierenAnsicht;
 import de.palaver.view.lieferantenverwaltung.LieferantAnzeigen;
+import de.palaver.view.lieferantenverwaltung.LieferantErstellen;
 
 @SuppressWarnings("serial")
 public class MainLayout extends VerticalLayout implements Command {
@@ -263,6 +264,8 @@ public class MainLayout extends VerticalLayout implements Command {
 				ViewHandler.getInstance().switchView(BestellungenAnzeigenTable.class);
 			} else if(selectedItem.getText().equals(IConstants.MENU_GRUNDBEDARF)) {
 				ViewHandler.getInstance().switchView(GrundbedarfGenerierenAnsicht.class);
+			} else if(selectedItem.getText().equals(IConstants.MENU_LIEFERANT_NEW)) {
+				ViewHandler.getInstance().switchView(LieferantErstellen.class);
 			}
 			
 			

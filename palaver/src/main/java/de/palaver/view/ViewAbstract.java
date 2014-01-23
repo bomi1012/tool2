@@ -60,6 +60,10 @@ public class ViewAbstract extends VerticalLayout {
 	protected NativeSelect m_nativeSelect;
 	protected IntStepper m_intStepper;
 	protected DateField m_date;
+	
+	public Button m_speichernButton;
+	public Button m_verwerfenButton;
+	public Button m_deaktivierenButton;
 
 	public boolean m_create;
 	public boolean m_okRemove = false;
@@ -159,6 +163,22 @@ public class ViewAbstract extends VerticalLayout {
 		public Hr() {
 			super("<hr/>", Label.CONTENT_XHTML);
 		}
+	}
+	
+	protected HorizontalLayout controlErstellenPanel() {	
+		m_deaktivierenButton = buttonSetting(m_button, IConstants.BUTTON_DELETE,
+				IConstants.ICON_PAGE_DELETE, false, true);
+		m_verwerfenButton = buttonSetting(m_button, IConstants.BUTTON_DISCARD,
+				IConstants.ICON_PAGE_REFRESH, true, true);
+		m_speichernButton = buttonSetting(m_button, IConstants.BUTTON_SAVE,
+				IConstants.ICON_PAGE_SAVE, true, true);
+		
+		m_horizontalLayout = new HorizontalLayout();
+		m_horizontalLayout.setSpacing(true);
+		m_horizontalLayout.addComponent(m_verwerfenButton);
+		m_horizontalLayout.addComponent(m_deaktivierenButton);
+		m_horizontalLayout.addComponent(m_speichernButton);
+		return m_horizontalLayout;
 	}
 
 }
