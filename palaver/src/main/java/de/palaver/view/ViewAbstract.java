@@ -53,7 +53,7 @@ public class ViewAbstract extends VerticalLayout {
 	protected VerticalLayout m_vertikalLayout;
 	protected HorizontalLayout m_horizontalLayout;
 	protected Button m_button;
-	protected Window win;
+	protected Window m_window;
 	protected Table m_table;
 	protected FilterTable m_filterTable; 
 	protected TextField m_textField; 
@@ -67,6 +67,8 @@ public class ViewAbstract extends VerticalLayout {
 
 	public boolean m_create;
 	public boolean m_okRemove = false;
+	private Button m_yesButton;
+	private Button m_noButton;
 	
 	
 	protected static final String MESSAGE_LEER_ARG_1 = "Tragen Sie bitte im Feld %s den Wert ein";
@@ -178,6 +180,20 @@ public class ViewAbstract extends VerticalLayout {
 		m_horizontalLayout.addComponent(m_verwerfenButton);
 		m_horizontalLayout.addComponent(m_deaktivierenButton);
 		m_horizontalLayout.addComponent(m_speichernButton);
+		return m_horizontalLayout;
+	}
+	
+	
+	protected HorizontalLayout controlYesNo() {	
+		m_yesButton = buttonSetting(m_button, "ja",
+				IConstants.ICON_YES, true, true);
+		m_noButton = buttonSetting(m_button, "nein",
+				IConstants.ICON_NO, true, true);
+		
+		m_horizontalLayout = new HorizontalLayout();
+		m_horizontalLayout.setSpacing(true);
+		m_horizontalLayout.addComponent(m_yesButton);
+		m_horizontalLayout.addComponent(m_noButton);
 		return m_horizontalLayout;
 	}
 

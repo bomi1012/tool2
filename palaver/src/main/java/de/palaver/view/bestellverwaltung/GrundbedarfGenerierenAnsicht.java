@@ -243,16 +243,16 @@ ValueChangeListener {
 	}
 
 	private void windowModal(final Artikel artikel) {
-		win = windowUI(win, OverArtikelverwaltungView.ARTIKEL, "90%", "95%");		
+		m_window = windowUI(m_window, OverArtikelverwaltungView.ARTIKEL, "90%", "95%");		
 		if(artikel != null) {
 			m_overArtikelverwaltungView.m_artikelErstellen = new ArtikelErstellen(artikel);
 		} else {
 			m_overArtikelverwaltungView.m_artikelErstellen = new ArtikelErstellen();
 		}
 		addComponent(m_overArtikelverwaltungView.m_artikelErstellen);
-		win.setContent(m_overArtikelverwaltungView.m_artikelErstellen);
-		win.setModal(true);
-		UI.getCurrent().addWindow(win);	
+		m_window.setContent(m_overArtikelverwaltungView.m_artikelErstellen);
+		m_window.setModal(true);
+		UI.getCurrent().addWindow(m_window);	
 		m_overArtikelverwaltungView.m_artikelErstellen.m_speichernButton.addClickListener(
 		new ClickListener() {			
 			@Override

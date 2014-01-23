@@ -21,7 +21,12 @@ public class KontakteDAO extends AbstractDAO{
 	private static final String FIELD_WWW = "www";
 
 	private static final String GET_KONTAKTE_BY_ID = "SELECT * FROM " + TABLE 
-			+ " WHERE " + FIELD_ID + " = {0}";;
+			+ " WHERE " + FIELD_ID + " = {0}";
+
+	private static final String INSERT_QUERY = "INSERT INTO " + TABLE + "(" 
+			+ "`" + FIELD_EMAIL + "`, " + "`" + FIELD_TELEFON + "`, " + "`" + FIELD_HANDY + "`, " 
+			+ "`" + FIELD_FAX + "`, " + "`" + FIELD_WWW + "`)" +
+					" VALUES({0},{1},{2},{3},{4})";
 
 	private Kontakte m_kontakte;
 	
@@ -53,5 +58,14 @@ public class KontakteDAO extends AbstractDAO{
 				set.getString(FIELD_TELEFON),
 				set.getString(FIELD_FAX),
 				set.getString(FIELD_WWW));	
+	}
+
+	public long createKontakte(Kontakte kontakte) throws ConnectException, DAOException {
+		return insert(MessageFormat.format(INSERT_QUERY, 
+				"'" + kontakte.getEmail() + "'",
+				"'" + kontakte.getTelefon() + "'",
+				"'" + kontakte.getHandy() + "'",
+				"'" + kontakte.getFax() + "'",
+				"'" + kontakte.getWww() + "'"));
 	}
 }

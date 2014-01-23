@@ -26,4 +26,8 @@ public class KontakteService {
 		}
 		return null;
 	}
+
+	public long createKontakte(Kontakte kontakte) throws ConnectException, DAOException {
+		return KontakteDAO.getInstance().createKontakte(kontakte);
+	}
 }

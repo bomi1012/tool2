@@ -6,6 +6,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hska.awp.palaver2.util.Util;
 import de.palaver.dao.AbstractDAO;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
@@ -35,6 +36,12 @@ public class LieferantDAO extends AbstractDAO {
 	private static final String GET_LIEFERANTEN_GRUNDBEDARF = "SELECT * FROM " + TABLE + " JOIN  " + TABLE_ARTIKEL 
             + " ON " + TABLE + "." + FIELD_ID + " = " + TABLE_ARTIKEL + ".lieferant_fk"
             + " WHERE " + TABLE_ARTIKEL + ".grundbedarf = {0} AND " + TABLE_ARTIKEL + "." + ACTIVE;
+
+	private static final String INSERT_QUERY = "INSERT INTO " + TABLE + "(" 
+			+ "`" + FIELD_NAME + "`, " + "`" + FIELD_LIEFERANTNUMMER + "`, " + "`" + FIELD_BEZEICHNUNG + "`, " 
+			+ "`" + FIELD_NOTIZ + "`, " + "`" + FIELD_MEHRERELIEFERTERMINE + "`, " 
+			+ "`" + FIELD_ADRESSE_FK + "`, " + "`" + FIELD_KONTAKTE_FK + "`)" +
+					" VALUES({0},{1},{2},{3},{4},{5},{6})";
 
 	private Lieferant m_lieferant;
 	private ArrayList<Lieferant> m_list;
@@ -91,6 +98,25 @@ public class LieferantDAO extends AbstractDAO {
 				set.getString(FIELD_NOTIZ),
 				AdresseService.getInstance().getAdresseById(set.getLong(FIELD_ADRESSE_FK)),
 				KontakteService.getInstance().getKontakteById(set.getLong(FIELD_KONTAKTE_FK)));	
+	}
+
+	public Long createLieferant(Lieferant lieferant) throws ConnectException, DAOException {
+		String kontakt = null;
+		String adresse = null;
+		if (lieferant.getKontakte() != null) {
+			kontakt = String.valueOf(lieferant.getKontakte().getId());
+		}
+		if (lieferant.getAdresse() != null) {
+			adresse = String.valueOf(lieferant.getAdresse().getId());
+		}
+		
+		return insert(MessageFormat.format(INSERT_QUERY, 
+				"'" + lieferant.getName() + "'",
+				"'" + lieferant.getLieferantnummer() + "'",
+				"'" + lieferant.getBezeichnung() + "'",
+				"'" + lieferant.getNotiz() + "'",
+				Util.convertBoolean(lieferant.isMehrereliefertermine()),
+				kontakt, adresse));
 	}
 
 

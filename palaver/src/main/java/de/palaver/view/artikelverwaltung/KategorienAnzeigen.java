@@ -89,16 +89,16 @@ public class KategorienAnzeigen extends OverAnzeigen implements View {
 	}
 
 	private void windowModal(Kategorie kategorie) {				
-		win = windowUI(win, EDIT_KATEGORIE, WIDTH, HEIGHT);
+		m_window = windowUI(m_window, EDIT_KATEGORIE, WIDTH, HEIGHT);
 		if(kategorie != null) {
 			m_kategorieErstellen = new KategorieErstellen(kategorie);
 		} else {
 			m_kategorieErstellen = new KategorieErstellen();
 		}
 		addComponent(m_kategorieErstellen);
-		win.setContent(m_kategorieErstellen);
-		win.setModal(true);
-		UI.getCurrent().addWindow(win);
+		m_window.setContent(m_kategorieErstellen);
+		m_window.setModal(true);
+		UI.getCurrent().addWindow(m_window);
 		m_kategorieErstellen.m_speichernButton.addClickListener(new ClickListener() {					
 			@Override
 			public void buttonClick(ClickEvent event) {	

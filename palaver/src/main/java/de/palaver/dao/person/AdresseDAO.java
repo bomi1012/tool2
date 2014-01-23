@@ -24,6 +24,11 @@ public class AdresseDAO extends AbstractDAO {
 	private static final String GET_ADRESSE_BY_ID = "SELECT * FROM " + TABLE 
 			+ " WHERE " + FIELD_ID + " = {0}";
 
+	private static final String INSERT_QUERY = "INSERT INTO " + TABLE + "(" 
+			+ "`" + FIELD_STRASSE + "`, " + "`" + FIELD_PLZ + "`, " + "`" + FIELD_STADT + "`, " 
+			+ "`" + FIELD_HAUSNUMMER + "`, " + "`" + FIELD_LAND + "`)" +
+					" VALUES({0},{1},{2},{3},{4})";
+
 	private Adresse m_adresse;
 	
 	public AdresseDAO() {
@@ -53,5 +58,14 @@ public class AdresseDAO extends AbstractDAO {
 				set.getString(FIELD_STADT),
 				set.getString(FIELD_PLZ),
 				set.getString(FIELD_LAND));	
+	}
+
+	public Long createAdresse(Adresse adresse) throws ConnectException, DAOException {
+		return insert(MessageFormat.format(INSERT_QUERY, 
+				"'" + adresse.getStrasse() + "'",
+				"'" + adresse.getPlz() + "'",
+				"'" + adresse.getStadt() + "'",
+				"'" + adresse.getHausnummer() + "'",
+				"'" + adresse.getLand() + "'"));
 	}
 }

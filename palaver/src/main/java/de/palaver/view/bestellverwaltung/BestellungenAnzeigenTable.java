@@ -154,22 +154,22 @@ ValueChangeListener {
 	}
 
 	private void windowModal(Bestellung bestellung) {
-		win = windowUI(win, "Bestellpositionen", "95%", "95%");		
+		m_window = windowUI(m_window, "Bestellpositionen", "95%", "95%");		
 		m_bestellpositionVorschau = new BestellpositionenVorschau(bestellung);
 		addComponent(m_bestellpositionVorschau);
-		win.setContent(m_bestellpositionVorschau);
-		win.setModal(true);
-		UI.getCurrent().addWindow(win);
+		m_window.setContent(m_bestellpositionVorschau);
+		m_window.setModal(true);
+		UI.getCurrent().addWindow(m_window);
 		
 	}
 	
 	private void windowModal1(Bestellung bestellung) {
-		win = windowUI(win, "Verwaltung", "95%", "95%");		
+		m_window = windowUI(m_window, "Verwaltung", "95%", "95%");		
 		m_bestellungVerwalten = new BestellungVerwalten(bestellung);
 		addComponent(m_bestellungVerwalten);
-		win.setContent(m_bestellungVerwalten);
-		win.setModal(true);
-		UI.getCurrent().addWindow(win);
+		m_window.setContent(m_bestellungVerwalten);
+		m_window.setModal(true);
+		UI.getCurrent().addWindow(m_window);
 		
 	}
 	

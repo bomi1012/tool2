@@ -388,12 +388,12 @@ public class ArtikelErstellen extends OverErstellen implements View,
 		}
 	}
 	private void addMengeneinheit() {		
-		win = windowUI(win, NEW_MENGENEINHEIT, "500", "350");
+		m_window = windowUI(m_window, NEW_MENGENEINHEIT, "500", "350");
 		MengeneinheitErstellen me = new MengeneinheitErstellen();
 		addComponent(me);
-		win.setContent(me);
-		UI.getCurrent().addWindow(win);
-		win.addCloseListener(new CloseListener() {			
+		m_window.setContent(me);
+		UI.getCurrent().addWindow(m_window);
+		m_window.addCloseListener(new CloseListener() {			
 			@Override
 			public void windowClose(CloseEvent e) {
 				try {
@@ -413,12 +413,12 @@ public class ArtikelErstellen extends OverErstellen implements View,
 //		UI.getCurrent().addWindow(win);
 	}
 	private void addKategorie() {
-		win = windowUI(win, NEW_KATEGORIE, "500", "250");
+		m_window = windowUI(m_window, NEW_KATEGORIE, "500", "250");
 		KategorieErstellen ke = new KategorieErstellen();
 		addComponent(ke);
-		win.setContent(ke);
-		UI.getCurrent().addWindow(win);
-		win.addCloseListener(new CloseListener() {			
+		m_window.setContent(ke);
+		UI.getCurrent().addWindow(m_window);
+		m_window.addCloseListener(new CloseListener() {			
 			@Override
 			public void windowClose(CloseEvent e) {
 				try {
@@ -434,12 +434,12 @@ public class ArtikelErstellen extends OverErstellen implements View,
 		});
 	}
 	private void addLagerort() {
-		win = windowUI(win, NEW_LAGERORT, "500", "250");
+		m_window = windowUI(m_window, NEW_LAGERORT, "500", "250");
 		LagerortErstellen loe = new LagerortErstellen();
 		addComponent(loe);
-		win.setContent(loe);
-		UI.getCurrent().addWindow(win);
-		win.addCloseListener(new CloseListener() {			
+		m_window.setContent(loe);
+		UI.getCurrent().addWindow(m_window);
+		m_window.addCloseListener(new CloseListener() {			
 			@Override
 			public void windowClose(CloseEvent e) {
 				try {

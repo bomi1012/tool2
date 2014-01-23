@@ -51,6 +51,16 @@ public class Kontakte extends EntityId{
 		m_fax = fax;
 		m_www = www;
 	}
+	
+	public Kontakte(String email, String handy, String telefon, String fax,
+			String www) {
+		super();
+		m_email = email;
+		m_handy = handy;
+		m_telefon = telefon;
+		m_fax = fax;
+		m_www = www;
+	}
 	@Override
 	public String toString() {
 		return "Kontakte ";

@@ -111,16 +111,16 @@ public class ArtikelAnzeigen extends OverAnzeigen implements View {
 	}
 
 	private void windowModal(Artikel artikel) {
-		win = windowUI(win, ARTIKEL, "90%", "95%");		
+		m_window = windowUI(m_window, ARTIKEL, "90%", "95%");		
 		if(artikel != null) {
 			m_artikelErstellen = new ArtikelErstellen(artikel);
 		} else {
 			m_artikelErstellen = new ArtikelErstellen();
 	}
 		addComponent(m_artikelErstellen);
-		win.setContent(m_artikelErstellen);
-		win.setModal(true);
-		UI.getCurrent().addWindow(win);
+		m_window.setContent(m_artikelErstellen);
+		m_window.setModal(true);
+		UI.getCurrent().addWindow(m_window);
 		m_artikelErstellen.m_speichernButton.addClickListener(new ClickListener() {					
 			@Override
 			public void buttonClick(ClickEvent event) {	

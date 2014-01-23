@@ -52,6 +52,17 @@ public class Adresse extends EntityId {
 		m_plz = plz;
 		m_land = land;
 	}
+	
+	public Adresse(String strasse, String hausnummer, String stadt, String plz,
+			String land) {
+		super();
+		m_strasse = strasse;
+		m_hausnummer = hausnummer;
+		m_stadt = stadt;
+		m_plz = plz;
+		m_land = land;
+	}
+	
 	@Override
 	public String toString() {
 		String adresse = "";

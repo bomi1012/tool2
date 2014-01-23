@@ -31,6 +31,10 @@ public class LieferantenService {
 	public List<Lieferant> getLieferantenByGrundbedarf(boolean b) throws SQLException, ConnectException, DAOException {
 		return LieferantDAO.getInstance().getLieferantenByGrundbedarf(b);
 	}
+
+	public Long createLieferant(Lieferant lieferant) throws ConnectException, DAOException {
+		return LieferantDAO.getInstance().createLieferant(lieferant);
+	}
 	
 	
 	

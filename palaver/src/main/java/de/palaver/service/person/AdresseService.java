@@ -27,4 +27,8 @@ public class AdresseService {
 		}
 		return null;
 	}
+
+	public Long createAdresse(Adresse adresse) throws ConnectException, DAOException {
+		return AdresseDAO.getInstance().createAdresse(adresse);
+	}
 }

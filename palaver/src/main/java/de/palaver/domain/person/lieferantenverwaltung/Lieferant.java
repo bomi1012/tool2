@@ -75,4 +75,15 @@ public class Lieferant extends EntityName {
 		m_kontakte = kontakte;
 		m_notiz = notiz;
 	}	
+	
+	public Lieferant(String name, String lieferantnummer, String bezeichnung,
+			boolean mehrereliefertermine, String notiz, Adresse adresse, Kontakte kontakte) {
+		super(name);
+		m_lieferantnummer = lieferantnummer;
+		m_bezeichnung = bezeichnung;
+		m_mehrereliefertermine = mehrereliefertermine;
+		m_adresse = adresse;
+		m_kontakte = kontakte;
+		m_notiz = notiz;
+	}
 }

@@ -84,12 +84,12 @@ ValueChangeListener{
 	}
 
 	private void windowModal(Bestellposition bestellposition) {
-		win = windowUI(win, "Bestellpositionen bearbeiten", "500", "250");		
+		m_window = windowUI(m_window, "Bestellpositionen bearbeiten", "500", "250");		
 		m_bestellpositionBearbeiten = new BestellpositionBearbeiten(bestellposition);
 		addComponent(m_bestellpositionBearbeiten);
-		win.setContent(m_bestellpositionBearbeiten);
-		win.setModal(true);
-		UI.getCurrent().addWindow(win);
+		m_window.setContent(m_bestellpositionBearbeiten);
+		m_window.setModal(true);
+		UI.getCurrent().addWindow(m_window);
 		
 	}
 	private void beans() {

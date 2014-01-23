@@ -90,16 +90,16 @@ public class MengeneinheitenAnzeigen extends OverAnzeigen implements View {
 	}
 
 	private void windowModal(Mengeneinheit mengeneinheit) {
-		win = windowUI(win, MENGENEINHEIT_EDIT, WIDTH, HEIGHT);		
+		m_window = windowUI(m_window, MENGENEINHEIT_EDIT, WIDTH, HEIGHT);		
 		if(mengeneinheit != null) {
 			m_mengeneinheitErstellen = new MengeneinheitErstellen(mengeneinheit);
 		} else {
 			m_mengeneinheitErstellen = new MengeneinheitErstellen();
 		}
 		addComponent(m_mengeneinheitErstellen);
-		win.setContent(m_mengeneinheitErstellen);
-		win.setModal(true);
-		UI.getCurrent().addWindow(win);
+		m_window.setContent(m_mengeneinheitErstellen);
+		m_window.setModal(true);
+		UI.getCurrent().addWindow(m_window);
 		m_mengeneinheitErstellen.m_speichernButton.addClickListener(new ClickListener() {					
 			@Override
 			public void buttonClick(ClickEvent event) {	

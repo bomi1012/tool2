@@ -90,16 +90,16 @@ public class LagerorteAnzeigen extends OverAnzeigen implements View {
 	}
 
 	private void windowModal(Lagerort lagerort) {				
-		win = windowUI(win, EDIT_LAGERORT, WIDTH, HEIGHT);
+		m_window = windowUI(m_window, EDIT_LAGERORT, WIDTH, HEIGHT);
 		if(lagerort != null) {
 			m_lagerortErstellen = new LagerortErstellen(lagerort);
 		} else {
 			m_lagerortErstellen  = new LagerortErstellen();
 		}
 		addComponent(m_lagerortErstellen);
-		win.setContent(m_lagerortErstellen);
-		win.setModal(true);
-		UI.getCurrent().addWindow(win);
+		m_window.setContent(m_lagerortErstellen);
+		m_window.setModal(true);
+		UI.getCurrent().addWindow(m_window);
 		m_lagerortErstellen.m_speichernButton.addClickListener(new ClickListener() {					
 			@Override
 			public void buttonClick(ClickEvent event) {	

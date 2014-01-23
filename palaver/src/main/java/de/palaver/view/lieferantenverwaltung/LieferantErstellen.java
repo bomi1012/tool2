@@ -1,23 +1,37 @@
 package de.palaver.view.lieferantenverwaltung;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.palaver.dao.ConnectException;
+import de.palaver.dao.DAOException;
+import de.palaver.domain.person.Adresse;
+import de.palaver.domain.person.Kontakte;
 import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
+import de.palaver.service.person.AdresseService;
+import de.palaver.service.person.KontakteService;
+import de.palaver.service.person.lieferantenverwaltung.LieferantenService;
+import de.palaver.view.layout.popup.YesNoPopup;
 
 @SuppressWarnings("serial")
 public class LieferantErstellen extends OverLieferantverwaltungView implements View,
 ValueChangeListener {
-
+	private static final Logger LOG = LoggerFactory.getLogger(LieferantErstellen.class.getName());
 	private HorizontalLayout m_windowHLayout;
 	private VerticalLayout m_leftVLayout; //Info
 	private VerticalLayout m_centerKVLayout; //Kontakte
@@ -27,7 +41,7 @@ ValueChangeListener {
 	private TextField m_nummerField;
 	private TextArea m_notizField;
 	private TextField m_bezeichnungField;
-	private CheckBox m_mehrerLiefertermin = new CheckBox("mehrere Liefertermine");
+	private CheckBox m_mehrerLieferterminCheckbox = new CheckBox("mehrere Liefertermine");
 	private TextField m_telefonField;
 	private TextField m_handyField;
 	private TextField m_faxField;
@@ -39,22 +53,30 @@ ValueChangeListener {
 	private TextField m_stadtField;
 	private TextField m_plzField;
 	private Button btFehler;
+	private YesNoPopup m_yesNoPopup;
 	
 	
 	public LieferantErstellen(Lieferant lieferant) {
 		super();
+		m_lieferant = lieferant;
+		m_create = false;
 		layout(lieferant);
+		listeners();
 	}
 	
 	public LieferantErstellen() {
 		super();
+		m_lieferant = new Lieferant();
+		m_kontakte = null;
+		m_adresse = null;
+		m_create = true;
 		layout(null);
+		listeners();
 	}
 	
 	private void layout(Lieferant lieferant) {
 		this.setSizeFull();
-		this.setMargin(true);
-		
+		this.setMargin(true);		
 		m_nameField = textFieldSettingAE(m_textField, "Lieferantname",
 				FULL, true, "Lieferantname", this);
 		m_nummerField = textFieldSettingAE(m_textField, "Lieferantnummer",
@@ -63,8 +85,7 @@ ValueChangeListener {
 				FULL, false, "Bezeichnung", this);
 		m_notizField = new TextArea("Kommentar");
 		m_notizField.setWidth(FULL);
-		m_notizField.setHeight("60");
-		
+		m_notizField.setHeight("60");		
 		
 		m_telefonField = textFieldSettingAE(m_textField, "Telefonnummer",
 				FULL, false, "Telefonnummer", this);
@@ -105,7 +126,7 @@ ValueChangeListener {
 		m_leftVLayout.addComponent(m_nummerField);
 		m_leftVLayout.addComponent(m_bezeichnungField);
 		m_leftVLayout.addComponent(m_notizField);
-		m_leftVLayout.addComponent(m_mehrerLiefertermin);
+		m_leftVLayout.addComponent(m_mehrerLieferterminCheckbox);
 		m_leftVLayout.setSpacing(true);
 		
 		m_centerKVLayout = new VerticalLayout();
@@ -164,7 +185,57 @@ ValueChangeListener {
 		
 		this.addComponent(m_vertikalLayout);
 		this.setComponentAlignment(m_vertikalLayout, Alignment.MIDDLE_CENTER);
+	}
+
+	private void listeners() {
+		m_speichernButton.addClickListener(new ClickListener() {			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				try {
+					sqlStatement(0);
+				} catch (ConnectException e) {
+					e.printStackTrace();
+				} catch (DAOException e) {
+					e.printStackTrace();
+				}
+				windowModal();				
+			}
+		});
 		
+	}
+
+	
+	protected void sqlStatement(int i) throws ConnectException, DAOException {
+		if(i == 0) {
+			if(m_create) {
+				if (m_telefonField.getValue() != "" || m_handyField.getValue() != "" || m_faxField.getValue() != "" 
+						|| m_emailField.getValue() != "" || m_webField.getValue() != "") {
+					m_kontakte = new Kontakte(m_emailField.getValue(), m_handyField.getValue(), m_telefonField.getValue(),
+							m_faxField.getValue(), m_webField.getValue());
+					m_kontakte.setId(KontakteService.getInstance().createKontakte(m_kontakte));
+				}
+				if (m_strasseField.getValue() != "" || m_housenummerField.getValue() != "" 
+						|| m_stadtField.getValue() != "" || m_plzField.getValue() != ""
+						|| m_landField.getValue() != "") {
+					m_adresse = new Adresse(m_strasseField.getValue(), m_housenummerField.getValue(), 
+							m_stadtField.getValue(), m_plzField.getValue(), m_landField.getValue());
+					m_adresse.setId(AdresseService.getInstance().createAdresse(m_adresse));
+				}
+				m_lieferant = new Lieferant(m_nameField.getValue(), m_nummerField.getValue(),
+						m_bezeichnungField.getValue(), m_mehrerLieferterminCheckbox.getValue(), m_notizField.getValue(),
+						m_adresse, m_kontakte);
+				m_lieferant.setId(LieferantenService.getInstance().createLieferant(m_lieferant));
+			}
+		}		
+	}
+
+	protected void windowModal() {
+		m_window = windowUI(m_window, "", "450", "180");		
+		m_yesNoPopup = new YesNoPopup("32x32/user.png", "Möchten Sie noch den Ansprechpartner hinzufügen?");
+		addComponent(m_yesNoPopup);
+		m_window.setContent(m_yesNoPopup);
+		m_window.setModal(true);
+		UI.getCurrent().addWindow(m_window);
 	}
 
 	private TextField textFieldSettingAE(TextField field, String name,
