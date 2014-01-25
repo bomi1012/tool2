@@ -6,6 +6,7 @@ import com.vaadin.ui.HorizontalLayout;
 import de.hska.awp.palaver2.util.IConstants;
 import de.palaver.domain.person.Adresse;
 import de.palaver.domain.person.Kontakte;
+import de.palaver.domain.person.lieferantenverwaltung.Ansprechpartner;
 import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
 import de.palaver.view.ViewAbstract;
 
@@ -18,6 +19,7 @@ public class OverLieferantverwaltungView extends ViewAbstract {
 
 
 	protected Lieferant m_lieferant;
+	protected Ansprechpartner m_ansprechpartner;
 	protected Adresse m_adresse;
 	protected Kontakte m_kontakte;
 	

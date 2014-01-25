@@ -55,4 +55,13 @@ public class Ansprechpartner extends EntityName {
 		m_adresse = adresse;
 		m_kontakte = kontakte;
 	}
+	
+	public Ansprechpartner(String name, Lieferant lieferant, String bezeichnung,
+			Adresse adresse, Kontakte kontakte) {
+		super(name);
+		m_lieferant = lieferant;
+		m_bezeichnung = bezeichnung;
+		m_adresse = adresse;
+		m_kontakte = kontakte;
+	}
 }

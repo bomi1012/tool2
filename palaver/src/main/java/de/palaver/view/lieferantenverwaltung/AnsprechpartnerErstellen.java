@@ -3,12 +3,19 @@ package de.palaver.view.lieferantenverwaltung;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.palaver.Application;
+import de.palaver.dao.ConnectException;
+import de.palaver.dao.DAOException;
 import de.palaver.domain.person.lieferantenverwaltung.Ansprechpartner;
 import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
 
@@ -35,11 +42,13 @@ ValueChangeListener {
 
 	public AnsprechpartnerErstellen() {
 		super();
-		layout();
 	}
 	
-	public AnsprechpartnerErstellen(Lieferant lieferant) {
+	public AnsprechpartnerErstellen(Lieferant lieferant) {		
 		super();
+		m_lieferant = lieferant;
+		layout();
+		listeners();
 	}
 	
 	public AnsprechpartnerErstellen(Ansprechpartner ansprechpartner) {
@@ -138,6 +147,55 @@ ValueChangeListener {
 		this.setComponentAlignment(m_vertikalLayout, Alignment.MIDDLE_CENTER);
 	}
 	
+	private void listeners() {
+		m_speichernButton.addClickListener(new ClickListener() {			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				try {
+					if(validiereEingabe()) {
+						sqlStatement(0);
+					}
+				} catch (ConnectException e) {
+					e.printStackTrace();
+				} catch (DAOException e) {
+					e.printStackTrace();
+				}								
+			}
+		});	
+	}
+	
+	protected void sqlStatement(int i) throws ConnectException, DAOException {
+//		if(i == 0) {
+//			if(m_create) {
+//			if (m_telefonField.getValue() != "" || m_handyField.getValue() != "" || m_faxField.getValue() != "" 
+//					|| m_emailField.getValue() != "" || m_webField.getValue() != "") {
+//				m_kontakte = new Kontakte(m_emailField.getValue(), m_handyField.getValue(), m_telefonField.getValue(),
+//						m_faxField.getValue(), m_webField.getValue());
+//				m_kontakte.setId(KontakteService.getInstance().createKontakte(m_kontakte));
+//			}
+//			if (m_strasseField.getValue() != "" || m_housenummerField.getValue() != "" 
+//					|| m_stadtField.getValue() != "" || m_plzField.getValue() != ""
+//					|| m_landField.getValue() != "") {
+//				m_adresse = new Adresse(m_strasseField.getValue(), m_housenummerField.getValue(), 
+//						m_stadtField.getValue(), m_plzField.getValue(), m_landField.getValue());
+//				m_adresse.setId(AdresseService.getInstance().createAdresse(m_adresse));
+//			}
+//			m_ansprechpartner = new Ansprechpartner(m_nameField.getValue(), m_lieferant,
+//					m_bezeichnungField.getValue(), m_adresse, m_kontakte);
+//			m_ansprechpartner.setId(AnsprechpartnerService.getInstance().createAnsprechpartner(m_ansprechpartner));
+//			}
+//		}			
+	}
+
+	protected boolean validiereEingabe() {
+		if (m_nameField.getValue() == "") {
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_LIEFERANT_NAME);
+			return false;
+		}
+		return true;
+	}
+
 	@Override
 	public void valueChange(ValueChangeEvent event) { }
 

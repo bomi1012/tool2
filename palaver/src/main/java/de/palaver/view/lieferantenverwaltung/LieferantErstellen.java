@@ -15,10 +15,12 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
@@ -29,6 +31,9 @@ import de.palaver.view.layout.popup.YesNoPopup;
 public class LieferantErstellen extends OverLieferantverwaltungView implements View,
 ValueChangeListener {
 	private static final Logger LOG = LoggerFactory.getLogger(LieferantErstellen.class.getName());
+	private static final String TEXT = "Neuer Lieferant wurde erstellt. <br> " +
+			"Möchten Sie den Ansprechpartner hinzufügen?";
+	
 	private HorizontalLayout m_windowHLayout;
 	private VerticalLayout m_leftVLayout; //Info
 	private VerticalLayout m_centerKVLayout; //Kontakte
@@ -120,7 +125,7 @@ ValueChangeListener {
 		
 		m_leftVLayout = new VerticalLayout();
 		m_leftVLayout.setWidth("90%");
-		m_leftVLayout.addComponent(headLine(m_headlineLabel, "Information", "subHeadline"));
+		m_leftVLayout.addComponent(headLine(m_headlineLabel, "Persönliche Daten", "subHeadline"));
 		m_leftVLayout.addComponent(new Hr());
 		m_leftVLayout.addComponent(m_nameField);
 		m_leftVLayout.addComponent(m_nummerField);
@@ -131,7 +136,7 @@ ValueChangeListener {
 		
 		m_centerKVLayout = new VerticalLayout();
 		m_centerKVLayout.setWidth("90%");
-		m_centerKVLayout.addComponent(headLine(m_headlineLabel, "Kontakte", "subHeadline"));
+		m_centerKVLayout.addComponent(headLine(m_headlineLabel, "Kontaktdaten", "subHeadline"));
 		m_centerKVLayout.addComponent(new Hr());
 		m_centerKVLayout.addComponent(m_telefonField);
 		m_centerKVLayout.addComponent(m_handyField);
@@ -178,6 +183,7 @@ ValueChangeListener {
 		
 		m_vertikalLayout = new VerticalLayout();
 		m_vertikalLayout.setWidth(FULL);
+		m_vertikalLayout.addComponent(headLine(m_headlineLabel, "Neuer Lieferant", STYLE_HEADLINE));
 		m_vertikalLayout.addComponent(m_windowHLayout);
 		m_vertikalLayout.addComponent(m_control);
 		m_vertikalLayout.setComponentAlignment(m_windowHLayout, Alignment.TOP_CENTER);
@@ -202,9 +208,24 @@ ValueChangeListener {
 					e.printStackTrace();
 				}								
 			}
-		});		
+		});	
+		
+		m_verwerfenButton.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				close();	
+			}
+		});
 	}
 
+	private void close() {
+		if (LieferantErstellen.this.getParent() instanceof Window) {					
+			Window win = (Window) LieferantErstellen.this.getParent();
+			win.close();
+		} else {
+			ViewHandler.getInstance().switchView(LieferantAnzeigen.class);
+		}
+	}
 	
 	protected boolean validiereEingabe() {
 		if (m_nameField.getValue() == "") {
@@ -241,7 +262,7 @@ ValueChangeListener {
 
 	protected void windowModal() {
 		m_window = windowUI(m_window, "", "450", "180");		
-		m_yesNoPopup = new YesNoPopup("32x32/user.png", "Möchten Sie noch den Ansprechpartner hinzufügen?");
+		m_yesNoPopup = new YesNoPopup("32x32/user.png", TEXT);
 		addComponent(m_yesNoPopup);
 		m_window.setContent(m_yesNoPopup);
 		m_window.setModal(true);
@@ -257,17 +278,25 @@ ValueChangeListener {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				m_window.close();
+				close();
 			}
 		});
 	}
 
 	protected void windowModalAnspechpartner() {
 		m_window = windowUI(m_window, "", "90%", "90%");		
-		m_ansprechpartnerErstellen = new AnsprechpartnerErstellen();
+		m_ansprechpartnerErstellen = new AnsprechpartnerErstellen(m_lieferant);
 		addComponent(m_ansprechpartnerErstellen);
 		m_window.setContent(m_ansprechpartnerErstellen);
 		m_window.setModal(true);
 		UI.getCurrent().addWindow(m_window);
+		
+		m_ansprechpartnerErstellen.m_verwerfenButton.addClickListener(new ClickListener() {			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				m_window.close();				
+			}
+		});
 	}
 	
 	

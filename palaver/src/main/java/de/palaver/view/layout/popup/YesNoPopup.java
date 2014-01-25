@@ -32,7 +32,7 @@ public class YesNoPopup extends ViewAbstract implements View, ValueChangeListene
 		
 		m_userImage = new Image();
 		m_userImage.setSource(new ThemeResource(image));		
-		m_textLabel = new Label(text);
+		m_textLabel = new Label(text, Label.CONTENT_XHTML);
 		m_control = controlYesNo();
 		
 		m_messageLayout = new HorizontalLayout();
