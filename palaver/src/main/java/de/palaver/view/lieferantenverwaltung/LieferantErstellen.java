@@ -16,16 +16,13 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.palaver.Application;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
-import de.palaver.domain.person.Adresse;
-import de.palaver.domain.person.Kontakte;
 import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
-import de.palaver.service.person.AdresseService;
-import de.palaver.service.person.KontakteService;
-import de.palaver.service.person.lieferantenverwaltung.LieferantenService;
 import de.palaver.view.layout.popup.YesNoPopup;
 
 @SuppressWarnings("serial")
@@ -54,6 +51,7 @@ ValueChangeListener {
 	private TextField m_plzField;
 	private Button btFehler;
 	private YesNoPopup m_yesNoPopup;
+	private AnsprechpartnerErstellen m_ansprechpartnerErstellen;
 	
 	
 	public LieferantErstellen(Lieferant lieferant) {
@@ -77,37 +75,39 @@ ValueChangeListener {
 	private void layout(Lieferant lieferant) {
 		this.setSizeFull();
 		this.setMargin(true);		
-		m_nameField = textFieldSettingAE(m_textField, "Lieferantname",
+		m_nameField = textFieldSetting(m_textField, "Lieferantname",
 				FULL, true, "Lieferantname", this);
-		m_nummerField = textFieldSettingAE(m_textField, "Lieferantnummer",
+		m_nummerField = textFieldSetting(m_textField, "Lieferantnummer",
 				FULL, false, "Lieferantnummer", this);
-		m_bezeichnungField = textFieldSettingAE(m_textField, "Bezeichnung",
+		m_bezeichnungField = textFieldSetting(m_textField, "Bezeichnung",
 				FULL, false, "Bezeichnung", this);
 		m_notizField = new TextArea("Kommentar");
 		m_notizField.setWidth(FULL);
 		m_notizField.setHeight("60");		
 		
-		m_telefonField = textFieldSettingAE(m_textField, "Telefonnummer",
+		
+		
+		m_telefonField = textFieldSetting(m_textField, "Telefonnummer",
 				FULL, false, "Telefonnummer", this);
-		m_handyField = textFieldSettingAE(m_textField, "Handynummer",
+		m_handyField = textFieldSetting(m_textField, "Handynummer",
 				FULL, false, "Handynummer", this);
-		m_faxField = textFieldSettingAE(m_textField, "Fax",
+		m_faxField = textFieldSetting(m_textField, "Fax",
 				FULL, false, "Fax", this);
-		m_emailField = textFieldSettingAE(m_textField, "E-Mail",
+		m_emailField = textFieldSetting(m_textField, "E-Mail",
 				FULL, false, "E-Mail", this);
-		m_webField = textFieldSettingAE(m_textField, "Web-Seite",
+		m_webField = textFieldSetting(m_textField, "Web-Seite",
 				FULL, false, "Web-Seite", this);
 		
 		
-		m_strasseField = textFieldSettingAE(m_textField, "Strasse",
+		m_strasseField = textFieldSetting(m_textField, "Strasse",
 				FULL, false, "Strasse", this);
-		m_housenummerField = textFieldSettingAE(m_textField, "Hausnummer",
+		m_housenummerField = textFieldSetting(m_textField, "Hausnummer",
 				FULL, false, "Hausnummer", this);
-		m_stadtField = textFieldSettingAE(m_textField, "Stadt",
+		m_stadtField = textFieldSetting(m_textField, "Stadt",
 				FULL, false, "Stadt", this);
-		m_plzField = textFieldSettingAE(m_textField, "PLZ",
+		m_plzField = textFieldSetting(m_textField, "PLZ",
 				FULL, false, "PLZ", this);
-		m_landField = textFieldSettingAE(m_textField, "Land",
+		m_landField = textFieldSetting(m_textField, "Land",
 				FULL, false, "Land", this);
 		
 		m_control = controlErstellenPanel();
@@ -192,41 +192,51 @@ ValueChangeListener {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				try {
-					sqlStatement(0);
+					if(validiereEingabe()) {
+						sqlStatement(0);
+						windowModal();
+					}
 				} catch (ConnectException e) {
 					e.printStackTrace();
 				} catch (DAOException e) {
 					e.printStackTrace();
-				}
-				windowModal();				
+				}								
 			}
-		});
-		
+		});		
 	}
 
 	
+	protected boolean validiereEingabe() {
+		if (m_nameField.getValue() == "") {
+			((Application) UI.getCurrent().getData())
+					.showDialog(IConstants.INFO_LIEFERANT_NAME);
+			return false;
+		}
+		return true;
+	}
+
 	protected void sqlStatement(int i) throws ConnectException, DAOException {
-		if(i == 0) {
-			if(m_create) {
-				if (m_telefonField.getValue() != "" || m_handyField.getValue() != "" || m_faxField.getValue() != "" 
-						|| m_emailField.getValue() != "" || m_webField.getValue() != "") {
-					m_kontakte = new Kontakte(m_emailField.getValue(), m_handyField.getValue(), m_telefonField.getValue(),
-							m_faxField.getValue(), m_webField.getValue());
-					m_kontakte.setId(KontakteService.getInstance().createKontakte(m_kontakte));
-				}
-				if (m_strasseField.getValue() != "" || m_housenummerField.getValue() != "" 
-						|| m_stadtField.getValue() != "" || m_plzField.getValue() != ""
-						|| m_landField.getValue() != "") {
-					m_adresse = new Adresse(m_strasseField.getValue(), m_housenummerField.getValue(), 
-							m_stadtField.getValue(), m_plzField.getValue(), m_landField.getValue());
-					m_adresse.setId(AdresseService.getInstance().createAdresse(m_adresse));
-				}
-				m_lieferant = new Lieferant(m_nameField.getValue(), m_nummerField.getValue(),
-						m_bezeichnungField.getValue(), m_mehrerLieferterminCheckbox.getValue(), m_notizField.getValue(),
-						m_adresse, m_kontakte);
-				m_lieferant.setId(LieferantenService.getInstance().createLieferant(m_lieferant));
-			}
-		}		
+//		if(i == 0) {
+//			if(m_create) {
+//				if (m_telefonField.getValue() != "" || m_handyField.getValue() != "" || m_faxField.getValue() != "" 
+//						|| m_emailField.getValue() != "" || m_webField.getValue() != "") {
+//					m_kontakte = new Kontakte(m_emailField.getValue(), m_handyField.getValue(), m_telefonField.getValue(),
+//							m_faxField.getValue(), m_webField.getValue());
+//					m_kontakte.setId(KontakteService.getInstance().createKontakte(m_kontakte));
+//				}
+//				if (m_strasseField.getValue() != "" || m_housenummerField.getValue() != "" 
+//						|| m_stadtField.getValue() != "" || m_plzField.getValue() != ""
+//						|| m_landField.getValue() != "") {
+//					m_adresse = new Adresse(m_strasseField.getValue(), m_housenummerField.getValue(), 
+//							m_stadtField.getValue(), m_plzField.getValue(), m_landField.getValue());
+//					m_adresse.setId(AdresseService.getInstance().createAdresse(m_adresse));
+//				}
+//				m_lieferant = new Lieferant(m_nameField.getValue(), m_nummerField.getValue(),
+//						m_bezeichnungField.getValue(), m_mehrerLieferterminCheckbox.getValue(), m_notizField.getValue(),
+//						m_adresse, m_kontakte);
+//				m_lieferant.setId(LieferantenService.getInstance().createLieferant(m_lieferant));
+//			}
+//		}		
 	}
 
 	protected void windowModal() {
@@ -236,9 +246,32 @@ ValueChangeListener {
 		m_window.setContent(m_yesNoPopup);
 		m_window.setModal(true);
 		UI.getCurrent().addWindow(m_window);
+		m_yesNoPopup.m_yesButton.addClickListener(new ClickListener() {			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				m_window.close();
+				windowModalAnspechpartner();
+			}
+		});
+		m_yesNoPopup.m_noButton.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				m_window.close();
+			}
+		});
 	}
 
-	private TextField textFieldSettingAE(TextField field, String name,
+	protected void windowModalAnspechpartner() {
+		m_window = windowUI(m_window, "", "90%", "90%");		
+		m_ansprechpartnerErstellen = new AnsprechpartnerErstellen();
+		addComponent(m_ansprechpartnerErstellen);
+		m_window.setContent(m_ansprechpartnerErstellen);
+		m_window.setModal(true);
+		UI.getCurrent().addWindow(m_window);
+	}
+	
+	
+	private TextField textFieldSetting(TextField field, String name,
 			String width, boolean required, String descript,
 			LieferantErstellen lieferantErstellen) {
 		field =  textFieldSetting(field, name, width, required, descript);

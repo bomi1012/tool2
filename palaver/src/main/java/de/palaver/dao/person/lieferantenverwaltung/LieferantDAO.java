@@ -116,7 +116,7 @@ public class LieferantDAO extends AbstractDAO {
 				"'" + lieferant.getBezeichnung() + "'",
 				"'" + lieferant.getNotiz() + "'",
 				Util.convertBoolean(lieferant.isMehrereliefertermine()),
-				kontakt, adresse));
+				adresse, kontakt));
 	}
 
 

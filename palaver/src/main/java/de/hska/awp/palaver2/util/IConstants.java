@@ -9,9 +9,9 @@ public interface IConstants
 
 // DB Verbindung
 //  Team
-//String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=root";
+String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&password=root";
 //  Team
-String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/test?user=root&password=root";
+//String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/test?user=root&password=root";
 //	Produktiv
 //String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=BaDAbU352M";
 //	TEST
@@ -222,7 +222,7 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/test?user=root&password
 	String 		INFO_ARTIKEL_AUSWAEHLEN = "Bitte Artikel auswählen";
 	String 		INFO_ARTIKEL_DEAKTIVIEREN ="Artikel wurde deaktiviert";
 	
-	String 		INFO_Lieferant_NAME = "Bitte Namen eingeben";
+	String 		INFO_LIEFERANT_NAME = "Bitte Namen eingeben";
 	String		INFO_LIEFERANT_AUSWAEHLEN = "Bitte Lieferanten auswählen";
 	String 		INFO_LIFERANT_EMAIL = "Bitte Email Adresse angeben";
 	

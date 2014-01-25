@@ -1,7 +1,6 @@
 package de.palaver.view.lieferantenverwaltung;
 
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 
 import de.hska.awp.palaver2.util.IConstants;
@@ -26,11 +25,6 @@ public class OverLieferantverwaltungView extends ViewAbstract {
 		super();
 	}
 
-	protected OverLieferantverwaltungView(Component... children) {
-		super(children);
-	}
-	
-	
 	protected HorizontalLayout controlLieferantenPanel() {	
 		m_auswaehlenButton =  buttonSetting(m_button, IConstants.BUTTON_SELECT,
 				IConstants.ICON_PAGE_WHITE_LUPE, true, true);

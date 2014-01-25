@@ -67,8 +67,8 @@ public class ViewAbstract extends VerticalLayout {
 
 	public boolean m_create;
 	public boolean m_okRemove = false;
-	private Button m_yesButton;
-	private Button m_noButton;
+	public Button m_yesButton;
+	public Button m_noButton;
 	
 	
 	protected static final String MESSAGE_LEER_ARG_1 = "Tragen Sie bitte im Feld %s den Wert ein";
