@@ -186,9 +186,9 @@ public class ViewAbstract extends VerticalLayout {
 	
 	protected HorizontalLayout controlYesNo() {	
 		m_yesButton = buttonSetting(m_button, "ja",
-				IConstants.ICON_YES, true, true);
+				"icons/accept.png", true, true);
 		m_noButton = buttonSetting(m_button, "nein",
-				IConstants.ICON_NO, true, true);
+				"icons/cancel.png", true, true);
 		
 		m_horizontalLayout = new HorizontalLayout();
 		m_horizontalLayout.setSpacing(true);

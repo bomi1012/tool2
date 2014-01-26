@@ -24,7 +24,12 @@ import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
+import de.palaver.domain.person.Adresse;
+import de.palaver.domain.person.Kontakte;
 import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
+import de.palaver.service.person.AdresseService;
+import de.palaver.service.person.KontakteService;
+import de.palaver.service.person.lieferantenverwaltung.LieferantenService;
 import de.palaver.view.layout.popup.YesNoPopup;
 
 @SuppressWarnings("serial")
@@ -237,27 +242,27 @@ ValueChangeListener {
 	}
 
 	protected void sqlStatement(int i) throws ConnectException, DAOException {
-//		if(i == 0) {
-//			if(m_create) {
-//				if (m_telefonField.getValue() != "" || m_handyField.getValue() != "" || m_faxField.getValue() != "" 
-//						|| m_emailField.getValue() != "" || m_webField.getValue() != "") {
-//					m_kontakte = new Kontakte(m_emailField.getValue(), m_handyField.getValue(), m_telefonField.getValue(),
-//							m_faxField.getValue(), m_webField.getValue());
-//					m_kontakte.setId(KontakteService.getInstance().createKontakte(m_kontakte));
-//				}
-//				if (m_strasseField.getValue() != "" || m_housenummerField.getValue() != "" 
-//						|| m_stadtField.getValue() != "" || m_plzField.getValue() != ""
-//						|| m_landField.getValue() != "") {
-//					m_adresse = new Adresse(m_strasseField.getValue(), m_housenummerField.getValue(), 
-//							m_stadtField.getValue(), m_plzField.getValue(), m_landField.getValue());
-//					m_adresse.setId(AdresseService.getInstance().createAdresse(m_adresse));
-//				}
-//				m_lieferant = new Lieferant(m_nameField.getValue(), m_nummerField.getValue(),
-//						m_bezeichnungField.getValue(), m_mehrerLieferterminCheckbox.getValue(), m_notizField.getValue(),
-//						m_adresse, m_kontakte);
-//				m_lieferant.setId(LieferantenService.getInstance().createLieferant(m_lieferant));
-//			}
-//		}		
+		if(i == 0) {
+			if(m_create) {
+				if (m_telefonField.getValue() != "" || m_handyField.getValue() != "" || m_faxField.getValue() != "" 
+						|| m_emailField.getValue() != "" || m_webField.getValue() != "") {
+					m_kontakte = new Kontakte(m_emailField.getValue(), m_handyField.getValue(), m_telefonField.getValue(),
+							m_faxField.getValue(), m_webField.getValue());
+					m_kontakte.setId(KontakteService.getInstance().createKontakte(m_kontakte));
+				}
+				if (m_strasseField.getValue() != "" || m_housenummerField.getValue() != "" 
+						|| m_stadtField.getValue() != "" || m_plzField.getValue() != ""
+						|| m_landField.getValue() != "") {
+					m_adresse = new Adresse(m_strasseField.getValue(), m_housenummerField.getValue(), 
+							m_stadtField.getValue(), m_plzField.getValue(), m_landField.getValue());
+					m_adresse.setId(AdresseService.getInstance().createAdresse(m_adresse));
+				}
+				m_lieferant = new Lieferant(m_nameField.getValue(), m_nummerField.getValue(),
+						m_bezeichnungField.getValue(), m_mehrerLieferterminCheckbox.getValue(), m_notizField.getValue(),
+						m_adresse, m_kontakte);
+				m_lieferant.setId(LieferantenService.getInstance().createLieferant(m_lieferant));
+			}
+		}		
 	}
 
 	protected void windowModal() {
@@ -294,7 +299,8 @@ ValueChangeListener {
 		m_ansprechpartnerErstellen.m_verwerfenButton.addClickListener(new ClickListener() {			
 			@Override
 			public void buttonClick(ClickEvent event) {
-				m_window.close();				
+				m_window.close();
+				close();
 			}
 		});
 	}

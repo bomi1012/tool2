@@ -63,7 +63,15 @@ public class Kontakte extends EntityId{
 	}
 	@Override
 	public String toString() {
-		return "Kontakte ";
+		String kontakte = "";
+		if(m_telefon != null && m_telefon != "") {
+			kontakte = "Tel.: " + m_telefon;
+		} else if(m_handy != null && m_handy != "") {
+			kontakte = "Handy: " + m_handy;
+		} else if(m_fax != null && m_fax != "") {
+			kontakte = "Fax: " + m_fax;
+		}
+		return kontakte;
 	}
 	
 	
