@@ -31,6 +31,7 @@ import de.palaver.service.person.AdresseService;
 import de.palaver.service.person.KontakteService;
 import de.palaver.service.person.lieferantenverwaltung.LieferantenService;
 import de.palaver.view.layout.popup.YesNoPopup;
+import de.palaver.view.lieferantenverwaltung.popup.AnsprechpartnerErstellen;
 
 @SuppressWarnings("serial")
 public class LieferantErstellen extends OverLieferantverwaltungView implements View,
@@ -228,7 +229,7 @@ ValueChangeListener {
 			Window win = (Window) LieferantErstellen.this.getParent();
 			win.close();
 		} else {
-			ViewHandler.getInstance().switchView(LieferantAnzeigen.class);
+			ViewHandler.getInstance().switchView(LieferantAnzeigenTable.class);
 		}
 	}
 	

@@ -54,7 +54,7 @@ import de.palaver.view.artikelverwaltung.MengeneinheitErstellen;
 import de.palaver.view.artikelverwaltung.MengeneinheitenAnzeigen;
 import de.palaver.view.bestellverwaltung.BestellungenAnzeigenTable;
 import de.palaver.view.bestellverwaltung.GrundbedarfGenerierenAnsicht;
-import de.palaver.view.lieferantenverwaltung.LieferantAnzeigen;
+import de.palaver.view.lieferantenverwaltung.LieferantAnzeigenTable;
 import de.palaver.view.lieferantenverwaltung.LieferantErstellen;
 
 @SuppressWarnings("serial")
@@ -279,7 +279,7 @@ public class MainLayout extends VerticalLayout implements Command {
 						.switchView(MitarbeiterErstellen.class);
 			}  else if (selectedItem.getText().equals(
 					IConstants.MENU_LIEFERANT_ANZEIGEN)) {
-				ViewHandler.getInstance().switchView(LieferantAnzeigen.class);
+				ViewHandler.getInstance().switchView(LieferantAnzeigenTable.class);
 			} else if (selectedItem.getText().equals(
 					IConstants.MENU_MITARBEITER_ANZEIGEN)) {
 				ViewHandler.getInstance().switchView(MitarbeiterAnzeigen.class);

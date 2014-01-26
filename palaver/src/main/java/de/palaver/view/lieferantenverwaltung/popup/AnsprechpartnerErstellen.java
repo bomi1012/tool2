@@ -1,4 +1,4 @@
-package de.palaver.view.lieferantenverwaltung;
+package de.palaver.view.lieferantenverwaltung.popup;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -18,6 +18,7 @@ import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
 import de.palaver.domain.person.lieferantenverwaltung.Ansprechpartner;
 import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
+import de.palaver.view.lieferantenverwaltung.OverLieferantverwaltungView;
 
 @SuppressWarnings("serial")
 public class AnsprechpartnerErstellen extends OverLieferantverwaltungView implements View,

@@ -1,5 +1,8 @@
 package de.palaver.service.person.lieferantenverwaltung;
 
+import java.sql.SQLException;
+import java.util.List;
+
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
 import de.palaver.dao.person.lieferantenverwaltung.AnsprechpartnerDAO;
@@ -22,6 +25,10 @@ public class AnsprechpartnerService extends AnsprechpartnerDAO {
 
 	public Long createAnsprechpartner(Ansprechpartner ansprechpartner) throws ConnectException, DAOException {
 		return AnsprechpartnerDAO.getInstance().createAnsprechpartner(ansprechpartner);
+	}
+
+	public List<Ansprechpartner> getAllAnsprechpartnersByLieferantId(Long id) throws ConnectException, DAOException, SQLException {
+		return AnsprechpartnerDAO.getInstance().getAllAnsprechpartnersByLieferantId(id);
 	}
 	
 	

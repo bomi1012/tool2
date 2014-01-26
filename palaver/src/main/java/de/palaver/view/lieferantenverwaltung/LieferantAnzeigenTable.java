@@ -21,18 +21,20 @@ import de.hska.awp.palaver2.util.ViewData;
 import de.palaver.Application;
 import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
 import de.palaver.service.person.lieferantenverwaltung.LieferantenService;
+import de.palaver.view.lieferantenverwaltung.popup.LieferantAnzeigenInfo;
 
 @SuppressWarnings("serial")
-public class LieferantAnzeigen extends OverLieferantverwaltungView implements View,
+public class LieferantAnzeigenTable extends OverLieferantverwaltungView implements View,
 ValueChangeListener {
-	private static final Logger log = LoggerFactory.getLogger(LieferantAnzeigen.class.getName());
+	private static final Logger log = LoggerFactory.getLogger(LieferantAnzeigenTable.class.getName());
 
 	private Button m_showFilterButton;
 	private HorizontalLayout headLayout;
-	private Lieferant lieferant;
 	private BeanItemContainer<Lieferant> m_container;
 
-	public LieferantAnzeigen() {
+	private LieferantAnzeigenInfo m_lieferantAnzeigenInfo;
+
+	public LieferantAnzeigenTable() {
 		super();
 		layout();
 		listeners();
@@ -69,7 +71,7 @@ ValueChangeListener {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
-					lieferant = (Lieferant) event.getProperty().getValue();
+					m_lieferant = (Lieferant) event.getProperty().getValue();
 					m_control.setEnabled(true);
 				}
 			}
@@ -79,7 +81,8 @@ ValueChangeListener {
 			@Override
 			public void itemClick(ItemClickEvent event) {
 				if (event.isDoubleClick()) {
-					m_auswaehlenButton.click();
+					//m_auswaehlenButton.click();
+					windowModal();
 				}
 			}
 		});
@@ -87,7 +90,8 @@ ValueChangeListener {
 		m_auswaehlenButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (lieferant != null) {
+				if (m_lieferant != null) {
+					
 					//TODO: Window
 					//ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
 				}
@@ -105,6 +109,22 @@ ValueChangeListener {
 		});
 	}
 	
+	protected void windowModal() {
+		String title = m_lieferant.getName();
+		if (m_lieferant.getLieferantnummer() != null && !m_lieferant.getLieferantnummer().equals("")) {
+			title += " (" + m_lieferant.getLieferantnummer() + ")";
+		} 
+		if (m_lieferant.getBezeichnung() != null && !m_lieferant.getBezeichnung().equals("")) {
+			title += ": " + m_lieferant.getBezeichnung();
+		}
+		m_window = windowUI(m_window, title, "70%", "70%");		
+		m_lieferantAnzeigenInfo = new LieferantAnzeigenInfo(m_lieferant);
+		addComponent(m_lieferantAnzeigenInfo);
+		m_window.setContent(m_lieferantAnzeigenInfo);
+		m_window.setModal(true);
+		UI.getCurrent().addWindow(m_window);
+	}
+
 	private void beans() {		
 		try {
 			m_container = new BeanItemContainer<Lieferant>(Lieferant.class, LieferantenService.getInstance().getAllLieferanten());
