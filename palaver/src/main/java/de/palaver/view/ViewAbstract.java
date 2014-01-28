@@ -45,6 +45,8 @@ public class ViewAbstract extends VerticalLayout {
 	public static final String FIELD_SUMME_2 = "summe2";
 	public static final String FIELD_IGNORE = "ignore";
 	
+	protected Button m_createButton;
+	protected Button m_editButton;
 	
 	protected static final String FULL = "100%";
 	protected static final String STYLE_HEADLINE = "ViewHeadline";
@@ -194,6 +196,22 @@ public class ViewAbstract extends VerticalLayout {
 		m_horizontalLayout.setSpacing(true);
 		m_horizontalLayout.addComponent(m_yesButton);
 		m_horizontalLayout.addComponent(m_noButton);
+		return m_horizontalLayout;
+	}
+	
+	/**
+	 * create + edit
+	 */
+	protected HorizontalLayout controlPanelEditAndNew() {
+		m_createButton = buttonSetting(m_button, IConstants.BUTTON_NEW,
+				IConstants.ICON_PAGE_ADD, true, true);
+		m_editButton = buttonSetting(m_button, IConstants.BUTTON_EDIT,
+				IConstants.ICON_PAGE_EDIT, true, false);
+
+		m_horizontalLayout = new HorizontalLayout();
+		m_horizontalLayout.setSpacing(true);
+		m_horizontalLayout.addComponent(m_createButton);
+		m_horizontalLayout.addComponent(m_editButton);
 		return m_horizontalLayout;
 	}
 

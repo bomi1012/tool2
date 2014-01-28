@@ -34,6 +34,8 @@ ValueChangeListener {
 
 	private LieferantAnzeigenInfo m_lieferantAnzeigenInfo;
 
+	private LieferantErstellen m_lieferantErstellen;
+
 	public LieferantAnzeigenTable() {
 		super();
 		layout();
@@ -47,7 +49,7 @@ ValueChangeListener {
 		
 		m_filterTable = filterTable();	
 		m_showFilterButton = filterButton(true, true);			
-		m_control = controlLieferantenPanel();		
+		m_control = controlPanelEditAndNew();		
 		m_headlineLabel = headLine(m_headlineLabel, "Alle Lieferanten", STYLE_HEADLINE);
 	
 		headLayout = new HorizontalLayout();
@@ -72,7 +74,7 @@ ValueChangeListener {
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
 					m_lieferant = (Lieferant) event.getProperty().getValue();
-					m_control.setEnabled(true);
+					m_editButton.setEnabled(true);
 				}
 			}
 		});
@@ -81,19 +83,23 @@ ValueChangeListener {
 			@Override
 			public void itemClick(ItemClickEvent event) {
 				if (event.isDoubleClick()) {
-					//m_auswaehlenButton.click();
-					windowModal();
+					windowModalShowInfo();
 				}
 			}
 		});
 
-		m_auswaehlenButton.addClickListener(new ClickListener() {
+		m_createButton.addClickListener(new ClickListener() {			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				windowModalLieferantErstellen(null);				
+			}
+		});
+		
+		m_editButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (m_lieferant != null) {
-					
-					//TODO: Window
-					//ViewHandler.getInstance().switchView(LieferantSuche.class, new ViewDataObject<Lieferant>(lieferant));
+					windowModalLieferantErstellen(m_lieferant);
 				}
 				else {
 					((Application) UI.getCurrent().getData())
@@ -101,6 +107,7 @@ ValueChangeListener {
 				}
 			}
 		});
+		
 		m_showFilterButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -109,7 +116,28 @@ ValueChangeListener {
 		});
 	}
 	
-	protected void windowModal() {
+	protected void windowModalLieferantErstellen(Lieferant lieferant) {
+		m_window = windowUI(m_window, "Lieferant erstellen", "90%", "90%");		
+		if(lieferant == null) {
+			m_lieferantErstellen = new LieferantErstellen();
+		} else {
+			m_lieferantErstellen = new LieferantErstellen(lieferant);
+		}
+		addComponent(m_lieferantErstellen);
+		m_window.setContent(m_lieferantErstellen);
+		m_window.setModal(true);
+		UI.getCurrent().addWindow(m_window);
+		
+		m_lieferantErstellen.m_speichernButton.addClickListener(new ClickListener() {			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				m_container.addItem(m_lieferantErstellen.m_lieferant);
+				setTable();
+			}
+		});
+	}
+
+	protected void windowModalShowInfo() {
 		String title = m_lieferant.getName();
 		if (m_lieferant.getLieferantnummer() != null && !m_lieferant.getLieferantnummer().equals("")) {
 			title += " (" + m_lieferant.getLieferantnummer() + ")";

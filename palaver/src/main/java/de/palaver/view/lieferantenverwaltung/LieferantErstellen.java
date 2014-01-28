@@ -162,13 +162,14 @@ ValueChangeListener {
 		m_centerAVLayout.addComponent(m_landField);
 		m_centerAVLayout.setSpacing(true);
 		
-//		m_rightVLayout = new VerticalLayout();
-//		m_rightVLayout.setWidth("90%");
-//		m_rightVLayout.addComponent(headLine(m_headlineLabel, "Ansprechpartner", "subHeadline"));
-//		m_rightVLayout.addComponent(new Hr());
-//		m_rightVLayout.addComponent(btFehler);
-//		m_rightVLayout.setSpacing(true);
-		
+		if(m_create == false) {
+			m_rightVLayout = new VerticalLayout();
+			m_rightVLayout.setWidth("90%");
+			m_rightVLayout.addComponent(headLine(m_headlineLabel, "Ansprechpartner", "subHeadline"));
+			m_rightVLayout.addComponent(new Hr());
+			m_rightVLayout.addComponent(btFehler);
+			m_rightVLayout.setSpacing(true);
+		}
 		
 		m_windowHLayout = new HorizontalLayout();
 		m_windowHLayout.setWidth(FULL);
@@ -177,15 +178,20 @@ ValueChangeListener {
 		m_windowHLayout.addComponent(m_leftVLayout);
 		m_windowHLayout.addComponent(m_centerKVLayout);
 		m_windowHLayout.addComponent(m_centerAVLayout);
-//		m_windowHLayout.addComponent(m_rightVLayout);
+
 		m_windowHLayout.setExpandRatio(m_leftVLayout, 1);
 		m_windowHLayout.setExpandRatio(m_centerKVLayout, 1);
 		m_windowHLayout.setExpandRatio(m_centerAVLayout, 1);
-//		m_windowHLayout.setExpandRatio(m_rightVLayout, 1);
+
 		m_windowHLayout.setComponentAlignment(m_leftVLayout, Alignment.TOP_LEFT);
 		m_windowHLayout.setComponentAlignment(m_centerKVLayout, Alignment.TOP_CENTER);
 		m_windowHLayout.setComponentAlignment(m_centerAVLayout, Alignment.TOP_RIGHT);
-//		m_windowHLayout.setComponentAlignment(m_rightVLayout, Alignment.TOP_LEFT);
+		
+		if(m_create == false) {
+			m_windowHLayout.addComponent(m_rightVLayout);
+			m_windowHLayout.setComponentAlignment(m_rightVLayout, Alignment.TOP_LEFT);
+			m_windowHLayout.setExpandRatio(m_rightVLayout, 1);
+		}
 		
 		m_vertikalLayout = new VerticalLayout();
 		m_vertikalLayout.setWidth(FULL);

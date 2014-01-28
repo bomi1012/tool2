@@ -14,8 +14,7 @@ import de.hska.awp.palaver2.util.ViewData;
 @SuppressWarnings("serial")
 public class OverAnzeigen extends OverArtikelverwaltungView implements View  {
 
-	protected Button m_createButton;
-	protected Button m_editButton;
+
 	protected Button m_filterButton;
 	protected HorizontalLayout m_control;
 
@@ -24,24 +23,6 @@ public class OverAnzeigen extends OverArtikelverwaltungView implements View  {
 		super();
 	}
 	
-	/**
-	 * create + edit
-	 */
-	protected HorizontalLayout controlPanelEditAndNew() {
-		m_createButton = buttonSetting(m_button, IConstants.BUTTON_NEW,
-				IConstants.ICON_PAGE_ADD, true, true);
-		m_editButton = buttonSetting(m_button, IConstants.BUTTON_EDIT,
-				IConstants.ICON_PAGE_EDIT, true, false);
-
-		m_horizontalLayout = new HorizontalLayout();
-		m_horizontalLayout.setSpacing(true);
-		m_horizontalLayout.addComponent(m_createButton);
-		m_horizontalLayout.addComponent(m_editButton);
-		return m_horizontalLayout;
-	}
-	
-
-
 	protected HorizontalLayout filterLayout(Label headlineLabel) {			
 		m_filterButton = new Button(IConstants.BUTTON_CLEAR_FILTER);
 		m_filterButton.setIcon(new ThemeResource("img/disable_filter.ico"));
