@@ -1,10 +1,14 @@
 package de.palaver.view.lieferantenverwaltung;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.server.ThemeResource;
+import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -16,6 +20,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
+import com.vaadin.ui.themes.BaseTheme;
 
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
@@ -26,9 +31,11 @@ import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
 import de.palaver.domain.person.Adresse;
 import de.palaver.domain.person.Kontakte;
+import de.palaver.domain.person.lieferantenverwaltung.Ansprechpartner;
 import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
 import de.palaver.service.person.AdresseService;
 import de.palaver.service.person.KontakteService;
+import de.palaver.service.person.lieferantenverwaltung.AnsprechpartnerService;
 import de.palaver.service.person.lieferantenverwaltung.LieferantenService;
 import de.palaver.view.layout.popup.YesNoPopup;
 import de.palaver.view.lieferantenverwaltung.popup.AnsprechpartnerErstellen;
@@ -60,9 +67,10 @@ ValueChangeListener {
 	private TextField m_housenummerField;
 	private TextField m_stadtField;
 	private TextField m_plzField;
-	private Button btFehler;
+	private Button m_addUserButton;
 	private YesNoPopup m_yesNoPopup;
 	private AnsprechpartnerErstellen m_ansprechpartnerErstellen;
+	private AbstractComponent m_editUserButton;
 	
 	
 	public LieferantErstellen(Lieferant lieferant) {
@@ -70,6 +78,7 @@ ValueChangeListener {
 		m_lieferant = lieferant;
 		m_create = false;
 		layout(lieferant);
+		setData();
 		listeners();
 	}
 	
@@ -122,13 +131,7 @@ ValueChangeListener {
 				FULL, false, "Land", this);
 		
 		m_control = controlErstellenPanel();
-		
-//		btFehler = new Button(" hallo!");
-//		btFehler.setPrimaryStyleName(BaseTheme.BUTTON_LINK);
-//		btFehler.setStyleName("cursor-hand");
-//		btFehler.setStyleName("lieferant");
-//		btFehler.setIcon(new ThemeResource("icons/user_add.png"));
-		
+
 		m_leftVLayout = new VerticalLayout();
 		m_leftVLayout.setWidth("90%");
 		m_leftVLayout.addComponent(headLine(m_headlineLabel, "Persönliche Daten", "subHeadline"));
@@ -163,11 +166,41 @@ ValueChangeListener {
 		m_centerAVLayout.setSpacing(true);
 		
 		if(m_create == false) {
+			
+			m_addUserButton = new Button(" neuer Ansprechpartner");
+			m_addUserButton.setPrimaryStyleName(BaseTheme.BUTTON_LINK);
+			m_addUserButton.setStyleName("cursor-hand");
+			m_addUserButton.setStyleName("lieferant");
+			m_addUserButton.setIcon(new ThemeResource("icons/user_add.png"));
+			
+			/////////////
 			m_rightVLayout = new VerticalLayout();
 			m_rightVLayout.setWidth("90%");
 			m_rightVLayout.addComponent(headLine(m_headlineLabel, "Ansprechpartner", "subHeadline"));
-			m_rightVLayout.addComponent(new Hr());
-			m_rightVLayout.addComponent(btFehler);
+			m_rightVLayout.addComponent(new Hr());	
+			try {
+				List<Ansprechpartner> apList = AnsprechpartnerService.getInstance().getAllAnsprechpartnersByLieferantId(m_lieferant.getId());
+				if (apList.size() != 0) {
+					for (Ansprechpartner ansprechpartner : apList) {
+						String message = " " + ansprechpartner.getName();
+						if(ansprechpartner.getBezeichnung() != null) {
+							message += " (" + ansprechpartner.getBezeichnung() + ")";
+						}
+						m_editUserButton = new Button(message);
+						m_editUserButton.setPrimaryStyleName(BaseTheme.BUTTON_LINK);
+						m_editUserButton.setStyleName("cursor-hand");
+						m_editUserButton.setStyleName("lieferant");
+						m_editUserButton.setIcon(new ThemeResource("icons/user_edit.png"));
+						m_editUserButton.setId(String.valueOf(ansprechpartner.getId()));
+						System.out.println(m_editUserButton.getId());
+						m_rightVLayout.addComponent(m_editUserButton);
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} 
+								
+			m_rightVLayout.addComponent(m_addUserButton);
 			m_rightVLayout.setSpacing(true);
 		}
 		
@@ -189,13 +222,18 @@ ValueChangeListener {
 		
 		if(m_create == false) {
 			m_windowHLayout.addComponent(m_rightVLayout);
-			m_windowHLayout.setComponentAlignment(m_rightVLayout, Alignment.TOP_LEFT);
+			m_windowHLayout.setComponentAlignment(m_centerAVLayout, Alignment.TOP_CENTER);
+			m_windowHLayout.setComponentAlignment(m_rightVLayout, Alignment.TOP_RIGHT);
 			m_windowHLayout.setExpandRatio(m_rightVLayout, 1);
 		}
 		
 		m_vertikalLayout = new VerticalLayout();
 		m_vertikalLayout.setWidth(FULL);
-		m_vertikalLayout.addComponent(headLine(m_headlineLabel, "Neuer Lieferant", STYLE_HEADLINE));
+		if(m_create == false) {
+			m_vertikalLayout.addComponent(headLine(m_headlineLabel, "Lieferant ändern", STYLE_HEADLINE));
+		} else {
+			m_vertikalLayout.addComponent(headLine(m_headlineLabel, "Neuer Lieferant", STYLE_HEADLINE));
+		}
 		m_vertikalLayout.addComponent(m_windowHLayout);
 		m_vertikalLayout.addComponent(m_control);
 		m_vertikalLayout.setComponentAlignment(m_windowHLayout, Alignment.TOP_CENTER);
@@ -272,6 +310,31 @@ ValueChangeListener {
 		}		
 	}
 
+	private void setData() {
+		m_nameField.setValue(m_lieferant.getName());
+		m_bezeichnungField.setValue(m_lieferant.getBezeichnung());
+		m_nummerField.setValue(m_lieferant.getLieferantnummer());
+		m_notizField.setValue(m_lieferant.getNotiz());
+		m_mehrerLieferterminCheckbox.setValue(m_lieferant.isMehrereliefertermine());
+		
+		if(m_lieferant.getKontakte() != null) {
+			m_telefonField.setValue(m_lieferant.getKontakte().getTelefon());
+			m_handyField.setValue(m_lieferant.getKontakte().getHandy());
+			m_faxField.setValue(m_lieferant.getKontakte().getFax());
+			m_emailField.setValue(m_lieferant.getKontakte().getEmail());
+			m_webField.setValue(m_lieferant.getKontakte().getWww());
+		}
+		
+		if(m_lieferant.getAdresse() != null) {
+			m_strasseField.setValue(m_lieferant.getAdresse().getStrasse());
+			m_housenummerField.setValue(m_lieferant.getAdresse().getHausnummer());
+			m_stadtField.setValue(m_lieferant.getAdresse().getStadt());
+			m_plzField.setValue(m_lieferant.getAdresse().getPlz());
+			m_landField.setValue(m_lieferant.getAdresse().getLand());
+		}
+		
+	}
+	
 	protected void windowModal() {
 		m_window = windowUI(m_window, "", "450", "180");		
 		m_yesNoPopup = new YesNoPopup("32x32/user.png", TEXT);
