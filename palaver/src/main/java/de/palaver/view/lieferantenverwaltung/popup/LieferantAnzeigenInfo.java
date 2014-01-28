@@ -8,8 +8,10 @@ import org.slf4j.LoggerFactory;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
@@ -41,26 +43,28 @@ ValueChangeListener {
 		try {
 			this.setSizeFull();
 			this.setMargin(true);
-			String infoLieferant = getInfoLieferant();
-			String infoAnsprechpartner = getInfoAnsprechpartner();
-		 
+			
 			m_horizontalLayout = new HorizontalLayout();
 			m_horizontalLayout.setWidth("90%");
 			
 			m_leftVLLayout = new VerticalLayout();
 			m_leftVLLayout.setWidth("90%");
+			String infoLieferant = getInfoLieferant();
+			m_leftVLLayout.addComponent(headLine(m_headlineLabel, "Lieferantdaten", STYLE_HEADLINE));
 			m_leftVLLayout.addComponent(new Label(infoLieferant, Label.CONTENT_XHTML));
 			
 			m_rightVLLayout = new VerticalLayout();
-			m_rightVLLayout.setWidth("90%");
+			m_rightVLLayout.setWidth("90%");			
+			m_rightVLLayout.addComponent(headLine(m_headlineLabel, "Ansprechpartnern", STYLE_HEADLINE));	
+			String infoAnsprechpartner = getInfoAnsprechpartner();
 			m_rightVLLayout.addComponent(new Label(infoAnsprechpartner, Label.CONTENT_XHTML));
 			
 			m_horizontalLayout.addComponent(m_leftVLLayout);
 			m_horizontalLayout.addComponent(m_rightVLLayout);
 			m_horizontalLayout.setExpandRatio(m_leftVLLayout, 1);
 			m_horizontalLayout.setExpandRatio(m_rightVLLayout, 1);
-			m_horizontalLayout.setComponentAlignment(m_leftVLLayout, Alignment.MIDDLE_LEFT);
-			m_horizontalLayout.setComponentAlignment(m_rightVLLayout, Alignment.MIDDLE_RIGHT);
+			m_horizontalLayout.setComponentAlignment(m_leftVLLayout, Alignment.TOP_LEFT);
+			m_horizontalLayout.setComponentAlignment(m_rightVLLayout, Alignment.TOP_RIGHT);
 			
 			this.addComponent(m_horizontalLayout);
 			this.setComponentAlignment(m_horizontalLayout, Alignment.MIDDLE_CENTER);
@@ -74,15 +78,43 @@ ValueChangeListener {
 		List<Ansprechpartner> ansprechpartners 
 				= AnsprechpartnerService.getInstance().getAllAnsprechpartnersByLieferantId(m_lieferant.getId());
 		if (ansprechpartners.size() == 0) {
-			System.out.println("NULL");
+			m_rightVLLayout.addComponent(new Label("<br><b>keine Information verfügbar</b>", Label.CONTENT_XHTML));
 		} else {
 			for (Ansprechpartner ansprechpartner : ansprechpartners) {
-				System.out.println(ansprechpartner.getName());
+				HorizontalLayout hl = new HorizontalLayout();
+				hl.setWidth(FULL);
+				Label lb = new Label("<b>" + ansprechpartner.getName() + "</b>", Label.CONTENT_XHTML);
+				Image i = new Image();
+				i.setSource(new ThemeResource("icons/user_ap.png"));
+				hl.addComponent(i);
+				hl.addComponent(lb);
+				hl.setExpandRatio(i, 1);
+				hl.setExpandRatio(lb, 5);
+				hl.setComponentAlignment(i, Alignment.TOP_CENTER);
+				hl.setComponentAlignment(lb, Alignment.TOP_LEFT);	
+				
+				String message = "";
+				
+				if(ansprechpartner.getKontakte() != null) {
+				message = "<b>Telefon: </b>" + ansprechpartner.getKontakte().getTelefon() + "<br>" +
+						"<b>Handy: </b>" + ansprechpartner.getKontakte().getHandy() + "<br>" +
+						"<b>E-Mail: </b>" + ansprechpartner.getKontakte().getEmail() + "<br>" +
+						"<b>Fax: </b>" + ansprechpartner.getKontakte().getFax() + "<br>" +
+						"<b>Webseite: </b>" + ansprechpartner.getKontakte().getWww() + "<br><br>";
+				message = message.replace("null", "");
+				} else {
+					message = "keine Information";
+				}
+				
+				
+				m_rightVLLayout.addComponent(hl);
+				m_rightVLLayout.addComponent(new Label(message, Label.CONTENT_XHTML));
 			}
 		}
 		return null;
 	}
 
+	
 	private String getInfoLieferant() {
 		String message = "";
 		String ki = "keine Information";
