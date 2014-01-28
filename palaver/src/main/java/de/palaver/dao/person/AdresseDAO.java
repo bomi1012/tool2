@@ -28,6 +28,12 @@ public class AdresseDAO extends AbstractDAO {
 			+ "`" + FIELD_STRASSE + "`, " + "`" + FIELD_PLZ + "`, " + "`" + FIELD_STADT + "`, " 
 			+ "`" + FIELD_HAUSNUMMER + "`, " + "`" + FIELD_LAND + "`)" +
 					" VALUES({0},{1},{2},{3},{4})";
+	private static final String DELETE_QUERY = "DELETE FROM " + TABLE + " WHERE " + FIELD_ID + " = {0}";
+	private static final String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + 
+			FIELD_STRASSE + " = {0}, " + FIELD_HAUSNUMMER + " = {1}," +
+			FIELD_STADT + " = {2}, " + FIELD_PLZ + " = {3}, " + 
+			FIELD_LAND + " = {4} WHERE " + FIELD_ID + " = {5}";
+	
 
 	private Adresse m_adresse;
 	
@@ -67,5 +73,16 @@ public class AdresseDAO extends AbstractDAO {
 				"'" + adresse.getStadt() + "'",
 				"'" + adresse.getHausnummer() + "'",
 				"'" + adresse.getLand() + "'"));
+	}
+
+	public void deleteAdresse(Long id) throws ConnectException, DAOException {
+		putManaged(MessageFormat.format(DELETE_QUERY, id));			
+	}
+
+	public void updateAdresse(Adresse adresse) throws ConnectException, DAOException {
+		putManaged(MessageFormat.format(UPDATE_QUERY, 
+				"'" + adresse.getStrasse() + "'", "'" + adresse.getHausnummer() + "'", 
+				"'" + adresse.getStadt() + "'", "'" + adresse.getPlz() + "'",
+				"'" + adresse.getLand() + "'", adresse.getId()));
 	}
 }

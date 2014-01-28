@@ -310,6 +310,52 @@ ValueChangeListener {
 						m_adresse, m_kontakte);
 				m_lieferant.setId(LieferantenService.getInstance().createLieferant(m_lieferant));
 			}
+			else {
+				if (m_lieferant.getAdresse() != null) {
+					if (m_strasseField.getValue() == "" && m_housenummerField.getValue() == "" 
+							&& m_stadtField.getValue() == "" && m_plzField.getValue() == ""
+							&& m_landField.getValue() == "") { //remove adresse
+						AdresseService.getInstance().deleteAdresse(m_lieferant.getAdresse().getId());
+					} else {
+						m_lieferant.getAdresse().setStrasse(m_strasseField.getValue());
+						m_lieferant.getAdresse().setHausnummer(m_housenummerField.getValue()); 
+						m_lieferant.getAdresse().setStadt(m_stadtField.getValue());
+						m_lieferant.getAdresse().setPlz(m_plzField.getValue());
+						m_lieferant.getAdresse().setLand(m_landField.getValue());
+						AdresseService.getInstance().updateAdresse(m_lieferant.getAdresse());
+					}
+				} else {
+					if (m_strasseField.getValue() != "" || m_housenummerField.getValue() != "" 
+							|| m_stadtField.getValue() != "" || m_plzField.getValue() != ""
+							|| m_landField.getValue() != "") {
+						m_adresse = new Adresse(m_strasseField.getValue(), m_housenummerField.getValue(), 
+								m_stadtField.getValue(), m_plzField.getValue(), m_landField.getValue());
+						m_adresse.setId(AdresseService.getInstance().createAdresse(m_adresse));
+					}
+				}
+				
+				if (m_lieferant.getKontakte() != null) {
+					if (m_telefonField.getValue() == "" && m_handyField.getValue() == "" && m_faxField.getValue() == "" 
+							&& m_emailField.getValue() == "" && m_webField.getValue() == "") { //remove 
+						KontakteService.getInstance().deleteKontakte(m_lieferant.getKontakte().getId());
+					} else {
+						m_lieferant.getKontakte().setTelefon(m_telefonField.getValue());
+						m_lieferant.getKontakte().setHandy(m_handyField.getValue()); 
+						m_lieferant.getKontakte().setFax(m_faxField.getValue());
+						m_lieferant.getKontakte().setEmail(m_emailField.getValue());
+						m_lieferant.getKontakte().setWww(m_webField.getValue());
+						KontakteService.getInstance().updatekontakte(m_lieferant.getKontakte());
+					}
+				} else {
+					if (m_strasseField.getValue() != "" || m_housenummerField.getValue() != "" 
+							|| m_stadtField.getValue() != "" || m_plzField.getValue() != ""
+							|| m_landField.getValue() != "") {
+						m_adresse = new Adresse(m_strasseField.getValue(), m_housenummerField.getValue(), 
+								m_stadtField.getValue(), m_plzField.getValue(), m_landField.getValue());
+						m_adresse.setId(AdresseService.getInstance().createAdresse(m_adresse));
+					}
+				}
+			}
 		}		
 	}
 

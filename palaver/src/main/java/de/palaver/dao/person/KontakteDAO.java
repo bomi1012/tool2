@@ -27,6 +27,11 @@ public class KontakteDAO extends AbstractDAO{
 			+ "`" + FIELD_EMAIL + "`, " + "`" + FIELD_TELEFON + "`, " + "`" + FIELD_HANDY + "`, " 
 			+ "`" + FIELD_FAX + "`, " + "`" + FIELD_WWW + "`)" +
 					" VALUES({0},{1},{2},{3},{4})";
+	private static final String DELETE_QUERY = "DELETE FROM " + TABLE + " WHERE " + FIELD_ID + " = {0}";
+	private static final String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + 
+			FIELD_TELEFON + " = {0}, " + FIELD_HANDY + " = {1}," +
+			FIELD_FAX + " = {2}, " + FIELD_EMAIL + " = {3}, " + 
+			FIELD_WWW + " = {4} WHERE " + FIELD_ID + " = {5}";
 
 	private Kontakte m_kontakte;
 	
@@ -67,5 +72,16 @@ public class KontakteDAO extends AbstractDAO{
 				"'" + kontakte.getHandy() + "'",
 				"'" + kontakte.getFax() + "'",
 				"'" + kontakte.getWww() + "'"));
+	}
+
+	public void deleteKontakte(Long id) throws ConnectException, DAOException {
+		putManaged(MessageFormat.format(DELETE_QUERY, id));		
+	}
+
+	public void updatekontakte(Kontakte kontakte) throws ConnectException, DAOException {
+		putManaged(MessageFormat.format(UPDATE_QUERY, 
+				"'" + kontakte.getTelefon() + "'", "'" + kontakte.getHandy() + "'", 
+				"'" + kontakte.getFax() + "'", "'" + kontakte.getEmail() + "'",
+				"'" + kontakte.getWww() + "'", kontakte.getId()));
 	}
 }

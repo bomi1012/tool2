@@ -31,4 +31,12 @@ public class AdresseService {
 	public Long createAdresse(Adresse adresse) throws ConnectException, DAOException {
 		return AdresseDAO.getInstance().createAdresse(adresse);
 	}
+
+	public void deleteAdresse(Long id) throws ConnectException, DAOException {
+		AdresseDAO.getInstance().deleteAdresse(id);
+	}
+
+	public void updateAdresse(Adresse adresse) throws ConnectException, DAOException {
+		AdresseDAO.getInstance().updateAdresse(adresse);		
+	}
 }

@@ -30,4 +30,12 @@ public class KontakteService {
 	public long createKontakte(Kontakte kontakte) throws ConnectException, DAOException {
 		return KontakteDAO.getInstance().createKontakte(kontakte);
 	}
+
+	public void deleteKontakte(Long id) throws ConnectException, DAOException {
+		KontakteDAO.getInstance().deleteKontakte(id);	
+	}
+
+	public void updatekontakte(Kontakte kontakte) throws ConnectException, DAOException {
+		KontakteDAO.getInstance().updatekontakte(kontakte);	
+	}
 }
