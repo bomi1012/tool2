@@ -107,7 +107,7 @@ ValueChangeListener {
 				}
 			}
 		});
-		
+	
 		m_showFilterButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {

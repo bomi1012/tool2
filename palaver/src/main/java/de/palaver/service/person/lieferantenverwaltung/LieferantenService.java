@@ -35,6 +35,15 @@ public class LieferantenService {
 	public Long createLieferant(Lieferant lieferant) throws ConnectException, DAOException {
 		return LieferantDAO.getInstance().createLieferant(lieferant);
 	}
+
+	public void updateLieferant(Lieferant lieferant) throws ConnectException, DAOException {
+		LieferantDAO.getInstance().updateLieferant(lieferant);
+		
+	}
+
+	public void deleteLieferant(Long id) throws ConnectException, DAOException {
+		LieferantDAO.getInstance().deleteLieferant(id);		
+	}
 	
 	
 	

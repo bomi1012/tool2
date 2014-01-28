@@ -269,6 +269,16 @@ ValueChangeListener {
 				close();	
 			}
 		});
+		m_deaktivierenButton.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				try {
+					sqlStatement(1);
+				} catch (Exception e) {
+					e.printStackTrace();
+				} 
+			}
+		});
 	}
 
 	private void close() {
@@ -311,11 +321,19 @@ ValueChangeListener {
 				m_lieferant.setId(LieferantenService.getInstance().createLieferant(m_lieferant));
 			}
 			else {
+				
+				m_lieferant.setName(m_nameField.getValue());
+				m_lieferant.setLieferantnummer(m_nummerField.getValue());
+				m_lieferant.setBezeichnung(m_bezeichnungField.getValue());
+				m_lieferant.setNotiz(m_notizField.getValue());
+				m_lieferant.setMehrereliefertermine(m_mehrerLieferterminCheckbox.getValue());
+				
 				if (m_lieferant.getAdresse() != null) {
 					if (m_strasseField.getValue() == "" && m_housenummerField.getValue() == "" 
 							&& m_stadtField.getValue() == "" && m_plzField.getValue() == ""
 							&& m_landField.getValue() == "") { //remove adresse
 						AdresseService.getInstance().deleteAdresse(m_lieferant.getAdresse().getId());
+						m_lieferant.setAdresse(null);
 					} else {
 						m_lieferant.getAdresse().setStrasse(m_strasseField.getValue());
 						m_lieferant.getAdresse().setHausnummer(m_housenummerField.getValue()); 
@@ -331,6 +349,7 @@ ValueChangeListener {
 						m_adresse = new Adresse(m_strasseField.getValue(), m_housenummerField.getValue(), 
 								m_stadtField.getValue(), m_plzField.getValue(), m_landField.getValue());
 						m_adresse.setId(AdresseService.getInstance().createAdresse(m_adresse));
+						m_lieferant.setAdresse(m_adresse);
 					}
 				}
 				
@@ -338,6 +357,7 @@ ValueChangeListener {
 					if (m_telefonField.getValue() == "" && m_handyField.getValue() == "" && m_faxField.getValue() == "" 
 							&& m_emailField.getValue() == "" && m_webField.getValue() == "") { //remove 
 						KontakteService.getInstance().deleteKontakte(m_lieferant.getKontakte().getId());
+						m_lieferant.setKontakte(null);
 					} else {
 						m_lieferant.getKontakte().setTelefon(m_telefonField.getValue());
 						m_lieferant.getKontakte().setHandy(m_handyField.getValue()); 
@@ -347,16 +367,19 @@ ValueChangeListener {
 						KontakteService.getInstance().updatekontakte(m_lieferant.getKontakte());
 					}
 				} else {
-					if (m_strasseField.getValue() != "" || m_housenummerField.getValue() != "" 
-							|| m_stadtField.getValue() != "" || m_plzField.getValue() != ""
-							|| m_landField.getValue() != "") {
-						m_adresse = new Adresse(m_strasseField.getValue(), m_housenummerField.getValue(), 
-								m_stadtField.getValue(), m_plzField.getValue(), m_landField.getValue());
-						m_adresse.setId(AdresseService.getInstance().createAdresse(m_adresse));
+					if (m_telefonField.getValue() != "" || m_handyField.getValue() != "" || m_faxField.getValue() != "" 
+							|| m_emailField.getValue() != "" || m_webField.getValue() != "") {
+						m_kontakte = new Kontakte(m_emailField.getValue(), m_handyField.getValue(), m_telefonField.getValue(),
+								m_faxField.getValue(), m_webField.getValue());
+						m_kontakte.setId(KontakteService.getInstance().createKontakte(m_kontakte));
+						m_lieferant.setKontakte(m_kontakte);
 					}
 				}
+				LieferantenService.getInstance().updateLieferant(m_lieferant);
 			}
-		}		
+		}	else {
+			LieferantenService.getInstance().deleteLieferant(m_lieferant.getId());
+		}	
 	}
 
 	private void setData() {
