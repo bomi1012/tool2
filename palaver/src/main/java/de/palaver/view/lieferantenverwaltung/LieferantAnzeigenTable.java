@@ -117,10 +117,12 @@ ValueChangeListener {
 	}
 	
 	protected void windowModalLieferantErstellen(Lieferant lieferant) {
-		m_window = windowUI(m_window, "Lieferant erstellen", "90%", "90%");		
+			
 		if(lieferant == null) {
+			m_window = windowUI(m_window, "Lieferant erstellen", "90%", "90%");	
 			m_lieferantErstellen = new LieferantErstellen();
 		} else {
+			m_window = windowUI(m_window, "Lieferant ändern", "90%", "90%");	
 			m_lieferantErstellen = new LieferantErstellen(lieferant);
 		}
 		addComponent(m_lieferantErstellen);

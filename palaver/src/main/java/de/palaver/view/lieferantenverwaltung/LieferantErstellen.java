@@ -131,6 +131,9 @@ ValueChangeListener {
 				FULL, false, "Land", this);
 		
 		m_control = controlErstellenPanel();
+		if (m_create == false) {
+			m_deaktivierenButton.setVisible(true);
+		}
 
 		m_leftVLayout = new VerticalLayout();
 		m_leftVLayout.setWidth("90%");
