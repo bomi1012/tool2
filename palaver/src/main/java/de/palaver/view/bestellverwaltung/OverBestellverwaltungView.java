@@ -45,8 +45,7 @@ public class OverBestellverwaltungView extends ViewAbstract {
 	protected Button m_verwaltenButton;
 
 
-	protected Button m_emailBestellenButton;
-	protected Button m_telefonBestellenButton;
+	protected Button m_bestellenButton;
 
 	private Button m_annahmeButton;
 	
@@ -121,23 +120,20 @@ public class OverBestellverwaltungView extends ViewAbstract {
 	}
 	
 	protected VerticalLayout controlVerwaltung() {	
-		m_emailBestellenButton = buttonSetting(m_button, "E-Mail-Bestellung",
-				IConstants.ICON_EMAIL_ATTACH, true, true);
-		m_telefonBestellenButton = buttonSetting(m_button, "Telefonbestellung",
-				IConstants.ICON_TELEPHONE, true, true);
-		
+		m_bestellenButton = buttonSetting(m_button, "Bestellung",
+				IConstants.ICON_BASKET, true, true);
+	
 		m_annahmeButton = buttonSetting(m_button, "Warenannahme",
 				IConstants.ICON_BASKET, true, true);
 		
-		m_annahmeButton.setWidth("165");
-		m_telefonBestellenButton.setWidth("165");
-		m_emailBestellenButton.setWidth("165");
+		m_closeButton = buttonSetting(m_button, "Zurück",
+				IConstants.ICON_PAGE_BACK, true, true);
 		
 		m_vertikalLayout = new VerticalLayout();
 		m_vertikalLayout.setSpacing(true);
-		m_vertikalLayout.addComponent(m_emailBestellenButton);
-		m_vertikalLayout.addComponent(m_telefonBestellenButton);
+		m_vertikalLayout.addComponent(m_bestellenButton);
 		m_vertikalLayout.addComponent(m_annahmeButton);
+		m_vertikalLayout.addComponent(m_closeButton);
 		m_vertikalLayout.setEnabled(true);
 		return m_vertikalLayout;
 	}

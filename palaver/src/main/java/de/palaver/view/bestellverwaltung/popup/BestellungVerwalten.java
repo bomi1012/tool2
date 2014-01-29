@@ -8,12 +8,15 @@ import com.vaadin.server.FileDownloader;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.Resource;
 import com.vaadin.server.ThemeResource;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -41,6 +44,7 @@ ValueChangeListener {
 	private Image m_imageExcel;
 	private Button m_downloadButton;
 	private String m_anhangPath;
+	private CheckBox m_bestelltCheckBox;
 
 	public BestellungVerwalten() {
 		super();
@@ -107,14 +111,15 @@ ValueChangeListener {
 	}
 
 	private void listeners() {
-		m_emailBestellenButton.addClickListener(new ClickListener() {
+		m_bestellenButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				designEmail();
+				besstelenLayout();
 				excelGenerieren(m_bestellung);
 			}
 		});	
 		
+		/** ******************************** */
 		m_sendenButton.addClickListener(new ClickListener() {			
 			@SuppressWarnings("static-access")
 			@Override
@@ -129,9 +134,7 @@ ValueChangeListener {
 		});		
 	}
 
-	private void designEmail() {
-		m_headlineLabel = headLine(m_headlineLabel, "Bestellug per E-Mail an " + 
-							m_bestellung.getLieferant().getName() + " senden", STYLE_HEADLINE);
+	private void besstelenLayout() {
 		m_center = new VerticalLayout();
 		m_center.setWidth("95%");
 		m_empafaengerField = textFieldSettingE(m_textField, "Empfänger", "45%", true, "Empfänger", this);
@@ -139,6 +142,31 @@ ValueChangeListener {
 		m_nachrichtArea = new TextArea("Nachricht");
 		m_nachrichtArea.setWidth("100%");
 		m_nachrichtArea.setHeight("85%");
+		m_bestelltCheckBox = new CheckBox(" bestellt");
+		String message = "";
+		boolean kontakt = false;
+		if(m_bestellung.getLieferant().getKontakte() != null) {
+			if(m_bestellung.getLieferant().getKontakte().getTelefon() != null 
+					&& m_bestellung.getLieferant().getKontakte().getTelefon().length() > 1) {
+				message += "<b>Telefonnummer:</b> " + m_bestellung.getLieferant().getKontakte().getTelefon() + "<br>";
+				kontakt = true;
+			}
+			if(m_bestellung.getLieferant().getKontakte().getHandy() != null 
+					&& m_bestellung.getLieferant().getKontakte().getHandy().length() > 1) {
+				message += "<b>Handynummer:</b> " + m_bestellung.getLieferant().getKontakte().getHandy() + "<br>";
+				kontakt = true;
+			}
+			if(m_bestellung.getLieferant().getKontakte().getFax() != null 
+					&& m_bestellung.getLieferant().getKontakte().getFax().length() > 1) {
+				message += "<b>Fax:</b> " + m_bestellung.getLieferant().getKontakte().getFax() + "<br>";
+				kontakt = true;
+			}
+		} else {
+			message = "<br>Keine Kontaktinformation verfügbar";
+		}
+		if(!kontakt) {
+			message = "<br>Keine Kontaktinformation verfügbar";
+		}
 		
 		m_control = new HorizontalLayout();
 		m_control.addComponent(m_downloadButton);
@@ -149,12 +177,17 @@ ValueChangeListener {
 		m_imageExcel.addStyleName("cursor-hand");
 		m_imageExcel.setDescription("Bestellung als excel-Datei herunterladen");
 		
-		m_center.addComponent(m_headlineLabel);
+		m_center.addComponent( headLine(m_headlineLabel, "Bestellug per E-Mail an " + 
+				m_bestellung.getLieferant().getName() + " senden", STYLE_HEADLINE));
 		m_center.addComponent(m_empafaengerField);
 		m_center.addComponent(m_betreffField);
 		m_center.addComponent(m_nachrichtArea);
 		m_center.addComponent(m_control);
 		m_center.addComponent(new Hr());
+		m_center.addComponent( headLine(m_headlineLabel, "Bestellung per Telefon an " + 
+				m_bestellung.getLieferant().getName(), STYLE_HEADLINE));
+		m_center.addComponent(new Label(message, ContentMode.HTML));
+		m_center.addComponent(m_bestelltCheckBox);
 		
 		m_center.setComponentAlignment(m_control, Alignment.TOP_RIGHT);
 		m_center.setSpacing(true);

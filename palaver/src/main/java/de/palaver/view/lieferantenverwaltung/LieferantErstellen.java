@@ -475,7 +475,7 @@ ValueChangeListener {
 	}
 
 	protected void windowModalAnspechpartner() {
-		m_window = windowUI(m_window, "", "80%", "80%");		
+		m_window = windowUI(m_window, "Ansprechpartner erstellen", "80%", "80%");		
 		m_ansprechpartnerErstellen = new AnsprechpartnerErstellen(m_lieferant);
 		addComponent(m_ansprechpartnerErstellen);
 		m_window.setContent(m_ansprechpartnerErstellen);

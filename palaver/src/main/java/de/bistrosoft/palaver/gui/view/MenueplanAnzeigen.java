@@ -596,7 +596,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 				h += "<tr>";
 				for (int x = 0; x < col; ++x) {
 					if (x != 0) {
-						h += "<th align=\"center\">";
+						h += "<th align=\"left\">";
 						h += getLabelText(x, y);
 						h += "</th>";
 					}
@@ -613,8 +613,8 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 		Component comp = shownMenueplan.layout.getComponent(x, y);
 		if (comp instanceof MenueComponent) {
 			MenueComponent mc = (MenueComponent) comp;
-			return mc.getAngezeigterName();
-			//+ mc.getFussnoten();
+			String fn = mc.getFussnoten().replace("(", "").replace(")", "").replace(" ", "").replace(",", ", ");
+			return mc.getAngezeigterName() + " (Koch: " + mc.getMenue().getKochname() + ")<br> Fuﬂnoten: " + fn;
 		} else if (comp instanceof Label) {
 			Label lb = (Label) comp;
 			String sLb = lb.getValue();

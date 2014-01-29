@@ -211,8 +211,6 @@ public class MainLayout extends VerticalLayout implements Command {
 				.userHasPersmission(Rollen.ADMINISTRATOR)) {
 			einstellungItem.addItem(IConstants.MENU_REGEL, this);
 		}
-		einstellungItem.addItem(IConstants.MENU_MENGENEINHEIT_ANZEIGEN, this);
-		einstellungItem.addItem(IConstants.MENU_KATEGORIE_ANZEIGEN, this);
 		einstellungItem.addItem(IConstants.MENU_FUSSNOTE, this);
 		einstellungItem.addItem(IConstants.MENU_GESCHMACK, this);
 		einstellungItem.addItem(IConstants.MENU_MENUEART, this);
@@ -229,6 +227,7 @@ public class MainLayout extends VerticalLayout implements Command {
 		username.setEnabled(false);
 
 		// DefaultView content = new DefaultView();
+		//TODO:
 		NachrichtAnzeigen content = new NachrichtAnzeigen();
 		this.addComponent(content);
 		this.setExpandRatio(content, 1);
