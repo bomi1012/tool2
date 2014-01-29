@@ -534,6 +534,15 @@ ValueChangeListener {
 				m_container.addItem(m_ansprechpartnerErstellen.m_ansprechpartner);
 			}
 		});
+		
+		m_ansprechpartnerErstellen.m_deaktivierenButton.addClickListener(new ClickListener() {			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				m_window.close();
+				m_container.removeItem(m_ansprechpartnerErstellen.m_ansprechpartner);
+				
+			}
+		});
 	}
 	
 	private TextField textFieldSetting(TextField field, String name,

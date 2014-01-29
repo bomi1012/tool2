@@ -192,6 +192,17 @@ ValueChangeListener {
 				}								
 			}
 		});	
+		
+		m_deaktivierenButton.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				try {
+					sqlStatement(1);
+				} catch (Exception e) {
+					e.printStackTrace();
+				} 
+			}
+		});
 	}
 	
 	protected void sqlStatement(int i) throws ConnectException, DAOException {
