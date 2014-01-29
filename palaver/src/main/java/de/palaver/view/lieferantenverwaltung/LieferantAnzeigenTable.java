@@ -137,6 +137,14 @@ ValueChangeListener {
 				setTable();
 			}
 		});
+		m_lieferantErstellen.m_deaktivierenButton.addClickListener(new ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				m_container.removeItem(m_lieferantErstellen.m_lieferant);
+				
+			}
+		});
 	}
 
 	protected void windowModalShowInfo() {

@@ -7,6 +7,9 @@ import org.slf4j.LoggerFactory;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.event.ItemClickEvent;
+import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Alignment;
@@ -71,7 +74,7 @@ ValueChangeListener {
 	private YesNoPopup m_yesNoPopup;
 	private AnsprechpartnerErstellen m_ansprechpartnerErstellen;
 	private AbstractComponent m_editUserButton;
-	
+	private BeanItemContainer<Ansprechpartner> m_container;
 	
 	public LieferantErstellen(Lieferant lieferant) {
 		super();
@@ -105,7 +108,7 @@ ValueChangeListener {
 		m_notizField.setWidth(FULL);
 		m_notizField.setHeight("60");		
 		
-		
+
 		
 		m_telefonField = textFieldSetting(m_textField, "Telefonnummer",
 				FULL, false, "Telefonnummer", this);
@@ -168,45 +171,42 @@ ValueChangeListener {
 		m_centerAVLayout.addComponent(m_landField);
 		m_centerAVLayout.setSpacing(true);
 		
-		if(m_create == false) {
-			
-			m_addUserButton = new Button(" neuer Ansprechpartner");
-			m_addUserButton.setPrimaryStyleName(BaseTheme.BUTTON_LINK);
-			m_addUserButton.setStyleName("cursor-hand");
-			m_addUserButton.setStyleName("lieferant");
-			m_addUserButton.setIcon(new ThemeResource("icons/user_add.png"));
-			
+		m_table = table();	
+		m_table.setHeight("200");
+	
+		m_addUserButton = new Button(" neuer Ansprechpartner");
+		m_addUserButton.setPrimaryStyleName(BaseTheme.BUTTON_LINK);
+		m_addUserButton.setStyleName("cursor-hand");
+		m_addUserButton.setStyleName("lieferant");
+		m_addUserButton.setIcon(new ThemeResource("icons/user_add.png"));
+		
+		if(lieferant == null) {
+			m_addUserButton.setVisible(false);
+		} else {
+			m_addUserButton.setVisible(true);
+		}
 			/////////////
 			m_rightVLayout = new VerticalLayout();
 			m_rightVLayout.setWidth("90%");
 			m_rightVLayout.addComponent(headLine(m_headlineLabel, "Ansprechpartner", "subHeadline"));
 			m_rightVLayout.addComponent(new Hr());	
+					
 			try {
-				List<Ansprechpartner> apList = AnsprechpartnerService.getInstance().getAllAnsprechpartnersByLieferantId(m_lieferant.getId());
-				if (apList.size() != 0) {
-					for (Ansprechpartner ansprechpartner : apList) {
-						String message = " " + ansprechpartner.getName();
-						if(ansprechpartner.getBezeichnung() != null) {
-							message += " (" + ansprechpartner.getBezeichnung() + ")";
-						}
-						m_editUserButton = new Button(message);
-						m_editUserButton.setPrimaryStyleName(BaseTheme.BUTTON_LINK);
-						m_editUserButton.setStyleName("cursor-hand");
-						m_editUserButton.setStyleName("lieferant");
-						m_editUserButton.setIcon(new ThemeResource("icons/user_edit.png"));
-						m_editUserButton.setId(String.valueOf(ansprechpartner.getId()));
-						System.out.println(m_editUserButton.getId());
-						m_rightVLayout.addComponent(m_editUserButton);
-					}
+				m_ansprechpartnerList = AnsprechpartnerService.getInstance().getAllAnsprechpartnersByLieferantId(m_lieferant.getId());
+				if (m_ansprechpartnerList.size() != 0) {
+					beans(m_ansprechpartnerList);			
+				} else {
+					m_table.setVisible(false);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
+				LOG.error(e.toString());
 			} 
-								
 			m_rightVLayout.addComponent(m_addUserButton);
+			m_rightVLayout.addComponent(m_table);				
+			
 			m_rightVLayout.setSpacing(true);
-		}
-		
+
 		m_windowHLayout = new HorizontalLayout();
 		m_windowHLayout.setWidth(FULL);
 		m_windowHLayout.setHeight(FULL);
@@ -222,13 +222,12 @@ ValueChangeListener {
 		m_windowHLayout.setComponentAlignment(m_leftVLayout, Alignment.TOP_LEFT);
 		m_windowHLayout.setComponentAlignment(m_centerKVLayout, Alignment.TOP_CENTER);
 		m_windowHLayout.setComponentAlignment(m_centerAVLayout, Alignment.TOP_RIGHT);
-		
-		if(m_create == false) {
+
 			m_windowHLayout.addComponent(m_rightVLayout);
 			m_windowHLayout.setComponentAlignment(m_centerAVLayout, Alignment.TOP_CENTER);
 			m_windowHLayout.setComponentAlignment(m_rightVLayout, Alignment.TOP_RIGHT);
 			m_windowHLayout.setExpandRatio(m_rightVLayout, 1);
-		}
+
 		
 		m_vertikalLayout = new VerticalLayout();
 		m_vertikalLayout.setWidth(FULL);
@@ -246,6 +245,8 @@ ValueChangeListener {
 		this.setComponentAlignment(m_vertikalLayout, Alignment.MIDDLE_CENTER);
 	}
 
+	
+
 	private void listeners() {
 		m_speichernButton.addClickListener(new ClickListener() {			
 			@Override
@@ -253,7 +254,13 @@ ValueChangeListener {
 				try {
 					if(validiereEingabe()) {
 						sqlStatement(0);
-						windowModal();
+						if (m_create) { 
+							windowModalYesNo();  
+						}
+						else { 
+							((Application) UI.getCurrent().getData())
+							.showDialog("Lieferant wurde geändert");
+						}
 					}
 				} catch (ConnectException e) {
 					e.printStackTrace();
@@ -269,16 +276,53 @@ ValueChangeListener {
 				close();	
 			}
 		});
+		
 		m_deaktivierenButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				try {
 					sqlStatement(1);
+					close();
 				} catch (Exception e) {
 					e.printStackTrace();
 				} 
 			}
 		});
+	
+		if(m_addUserButton.isVisible()) {
+			m_addUserButton.addClickListener(new ClickListener() {			
+				@Override
+				public void buttonClick(ClickEvent event) {
+					windowModalAnspechpartner();  
+				}
+			});
+
+			m_table.addItemClickListener(new ItemClickListener() {
+				@Override
+				public void itemClick(ItemClickEvent event) {
+					windowModalAnspechpartner((Ansprechpartner) event.getItemId());  
+				}
+			});
+		}
+
+	}
+
+
+	private void beans(List<Ansprechpartner> ansprechpartnerList) {
+		try {
+			m_container = new BeanItemContainer<Ansprechpartner>(Ansprechpartner.class,
+					ansprechpartnerList);
+			setTable();
+		} catch (Exception e) {
+			LOG.error(e.toString());
+		}	
+	}
+
+	private void setTable() {
+		m_table.setContainerDataSource(m_container);
+		m_table.setVisibleColumns(new Object[] { FIELD_NAME });
+		m_table.sort(new Object[] { FIELD_NAME }, new boolean[] { true });
+		
 	}
 
 	private void close() {
@@ -378,7 +422,7 @@ ValueChangeListener {
 				LieferantenService.getInstance().updateLieferant(m_lieferant);
 			}
 		}	else {
-			LieferantenService.getInstance().deleteLieferant(m_lieferant.getId());
+			LieferantenService.getInstance().deleteLieferant(m_lieferant);
 		}	
 	}
 
@@ -407,7 +451,7 @@ ValueChangeListener {
 		
 	}
 	
-	protected void windowModal() {
+	protected void windowModalYesNo() {
 		m_window = windowUI(m_window, "", "450", "180");		
 		m_yesNoPopup = new YesNoPopup("32x32/user.png", TEXT);
 		addComponent(m_yesNoPopup);
@@ -442,11 +486,53 @@ ValueChangeListener {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				m_window.close();
-				close();
+				if (m_create) {
+					close();
+				}
+			}
+		});
+		m_ansprechpartnerErstellen.m_speichernButton.addClickListener(new ClickListener() {			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				m_window.close();
+				if (m_create) {
+					try {
+						beans(AnsprechpartnerService.getInstance().getAllAnsprechpartnersByLieferantId(m_lieferant.getId()));
+						m_addUserButton.setVisible(true);
+						m_table.setVisible(true);
+						listeners();
+					} catch (Exception e) {
+						e.printStackTrace();
+					} 
+				} 
+				m_container.addItem(m_ansprechpartnerErstellen.m_ansprechpartner);
 			}
 		});
 	}
 	
+	protected void windowModalAnspechpartner(Ansprechpartner ansprechpartner) {
+		m_window = windowUI(m_window, "", "90%", "90%");		
+		m_ansprechpartnerErstellen = new AnsprechpartnerErstellen(ansprechpartner);
+		addComponent(m_ansprechpartnerErstellen);
+		m_window.setContent(m_ansprechpartnerErstellen);
+		m_window.setModal(true);
+		UI.getCurrent().addWindow(m_window);		
+		
+		m_ansprechpartnerErstellen.m_verwerfenButton.addClickListener(new ClickListener() {			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				m_window.close();
+			}
+		});
+		
+		m_ansprechpartnerErstellen.m_speichernButton.addClickListener(new ClickListener() {			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				m_window.close();
+				m_container.addItem(m_ansprechpartnerErstellen.m_ansprechpartner);
+			}
+		});
+	}
 	
 	private TextField textFieldSetting(TextField field, String name,
 			String width, boolean required, String descript,

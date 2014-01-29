@@ -27,9 +27,10 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 	private static final String INSERT_QUERY = "INSERT INTO " + TABLE + "(" 
 			+ "`" + FIELD_NAME + "`, " + "`" + FIELD_LIEFERANT_FK + "`, " + "`" + FIELD_BEZEICHNUNG + "`, " 
 			+ "`" + FIELD_ADRESSE_FK + "`, " + "`" + FIELD_KONTAKTE_FK + "`)" +
-					" VALUES({0},{1},{2},{3},{4},{5},{6})";
+					" VALUES({0},{1},{2},{3},{4})";
 	private static final String GET_ALL_ANSPRECHPARTNERS = "SELECT * FROM " + TABLE 
 			+ " WHERE " + FIELD_LIEFERANT_FK + " = {0} ORDER BY " + FIELD_NAME;
+	private static final String DELETE_QUERY_BY_LIEFERANT_ID = "DELETE FROM " + TABLE + " WHERE " + FIELD_LIEFERANT_FK + " = {0}";;
 	
 	
 	public AnsprechpartnerDAO() {
@@ -80,5 +81,9 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 				
 				AdresseDAO.getInstance().getAdresseById(set.getLong(FIELD_ADRESSE_FK)),
 				KontakteDAO.getInstance().getKontakteById(set.getLong(FIELD_KONTAKTE_FK)));	
+	}
+
+	public void deleteAnsprechpartnerByLieferantId(Long id) throws ConnectException, DAOException {
+		putManaged(MessageFormat.format(DELETE_QUERY_BY_LIEFERANT_ID, id));		
 	}
 }

@@ -143,6 +143,7 @@ public class ViewAbstract extends VerticalLayout {
 		m_table = new Table();
 		m_table.setSizeFull();
 		m_table.setSelectable(true);
+		m_table.setImmediate(true);
 		return m_table;
 	}
 	

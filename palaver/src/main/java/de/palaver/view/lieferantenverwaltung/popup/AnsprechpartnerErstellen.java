@@ -16,8 +16,13 @@ import de.hska.awp.palaver2.util.ViewData;
 import de.palaver.Application;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
+import de.palaver.domain.person.Adresse;
+import de.palaver.domain.person.Kontakte;
 import de.palaver.domain.person.lieferantenverwaltung.Ansprechpartner;
 import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
+import de.palaver.service.person.AdresseService;
+import de.palaver.service.person.KontakteService;
+import de.palaver.service.person.lieferantenverwaltung.AnsprechpartnerService;
 import de.palaver.view.lieferantenverwaltung.OverLieferantverwaltungView;
 
 @SuppressWarnings("serial")
@@ -48,13 +53,33 @@ ValueChangeListener {
 	public AnsprechpartnerErstellen(Lieferant lieferant) {		
 		super();
 		m_lieferant = lieferant;
+		m_create = true;
 		layout();
 		listeners();
 	}
 	
 	public AnsprechpartnerErstellen(Ansprechpartner ansprechpartner) {
 		super();
+		m_create = false;
 		layout();
+		m_nameField.setValue(ansprechpartner.getName());
+		m_bezeichnungField.setValue(ansprechpartner.getBezeichnung());
+		
+		if(ansprechpartner.getKontakte() != null) {
+			m_telefonField.setValue(ansprechpartner.getKontakte().getTelefon());
+			m_handyField.setValue(ansprechpartner.getKontakte().getHandy());
+			m_faxField.setValue(ansprechpartner.getKontakte().getFax());
+			m_emailField.setValue(ansprechpartner.getKontakte().getEmail());
+			m_webField.setValue(ansprechpartner.getKontakte().getWww());
+		}
+		
+		if(ansprechpartner.getAdresse() != null) {
+			m_strasseField.setValue(ansprechpartner.getAdresse().getStrasse());
+			m_housenummerField.setValue(ansprechpartner.getAdresse().getHausnummer());
+			m_stadtField.setValue(ansprechpartner.getAdresse().getStadt());
+			m_plzField.setValue(ansprechpartner.getAdresse().getPlz());
+			m_landField.setValue(ansprechpartner.getAdresse().getLand());
+		}
 	}
 	
 	private void layout() {
@@ -166,26 +191,26 @@ ValueChangeListener {
 	}
 	
 	protected void sqlStatement(int i) throws ConnectException, DAOException {
-//		if(i == 0) {
-//			if(m_create) {
-//			if (m_telefonField.getValue() != "" || m_handyField.getValue() != "" || m_faxField.getValue() != "" 
-//					|| m_emailField.getValue() != "" || m_webField.getValue() != "") {
-//				m_kontakte = new Kontakte(m_emailField.getValue(), m_handyField.getValue(), m_telefonField.getValue(),
-//						m_faxField.getValue(), m_webField.getValue());
-//				m_kontakte.setId(KontakteService.getInstance().createKontakte(m_kontakte));
-//			}
-//			if (m_strasseField.getValue() != "" || m_housenummerField.getValue() != "" 
-//					|| m_stadtField.getValue() != "" || m_plzField.getValue() != ""
-//					|| m_landField.getValue() != "") {
-//				m_adresse = new Adresse(m_strasseField.getValue(), m_housenummerField.getValue(), 
-//						m_stadtField.getValue(), m_plzField.getValue(), m_landField.getValue());
-//				m_adresse.setId(AdresseService.getInstance().createAdresse(m_adresse));
-//			}
-//			m_ansprechpartner = new Ansprechpartner(m_nameField.getValue(), m_lieferant,
-//					m_bezeichnungField.getValue(), m_adresse, m_kontakte);
-//			m_ansprechpartner.setId(AnsprechpartnerService.getInstance().createAnsprechpartner(m_ansprechpartner));
-//			}
-//		}			
+		if(i == 0) {
+			if(m_create) {
+				if (m_telefonField.getValue() != "" || m_handyField.getValue() != "" || m_faxField.getValue() != "" 
+						|| m_emailField.getValue() != "" || m_webField.getValue() != "") {
+					m_kontakte = new Kontakte(m_emailField.getValue(), m_handyField.getValue(), m_telefonField.getValue(),
+							m_faxField.getValue(), m_webField.getValue());
+					m_kontakte.setId(KontakteService.getInstance().createKontakte(m_kontakte));
+				}
+				if (m_strasseField.getValue() != "" || m_housenummerField.getValue() != "" 
+						|| m_stadtField.getValue() != "" || m_plzField.getValue() != ""
+						|| m_landField.getValue() != "") {
+					m_adresse = new Adresse(m_strasseField.getValue(), m_housenummerField.getValue(), 
+							m_stadtField.getValue(), m_plzField.getValue(), m_landField.getValue());
+					m_adresse.setId(AdresseService.getInstance().createAdresse(m_adresse));
+				}
+				m_ansprechpartner = new Ansprechpartner(m_nameField.getValue(), m_lieferant,
+						m_bezeichnungField.getValue(), m_adresse, m_kontakte);
+				m_ansprechpartner.setId(AnsprechpartnerService.getInstance().createAnsprechpartner(m_ansprechpartner));
+			}
+		}			
 	}
 
 	protected boolean validiereEingabe() {

@@ -1,5 +1,8 @@
 package de.palaver.view.lieferantenverwaltung;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.vaadin.ui.HorizontalLayout;
 
 import de.palaver.domain.person.Adresse;
@@ -18,6 +21,9 @@ public class OverLieferantverwaltungView extends ViewAbstract {
 	protected Ansprechpartner m_ansprechpartner;
 	protected Adresse m_adresse;
 	protected Kontakte m_kontakte;
+	
+
+	protected List<Ansprechpartner> m_ansprechpartnerList = new ArrayList<Ansprechpartner>();;
 	
 	protected OverLieferantverwaltungView() {
 		super();

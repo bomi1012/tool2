@@ -5,6 +5,9 @@ import java.util.List;
 
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
+import de.palaver.dao.person.AdresseDAO;
+import de.palaver.dao.person.KontakteDAO;
+import de.palaver.dao.person.lieferantenverwaltung.AnsprechpartnerDAO;
 import de.palaver.dao.person.lieferantenverwaltung.LieferantDAO;
 import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
 
@@ -41,8 +44,16 @@ public class LieferantenService {
 		
 	}
 
-	public void deleteLieferant(Long id) throws ConnectException, DAOException {
-		LieferantDAO.getInstance().deleteLieferant(id);		
+	public void deleteLieferant(Lieferant lieferant) throws ConnectException, DAOException {
+		
+		AnsprechpartnerDAO.getInstance().deleteAnsprechpartnerByLieferantId(lieferant.getId());
+		LieferantDAO.getInstance().deleteLieferant(lieferant.getId());
+		if(lieferant.getAdresse() != null) {
+			AdresseDAO.getInstance().deleteAdresse(lieferant.getAdresse().getId());
+		}
+		if(lieferant.getKontakte() != null) {
+			KontakteDAO.getInstance().deleteKontakte(lieferant.getKontakte().getId());
+		}
 	}
 	
 	
