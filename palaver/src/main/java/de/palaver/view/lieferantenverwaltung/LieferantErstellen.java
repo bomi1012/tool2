@@ -255,7 +255,7 @@ ValueChangeListener {
 					if(validiereEingabe()) {
 						sqlStatement(0);
 						if (m_create) { 
-							windowModalYesNo();  
+							windowModalYesNo(); 
 						}
 						else { 
 							((Application) UI.getCurrent().getData())
@@ -475,7 +475,7 @@ ValueChangeListener {
 	}
 
 	protected void windowModalAnspechpartner() {
-		m_window = windowUI(m_window, "", "90%", "90%");		
+		m_window = windowUI(m_window, "", "80%", "80%");		
 		m_ansprechpartnerErstellen = new AnsprechpartnerErstellen(m_lieferant);
 		addComponent(m_ansprechpartnerErstellen);
 		m_window.setContent(m_ansprechpartnerErstellen);
@@ -501,6 +501,7 @@ ValueChangeListener {
 						m_addUserButton.setVisible(true);
 						m_table.setVisible(true);
 						listeners();
+						m_create = false;
 					} catch (Exception e) {
 						e.printStackTrace();
 					} 
@@ -510,8 +511,8 @@ ValueChangeListener {
 		});
 	}
 	
-	protected void windowModalAnspechpartner(Ansprechpartner ansprechpartner) {
-		m_window = windowUI(m_window, "", "90%", "90%");		
+	protected void windowModalAnspechpartner(final Ansprechpartner ansprechpartner) {
+		m_window = windowUI(m_window, "Ansprechpartner ändern", "80%", "80%");		
 		m_ansprechpartnerErstellen = new AnsprechpartnerErstellen(ansprechpartner);
 		addComponent(m_ansprechpartnerErstellen);
 		m_window.setContent(m_ansprechpartnerErstellen);
@@ -529,6 +530,7 @@ ValueChangeListener {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				m_window.close();
+				m_container.removeItem(ansprechpartner);
 				m_container.addItem(m_ansprechpartnerErstellen.m_ansprechpartner);
 			}
 		});

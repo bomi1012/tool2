@@ -30,6 +30,14 @@ public class AnsprechpartnerService extends AnsprechpartnerDAO {
 	public List<Ansprechpartner> getAllAnsprechpartnersByLieferantId(Long id) throws ConnectException, DAOException, SQLException {
 		return AnsprechpartnerDAO.getInstance().getAllAnsprechpartnersByLieferantId(id);
 	}
+
+	public void updateAnsprechpartner(Ansprechpartner ansprechpartner) throws ConnectException, DAOException {
+		AnsprechpartnerDAO.getInstance().updateAnsprechpartner(ansprechpartner);
+	}
+
+	public void deleteAnsprechpartner(Long id) throws ConnectException, DAOException {
+		AnsprechpartnerDAO.getInstance().deleteAnsprechpartner(id);		
+	}
 	
 	
 }

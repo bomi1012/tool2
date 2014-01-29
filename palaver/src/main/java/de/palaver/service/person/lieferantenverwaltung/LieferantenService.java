@@ -55,7 +55,7 @@ public class LieferantenService {
 			KontakteDAO.getInstance().deleteKontakte(lieferant.getKontakte().getId());
 		}
 	}
-	
+
 	
 	
 	

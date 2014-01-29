@@ -53,6 +53,7 @@ ValueChangeListener {
 	public AnsprechpartnerErstellen(Lieferant lieferant) {		
 		super();
 		m_lieferant = lieferant;
+		m_ansprechpartner = null;
 		m_create = true;
 		layout();
 		listeners();
@@ -60,8 +61,11 @@ ValueChangeListener {
 	
 	public AnsprechpartnerErstellen(Ansprechpartner ansprechpartner) {
 		super();
+		m_ansprechpartner = ansprechpartner;
 		m_create = false;
 		layout();
+		listeners();
+		m_deaktivierenButton.setVisible(true);
 		m_nameField.setValue(ansprechpartner.getName());
 		m_bezeichnungField.setValue(ansprechpartner.getBezeichnung());
 		
@@ -210,7 +214,62 @@ ValueChangeListener {
 						m_bezeichnungField.getValue(), m_adresse, m_kontakte);
 				m_ansprechpartner.setId(AnsprechpartnerService.getInstance().createAnsprechpartner(m_ansprechpartner));
 			}
-		}			
+			else {				
+				m_ansprechpartner.setName(m_nameField.getValue());
+				m_ansprechpartner.setBezeichnung(m_bezeichnungField.getValue());
+				
+				if (m_ansprechpartner.getAdresse() != null) {
+					if (m_strasseField.getValue() == "" && m_housenummerField.getValue() == "" 
+							&& m_stadtField.getValue() == "" && m_plzField.getValue() == ""
+							&& m_landField.getValue() == "") { //remove adresse
+						AdresseService.getInstance().deleteAdresse(m_ansprechpartner.getAdresse().getId());
+						m_ansprechpartner.setAdresse(null);
+					} else {
+						m_ansprechpartner.getAdresse().setStrasse(m_strasseField.getValue());
+						m_ansprechpartner.getAdresse().setHausnummer(m_housenummerField.getValue()); 
+						m_ansprechpartner.getAdresse().setStadt(m_stadtField.getValue());
+						m_ansprechpartner.getAdresse().setPlz(m_plzField.getValue());
+						m_ansprechpartner.getAdresse().setLand(m_landField.getValue());
+						AdresseService.getInstance().updateAdresse(m_ansprechpartner.getAdresse());
+					}
+				} else {
+					if (m_strasseField.getValue() != "" || m_housenummerField.getValue() != "" 
+							|| m_stadtField.getValue() != "" || m_plzField.getValue() != ""
+							|| m_landField.getValue() != "") {
+						m_adresse = new Adresse(m_strasseField.getValue(), m_housenummerField.getValue(), 
+								m_stadtField.getValue(), m_plzField.getValue(), m_landField.getValue());
+						m_adresse.setId(AdresseService.getInstance().createAdresse(m_adresse));
+						m_ansprechpartner.setAdresse(m_adresse);
+					}
+				}
+				
+				if (m_ansprechpartner.getKontakte() != null) {
+					if (m_telefonField.getValue() == "" && m_handyField.getValue() == "" && m_faxField.getValue() == "" 
+							&& m_emailField.getValue() == "" && m_webField.getValue() == "") { //remove 
+						KontakteService.getInstance().deleteKontakte(m_ansprechpartner.getKontakte().getId());
+						m_ansprechpartner.setKontakte(null);
+					} else {
+						m_ansprechpartner.getKontakte().setTelefon(m_telefonField.getValue());
+						m_ansprechpartner.getKontakte().setHandy(m_handyField.getValue()); 
+						m_ansprechpartner.getKontakte().setFax(m_faxField.getValue());
+						m_ansprechpartner.getKontakte().setEmail(m_emailField.getValue());
+						m_ansprechpartner.getKontakte().setWww(m_webField.getValue());
+						KontakteService.getInstance().updatekontakte(m_ansprechpartner.getKontakte());
+					}
+				} else {
+					if (m_telefonField.getValue() != "" || m_handyField.getValue() != "" || m_faxField.getValue() != "" 
+							|| m_emailField.getValue() != "" || m_webField.getValue() != "") {
+						m_kontakte = new Kontakte(m_emailField.getValue(), m_handyField.getValue(), m_telefonField.getValue(),
+								m_faxField.getValue(), m_webField.getValue());
+						m_kontakte.setId(KontakteService.getInstance().createKontakte(m_kontakte));
+						m_ansprechpartner.setKontakte(m_kontakte);
+					}
+				}
+				AnsprechpartnerService.getInstance().updateAnsprechpartner(m_ansprechpartner);
+			}
+		}	else {
+			AnsprechpartnerService.getInstance().deleteAnsprechpartner(m_ansprechpartner.getId());
+		}		
 	}
 
 	protected boolean validiereEingabe() {

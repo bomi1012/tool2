@@ -30,7 +30,12 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 					" VALUES({0},{1},{2},{3},{4})";
 	private static final String GET_ALL_ANSPRECHPARTNERS = "SELECT * FROM " + TABLE 
 			+ " WHERE " + FIELD_LIEFERANT_FK + " = {0} ORDER BY " + FIELD_NAME;
-	private static final String DELETE_QUERY_BY_LIEFERANT_ID = "DELETE FROM " + TABLE + " WHERE " + FIELD_LIEFERANT_FK + " = {0}";;
+	private static final String DELETE_QUERY_BY_LIEFERANT_ID = "DELETE FROM " + TABLE + " WHERE " + FIELD_LIEFERANT_FK + " = {0}";
+	private static final String DELETE_QUERY = "DELETE FROM " + TABLE + " WHERE " + FIELD_ID + " = {0}";
+	private static final String UPDATE_QUERY = "UPDATE " + TABLE + " SET "
+			+ FIELD_NAME + " = {0}, " + FIELD_BEZEICHNUNG + " = {1}, "
+			+ FIELD_ADRESSE_FK + " = {2}, " + FIELD_KONTAKTE_FK + " = {3} WHERE " 
+			+ FIELD_ID + " = {4}";
 	
 	
 	public AnsprechpartnerDAO() {
@@ -85,5 +90,24 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 
 	public void deleteAnsprechpartnerByLieferantId(Long id) throws ConnectException, DAOException {
 		putManaged(MessageFormat.format(DELETE_QUERY_BY_LIEFERANT_ID, id));		
+	}
+
+	public void updateAnsprechpartner(Ansprechpartner ansprechpartner) throws ConnectException, DAOException {
+		String kontakt = null;
+		String adresse = null;
+		if (ansprechpartner.getKontakte() != null) {
+			kontakt = String.valueOf(ansprechpartner.getKontakte().getId());
+		}
+		if (ansprechpartner.getAdresse() != null) {
+			adresse = String.valueOf(ansprechpartner.getAdresse().getId());
+		}
+		putManaged(MessageFormat.format(UPDATE_QUERY, "'" + ansprechpartner.getName()
+				+ "'", "'" + ansprechpartner.getBezeichnung() + "'", 
+				adresse, kontakt, ansprechpartner.getId()));
+		
+	}
+
+	public void deleteAnsprechpartner(Long id) throws ConnectException, DAOException {
+		putManaged(MessageFormat.format(DELETE_QUERY, id));	
 	}
 }
