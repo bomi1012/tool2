@@ -86,6 +86,14 @@ ValueChangeListener {
 		
 		setLayout();
 		
+		if(!m_bestellung.getStatus()) {
+			bestellen();
+		}
+	}
+	
+	private void bestellen() {
+		besstelenLayout();
+		excelGenerieren(m_bestellung);
 	}
 	
 	private void setLayout() {
@@ -114,8 +122,7 @@ ValueChangeListener {
 		m_bestellenButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				besstelenLayout();
-				excelGenerieren(m_bestellung);
+				bestellen();
 			}
 		});	
 		
