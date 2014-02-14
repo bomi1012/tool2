@@ -102,7 +102,7 @@ public class GrundbedarfModel implements Serializable{
 	
 	@SuppressWarnings("serial")
 	public void init(final Artikel artikel) {
-m_artikel = artikel;
+		m_artikel = artikel;
 		
 		m_artikelId = artikel.getId();
 		

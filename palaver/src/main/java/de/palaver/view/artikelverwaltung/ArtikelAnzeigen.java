@@ -143,14 +143,14 @@ public class ArtikelAnzeigen extends OverAnzeigen implements View {
 	private void setTable() {
 		m_filterTable.setContainerDataSource(m_container);
 		m_filterTable.setVisibleColumns(new Object[] { FIELD_NAME, FIELD_ARTIKEL_NR, FIELD_LIEFERANT, FIELD_KATEGORIE, 
-				FIELD_LAGERORT, FIELD_PREIS, FIELD_STANDARD, FIELD_GRUNDBEDARF, FIELD_BESTELLGROESSE, FIELD_NOTIZ });			
+				FIELD_LAGERORT, FIELD_PREIS, FIELD_STANDARD, FIELD_GRUNDBEDARF, FIELD_BESTELLGROESSE_LT1, FIELD_NOTIZ });			
 		m_filterTable.sort(new Object[] { FIELD_NAME }, new boolean[] { true });			
 		m_filterTable.setColumnWidth(FIELD_KATEGORIE, 70);
 		m_filterTable.setColumnWidth(FIELD_ARTIKEL_NR, 60);
 		m_filterTable.setColumnHeader(FIELD_ARTIKEL_NR, "nummer");
 		m_filterTable.setColumnWidth(FIELD_PREIS, 50);
-		m_filterTable.setColumnWidth(FIELD_BESTELLGROESSE, 50);
-		m_filterTable.setColumnHeader(FIELD_BESTELLGROESSE, "gebinde");
+		m_filterTable.setColumnWidth(FIELD_BESTELLGROESSE_LT1, 50);
+		m_filterTable.setColumnHeader(FIELD_BESTELLGROESSE_LT1, "gebinde");
 
 		m_filterTable.setCellStyleGenerator(new CellStyleGenerator() {
 			@Override

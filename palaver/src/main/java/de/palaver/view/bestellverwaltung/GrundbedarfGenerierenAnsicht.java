@@ -224,13 +224,13 @@ ValueChangeListener {
 	@SuppressWarnings({ "static-access", "deprecation" })
 	private void setTable() {
 		m_filterTable.setContainerDataSource(m_container);
-		m_filterTable.setVisibleColumns(new Object[] { FIELD_ARTIKEL_NAME, FIELD_BESTELLGROESSE, 
+		m_filterTable.setVisibleColumns(new Object[] { FIELD_ARTIKEL_NAME, FIELD_BESTELLGROESSE_LT1, 
 				FIELD_LIEFERDATUM_1, FIELD_SUMME_1, FIELD_LIEFERDATUM_2, FIELD_SUMME_2,
 				FIELD_MENGENEINHEIT, FIELD_IGNORE});
 		m_filterTable.sort(new Object[] { FIELD_ARTIKEL_NAME }, new boolean[] { true });
 		m_filterTable.setColumnWidth(FIELD_IGNORE, 70);
 		m_filterTable.setColumnHeader(FIELD_IGNORE, "ignorieren");	
-		m_filterTable.setColumnWidth(FIELD_BESTELLGROESSE, 60);
+		m_filterTable.setColumnWidth(FIELD_BESTELLGROESSE_LT1, 60);
 		m_filterTable.setColumnWidth(FIELD_SUMME_1, 60);
 		m_filterTable.setColumnWidth(FIELD_SUMME_2, 60);
 		m_filterTable.setColumnWidth(FIELD_MENGENEINHEIT, 45);
@@ -239,7 +239,7 @@ ValueChangeListener {
 		m_filterTable.setColumnAlignment(FIELD_SUMME_1, m_filterTable.ALIGN_CENTER);
 		m_filterTable.setColumnAlignment(FIELD_SUMME_2, m_filterTable.ALIGN_CENTER);
 		m_filterTable.setColumnAlignment(FIELD_MENGENEINHEIT, m_filterTable.ALIGN_CENTER);
-		m_filterTable.setColumnAlignment(FIELD_BESTELLGROESSE, m_filterTable.ALIGN_CENTER);	
+		m_filterTable.setColumnAlignment(FIELD_BESTELLGROESSE_LT1, m_filterTable.ALIGN_CENTER);	
 	}
 
 	private void windowModal(final Artikel artikel) {

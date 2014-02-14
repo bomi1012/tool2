@@ -28,6 +28,8 @@ public class AbstractBestellverwaltungDAO extends AbstractDAO {
 	protected static final String FIELD_LIEFERMENGE1 = "liefermenge1";
 	protected static final String FIELD_LIEFERMENGE2 = "liefermenge2";
 	protected static final String FIELD_STATUS = "status";
+	public static final String FIELD_STATUS_LT_1 = "statusLT1";
+	public static final String FIELD_STATUS_LT_2 = "statusLT2";
 	protected static final String FIELD_KATEGORIE = "kategorie";
 	
 	
@@ -84,6 +86,7 @@ public class AbstractBestellverwaltungDAO extends AbstractDAO {
 				BestellungDAO.getInstance().getBestellungById(set.getLong(FIELD_BESTELLUNG_FK)), 
 				set.getDouble(FIELD_LIEFERMENGE1), 
 				set.getDouble(FIELD_LIEFERMENGE2), 
-				set.getBoolean(FIELD_STATUS));	
+				set.getBoolean(FIELD_STATUS_LT_1),
+				set.getBoolean(FIELD_STATUS_LT_2));	
 	}
 }

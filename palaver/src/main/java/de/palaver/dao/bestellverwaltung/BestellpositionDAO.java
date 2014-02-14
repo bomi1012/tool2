@@ -30,11 +30,14 @@ public class BestellpositionDAO extends AbstractBestellverwaltungDAO {
 	
 	private final static String INSERT_QUERY = "INSERT INTO " + TABLE_BP + "(" 
 			+ "`" + FIELD_ARTIKEL_FK + "`, " + "`" + FIELD_BESTELLUNG_FK + "`, " + "`" + FIELD_LIEFERMENGE1 + "`, " 
-			+ "`" + FIELD_LIEFERMENGE2 + "`, " + "`" + FIELD_STATUS + "`)" +
-					" VALUES({0},{1},{2},{3},{4})";
+			+ "`" + FIELD_LIEFERMENGE2 + "`, " + "`" + FIELD_STATUS_LT_1 + "`, " + "`" + FIELD_STATUS_LT_2 + "`)" +
+					" VALUES({0},{1},{2},{3},{4},{5})";
 	
 	private final static String DELETE_BY_BESTELLUNG_ID = "DELETE FROM " + TABLE_BP + " WHERE " + 
 			FIELD_BESTELLUNG_FK + " = {0}";
+
+	private static final String UPDATE_STATUS = "UPDATE " + TABLE_BP + " SET {0} = {1} WHERE " + 
+			FIELD_ID + " = {2}";
 	
 	
 //	private static final String GET_BESTELLPOSITION_BY_ID = "SELECT * FROM " + TABLE + " WHERE " + ID + "= {0}";
@@ -63,17 +66,6 @@ public class BestellpositionDAO extends AbstractBestellverwaltungDAO {
 		return instance;
 	}
 
-	public void createBestellposition(Bestellposition bestellposition) throws ConnectException, DAOException {
-		putManaged(MessageFormat.format(				
-				INSERT_QUERY, 
-				bestellposition.getArtikel().getId(),
-				bestellposition.getBestellung().getId(),
-				bestellposition.getLiefermenge1(),
-				bestellposition.getLiefermenge2(),
-				Util.convertBoolean(bestellposition.isStatus())));	
-		
-	}
-
 	public List<Bestellposition> getBestellpositionenByBestellungId(Long id) throws ConnectException, DAOException, SQLException {
 		m_listBestellposition = new ArrayList<Bestellposition>();
 		m_set = getManaged(MessageFormat.format(GET_BESTELLPOSITIONEN_BY_BESTELLUNG_ID, id));
@@ -85,6 +77,23 @@ public class BestellpositionDAO extends AbstractBestellverwaltungDAO {
 
 	public void deleteBestellpositionenByBestellungId(long id) throws ConnectException, DAOException {
 		putManaged(MessageFormat.format(DELETE_BY_BESTELLUNG_ID, id));			
+	}
+	
+	public void createBestellposition(Bestellposition bestellposition) throws ConnectException, DAOException {
+		putManaged(MessageFormat.format(				
+				INSERT_QUERY, 
+				bestellposition.getArtikel().getId(),
+				bestellposition.getBestellung().getId(),
+				bestellposition.getLiefermenge1(),
+				bestellposition.getLiefermenge2(),
+				Util.convertBoolean(bestellposition.isStatusLT1()),
+				Util.convertBoolean(bestellposition.isStatusLT2())));	
+		
+	}
+
+	public void updateStatus(Long id, String fieldStatus, boolean value) throws ConnectException, DAOException {
+		putManaged(MessageFormat.format(UPDATE_STATUS, fieldStatus, value, id));	
+		
 	}
 	
 //	/**

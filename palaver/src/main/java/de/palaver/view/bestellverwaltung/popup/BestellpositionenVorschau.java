@@ -113,7 +113,7 @@ ValueChangeListener{
 			public String getStyle(CustomTable source, Object itemId, Object propertyId) {
 				Bestellposition bestellposition = (Bestellposition) itemId;
 				if (FIELD_STATUS.equals(propertyId)) {
-					return bestellposition.isStatus() ? "check" : "cross";
+					return bestellposition.isStatusLT1() ? "check" : "cross";
 				}
 				return "";				
 			}

@@ -16,56 +16,64 @@ public class Bestellposition extends EntityId implements java.io.Serializable {
 	private Bestellung m_bestellung;
 	private Double m_liefermenge1;
 	private Double m_liefermenge2;
-	private boolean m_status;
+	private boolean m_statusLT1;
+	private boolean m_statusLT2;
 		
 
 	public Artikel getArtikel() {
 		return m_artikel;
 	}
 	public void setArtikel(Artikel artikel) {
-		this.m_artikel = artikel;
+		m_artikel = artikel;
 	}
 
 	public Bestellung getBestellung() {
 		return m_bestellung;
 	}
 	public void setBestellung(Bestellung bestellung) {
-		this.m_bestellung = bestellung;
+		m_bestellung = bestellung;
 	}
 
 	public Double getLiefermenge1() {
 		return m_liefermenge1;
 	}
 	public void setLiefermenge1(Double liefermenge1) {
-		this.m_liefermenge1 = liefermenge1;
+		m_liefermenge1 = liefermenge1;
 	}
 
 	public Double getLiefermenge2() {
 		return m_liefermenge2;
 	}
 	public void setLiefermenge2(Double liefermenge2) {
-		this.m_liefermenge2 = liefermenge2;
+		m_liefermenge2 = liefermenge2;
 	}
 
-	public boolean isStatus() {
-		return m_status;
+	public boolean isStatusLT1() {
+		return m_statusLT1;
 	}
-	public void setStatus(boolean status) {
-		this.m_status = status;
+	public void setStatusLT1(boolean status) {
+		m_statusLT1 = status;
 	}
-
+	
+	public boolean isStatusLT2() {
+		return m_statusLT2;
+	}
+	public void setStatusLT2(boolean status) {
+		m_statusLT2 = status;
+	}
 
 	public Bestellposition() {
 		super();
 	}
 	public Bestellposition(Long id, Artikel artikel, Bestellung bestellung,
-			Double liefertermin1, Double liefertermin2, boolean status) {
+			Double liefertermin1, Double liefertermin2, boolean statusLT1, boolean statusLT2) {
 		super(id);
 		m_artikel = artikel;
 		m_bestellung = bestellung;
 		m_liefermenge1 = liefertermin1;
 		m_liefermenge2 = liefertermin2;
-		m_status = status;
+		m_statusLT1 = statusLT1;
+		m_statusLT2 = statusLT2;
 	}
 
 	public Bestellposition(Artikel artikel, Bestellung bestellung,
@@ -75,7 +83,7 @@ public class Bestellposition extends EntityId implements java.io.Serializable {
 		m_bestellung = bestellung;
 		m_liefermenge1 = liefermenge1;
 		m_liefermenge2 = liefermenge2;
-		m_status = status;
+		m_statusLT1 = status;
 	}
 	@Override
 	public int hashCode() {

@@ -9,6 +9,7 @@ import java.util.List;
 
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
+import de.palaver.dao.bestellverwaltung.AbstractBestellverwaltungDAO;
 import de.palaver.dao.bestellverwaltung.BestellpositionDAO;
 import de.palaver.domain.bestellverwaltung.Bestellposition;
 
@@ -46,6 +47,14 @@ public class BestellpositionService {
 	public void deleteBestellpositionenByBestellungId(long id) throws ConnectException, DAOException {
 		BestellpositionDAO.getInstance().deleteBestellpositionenByBestellungId(id);
 		
+	}
+
+	public void updateStatus(Long id, int lt, boolean value) throws ConnectException, DAOException {
+		if(lt == 1) {
+			BestellpositionDAO.getInstance().updateStatus(id, AbstractBestellverwaltungDAO.FIELD_STATUS_LT_1, value);
+		} else {
+			BestellpositionDAO.getInstance().updateStatus(id, AbstractBestellverwaltungDAO.FIELD_STATUS_LT_2, value);
+		}
 	}
 	
 	

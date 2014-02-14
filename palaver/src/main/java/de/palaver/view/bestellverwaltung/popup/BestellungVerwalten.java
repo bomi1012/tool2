@@ -1,9 +1,17 @@
 package de.palaver.view.bestellverwaltung.popup;
 
 import java.io.File;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.tepi.filtertable.FilterTable;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.Resource;
@@ -24,14 +32,22 @@ import com.vaadin.ui.VerticalLayout;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.customFilter;
+import de.hska.awp.palaver2.util.customFilterDecorator;
+import de.palaver.dao.ConnectException;
+import de.palaver.dao.DAOException;
+import de.palaver.domain.bestellverwaltung.Bestellposition;
 import de.palaver.domain.bestellverwaltung.Bestellung;
+import de.palaver.service.bestellverwaltung.BestellpositionService;
 import de.palaver.service.bestellverwaltung.BestellungService;
 import de.palaver.service.emailversand.MailService;
 import de.palaver.view.bestellverwaltung.OverBestellverwaltungView;
+import de.palaver.view.models.WarenannahmeModel;
 
 @SuppressWarnings("serial")
 public class BestellungVerwalten extends OverBestellverwaltungView implements View,
 ValueChangeListener {
+	private static final Logger LOG = LoggerFactory.getLogger(BestellungVerwalten.class.getName());
 
 	private VerticalLayout m_left;
 	private VerticalLayout m_center;
@@ -45,6 +61,8 @@ ValueChangeListener {
 	private Button m_downloadButton;
 	private String m_anhangPath;
 	private CheckBox m_bestelltCheckBox;
+	private List<WarenannahmeModel>  m_warenannahmes;
+	private BeanItemContainer<WarenannahmeModel> m_container;
 
 	public BestellungVerwalten() {
 		super();
@@ -95,6 +113,10 @@ ValueChangeListener {
 		besstelenLayout();
 		excelGenerieren(m_bestellung);
 	}
+	private void annahme() throws ConnectException, DAOException, SQLException {
+		annahmeLayout();
+		beans(m_bestellung);
+	}
 	
 	private void setLayout() {
 		if(m_horizontalLayout != null) {
@@ -125,6 +147,21 @@ ValueChangeListener {
 				bestellen();
 			}
 		});	
+		
+		m_annahmeButton.addClickListener(new ClickListener() {			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				try {
+					annahme();
+				} catch (ConnectException e) {
+					e.printStackTrace();
+				} catch (DAOException e) {
+					e.printStackTrace();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		
 		/** ******************************** */
 		m_sendenButton.addClickListener(new ClickListener() {			
@@ -208,6 +245,69 @@ ValueChangeListener {
 		}
 		m_betreffField.setValue("Bestellung - Muster");
 	}
+	
+	private void annahmeLayout() {
+		m_center = new VerticalLayout();
+		m_center.setWidth("95%");
+		
+		m_filterTable = new FilterTable();
+		m_filterTable.setWidth("95%");
+		m_filterTable.setSelectable(true);
+		m_filterTable.setFilterBarVisible(true);
+		m_filterTable.setFilterGenerator(new customFilter());
+		m_filterTable.setFilterDecorator(new customFilterDecorator());
+		m_filterTable.setSelectable(true);
+		
+		m_center.addComponent(m_filterTable);
+		m_center.setComponentAlignment(m_filterTable, Alignment.TOP_CENTER);
+		m_center.setSpacing(true);
+		
+		
+		////////////////////
+		setLayout();
+		////////////////////
+	}
+	
+	private void beans(Bestellung bestellung) throws ConnectException, DAOException, SQLException {
+		m_warenannahmes = new ArrayList<WarenannahmeModel>();
+		m_bestellpositions = BestellpositionService.getInstance().getBestellpositionenByBestellungId(bestellung.getId());
+		
+		for (Bestellposition bestellposition : m_bestellpositions) {
+			WarenannahmeModel wm = new WarenannahmeModel(bestellposition);
+			m_warenannahmes.add(wm);
+		}
+		
+		try {
+			m_container = new BeanItemContainer<WarenannahmeModel>(WarenannahmeModel.class, m_warenannahmes);
+			setTable();
+		} catch (Exception e) {
+			LOG.error(e.toString());
+		}	
+	}
+	
+	private void setTable() {
+		//TODO:
+		m_filterTable.setContainerDataSource(m_container);
+		if(m_bestellung.getLieferant().isMehrereliefertermine()) {
+		m_filterTable.setVisibleColumns(new Object[] { FIELD_ARTIKEL_NAME, FIELD_BESTELLGROESSE_LT1, "geliefertLT1",
+				FIELD_BESTELLGROESSE_LT2, "geliefertLT2"});
+		} else {
+			m_filterTable.setVisibleColumns(new Object[] { FIELD_ARTIKEL_NAME, FIELD_BESTELLGROESSE_LT1, "geliefertLT1"});
+		}
+		m_filterTable.sort(new Object[] { FIELD_ARTIKEL_NAME }, new boolean[] { true });
+		m_filterTable.setColumnWidth("geliefertLT1", 55);
+		m_filterTable.setColumnHeader("geliefertLT1", "OK");	
+		m_filterTable.setColumnWidth(FIELD_BESTELLGROESSE_LT1, 70);
+		m_filterTable.setColumnHeader(FIELD_BESTELLGROESSE_LT1, "menge");	
+		
+		if(m_bestellung.getLieferant().isMehrereliefertermine()) {
+			m_filterTable.setColumnWidth("geliefertLT2", 55);
+			m_filterTable.setColumnHeader("geliefertLT2", "geliefert");	
+			m_filterTable.setColumnWidth(FIELD_BESTELLGROESSE_LT2, 70);
+			m_filterTable.setColumnHeader(FIELD_BESTELLGROESSE_LT2, "menge");
+		}
+	}
+	
 	
 	private TextField textFieldSettingE(TextField field, String name,
 			String width, boolean required, String descript,

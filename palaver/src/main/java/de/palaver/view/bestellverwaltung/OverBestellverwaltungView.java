@@ -47,7 +47,7 @@ public class OverBestellverwaltungView extends ViewAbstract {
 
 	protected Button m_bestellenButton;
 
-	private Button m_annahmeButton;
+	protected Button m_annahmeButton;
 	
 	
 	protected OverBestellverwaltungView() {
