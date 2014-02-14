@@ -104,7 +104,7 @@ public class WarenannahmeModel implements Serializable{
 			public void valueChange(ValueChangeEvent event) {
 				setEnable();
 				try {
-					changeStatus(bestellposition.getId(), 1, ((Boolean) m_geliefertLT2.getValue()).booleanValue());
+					changeStatus(bestellposition.getId(), 1, ((Boolean) m_geliefertLT1.getValue()).booleanValue());
 				} catch (ConnectException e) {
 					e.printStackTrace();
 				} catch (DAOException e) {
@@ -139,7 +139,7 @@ public class WarenannahmeModel implements Serializable{
 			boolean value2 = ((Boolean) m_geliefertLT2.getValue()).booleanValue();
 			m_bestellgroesseLT2.setEnabled(!value2);
 			if(value1 && value2) {
-				m_artikelName.setEnabled(true);
+				m_artikelName.setEnabled(false);
 			}
 		}
 	}

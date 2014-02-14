@@ -23,17 +23,16 @@ public abstract class AbstractDAO {
 	}
 
 	@SuppressWarnings({ "resource" })
-	protected synchronized ResultSet getManaged(String querry)
+	protected synchronized ResultSet getManaged(String query)
 			throws ConnectException, DAOException, SQLException {
 		openConnection();
-
 		ResultSet result = null;
 		CachedRowSet cache = new CachedRowSetImpl();
 		try {
-			result = m_statement.executeQuery(querry);
+			result = m_statement.executeQuery(query);
 			cache.populate(result);
 		} catch (Exception e) {
-			throw new DAOException("Statement error: " + querry
+			throw new DAOException("Statement error: " + query
 					+ " caused by: " + e.toString());
 		} finally {
 			closeConnection();
@@ -47,6 +46,7 @@ public abstract class AbstractDAO {
 	@SuppressWarnings({ "resource" })
 	protected synchronized ResultSet getMany(String querry)
 			throws ConnectException, DAOException, SQLException {
+		
 		ResultSet result = null;
 		CachedRowSet cache = new CachedRowSetImpl();
 		try {
@@ -60,39 +60,38 @@ public abstract class AbstractDAO {
 		return cache.getOriginal();
 	}
 
-	protected synchronized Long insert(String querry) throws ConnectException,
+	protected synchronized Long insert(String query) throws ConnectException,
 			DAOException {
 		openConnection();
 		try {
-			m_statement.executeUpdate(querry, Statement.RETURN_GENERATED_KEYS);
+			m_statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
 			m_set = m_statement.getGeneratedKeys();
 			m_set.next();
 			m_lastId = m_set.getLong(1);
 		} catch (Exception e) {
-			throw new DAOException("Statement error: " + querry);
+			throw new DAOException("Statement error: " + query);
 		} finally {
 			closeConnection();
 		}
 		return m_lastId;
 	}
 
-	protected synchronized void putManaged(String querry)
+	protected synchronized void putManaged(String query)
 			throws ConnectException, DAOException {
 		openConnection();
 		try {
-			m_statement.executeUpdate(querry);
+			m_statement.executeUpdate(query);
 		} catch (Exception e) {
-			throw new DAOException("Statement error: " + querry);
+			throw new DAOException("Statement error: " + query);
 		} finally {
 			closeConnection();
 		}
 	}
 
 	@Deprecated
-	protected ResultSet get(String querry) throws SQLException {
+	protected ResultSet get(String query) throws SQLException {
 		ResultSet result = null;
-		result = m_statement.executeQuery(querry);
-
+		result = m_statement.executeQuery(query);
 		return result;
 	}
 

@@ -89,6 +89,10 @@ public class BestellungDAO extends AbstractBestellverwaltungDAO {
 		
 	}
 
+	public void updateStatus(Long id, boolean value) throws ConnectException, DAOException {
+		putManaged("UPDATE " + TABLE_B + " SET " + FIELD_STATUS + " = " + value + " WHERE " + FIELD_ID + " = " + id);
+	}
+
 //	/**
 //	 * Die Methode liefert alle nicht bestellten Bestellungen zurück
 //	 * 

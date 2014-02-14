@@ -81,7 +81,7 @@ ValueChangeListener {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (m_bestellung != null) {
-					windowModal(m_bestellung);
+					windowModalVorschau(m_bestellung);
 				}
 				else {
 					((Application) UI.getCurrent().getData())
@@ -108,7 +108,7 @@ ValueChangeListener {
 		m_verwaltenButton.addClickListener(new ClickListener() {			
 			@Override
 			public void buttonClick(ClickEvent event) {
-				windowModal1(m_bestellung);
+				windowModalVerwalten(m_bestellung);
 			}
 		});
 	}
@@ -153,7 +153,7 @@ ValueChangeListener {
 		m_filterTable.setFilterFieldValue(FIELD_STATUS, false);
 	}
 
-	private void windowModal(Bestellung bestellung) {
+	private void windowModalVorschau(Bestellung bestellung) {
 		m_window = windowUI(m_window, "Bestellpositionen", "95%", "95%");		
 		m_bestellpositionVorschau = new BestellpositionenVorschau(bestellung);
 		addComponent(m_bestellpositionVorschau);
@@ -163,7 +163,7 @@ ValueChangeListener {
 		
 	}
 	
-	private void windowModal1(Bestellung bestellung) {
+	private void windowModalVerwalten(Bestellung bestellung) {
 		m_window = windowUI(m_window, "Verwaltung", "95%", "95%");		
 		m_bestellungVerwalten = new BestellungVerwalten(bestellung);
 		addComponent(m_bestellungVerwalten);
@@ -171,6 +171,24 @@ ValueChangeListener {
 		m_window.setModal(true);
 		UI.getCurrent().addWindow(m_window);
 		
+		if(m_bestellungVerwalten.m_bestelltCheckBox != null) {
+			m_bestellungVerwalten.m_bestelltCheckBox.addValueChangeListener(new ValueChangeListener() {			
+				@Override
+				public void valueChange(ValueChangeEvent event) {
+					try {
+						BestellungService.getInstance().updateStatus(m_bestellung.getId(),
+								((Boolean) m_bestellungVerwalten.m_bestelltCheckBox.getValue()).booleanValue());
+						m_bestellung.setStatus(((Boolean) m_bestellungVerwalten.m_bestelltCheckBox.getValue()).booleanValue());
+					} catch (ConnectException e) {
+						e.printStackTrace();
+					} catch (DAOException e) {
+						e.printStackTrace();
+					}
+					m_container.addItem(m_bestellung);
+					setTable();
+				}
+			});
+		}
 	}
 	
 

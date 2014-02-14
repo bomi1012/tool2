@@ -49,6 +49,11 @@ public class BestellungService {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public void updateStatus(Long id, boolean value) throws ConnectException, DAOException {
+		BestellungDAO.getInstance().updateStatus(id, value);
+		
+	}
 	
 	
 	///////////////////////////////////////////////////

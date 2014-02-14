@@ -60,7 +60,7 @@ ValueChangeListener {
 	private Image m_imageExcel;
 	private Button m_downloadButton;
 	private String m_anhangPath;
-	private CheckBox m_bestelltCheckBox;
+	public CheckBox m_bestelltCheckBox;
 	private List<WarenannahmeModel>  m_warenannahmes;
 	private BeanItemContainer<WarenannahmeModel> m_container;
 
@@ -71,6 +71,7 @@ ValueChangeListener {
 	public BestellungVerwalten(Bestellung bestellung) {
 		super();
 		m_bestellung = bestellung;
+		m_bestelltCheckBox.setValue(bestellung.getStatus());
 		layout();
 		listeners();
 	}
@@ -162,6 +163,7 @@ ValueChangeListener {
 				}
 			}
 		});
+		
 		
 		/** ******************************** */
 		m_sendenButton.addClickListener(new ClickListener() {			
@@ -286,7 +288,6 @@ ValueChangeListener {
 	}
 	
 	private void setTable() {
-		//TODO:
 		m_filterTable.setContainerDataSource(m_container);
 		if(m_bestellung.getLieferant().isMehrereliefertermine()) {
 		m_filterTable.setVisibleColumns(new Object[] { FIELD_ARTIKEL_NAME, FIELD_BESTELLGROESSE_LT1, "geliefertLT1",

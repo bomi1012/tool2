@@ -36,8 +36,6 @@ public class BestellpositionDAO extends AbstractBestellverwaltungDAO {
 	private final static String DELETE_BY_BESTELLUNG_ID = "DELETE FROM " + TABLE_BP + " WHERE " + 
 			FIELD_BESTELLUNG_FK + " = {0}";
 
-	private static final String UPDATE_STATUS = "UPDATE " + TABLE_BP + " SET {0} = {1} WHERE " + 
-			FIELD_ID + " = {2}";
 	
 	
 //	private static final String GET_BESTELLPOSITION_BY_ID = "SELECT * FROM " + TABLE + " WHERE " + ID + "= {0}";
@@ -92,7 +90,8 @@ public class BestellpositionDAO extends AbstractBestellverwaltungDAO {
 	}
 
 	public void updateStatus(Long id, String fieldStatus, boolean value) throws ConnectException, DAOException {
-		putManaged(MessageFormat.format(UPDATE_STATUS, fieldStatus, value, id));	
+		putManaged("UPDATE " + TABLE_BP + " SET " + fieldStatus + " = " + value + " WHERE " + 
+				FIELD_ID + " = " + id);	
 		
 	}
 	
