@@ -81,20 +81,20 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			ContentMode.HTML);
 	
 	
-	private TextField tfMenuename = new TextField("Menï¿½name");
+	private TextField tfMenuename = new TextField("Menüname");
 
-	private TwinColTouch tcsFussnoten = new TwinColTouch("Fuï¿½noten");
+	private TwinColTouch tcsFussnoten = new TwinColTouch("Fuünoten");
 
 	private NativeSelect nsKoch = new NativeSelect("Koch");
-	private NativeSelect nsMenueart = new NativeSelect("Menï¿½art");
+	private NativeSelect nsMenueart = new NativeSelect("Menüart");
 	private NativeSelect nsGeschmack = new NativeSelect("Geschmack");
 
-	private CheckBox chbFavorit = new CheckBox("Menï¿½ ist ein Favorit");
-	private CheckBox chbAufwand = new CheckBox("Menï¿½ hat hohen Aufwand");
+	private CheckBox chbFavorit = new CheckBox("Menü ist ein Favorit");
+	private CheckBox chbAufwand = new CheckBox("Menü hat hohen Aufwand");
 
 	private Button btSpeichern = new Button("Speichern");
 	private Button btVerwerfen = new Button("Verwerfen");
-	private Button btUpdate = new Button("ï¿½ndern");
+	private Button btUpdate = new Button("ündern");
 	private Button btNeuesRezept = new Button("Neues Rezept");
 
 	private FilterTable tblMenueRezepte = new FilterTable();
@@ -132,7 +132,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		tblMenueRezepte.setFilterBarVisible(true);
 		tblMenueRezepte
 				.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
-		tblMenueRezepte.setCaption("Rezepte in Menï¿½");
+		tblMenueRezepte.setCaption("Rezepte in Menü");
 
 		load();
 		
@@ -141,7 +141,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 
 		this.addComponent(vlBox);
 		this.setComponentAlignment(vlBox, Alignment.MIDDLE_CENTER);
-		headlineAnlegen = new Label("Menï¿½ anlegen");
+		headlineAnlegen = new Label("Menü anlegen");
 		headlineAnlegen.setStyleName("ViewHeadline");
 		vlBox.addComponent(headlineAnlegen);
 		
@@ -516,7 +516,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		menue.setRezepte(tmpRezepte);
 
 		hlControl.replaceComponent(btSpeichern, btUpdate);
-		headlineUpdate = new Label("Menï¿½ bearbeiten");
+		headlineUpdate = new Label("Menü bearbeiten");
 
 		headlineUpdate.setStyleName("ViewHeadline");
 
@@ -709,7 +709,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	// }
 	// mhr.setHauptgericht(true);
 	// Notification notification = new Notification(
-	// "Rezept wurde als MenÃ¼ gespeichert!");
+	// "Rezept wurde als Menü gespeichert!");
 	// notification.setDelayMsec(500);
 	// notification.show(Page.getCurrent());
 	// }

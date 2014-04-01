@@ -179,7 +179,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		this.addComponent(vlBox);
 		this.setComponentAlignment(vlBox, Alignment.MIDDLE_CENTER);
 		
-		//setzte ï¿½berschrift
+		//setzte überschrift
 		headlineAnlegen = new Label("Rezept anlegen");
 		headlineAnlegen.setStyleName("ViewHeadline");
 		vlBox.addComponent(headlineAnlegen);
@@ -204,11 +204,11 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		vlDetailsLinks.addComponent(kommentar);
 		vlDetailsLinks.setWidth("450px");
 
-		//Die Detailansicht Rechts beinhaltet die Zubereitung und Grï¿½ï¿½e auf 500 Pixel
+		//Die Detailansicht Rechts beinhaltet die Zubereitung und Grüüe auf 500 Pixel
 		vlDetailsRechts.addComponent(zubereitung);
 		vlDetailsRechts.setWidth("500px");
 
-		//Einstellungen der Grï¿½ï¿½e der Zutaten
+		//Einstellungen der Grüüe der Zutaten
 		hlZutaten.setWidth("1000px");
 		hlZutaten.setHeight("393px");
 
@@ -221,7 +221,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		btMenue.setEnabled(true);
 		btDeaktivieren.setVisible(false);
 		
-		//Setze die Buttons Menï¿½ ï¿½berfphren, Artikel anlegen, Verwerfen und Speichern
+		//Setze die Buttons Menü überfphren, Artikel anlegen, Verwerfen und Speichern
 		hlControl.addComponent(btMenue);
 		hlControl.addComponent(btArtikel);
 		hlControl.addComponent(btVerwerfen);
@@ -234,7 +234,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		kommentar.addValueChangeListener(this);
 
 		//Bei Kllick auf Button Verwerfen, sollen die Felder geleert werden
-		//dafï¿½r wird die Seite neu geladen
+		//dafür wird die Seite neu geladen
 		btVerwerfen.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -302,8 +302,8 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		
 		
 		
-		//Bei Klick auf diesen Button soll ein Rezept gleich als Menï¿½ angelegt werden kï¿½nnen
-		//Dabei wird das Rezept gepeichert und im Menï¿½ bekannt Felder gefï¿½llt, geschiet im MenueAnlegen
+		//Bei Klick auf diesen Button soll ein Rezept gleich als Menü angelegt werden künnen
+		//Dabei wird das Rezept gepeichert und im Menü bekannt Felder gefüllt, geschiet im MenueAnlegen
 		btMenue.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -326,7 +326,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			}
 		});
 
-		//Bei Klick auf Button Artikel anlegen, wird ein Window geï¿½ffnet mit der View ArtikelErstellen
+		//Bei Klick auf Button Artikel anlegen, wird ein Window geüffnet mit der View ArtikelErstellen
 		btArtikel.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -348,7 +348,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		artikelTable.setDragMode(com.vaadin.ui.CustomTable.TableDragMode.ROW);
 		artikelTable.setSelectable(true);
 
-		//Container der die Tabelle fï¿½r RezeptHasArtikel erstellt.
+		//Container der die Tabelle für RezeptHasArtikel erstellt.
 		//Mit den Spalten ArtikelName, Menge, Einheit und Notiz
 		containerRezeptHasArtikel = new BeanItemContainer<RezeptHasArtikel>(
 				RezeptHasArtikel.class);
@@ -675,12 +675,12 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		return rez;
 	}
 
-	// Methode zum ï¿½ndern eines Rezepts
+	// Methode zum ündern eines Rezepts
 	private void update() {
 		// setzt Rezeptname
 		rezept.setName(nameInput);
 
-		// setzt ï¿½nderungsdatum
+		// setzt ünderungsdatum
 		java.util.Date date = new java.util.Date();
 		Date date2 = new Date(date.getTime());
 		rezept.setErstellt(date2);
@@ -710,7 +710,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 			Rezeptverwaltung.getInstance().deleteZutatenZuRezept(rezept);
 			Rezeptverwaltung.getInstance().saveArtikel(rezept);
 			Rezeptverwaltung.getInstance().deleteZubereitungZuRezept(rezept);
-			// TODO: Methode wie saveArtikel fÃ¼r Zubereitungen
+			// TODO: Methode wie saveArtikel für Zubereitungen
 			// Rezeptverwaltung.getInstance().saveZubereitungen(rezept);
 		} catch (ConnectException e) {
 			e.printStackTrace();

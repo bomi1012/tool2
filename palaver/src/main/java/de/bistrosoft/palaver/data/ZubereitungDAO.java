@@ -48,7 +48,7 @@ public class ZubereitungDAO extends AbstractDAO {
 		return instance;
 	}
 
-	// Methode, die alle Zubereitung in einer Liste zurÃ¼ckliefert
+	// Methode, die alle Zubereitung in einer Liste zurückliefert
 	public List<Zubereitung> getAllZubereitung() throws ConnectException,
 			DAOException, SQLException {
 		List<Zubereitung> list = new ArrayList<Zubereitung>();
@@ -59,7 +59,7 @@ public class ZubereitungDAO extends AbstractDAO {
 		return list;
 	}
 
-	// Methode, die eine Zubereitung eines Rezepts Ã¼ber die ID zurÃ¼ckliefert
+	// Methode, die eine Zubereitung eines Rezepts über die ID zurückliefert
 	public List<Zubereitung> getZubereitungByRezept(Long id)
 			throws ConnectException, DAOException, SQLException {
 		List<Zubereitung> list = new ArrayList<Zubereitung>();
@@ -71,7 +71,7 @@ public class ZubereitungDAO extends AbstractDAO {
 		return list;
 	}
 
-	// Methode, die eine Zubereitung Ã¼ber die ID zurÃ¼ckliefert
+	// Methode, die eine Zubereitung über die ID zurückliefert
 	public Zubereitung getZubereitungById(Long id) throws ConnectException,
 			DAOException, SQLException {
 		ResultSet set = getManaged(MessageFormat.format(GET_ZUBEREITUNG_BY_ID,
@@ -82,7 +82,7 @@ public class ZubereitungDAO extends AbstractDAO {
 		return zubereitung;
 	}
 
-	// Methode, die eine Zubereitung Ã¼ber den Name zurÃ¼ckliefert
+	// Methode, die eine Zubereitung über den Name zurückliefert
 	public Zubereitung getZubereitungByName(String name)
 			throws ConnectException, DAOException, SQLException {
 		List<Zubereitung> list = new ArrayList<Zubereitung>();

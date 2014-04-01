@@ -49,7 +49,7 @@ public class KategorieDAO extends AbstractDAO {
 	}
 
 	/**
-	 * Die Methode getKategorieById liefert ein Ergebniss zurÃ¼ck bei der Suche
+	 * Die Methode getKategorieById liefert ein Ergebniss zurück bei der Suche
 	 * nach einer Kategorie in der Datenbank.
 	 */
 	public Kategorie getKategorieById(Long id) throws ConnectException,

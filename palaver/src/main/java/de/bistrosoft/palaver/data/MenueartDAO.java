@@ -48,7 +48,7 @@ public class MenueartDAO extends AbstractDAO {
 		return instance;
 	}
 
-	// Methode, die alle Menuearten in einer Liste zurÃ¼ckliefert
+	// Methode, die alle Menuearten in einer Liste zurückliefert
 	public List<Menueart> getAllMenueart() throws ConnectException,
 			DAOException, SQLException {
 		List<Menueart> list = new ArrayList<Menueart>();
@@ -59,7 +59,7 @@ public class MenueartDAO extends AbstractDAO {
 		return list;
 	}
 
-	// Methode, die eine Menueart Ã¼ber die ID zurÃ¼ckliefert
+	// Methode, die eine Menueart über die ID zurückliefert
 	public Menueart getMenueartById(Long id) throws ConnectException,
 			DAOException, SQLException {
 		ResultSet set = getManaged(MessageFormat.format(GET_MENUEART_BY_ID, id));
@@ -69,7 +69,7 @@ public class MenueartDAO extends AbstractDAO {
 		return menueart;
 	}
 
-	// Methode, die eine Menueart eines Menue Ã¼ber die ID zurÃ¼ckliefert
+	// Methode, die eine Menueart eines Menue über die ID zurückliefert
 	public Menueart getMenueartByMenue(Long id) throws ConnectException,
 			DAOException, SQLException {
 		ResultSet set = getManaged(MessageFormat.format(GET_MENUEART_BY_MENUE,
@@ -80,7 +80,7 @@ public class MenueartDAO extends AbstractDAO {
 		return menueart;
 	}
 
-	// Methode, die eine Menueart Ã¼ber den Namen zurÃ¼ckliefert
+	// Methode, die eine Menueart über den Namen zurückliefert
 	public List<Menueart> getMenueartByName(String name)
 			throws ConnectException, DAOException, SQLException {
 		List<Menueart> list = new ArrayList<Menueart>();

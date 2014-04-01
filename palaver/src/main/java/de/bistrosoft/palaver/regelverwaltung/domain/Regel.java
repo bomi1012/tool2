@@ -135,7 +135,7 @@ public class Regel {
 		this.ignorierbar = ignorierbar;
 		this.kriterienlist = Arrays.asList(kriterien.split(", "));
 
-		// FÃ¼lle List<Integer>
+		// Fülle List<Integer>
 		// Zeilen
 		int topRows = 2;
 		List<String> strZeilen = Arrays.asList(zeilen.split(","));

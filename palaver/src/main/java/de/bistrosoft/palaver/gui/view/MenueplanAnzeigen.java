@@ -317,7 +317,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 					btSpeichern.setVisible(true);
 					// btFreigeben.setVisible(true);
 					btEnableDragging.setVisible(true);
-					btEnableDelete.setCaption("Elemente lÃ¶schen");
+					btEnableDelete.setCaption("Elemente löschen");
 				} else {
 					shownMenueplan.layout.setDragMode(LayoutDragMode.NONE);
 					btSubmitDelete.setVisible(true);
@@ -325,7 +325,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 					btSpeichern.setVisible(false);
 					// btFreigeben.setVisible(false);
 					btEnableDragging.setVisible(false);
-					btEnableDelete.setCaption("ZurÃ¼ck");
+					btEnableDelete.setCaption("Zurück");
 				}
 
 				Integer rows = shownMenueplan.layout.getRows();
@@ -357,7 +357,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 			public void buttonClick(ClickEvent event) {
 				Window fvj = new Window();
 				VerticalLayout vlWinBox = new VerticalLayout();
-				final PopupDateField date = new PopupDateField("Datum wÃ¤hlen:") {
+				final PopupDateField date = new PopupDateField("Datum wählen:") {
 					@Override
 					protected Date handleUnparsableDateString(String dateString)
 							throws ConversionException {
@@ -388,7 +388,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 				vlWinBox.addComponent(date);
 				vlWinBox.setComponentAlignment(date, Alignment.TOP_CENTER);
 				Week mplWeek = shownMenueplan.getMenueplan().getWeek();
-				lbMplWeek = new Label("MenÃ¼plan " + mplWeek.getWeek() + "/"
+				lbMplWeek = new Label("Menüplan " + mplWeek.getWeek() + "/"
 						+ mplWeek.getYear());
 				vlWinBox.addComponent(lbMplWeek);
 
@@ -541,7 +541,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 		box.setComponentAlignment(lbPlatzhalter, Alignment.BOTTOM_CENTER);
 
 		checkRollen();
-		getHtmlTable();
+		getHtmlTable(0);
 	}
 
 	private void ladeDaten() {
@@ -586,7 +586,8 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 
 	}
 
-	public String getHtmlTable() {
+	public String getHtmlTable(int i) {
+		System.out.print(i);
 		String h = "<table border=\"1\" height=\"600\">";
 		Integer col = shownMenueplan.layout.getColumns();
 		Integer row = shownMenueplan.layout.getRows();
@@ -603,6 +604,15 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 				}
 				h += "</tr>";
 			}
+			else if (i == 1 && y == 1){
+				for (int x = 0; x < col; ++x) {
+					if (x != 0) {
+						h += "<th align=\"left\">";
+						h += getLabelText(x, y);
+						h += "</th>";
+					}
+				}
+			}
 		}
 		h += "</table>";
 		h += IConstants.FUSSNOTEN_MENUEPLAN;
@@ -614,11 +624,26 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 		if (comp instanceof MenueComponent) {
 			MenueComponent mc = (MenueComponent) comp;
 			String fn = mc.getFussnoten().replace("(", "").replace(")", "").replace(" ", "").replace(",", ", ");
-			return mc.getAngezeigterName() + " (Koch: " + mc.getMenue().getKochname() + ")<br> Fußnoten: " + fn;
+			return mc.getAngezeigterName() + " (Koch: " + mc.getMenue().getKochname() + ")<br> (" + fn + ")";
 		} else if (comp instanceof Label) {
 			Label lb = (Label) comp;
 			String sLb = lb.getValue();
 			return getZeilenLabel(sLb);
+		} else if (comp instanceof KoecheComponent) {
+			KoecheComponent kc = (KoecheComponent) comp;
+			String koch = "";
+			if (kc.getKoch1() == null) {
+				koch += "";
+			} else {
+				koch += kc.getKoch1();
+			}
+			koch += "<br />";
+			if (kc.getKoch2() == null) {
+				koch += "";
+			} else {
+				koch += kc.getKoch2();
+			}
+			return koch;
 		}
 		return "";
 	}
@@ -668,7 +693,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 		HorizontalLayout hlControl = new HorizontalLayout();
 		VerticalLayout vlMenueplan = new VerticalLayout();
 
-		Label lbH = new Label(getHtmlTable(), ContentMode.HTML);
+		Label lbH = new Label(getHtmlTable(1), ContentMode.HTML);
 		// Button btSchliessen = new Button("SchließŸen");
 
 		addComponent(vlBox);

@@ -87,7 +87,7 @@ public class RollenAnzeigen extends VerticalLayout implements View {
 					mengNeu.setModal(true);
 					mengNeu.center();
 					mengNeu.setResizable(false);
-					mengNeu.setCaption("Rolle hinzufÃ¼gen");
+					mengNeu.setCaption("Rolle hinzufügen");
 
 					UI.getCurrent().addWindow(mengNeu);
 
@@ -121,7 +121,7 @@ public class RollenAnzeigen extends VerticalLayout implements View {
 					nameup.setImmediate(true);
 					nameup.setValue(rollenupdate.getName());
 					nameup.setMaxLength(45);
-					nameup.addValidator(new StringLengthValidator("Bitte gÃ¼ltigen Namen eingeben", 4, 45, false));
+					nameup.addValidator(new StringLengthValidator("Bitte gültigen Namen eingeben", 4, 45, false));
 
 					verwerfen.addClickListener(new ClickListener() {
 

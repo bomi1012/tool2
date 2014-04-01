@@ -51,7 +51,7 @@ public class GeschmackDAO extends AbstractDAO {
 		return instance;
 	}
 
-	// Methode, die alle GeschmÃ¤cker in einer Liste zurÃ¼ckliefert
+	// Methode, die alle GeschmÃ¤cker in einer Liste zurückliefert
 	public List<Geschmack> getAllGeschmack() throws ConnectException,
 			DAOException, SQLException {
 		List<Geschmack> list = new ArrayList<Geschmack>();
@@ -63,7 +63,7 @@ public class GeschmackDAO extends AbstractDAO {
 		return list;
 	}
 
-	// Methode, die einen Geschmack zu einem MenÃ¼ Ã¼ber die ID zurÃ¼ckliefert
+	// Methode, die einen Geschmack zu einem Menü über die ID zurückliefert
 	public Geschmack getGeschmackByMenue(Long id) throws ConnectException,
 			DAOException, SQLException {
 		ResultSet set = getManaged(MessageFormat.format(GET_GESCHMACK_BY_MENUE,
@@ -75,7 +75,7 @@ public class GeschmackDAO extends AbstractDAO {
 		return geschmack;
 	}
 
-	// Methode, die einen Geschmack zu einem Rezept Ã¼ber die ID zurÃ¼ckliefert
+	// Methode, die einen Geschmack zu einem Rezept über die ID zurückliefert
 	public Geschmack getGeschmackByRezept(Long id) throws ConnectException,
 			DAOException, SQLException {
 		ResultSet set = getManaged(MessageFormat.format(
@@ -87,7 +87,7 @@ public class GeschmackDAO extends AbstractDAO {
 		return geschmack;
 	}
 
-	// Methode, die einen Geschmack Ã¼ber die ID zurÃ¼ckliefert
+	// Methode, die einen Geschmack über die ID zurückliefert
 	public Geschmack getGeschmackById(Long id) throws ConnectException,
 			DAOException, SQLException {
 		ResultSet set = getManaged(MessageFormat

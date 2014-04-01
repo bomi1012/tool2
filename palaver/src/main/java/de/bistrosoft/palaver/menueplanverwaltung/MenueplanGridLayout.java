@@ -122,15 +122,15 @@ public class MenueplanGridLayout extends CustomComponent {
 		layout.setComponentHorizontalDropRatio(0);
 		layout.setComponentVerticalDropRatio(0);
 
-		// DragDropGridLayout zu Seitenlayout hinzufÃ¼gen
+		// DragDropGridLayout zu Seitenlayout hinzufügen
 		outer.addComponent(layout);
 		outer.setComponentAlignment(layout, Alignment.MIDDLE_CENTER);
 		outer.setExpandRatio(layout, 1);
 
-		// Wegschieben der DragDropGridLayout-Komponenten ermÃ¶glichen
+		// Wegschieben der DragDropGridLayout-Komponenten ermöglichen
 		layout.setDragMode(LayoutDragMode.CLONE);
 
-		// Hinschieben der DragDropGridLayout-Komponenten ermÃ¶glichen
+		// Hinschieben der DragDropGridLayout-Komponenten ermöglichen
 		layout.setDropHandler(new MenueplanGridDropHandler());
 
 		// Limit dragging to only buttons
@@ -140,7 +140,7 @@ public class MenueplanGridLayout extends CustomComponent {
 			}
 		});
 
-		// FÃ¼lle Überschriftenspalte mit formatierten Labels
+		// Fülle Überschriftenspalte mit formatierten Labels
 		Label[] arlbUeb = {
 				new Label(
 						"<pre><font face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">     Datum</font></pre>",
@@ -175,7 +175,7 @@ public class MenueplanGridLayout extends CustomComponent {
 		arlbUeb[0].setHeight("30px");
 		arlbUeb[1].setHeight("50px");
 
-		// FÃ¼lle Datumszeile mit Wochentag und Datum
+		// Fülle Datumszeile mit Wochentag und Datum
 		ArrayList<GregorianCalendar> dates = CalendarWeek.getDatesOfWeek(week,
 				year);
 		for (int col = 1; col < COLUMNS; col++) {
@@ -262,7 +262,7 @@ public class MenueplanGridLayout extends CustomComponent {
 			}
 		}
 
-		// FÃ¼ge ADD Buttons in noch leere Felder ein
+		// Füge ADD Buttons in noch leere Felder ein
 		for (int row = 2; row < ROWS; row++) {
 			for (int col = 0; col < COLUMNS; col++) {
 				if (layout.getComponent(col, row) == null) {
@@ -303,7 +303,7 @@ public class MenueplanGridLayout extends CustomComponent {
 
 	public void speichern() {
 
-		// Extrahiere MenÃ¼s
+		// Extrahiere Menüs
 		List<MenueComponent> menues = new ArrayList<MenueComponent>();
 		for (int col = 0; col < COLUMNS; ++col) {
 			for (int row = 0; row < ROWS; ++row) {

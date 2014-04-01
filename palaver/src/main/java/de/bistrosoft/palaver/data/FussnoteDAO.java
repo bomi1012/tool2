@@ -48,7 +48,7 @@ public class FussnoteDAO extends AbstractDAO {
 		return instance;
 	}
 
-	// Methode, die alle Fussnoten in einer Liste zurÃ¼ckliefert
+	// Methode, die alle Fussnoten in einer Liste zurückliefert
 	public List<Fussnote> getAllFussnote() throws ConnectException,
 			DAOException, SQLException {
 		List<Fussnote> list = new ArrayList<Fussnote>();
@@ -60,7 +60,7 @@ public class FussnoteDAO extends AbstractDAO {
 		return list;
 	}
 
-	// Methode, die alle Fussnoten zu einem MenÃ¼ Ã¼ber die ID zurÃ¼ckliefert
+	// Methode, die alle Fussnoten zu einem Menü über die ID zurückliefert
 	public List<Fussnote> getFussnoteByMenue(Long id) throws ConnectException,
 			DAOException, SQLException {
 		List<Fussnote> list = new ArrayList<Fussnote>();
@@ -73,7 +73,7 @@ public class FussnoteDAO extends AbstractDAO {
 		return list;
 	}
 
-	// Methode, die eine Fussnote Ã¼ber die ID zurÃ¼ckliefert
+	// Methode, die eine Fussnote über die ID zurückliefert
 	public Fussnote getFussnoteById(Long id) throws ConnectException,
 			DAOException, SQLException {
 		ResultSet set = getManaged(MessageFormat.format(GET_FUSSNOTE_BY_ID, id));
@@ -84,7 +84,7 @@ public class FussnoteDAO extends AbstractDAO {
 		return fussnote;
 	}
 
-	// Methode, die eine Fussnote Ã¼ber den Namen zurÃ¼ckliefert
+	// Methode, die eine Fussnote über den Namen zurückliefert
 	public Fussnote getFussnoteByName(String fn) throws ConnectException,
 			DAOException, SQLException {
 		Fussnote result = null;
@@ -109,7 +109,7 @@ public class FussnoteDAO extends AbstractDAO {
 		this.putManaged(INSERT_QUERY);
 	}
 
-	// Methode, die eine Fussnote Ã¤ndert
+	// Methode, die eine Fussnote Ändert
 	public void updateFussnote(Fussnote fussnote) throws ConnectException,
 			DAOException, SQLException {
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + NAME + "='"

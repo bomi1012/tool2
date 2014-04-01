@@ -110,7 +110,7 @@ public class BestellpositionService {
 //	}
 //	
 //	/**
-//	 * Die Methode liefert eine Bestellposition anhand des Parameter id zurÃ¼ck.
+//	 * Die Methode liefert eine Bestellposition anhand des Parameter id zurück.
 //	 * 
 //	 * @throws SQLException
 //	 * @throws DAOException

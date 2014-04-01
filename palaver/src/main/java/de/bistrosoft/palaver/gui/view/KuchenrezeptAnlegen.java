@@ -77,7 +77,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 	private BeanItemContainer<Artikel> containerArtikel;
 	private BeanItemContainer<KuchenrezeptHasArtikel> containerKuchenrezeptHasArtikel;
 
-	// ï¿½berschriften
+	// überschriften
 	private Label ueberschrift = new Label("Kuchenrezept anlegen");
 	private Label ueberschrift2 = new Label("Kuchenrezept bearbeiten");
 
@@ -538,7 +538,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		// setzt Rezeptname
 		kuchenrezept.setName(nameInput);
 
-		// setzt ï¿½nderungsdatum
+		// setzt ünderungsdatum
 		java.util.Date date = new java.util.Date();
 		Date date3 = new Date(date.getTime());
 		kuchenrezept.setErstellt(date3);

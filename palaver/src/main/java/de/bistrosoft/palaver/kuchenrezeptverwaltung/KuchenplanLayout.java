@@ -113,7 +113,7 @@ public class KuchenplanLayout extends CustomComponent {
 		layout.setWidth("400px");
 		layout.setStyleName("menueplan-grid");
 
-		// GridLayout zu Seitenlayout hinzufÃ¼gen
+		// GridLayout zu Seitenlayout hinzufügen
 		outer.addComponent(layout);
 		outer.setComponentAlignment(layout, Alignment.MIDDLE_LEFT);
 

@@ -73,7 +73,7 @@ public class KuchenplanAnzeigen extends VerticalLayout implements View {
 		btForeWeek.addStyleName("menueplan-lastweek");
 		btForeWeek.addClickListener(new ClickListener() {
 
-			// Click-Listener fï¿½r eine Woche vorher
+			// Click-Listener für eine Woche vorher
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (shownKuchenplan == zweiteKuchenplan) {
@@ -116,7 +116,7 @@ public class KuchenplanAnzeigen extends VerticalLayout implements View {
 		btNextWeek.addStyleName("menueplan-nextweek");
 		btNextWeek.addClickListener(new ClickListener() {
 
-			// Click-Listener fï¿½r eine Woche spÃ¤ter
+			// Click-Listener für eine Woche spÃ¤ter
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (shownKuchenplan == ersteKuchenplan) {
@@ -152,7 +152,7 @@ public class KuchenplanAnzeigen extends VerticalLayout implements View {
 			}
 		});
 
-		// Hinzufï¿½gen und Anordnen der Komponenten
+		// Hinzufügen und Anordnen der Komponenten
 		left.addComponent(btForeWeek);
 		left.setComponentAlignment(btForeWeek, Alignment.TOP_LEFT);
 		right.addComponent(btNextWeek);
@@ -165,14 +165,14 @@ public class KuchenplanAnzeigen extends VerticalLayout implements View {
 		box.addComponent(hlChangeWeek);
 		box.setComponentAlignment(hlChangeWeek, Alignment.TOP_CENTER);
 
-		// Button zum Speichern des Menï¿½plans
+		// Button zum Speichern des Menüplans
 		Button btSpeichern = new Button("Speichern");
 
 		btSpeichern.addClickListener(new ClickListener() {
 			// Click-Listener zum Speichern
 			@Override
 			public void buttonClick(ClickEvent event) {
-				// alle Felder durchgehen, prï¿½fen ob menuecomponent vorhanden
+				// alle Felder durchgehen, prüfen ob menuecomponent vorhanden
 				// ist und wenn ja speichern
 				int week = shownKuchenplan.getKuchenplan().getWeek().getWeek();
 				int year = shownKuchenplan.getKuchenplan().getWeek().getYear();
@@ -183,7 +183,7 @@ public class KuchenplanAnzeigen extends VerticalLayout implements View {
 		// FußŸnoten
 		Label lbFussnoten = new Label(IConstants.FUSSNOTEN_KUCHENPLAN, ContentMode.HTML);
 
-		// Hinzufï¿½gen und Anordnen weiterer Komponenten
+		// Hinzufügen und Anordnen weiterer Komponenten
 		Label lbPlatzhalter = new Label(" ");
 		lbPlatzhalter.setHeight("60px");
 		Label lbPlatzhalter2 = new Label(" ");

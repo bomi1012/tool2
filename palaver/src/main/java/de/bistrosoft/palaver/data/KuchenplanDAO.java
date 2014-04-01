@@ -81,7 +81,7 @@ public class KuchenplanDAO extends AbstractDAO {
 		return instance;
 	}
 
-	// Methode, die alle Kuchenartikel in einer Woche zurÃ¼ckliefert
+	// Methode, die alle Kuchenartikel in einer Woche zurückliefert
 	public List<RezeptHasArtikel> getKuchenartikelByWeek(Week week, char zeichen, int tag) {
 		List<RezeptHasArtikel> ab = new ArrayList<RezeptHasArtikel>();
 
@@ -109,7 +109,7 @@ public class KuchenplanDAO extends AbstractDAO {
 		return ab;
 	}
 
-	// Methode, die einen kompletten Kuchenplan einer Woche zurÃ¼ckliefert
+	// Methode, die einen kompletten Kuchenplan einer Woche zurückliefert
 	public Kuchenplan getKuchenplanByWeekWithItems(Week week)
 			throws ConnectException, DAOException, SQLException {
 		Kuchenplan kuchenplan = null;
@@ -162,7 +162,7 @@ public class KuchenplanDAO extends AbstractDAO {
 				week.getYear()));
 	}
 
-	// Methode, ein Kuchenrezpt aus einem Kuchenplan lÃ¶scht
+	// Methode, ein Kuchenrezpt aus einem Kuchenplan löscht
 	public void deleteItemsByKuchenplan(Kuchenplan kuchenplan)
 			throws ConnectException, DAOException {
 		putManaged(MessageFormat.format(DELETE_KUCHENPLANITEMS_BY_KUCHENPLAN,

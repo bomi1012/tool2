@@ -116,7 +116,7 @@ public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChan
 
 		if (nl != null) {
 
-			// Sortieren der Nachrichten nach der größten ID
+			// Sortieren der Nachrichten nach der gr�ßten ID
 			final List<Nachricht> neu = new ArrayList<Nachricht>();
 			if (nl != null) {
 				for (int z = 0; z < nl.size(); z++) {

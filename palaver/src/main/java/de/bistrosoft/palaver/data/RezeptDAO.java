@@ -130,7 +130,7 @@ public class RezeptDAO extends AbstractDAO {
 	}
 
 	// Methode, die alle Rezepte mit der Rezeptart Beilage in einer Liste
-	// zurÃ¼ckliefert
+	// zurückliefert
 	public List<Rezept> getAllBeilagen() throws ConnectException, DAOException,
 			SQLException {
 		List<Rezept> list = new ArrayList<Rezept>();
@@ -215,7 +215,7 @@ public class RezeptDAO extends AbstractDAO {
 		return list;
 	}
 
-	// Methode, die ein Rezept Ã¼ber die ID zurueckliefert
+	// Methode, die ein Rezept über die ID zurueckliefert
 	public Rezept getRezeptById(Long id) throws ConnectException, DAOException,
 			SQLException {
 		ResultSet set = getManaged(MessageFormat.format(GET_REZEPT_BY_ID, id));
@@ -232,7 +232,7 @@ public class RezeptDAO extends AbstractDAO {
 		return rezept;
 	}
 
-	// Methode, die ein Rezept Ã¼ber den Name zurueckliefert
+	// Methode, die ein Rezept über den Name zurueckliefert
 	public Rezept getRezeptByName(String namerezept) throws ConnectException,
 			DAOException, SQLException {
 		Rezept result = null;
@@ -265,7 +265,7 @@ public class RezeptDAO extends AbstractDAO {
 		return rezept;
 	}
 
-	// Methode, die alle Artikel zu einem Rezept Ã¼ber dessen ID in einer Liste
+	// Methode, die alle Artikel zu einem Rezept über dessen ID in einer Liste
 	// zurueckliefert
 	public List<RezeptHasArtikel> getAllArtikelByRezeptId1(Long rezeptID)
 			throws ConnectException, DAOException, SQLException {

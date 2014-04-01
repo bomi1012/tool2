@@ -31,7 +31,7 @@ package de.palaver.view;
 //import de.hska.awp.palaver2.util.ViewHandler;
 //
 ///**
-// * Die View ermÃ¶glicht die Auswahl eines Kalendertags und die Generierung und
+// * Die View ermöglicht die Auswahl eines Kalendertags und die Generierung und
 // * Speicherung der Bestellungen zu der entsprechenden Kalenderwoche.
 // * 
 // * @author Christian Barth

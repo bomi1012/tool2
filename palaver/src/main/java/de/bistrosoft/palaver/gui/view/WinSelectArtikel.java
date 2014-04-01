@@ -104,7 +104,7 @@
 //				box.setSizeFull();
 //				box.setMargin(true);
 //				setContent(box);
-//				btAdd = new Button("HinzufÃ¼gen");
+//				btAdd = new Button("Hinzufügen");
 //				box.addComponent(artikelcol);
 //				box.addComponent(btAdd);
 //

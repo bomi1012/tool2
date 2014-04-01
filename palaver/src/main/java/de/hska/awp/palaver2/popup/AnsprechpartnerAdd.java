@@ -48,7 +48,7 @@
 //
 //	@Override
 //	protected void init(VaadinRequest request) {
-//		getPage().setTitle("Ansprechpartner hinzufÃ¼gen");
+//		getPage().setTitle("Ansprechpartner hinzufügen");
 //
 //		setContent(box);
 //		this.setSizeFull();
@@ -114,7 +114,7 @@
 //				try {
 //					AnsprechpartnerService.getInstance().createAnsprechpartner(ans);
 //				} catch (Exception e) {
-//					throw new NullPointerException("Bitte gÃ¼ltige Werte eingeben");
+//					throw new NullPointerException("Bitte gültige Werte eingeben");
 //				}
 //			}
 //		});

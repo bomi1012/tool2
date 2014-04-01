@@ -109,7 +109,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 	BeanItemContainer<String> regeltypcontainer = new BeanItemContainer<String>(
 			String.class, regeltypinhalt);
 
-	// Konstruktur der fÃ¼r das bearbeiten einer Regel verwendet wird
+	// Konstruktur der für das bearbeiten einer Regel verwendet wird
 	public RegelAnlegen(Regel regel) {
 		label = new Label("Regel bearbeiten");
 		layout();
@@ -118,7 +118,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 
 	}
 
-	// Konstruktor der fÃ¼r das Anlegen einer neuen Regel verwendet wird
+	// Konstruktor der für das Anlegen einer neuen Regel verwendet wird
 	public RegelAnlegen() {
 		label = new Label("Regel erstellen");
 		layout();
@@ -311,7 +311,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 
 	}
 
-	// Clicklistener fÃ¼r das Speichern einer neuen Regel
+	// Clicklistener für das Speichern einer neuen Regel
 	private void speichern() {
 		speichern.addClickListener(new ClickListener() {
 
@@ -341,7 +341,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 		});
 	}
 
-	// ChangeListener fÃ¼r die Felder
+	// ChangeListener für die Felder
 	private void ChangeListener() {
 
 		zeilen.addValueChangeListener(new ValueChangeListener() {
@@ -374,9 +374,9 @@ public class RegelAnlegen extends VerticalLayout implements View,
 
 				regeltypinput = valueString;
 
-				// Falls Regeltyp Aufwand oder Menue ausgewÃ¼hlt wird, wird ein
-				// Textfeld eingefÃ¼gt und aus dem Container fÃ¼r Operator die
-				// AuswahlmÃ¼glichkeiten "verbotene Werte" und "muss enthalten"
+				// Falls Regeltyp Aufwand oder Menue ausgewühlt wird, wird ein
+				// Textfeld eingefügt und aus dem Container für Operator die
+				// Auswahlmüglichkeiten "verbotene Werte" und "muss enthalten"
 				// entfernt
 				if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_AUFWAND
 						|| regeltypinput == IConstants.INFO_REGEL_REGELTYP_MENUE) {
@@ -392,14 +392,14 @@ public class RegelAnlegen extends VerticalLayout implements View,
 				} else if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_ZUBEREITUNG) {
 					// falls Operator "maximale Anzahl"
 					if (operatorinput == IConstants.INFO_REGEL_OPERATOR_MAXIMAL) {
-						// dann die TwinCols raus und ein Textfeld einfÃ¼gen
+						// dann die TwinCols raus und ein Textfeld einfügen
 						mitte.removeComponent(kriterienFussnote);
 						mitte.removeComponent(kriterienGeschmack);
 						mitte.removeComponent(kriterienMenueart);
 						mitte.removeComponent(kriterienZubereitung);
 						mitte.addComponent(kriterienText);
 					}
-					// Ansonsten TwinCol fÃ¼r Zubereitung hinufÃ¼gen und alle
+					// Ansonsten TwinCol für Zubereitung hinufügen und alle
 					// anderen Komontenen entfernen
 					else {
 						mitte.removeComponent(kriterienFussnote);
@@ -408,8 +408,8 @@ public class RegelAnlegen extends VerticalLayout implements View,
 						mitte.removeComponent(kriterienText);
 						mitte.addComponent(kriterienZubereitung);
 					}
-					// falls Container fÃ¼r Operator "verbotene Werte" oder
-					// "muss enthalten" nicht enthÃ¼lt, werden diese hinzugefÃ¼gt
+					// falls Container für Operator "verbotene Werte" oder
+					// "muss enthalten" nicht enthült, werden diese hinzugefügt
 					if (!operator
 							.containsId(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
 						operator.addItem(IConstants.INFO_REGEL_OPERATOR_ERLAUBT);
@@ -422,14 +422,14 @@ public class RegelAnlegen extends VerticalLayout implements View,
 				} else if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_MENUEART) {
 					// falls Operator "maximale Anzahl"
 					if (operatorinput == IConstants.INFO_REGEL_OPERATOR_MAXIMAL) {
-						// dann die TwinCols raus und ein Textfeld einfÃ¼gen
+						// dann die TwinCols raus und ein Textfeld einfügen
 						mitte.removeComponent(kriterienFussnote);
 						mitte.removeComponent(kriterienGeschmack);
 						mitte.removeComponent(kriterienMenueart);
 						mitte.removeComponent(kriterienZubereitung);
 						mitte.addComponent(kriterienText);
 					}
-					// Ansonsten TwinCol fÃ¼r Menueart hinufÃ¼gen und alle
+					// Ansonsten TwinCol für Menueart hinufügen und alle
 					// anderen Komontenen entfernen
 					else {
 						mitte.removeComponent(kriterienFussnote);
@@ -438,8 +438,8 @@ public class RegelAnlegen extends VerticalLayout implements View,
 						mitte.removeComponent(kriterienText);
 						mitte.addComponent(kriterienMenueart);
 					}
-					// falls Container fÃ¼r Operator "verbotene Werte" oder
-					// "muss enthalten" nicht enthÃ¼lt, werden diese hinzugefÃ¼gt
+					// falls Container für Operator "verbotene Werte" oder
+					// "muss enthalten" nicht enthült, werden diese hinzugefügt
 					if (!operator
 							.containsId(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
 						operator.addItem(IConstants.INFO_REGEL_OPERATOR_ERLAUBT);
@@ -453,14 +453,14 @@ public class RegelAnlegen extends VerticalLayout implements View,
 				else if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_GESCHMACK) {
 					// falls Operator "maximale Anzahl"
 					if (operatorinput == IConstants.INFO_REGEL_OPERATOR_MAXIMAL) {
-						// dann die TwinCols raus und ein Textfeld einfÃ¼gen
+						// dann die TwinCols raus und ein Textfeld einfügen
 						mitte.removeComponent(kriterienFussnote);
 						mitte.removeComponent(kriterienGeschmack);
 						mitte.removeComponent(kriterienMenueart);
 						mitte.removeComponent(kriterienZubereitung);
 						mitte.addComponent(kriterienText);
 					} 
-					// Ansonsten TwinCol fÃ¼r Geschmack hinufÃ¼gen und alle
+					// Ansonsten TwinCol für Geschmack hinufügen und alle
 					// anderen Komontenen entfernen
 					else {
 						mitte.removeComponent(kriterienFussnote);
@@ -469,8 +469,8 @@ public class RegelAnlegen extends VerticalLayout implements View,
 						mitte.removeComponent(kriterienText);
 						mitte.addComponent(kriterienGeschmack);
 					}
-					// falls Container fÃ¼r Operator "verbotene Werte" oder
-					// "muss enthalten" nicht enthÃ¼lt, werden diese hinzugefÃ¼gt
+					// falls Container für Operator "verbotene Werte" oder
+					// "muss enthalten" nicht enthült, werden diese hinzugefügt
 					if (!operator
 							.containsId(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
 						operator.addItem(IConstants.INFO_REGEL_OPERATOR_ERLAUBT);
@@ -480,18 +480,18 @@ public class RegelAnlegen extends VerticalLayout implements View,
 						operator.addItem(IConstants.INFO_REGEL_OPERATOR_VERBOTEN);
 					}
 				} 
-				// Falls Regeltyp FuÃ¼note ist
+				// Falls Regeltyp Fuünote ist
 				else if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_FUSSNOTE) {
 					// falls Operator "maximale Anzahl"
 					if (operatorinput == IConstants.INFO_REGEL_OPERATOR_MAXIMAL) {
-						// dann die TwinCols raus und ein Textfeld einfÃ¼gen
+						// dann die TwinCols raus und ein Textfeld einfügen
 						mitte.removeComponent(kriterienFussnote);
 						mitte.removeComponent(kriterienGeschmack);
 						mitte.removeComponent(kriterienMenueart);
 						mitte.removeComponent(kriterienZubereitung);
 						mitte.addComponent(kriterienText);
 					}
-					// Ansonsten TwinCol fÃ¼r FuÃ¼note hinufÃ¼gen und alle
+					// Ansonsten TwinCol für Fuünote hinufügen und alle
 					// anderen Komontenen entfernen
 					else {
 						mitte.removeComponent(kriterienGeschmack);
@@ -500,8 +500,8 @@ public class RegelAnlegen extends VerticalLayout implements View,
 						mitte.removeComponent(kriterienText);
 						mitte.addComponent(kriterienFussnote);
 					}
-					// falls Container fÃ¼r Operator "verbotene Werte" oder
-					// "muss enthalten" nicht enthÃ¼lt, werden diese hinzugefÃ¼gt
+					// falls Container für Operator "verbotene Werte" oder
+					// "muss enthalten" nicht enthült, werden diese hinzugefügt
 					if (!operator
 							.containsId(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
 						operator.addItem(IConstants.INFO_REGEL_OPERATOR_ERLAUBT);
@@ -523,8 +523,8 @@ public class RegelAnlegen extends VerticalLayout implements View,
 
 				operatorinput = valueString;
 
-				// Falls beim Feld Operator "maximale Anzahl" ausgewÃ¼hlt wird, wird ein Textfeld
-				// eingefÃ¼gt
+				// Falls beim Feld Operator "maximale Anzahl" ausgewühlt wird, wird ein Textfeld
+				// eingefügt
 				if (operatorinput == IConstants.INFO_REGEL_OPERATOR_MAXIMAL) {
 					mitte.removeComponent(kriterienFussnote);
 					mitte.removeComponent(kriterienGeschmack);
@@ -532,8 +532,8 @@ public class RegelAnlegen extends VerticalLayout implements View,
 					mitte.removeComponent(kriterienZubereitung);
 					mitte.addComponent(kriterienText);
 
-					// Falls beim Regeltyp Aufwand oder Menue ausgewÃ¼hlt wird, so
-					// wird ein Textfeld eingefÃ¼gt
+					// Falls beim Regeltyp Aufwand oder Menue ausgewühlt wird, so
+					// wird ein Textfeld eingefügt
 				} else if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_AUFWAND
 						|| regeltypinput == IConstants.INFO_REGEL_REGELTYP_MENUE) {
 					mitte.removeComponent(kriterienFussnote);
@@ -542,10 +542,10 @@ public class RegelAnlegen extends VerticalLayout implements View,
 					mitte.removeComponent(kriterienZubereitung);
 					mitte.addComponent(kriterienText);
 				}
-				// Falls beim Operator "verbotene Werte" oder "muss enthalten" ausgewÃ¼hlt wird
+				// Falls beim Operator "verbotene Werte" oder "muss enthalten" ausgewühlt wird
 				else if (operatorinput == IConstants.INFO_REGEL_OPERATOR_ERLAUBT
 						|| operatorinput == IConstants.INFO_REGEL_OPERATOR_VERBOTEN) {
-					// Wenn Beim Regeltyp Menueart ausgewÃ¼hlt wird, wird twincol fÃ¼r Menueart einfÃ¼gt 
+					// Wenn Beim Regeltyp Menueart ausgewühlt wird, wird twincol für Menueart einfügt 
 					if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_MENUEART
 							|| regeltyp
 									.getValue()
@@ -554,7 +554,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 						mitte.removeComponent(kriterienText);
 						mitte.addComponent(kriterienMenueart);
 					}
-					// Wenn beim Regeltyo FuÃ¼note ausgewÃ¼hlt wird, wird twincol fÃ¼r FuÃ¼note eingefÃ¼gt
+					// Wenn beim Regeltyo Fuünote ausgewühlt wird, wird twincol für Fuünote eingefügt
 					if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_FUSSNOTE
 							|| regeltyp
 									.getValue()
@@ -563,7 +563,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 						mitte.removeComponent(kriterienText);
 						mitte.addComponent(kriterienFussnote);
 					}
-					// Wenn beim Regeltyo Geschmack ausgewÃ¼hlt wird, wird twincol fÃ¼r Geschmack eingefÃ¼gt
+					// Wenn beim Regeltyo Geschmack ausgewühlt wird, wird twincol für Geschmack eingefügt
 					if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_GESCHMACK
 							|| regeltyp
 									.getValue()
@@ -572,7 +572,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 						mitte.removeComponent(kriterienText);
 						mitte.addComponent(kriterienGeschmack);
 					}
-					// Wenn beim Regeltyo Zubereitung ausgewÃ¼hlt wird, wird twincol fÃ¼r Zubereitung eingefÃ¼gt
+					// Wenn beim Regeltyo Zubereitung ausgewühlt wird, wird twincol für Zubereitung eingefügt
 					if (regeltypinput == IConstants.INFO_REGEL_REGELTYP_ZUBEREITUNG
 							|| regeltyp
 									.getValue()
@@ -647,7 +647,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 
 	}
 
-	// Diese Methode dient dazu, die Container je nach ausgewÃ¼hltem Regeltyp zu
+	// Diese Methode dient dazu, die Container je nach ausgewühltem Regeltyp zu
 	// setzen
 	public void check() {
 		try {
@@ -684,7 +684,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 	}
 
 	// Diese Methode wird aufgerufen, sobald man eine Regel per Doppelklick
-	// auswÃ¼hlt
+	// auswühlt
 	public void getViewParam(ViewData data) {
 		// Angeklickte Regel
 		regel = (Regel) ((ViewDataObject<?>) data).getData();

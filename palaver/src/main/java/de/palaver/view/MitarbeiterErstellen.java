@@ -227,9 +227,9 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 					mitarbeiter.setBenutzername(benutzername.getValue());
 	
 					// Listbuilder: ValueChangeListener gibt einen String der IDs
-					// zurÃ¼ck z.B. [1, 3]
+					// zurück z.B. [1, 3]
 					// String auseinander nehmen und die Objekte anhand der ID
-					// suchen und der Liste hinzufÃ¼gen
+					// suchen und der Liste hinzufügen
 					List<String> rollenId = null;
 					if (rollen.getValue().toString() != "[]") {
 						rollenId = Arrays.asList(valueString.substring(1, valueString.length() - 1).split("\\s*,\\s*"));

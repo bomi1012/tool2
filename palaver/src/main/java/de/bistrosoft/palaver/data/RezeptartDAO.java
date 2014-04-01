@@ -46,7 +46,7 @@ public class RezeptartDAO extends AbstractDAO {
 		return instance;
 	}
 
-	// Methode, die alle Rezeptarten in einer Liste zurÃ¼ckliefert
+	// Methode, die alle Rezeptarten in einer Liste zurückliefert
 	public List<Rezeptart> getAllRezeptart() throws ConnectException,
 			DAOException, SQLException {
 		List<Rezeptart> list = new ArrayList<Rezeptart>();
@@ -57,7 +57,7 @@ public class RezeptartDAO extends AbstractDAO {
 		return list;
 	}
 
-	// Methode, die eine Rezeptart Ã¼ber die ID zurÃ¼ckliefert
+	// Methode, die eine Rezeptart über die ID zurückliefert
 	public Rezeptart getRezeptartById(Long id) throws ConnectException,
 			DAOException, SQLException {
 		ResultSet set = getManaged(MessageFormat
@@ -68,7 +68,7 @@ public class RezeptartDAO extends AbstractDAO {
 		return rezeptart;
 	}
 
-	// Methode, die eine Rezeptart zu einem Rezept Ã¼ber die ID zurÃ¼ckliefert
+	// Methode, die eine Rezeptart zu einem Rezept über die ID zurückliefert
 	public Rezeptart getRezeptartByRezept(Long id) throws ConnectException,
 			DAOException, SQLException {
 		ResultSet set = getManaged(MessageFormat.format(

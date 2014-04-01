@@ -586,14 +586,14 @@
 //				//System.out.println(ausgArtikel.size());
 //					}
 //					else{
-//						Notification notification = new Notification("Bitte geben Sie dem MenÃ¼ einen Namen");
+//						Notification notification = new Notification("Bitte geben Sie dem Menü einen Namen");
 //						notification.setDelayMsec(500);
 //						notification.show(Page.getCurrent());
 //						
 //					}
 //				}
 //				else{ 
-//					Notification notification = new Notification("Bitte geben sie den MenÃ¼ersteller an");
+//					Notification notification = new Notification("Bitte geben sie den Menüersteller an");
 //					notification.setDelayMsec(500);
 //					notification.show(Page.getCurrent());
 //					

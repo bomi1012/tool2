@@ -102,7 +102,7 @@ public class KuchenplanHistorie extends VerticalLayout implements View {
 						week = cal.get(Calendar.WEEK_OF_YEAR);
 						@SuppressWarnings("deprecation")
 						int year = date.getValue().getYear() + 1900;
-						// alte Anzeigen lÃ¶schen
+						// alte Anzeigen löschen
 						if (kuchenplan != null) {
 							box.removeComponent(kuchenplan);
 							box.removeComponent(lbKW);

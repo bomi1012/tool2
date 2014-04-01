@@ -46,7 +46,7 @@
 //	Integer z = 0;
 //	
 //	private Label ueberschrift = new Label(
-//			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Menü Anzeigen</font><b></pre>",
+//			"<pre><b><font size='5' face=\"Arial, Helvetica, Tahoma, Verdana, sans-serif\">Men� Anzeigen</font><b></pre>",
 //			ContentMode.HTML);
 //
 //	
@@ -109,7 +109,7 @@
 //	private Button neuRezept = new Button("neues Rezept anlegen");
 //
 //	private Button btAdd = new Button("Add");
-//	private Button change = new Button("Menü ändern");
+//	private Button change = new Button("Men� ändern");
 //	BeanItemContainer<Fussnote> container1;
 //
 //	public MenueAnzeigen() {

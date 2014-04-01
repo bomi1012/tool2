@@ -23,7 +23,7 @@ public class KategorieService {
 	}
 
 	/**
-	 * Die Methode liefert alle Kategorien zurÃ¼ck.
+	 * Die Methode liefert alle Kategorien zurück.
 	 * @return List<Kategorie>
 	 */
 	public List<Kategorie> getAllKategories() throws ConnectException,
@@ -32,7 +32,7 @@ public class KategorieService {
 	}
 
 	/**
-	 * Die Methode liefert eine Kategorie anhand des Parameter id zurÃ¼ck.
+	 * Die Methode liefert eine Kategorie anhand des Parameter id zurück.
 	 * @param id 
 	 * @return Kategorie
 	 */
