@@ -20,8 +20,8 @@ import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
-import de.palaver.domain.artikelverwaltung.Kategorie;
-import de.palaver.service.artikelverwaltung.KategorieService;
+import de.palaver.management.artikel.Kategorie;
+import de.palaver.management.artikel.service.KategorieService;
 import de.palaver.view.IErstellen;
 
 public class KategorieErstellen extends OverErstellen implements View,

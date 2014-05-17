@@ -9,11 +9,11 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.TextField;
 
-import de.palaver.domain.artikelverwaltung.Artikel;
-import de.palaver.domain.artikelverwaltung.Kategorie;
-import de.palaver.domain.artikelverwaltung.Lagerort;
-import de.palaver.domain.artikelverwaltung.Mengeneinheit;
 import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
+import de.palaver.management.artikel.Artikel;
+import de.palaver.management.artikel.Kategorie;
+import de.palaver.management.artikel.Lagerort;
+import de.palaver.management.artikel.Mengeneinheit;
 import de.palaver.view.ViewAbstract;
 
 @SuppressWarnings("serial")

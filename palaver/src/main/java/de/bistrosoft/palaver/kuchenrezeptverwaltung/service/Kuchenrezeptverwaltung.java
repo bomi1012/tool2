@@ -13,8 +13,8 @@ import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenrezeptHasArtike
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenrezeptHasFussnote;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
-import de.palaver.dao.artikelverwaltung.ArtikelDAO;
-import de.palaver.domain.artikelverwaltung.Artikel;
+import de.palaver.management.artikel.Artikel;
+import de.palaver.management.artikel.DAO.ArtikelDAO;
 
 /**
  * @author Christine Hartkorn, Jasmin Baumgartner

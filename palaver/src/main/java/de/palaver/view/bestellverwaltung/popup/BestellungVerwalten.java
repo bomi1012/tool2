@@ -290,16 +290,16 @@ ValueChangeListener {
 	private void setTable() {
 		m_filterTable.setContainerDataSource(m_container);
 		if(m_bestellung.getLieferant().isMehrereliefertermine()) {
-		m_filterTable.setVisibleColumns(new Object[] { FIELD_ARTIKEL_NAME, FIELD_BESTELLGROESSE_LT1, "geliefertLT1",
+		m_filterTable.setVisibleColumns(new Object[] { FIELD_ARTIKEL_NAME, FIELD_BESTELLGROESSE, "geliefertLT1",
 				FIELD_BESTELLGROESSE_LT2, "geliefertLT2"});
 		} else {
-			m_filterTable.setVisibleColumns(new Object[] { FIELD_ARTIKEL_NAME, FIELD_BESTELLGROESSE_LT1, "geliefertLT1"});
+			m_filterTable.setVisibleColumns(new Object[] { FIELD_ARTIKEL_NAME, FIELD_BESTELLGROESSE, "geliefertLT1"});
 		}
 		m_filterTable.sort(new Object[] { FIELD_ARTIKEL_NAME }, new boolean[] { true });
 		m_filterTable.setColumnWidth("geliefertLT1", 55);
 		m_filterTable.setColumnHeader("geliefertLT1", "OK");	
-		m_filterTable.setColumnWidth(FIELD_BESTELLGROESSE_LT1, 70);
-		m_filterTable.setColumnHeader(FIELD_BESTELLGROESSE_LT1, "menge");	
+		m_filterTable.setColumnWidth(FIELD_BESTELLGROESSE, 70);
+		m_filterTable.setColumnHeader(FIELD_BESTELLGROESSE, "menge");	
 		
 		if(m_bestellung.getLieferant().isMehrereliefertermine()) {
 			m_filterTable.setColumnWidth("geliefertLT2", 55);

@@ -1,10 +1,12 @@
-package de.palaver.domain.artikelverwaltung;
+package de.palaver.management.artikel;
 
 import de.palaver.domain.EntityName;
 
 public class Mengeneinheit extends EntityName implements java.io.Serializable {
 	private static final long serialVersionUID = 5210068506937506344L;
 	private String m_kurz;
+	public String getKurz() { return m_kurz; }
+	public void setKurz(String kurz) { m_kurz = kurz; }
 
 	public Mengeneinheit() {
 		super();
@@ -14,11 +16,12 @@ public class Mengeneinheit extends EntityName implements java.io.Serializable {
 		this.m_kurz = kurz;
 	}
 	public Mengeneinheit(String name, String kurz) {
-		super(name);
-		this.m_kurz = kurz;
+		this(null, name, kurz);
 	}
 
-	public String getKurz() { return this.m_kurz; }
-	public void setKurz(String kurz) { this.m_kurz = kurz; }
+	public Mengeneinheit(long id, String name) {
+		this(id, name, null);
+	}
+
 
 }

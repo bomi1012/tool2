@@ -12,7 +12,7 @@ public class Lieferant extends EntityName {
 	private boolean m_mehrereliefertermine;
 	private Adresse m_adresse;
 	private Kontakte m_kontakte;
-	
+
 	public String getLieferantnummer() {
 		return m_lieferantnummer;
 	}
@@ -36,7 +36,7 @@ public class Lieferant extends EntityName {
 	public void setMehrereliefertermine(boolean mehrereliefertermine) {
 		m_mehrereliefertermine = mehrereliefertermine;
 	}
-	
+
 	public Adresse getAdresse() {
 		return m_adresse;
 	}
@@ -65,8 +65,9 @@ public class Lieferant extends EntityName {
 		super();
 	}
 
-	public Lieferant(long id, String name, String lieferantnummer, String bezeichnung,
-			boolean mehrereliefertermine, String notiz, Adresse adresse, Kontakte kontakte) {
+	public Lieferant(long id, String name, String lieferantnummer,
+			String bezeichnung, boolean mehrereliefertermine, String notiz,
+			Adresse adresse, Kontakte kontakte) {
 		super(id, name);
 		m_lieferantnummer = lieferantnummer;
 		m_bezeichnung = bezeichnung;
@@ -74,10 +75,11 @@ public class Lieferant extends EntityName {
 		m_adresse = adresse;
 		m_kontakte = kontakte;
 		m_notiz = notiz;
-	}	
-	
+	}
+
 	public Lieferant(String name, String lieferantnummer, String bezeichnung,
-			boolean mehrereliefertermine, String notiz, Adresse adresse, Kontakte kontakte) {
+			boolean mehrereliefertermine, String notiz, Adresse adresse,
+			Kontakte kontakte) {
 		super(name);
 		m_lieferantnummer = lieferantnummer;
 		m_bezeichnung = bezeichnung;
@@ -85,5 +87,9 @@ public class Lieferant extends EntityName {
 		m_adresse = adresse;
 		m_kontakte = kontakte;
 		m_notiz = notiz;
+	}
+
+	public Lieferant(long id, String name) {
+		this(id, name, null, null, false, null, null, null);
 	}
 }

@@ -9,8 +9,8 @@ import java.util.List;
 
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
-import de.palaver.dao.artikelverwaltung.ArtikelDAO;
-import de.palaver.domain.artikelverwaltung.Artikel;
+import de.palaver.management.artikel.Artikel;
+import de.palaver.management.artikel.DAO.ArtikelDAO;
 import de.bistrosoft.palaver.data.FussnoteDAO;
 import de.bistrosoft.palaver.data.GeschmackDAO;
 import de.bistrosoft.palaver.data.RezeptDAO;

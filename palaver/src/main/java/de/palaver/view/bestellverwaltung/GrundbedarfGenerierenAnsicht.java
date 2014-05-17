@@ -35,11 +35,11 @@ import de.hska.awp.palaver2.util.customFilterDecorator;
 import de.palaver.Application;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
-import de.palaver.domain.artikelverwaltung.Artikel;
 import de.palaver.domain.bestellverwaltung.Bestellposition;
 import de.palaver.domain.bestellverwaltung.Bestellung;
 import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
-import de.palaver.service.artikelverwaltung.ArtikelService;
+import de.palaver.management.artikel.Artikel;
+import de.palaver.management.artikel.service.ArtikelService;
 import de.palaver.service.person.lieferantenverwaltung.LieferantenService;
 import de.palaver.view.artikelverwaltung.ArtikelErstellen;
 import de.palaver.view.artikelverwaltung.KategorienAnzeigen;
@@ -224,13 +224,13 @@ ValueChangeListener {
 	@SuppressWarnings({ "static-access", "deprecation" })
 	private void setTable() {
 		m_filterTable.setContainerDataSource(m_container);
-		m_filterTable.setVisibleColumns(new Object[] { FIELD_ARTIKEL_NAME, FIELD_BESTELLGROESSE_LT1, 
+		m_filterTable.setVisibleColumns(new Object[] { FIELD_ARTIKEL_NAME, FIELD_BESTELLGROESSE, 
 				FIELD_LIEFERDATUM_1, FIELD_SUMME_1, FIELD_LIEFERDATUM_2, FIELD_SUMME_2,
 				FIELD_MENGENEINHEIT, FIELD_IGNORE});
 		m_filterTable.sort(new Object[] { FIELD_ARTIKEL_NAME }, new boolean[] { true });
 		m_filterTable.setColumnWidth(FIELD_IGNORE, 70);
 		m_filterTable.setColumnHeader(FIELD_IGNORE, "ignorieren");	
-		m_filterTable.setColumnWidth(FIELD_BESTELLGROESSE_LT1, 60);
+		m_filterTable.setColumnWidth(FIELD_BESTELLGROESSE, 60);
 		m_filterTable.setColumnWidth(FIELD_SUMME_1, 60);
 		m_filterTable.setColumnWidth(FIELD_SUMME_2, 60);
 		m_filterTable.setColumnWidth(FIELD_MENGENEINHEIT, 45);
@@ -239,7 +239,7 @@ ValueChangeListener {
 		m_filterTable.setColumnAlignment(FIELD_SUMME_1, m_filterTable.ALIGN_CENTER);
 		m_filterTable.setColumnAlignment(FIELD_SUMME_2, m_filterTable.ALIGN_CENTER);
 		m_filterTable.setColumnAlignment(FIELD_MENGENEINHEIT, m_filterTable.ALIGN_CENTER);
-		m_filterTable.setColumnAlignment(FIELD_BESTELLGROESSE_LT1, m_filterTable.ALIGN_CENTER);	
+		m_filterTable.setColumnAlignment(FIELD_BESTELLGROESSE, m_filterTable.ALIGN_CENTER);	
 	}
 
 	private void windowModal(final Artikel artikel) {

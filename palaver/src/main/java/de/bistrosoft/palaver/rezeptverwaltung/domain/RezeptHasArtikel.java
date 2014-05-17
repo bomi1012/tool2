@@ -2,8 +2,8 @@ package de.bistrosoft.palaver.rezeptverwaltung.domain;
 
 // Generated 25.04.2013 13:27:05 by Hibernate Tools 4.0.0
 
-import de.palaver.domain.artikelverwaltung.Artikel;
-import de.palaver.domain.artikelverwaltung.Mengeneinheit;
+import de.palaver.management.artikel.Artikel;
+import de.palaver.management.artikel.Mengeneinheit;
 
 public class RezeptHasArtikel {
 

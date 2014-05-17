@@ -1,7 +1,7 @@
 /**
  * 	Sebastian Walz
  */
-package de.palaver.dao.artikelverwaltung;
+package de.palaver.management.artikel.DAO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,7 +14,11 @@ import de.palaver.dao.AbstractDAO;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
 import de.palaver.dao.person.lieferantenverwaltung.LieferantDAO;
-import de.palaver.domain.artikelverwaltung.Artikel;
+import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
+import de.palaver.management.artikel.Artikel;
+import de.palaver.management.artikel.Kategorie;
+import de.palaver.management.artikel.Lagerort;
+import de.palaver.management.artikel.Mengeneinheit;
 
 /**
  * Klasse ArtikelDAO. Die Klasse stellt für den Artikel alle notwendigen
@@ -37,24 +41,38 @@ public class ArtikelDAO extends AbstractDAO {
 	private final static String FIELD_STANDARD = "standard";
 	private final static String FIELD_GRUNDBEDARF = "grundbedarf";
 	private final static String FIELD_FUER_REZEPT = "fuerRezepte";
-	private final static String ACTIVE = "status = 0";
+	private final static String ACTIVE_AND = " status = 0";
 		
-	private final static String GET_ALL_ACTIVE_ARTIKLES = "SELECT * FROM " + TABLE 
-			+ " WHERE " + ACTIVE;
+	private final static String TABLE_WITH_RELATIONS = "SELECT " +
+			"a.id, a.name, a.artikelnr, a.bestellgroesse, a.preis, " +
+			"a.standard, a.grundbedarf, a.fuerRezepte, a.durchschnittLT1," +
+			"a.durchschnittLT2, a.notiz ,k.id, k.name, lo.id, lo.name, li.id, li.name, " +
+			"me.id, me.name " +
+			"FROM " + TABLE + " a, kategorie k, lagerort lo, lieferant li, mengeneinheit me " +
+			"WHERE a.mengeneinheit_fk = me.id " +
+			"AND a.kategorie_fk = k.id " +
+			"AND a.lagerort_fk = lo.id " +
+			"AND a.lieferant_fk = li.id " +
+			"AND a.status = 0";
+	
+	
+	private final static String GET_ALL_ACTIVE_ARTIKLES = TABLE_WITH_RELATIONS;
+	
+	///OLD
 	private final static String GET_ACTIVE_ARTIKLES_BY_LIEFERANT_ID = "SELECT * FROM " + TABLE 
-			+ " WHERE " + FIELD_LIEFERANT_FK + " = {0} AND " + ACTIVE + " ORDER BY " + FIELD_NAME;
+			+ " WHERE " + FIELD_LIEFERANT_FK + " = {0} AND " + ACTIVE_AND + " ORDER BY " + FIELD_NAME;
 	private final static String GET_ARTIKEL_BY_ID = "SELECT * FROM " + TABLE 
 			+ " WHERE " + FIELD_ID + " = {0}";
 	private final static String GET_ACTIVE_ARTIKELS_BY_NAME = "SELECT * FROM" + TABLE 
-			+ " WHERE " + FIELD_NAME + " = {0}" + ACTIVE;
+			+ " WHERE " + FIELD_NAME + " = {0}" + ACTIVE_AND;
 	private final static String GET_ACTIVE_ARTIKELS_BY_GRUNDBEDARF = "SELECT * FROM " + TABLE 
-			+ " WHERE " + FIELD_GRUNDBEDARF + " = 1 AND " + ACTIVE;
+			+ " WHERE " + FIELD_GRUNDBEDARF + " = 1 AND " + ACTIVE_AND;
 	private final static String GET_ACTIVE_ARTIKELS_BY_STANDARD = "SELECT * FROM " + TABLE 
-			+ " WHERE " + FIELD_STANDARD + " = 1" + ACTIVE;
+			+ " WHERE " + FIELD_STANDARD + " = 1" + ACTIVE_AND;
 	private final static String GET_ACTIVE_ARTIKEL_BY_KATEGORIE = "SELECT * FROM " + TABLE 
-			+ " WHERE " + FIELD_KATEGORIE_FK + " = {0} AND " + ACTIVE;
+			+ " WHERE " + FIELD_KATEGORIE_FK + " = {0} AND " + ACTIVE_AND;
 	private final static String GET_ACTIVE_GRUNDBEDARF_BY_LIEFERANT_ID = "SELECT * FROM " + TABLE 
-			+ " WHERE " + FIELD_LIEFERANT_FK + " = {0} AND " + ACTIVE
+			+ " WHERE " + FIELD_LIEFERANT_FK + " = {0} AND " + ACTIVE_AND
 			+ " AND " + FIELD_GRUNDBEDARF + " = 1";
 	
 	
@@ -90,7 +108,7 @@ public class ArtikelDAO extends AbstractDAO {
 		m_list = new ArrayList<Artikel>();
 		m_set = getManaged(GET_ALL_ACTIVE_ARTIKLES);
 		while (m_set.next()) {
-			m_list.add(setArtikel(m_set));
+			m_list.add(setArtikelRelations(m_set));
 		}		
 		return m_list;
 	}
@@ -210,13 +228,64 @@ public class ArtikelDAO extends AbstractDAO {
 		putManaged("UPDATE artikel SET `status` = " + 1 + " WHERE id = " + id);
 	}
 
+	/**
+	 * a.id,
+	 * a.name, 
+	 * a.artikelnr,
+	 * a.bestellgroesse, 
+	 * a.preis, 
+	 * a.standard, 
+	 * a.grundbedarf, 
+	 * a.fuerRezepte, 
+	 * a.durchschnittLT1,
+	 * a.durchschnittLT2, 
+	 * a.notiz ,
+	 * 
+	 * k.id, 
+	 * k.name, 
+	 * 
+	 * lo.id,  
+	 * lo.name, 
+	 * 
+	 * li.id, 
+	 * li.name, 
+	 * 
+	 * me.id, 
+	 * me.name 
+
+	 * @param set
+	 * @return
+	 * @throws DAOException 
+	 * @throws ConnectException 
+	 * @throws SQLException 
+	 */
+	
+	private Artikel setArtikelRelations(ResultSet set) throws SQLException, ConnectException, DAOException {
+		return 	new Artikel(set.getLong(1), 
+				set.getString(2), 
+				set.getString(3),
+				set.getDouble(4),
+				set.getFloat(5),
+				set.getBoolean(6),
+				set.getBoolean(7),
+				set.getBoolean(8),
+				set.getInt(9), 
+				set.getInt(10), 
+				set.getString(11), 
+				new Kategorie(set.getLong(12), set.getString(13)),
+				new Lagerort(set.getLong(14), set.getString(15)), 
+				new Lieferant(set.getLong(16), set.getString(17)),
+				new Mengeneinheit(set.getLong(18), set.getString(19)));	
+	}
+	
 	private Artikel setArtikel(ResultSet set) throws ConnectException, DAOException, SQLException {
 		return 	new Artikel(set.getLong(FIELD_ID), 
-				MengeneinheitDAO.getInstance().getMengeneinheitById(set.getLong(FIELD_MENGENEINHEIT_FK)),
-				KategorieDAO.getInstance().getKategorieById(set.getLong(FIELD_KATEGORIE_FK)), 
-				LieferantDAO.getInstance().getActiveLieferantById(set.getLong(FIELD_LIEFERANT_FK)), 
-				set.getString(FIELD_ARTIKELNUMMER), 
 				set.getString(FIELD_NAME), 
+				MengeneinheitDAO.getInstance().getMengeneinheitById(set.getLong(FIELD_MENGENEINHEIT_FK)), //TODO
+				KategorieDAO.getInstance().getKategorieById(set.getLong(FIELD_KATEGORIE_FK)),  //TODO
+				LieferantDAO.getInstance().getActiveLieferantById(set.getLong(FIELD_LIEFERANT_FK)),  //TODO
+				LagerortDAO.getInstance().getLagerortById(set.getLong(FIELD_LAGERORT_FK)),  //TODO
+				set.getString(FIELD_ARTIKELNUMMER), 
 				set.getDouble(FIELD_BESTELLGROESSE), 
 				set.getFloat(FIELD_PREIS), 
 				set.getInt(FIELD_DURCHSCHNITT_LT_1), 
@@ -224,8 +293,7 @@ public class ArtikelDAO extends AbstractDAO {
 				set.getString(FIELD_NOTIZ), 
 				set.getBoolean(FIELD_STANDARD), 
 				set.getBoolean(FIELD_GRUNDBEDARF), 
-				set.getBoolean(FIELD_FUER_REZEPT),  
-				LagerortDAO.getInstance().getLagerortById(set.getLong(FIELD_LAGERORT_FK)));	
+				set.getBoolean(FIELD_FUER_REZEPT));
 	}
 
 	public List<Artikel> getGrundbedarfByLieferantId(Long id) throws ConnectException, DAOException, SQLException {

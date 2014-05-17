@@ -1,12 +1,12 @@
-package de.palaver.service.artikelverwaltung;
+package de.palaver.management.artikel.service;
 
 import java.sql.SQLException;
 import java.util.List;
 
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
-import de.palaver.dao.artikelverwaltung.MengeneinheitDAO;
-import de.palaver.domain.artikelverwaltung.Mengeneinheit;
+import de.palaver.management.artikel.Mengeneinheit;
+import de.palaver.management.artikel.DAO.MengeneinheitDAO;
 
 public class MengeneinheitService {
 

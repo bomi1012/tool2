@@ -17,8 +17,8 @@ import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.palaver.Application;
-import de.palaver.domain.artikelverwaltung.Lagerort;
-import de.palaver.service.artikelverwaltung.LagerorService;
+import de.palaver.management.artikel.Lagerort;
+import de.palaver.management.artikel.service.LagerorService;
 
 @SuppressWarnings("serial")
 public class LagerorteAnzeigen extends OverAnzeigen implements View {

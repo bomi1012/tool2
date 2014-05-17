@@ -35,7 +35,7 @@ public class ViewAbstract extends VerticalLayout {
 	public static final String FIELD_PREIS = "preis";
 	public static final String FIELD_STANDARD = "standard";
 	public static final String FIELD_GRUNDBEDARF = "grundbedarf";
-	public static final String FIELD_BESTELLGROESSE_LT1 = "bestellgroesseLT1";
+	public static final String FIELD_BESTELLGROESSE = "bestellgroesse";
 	public static final String FIELD_BESTELLGROESSE_LT2 = "bestellgroesseLT2";
 	public static final String FIELD_LIEFERDATUM_1 = "lieferdatum1";
 	public static final String FIELD_LIEFERDATUM_2 = "lieferdatum2";

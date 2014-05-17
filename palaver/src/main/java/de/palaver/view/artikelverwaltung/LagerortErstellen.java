@@ -20,9 +20,9 @@ import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
-import de.palaver.domain.artikelverwaltung.Kategorie;
-import de.palaver.domain.artikelverwaltung.Lagerort;
-import de.palaver.service.artikelverwaltung.LagerorService;
+import de.palaver.management.artikel.Kategorie;
+import de.palaver.management.artikel.Lagerort;
+import de.palaver.management.artikel.service.LagerorService;
 import de.palaver.view.IErstellen;
 
 public class LagerortErstellen extends OverErstellen implements View,

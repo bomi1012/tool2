@@ -14,12 +14,12 @@ import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Fussnotekuchenverwal
 import de.palaver.dao.AbstractDAO;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
-import de.palaver.dao.artikelverwaltung.ArtikelDAO;
-import de.palaver.dao.artikelverwaltung.MengeneinheitDAO;
-import de.palaver.domain.artikelverwaltung.Artikel;
-import de.palaver.domain.artikelverwaltung.Mengeneinheit;
-import de.palaver.service.artikelverwaltung.ArtikelService;
-import de.palaver.service.artikelverwaltung.MengeneinheitService;
+import de.palaver.management.artikel.Artikel;
+import de.palaver.management.artikel.Mengeneinheit;
+import de.palaver.management.artikel.DAO.ArtikelDAO;
+import de.palaver.management.artikel.DAO.MengeneinheitDAO;
+import de.palaver.management.artikel.service.ArtikelService;
+import de.palaver.management.artikel.service.MengeneinheitService;
 
 /**
  * 

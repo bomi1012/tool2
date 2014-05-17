@@ -11,8 +11,8 @@ import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver2.util.customFilter;
 import de.hska.awp.palaver2.util.customFilterDecorator;
-import de.palaver.domain.artikelverwaltung.Artikel;
-import de.palaver.service.artikelverwaltung.ArtikelService;
+import de.palaver.management.artikel.Artikel;
+import de.palaver.management.artikel.service.ArtikelService;
 
 /**
  * 

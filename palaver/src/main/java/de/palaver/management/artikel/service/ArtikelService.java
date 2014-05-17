@@ -1,20 +1,19 @@
-/**
- * Created by Sebastian Walz
- * 24.04.2013 16:08:18
- */
-package de.palaver.service.artikelverwaltung;
+package de.palaver.management.artikel.service;
 
 import java.sql.SQLException;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
-import de.palaver.dao.artikelverwaltung.ArtikelDAO;
-import de.palaver.domain.artikelverwaltung.Artikel;
+import de.palaver.management.artikel.Artikel;
+import de.palaver.management.artikel.DAO.ArtikelDAO;
 
 public class ArtikelService {
 	private static ArtikelService instance = null;
-	
+	private static final Logger LOG = LoggerFactory.getLogger(ArtikelService.class.getName());
 	private ArtikelService() {
 		super();
 	}
@@ -26,9 +25,14 @@ public class ArtikelService {
 		return instance;
 	}
 
-	public List<Artikel> getActiveArtikeln() throws ConnectException, DAOException,
-			SQLException {
-		return  ArtikelDAO.getInstance().getActiveArtikeln();		
+	public List<Artikel> getActiveArtikeln() {
+		try {
+			return  ArtikelDAO.getInstance().getActiveArtikeln();
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error(e.toString());
+		} 
+		return null;
 	}
 
 	public Artikel getArtikelById(Long id) throws ConnectException,

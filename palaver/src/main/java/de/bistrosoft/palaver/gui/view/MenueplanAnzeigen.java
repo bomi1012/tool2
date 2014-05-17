@@ -624,7 +624,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 		if (comp instanceof MenueComponent) {
 			MenueComponent mc = (MenueComponent) comp;
 			String fn = mc.getFussnoten().replace("(", "").replace(")", "").replace(" ", "").replace(",", ", ");
-			return mc.getAngezeigterName() + " (Koch: " + mc.getMenue().getKochname() + ")<br> (" + fn + ")";
+			return mc.getAngezeigterName() + "<br> (" + fn + ")";
 		} else if (comp instanceof Label) {
 			Label lb = (Label) comp;
 			String sLb = lb.getValue();

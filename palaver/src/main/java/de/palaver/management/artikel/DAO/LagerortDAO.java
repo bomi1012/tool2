@@ -1,4 +1,4 @@
-package de.palaver.dao.artikelverwaltung;
+package de.palaver.management.artikel.DAO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,7 +9,7 @@ import java.util.List;
 import de.palaver.dao.AbstractDAO;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
-import de.palaver.domain.artikelverwaltung.Lagerort;
+import de.palaver.management.artikel.Lagerort;
 
 public class LagerortDAO extends AbstractDAO {
 

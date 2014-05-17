@@ -1,7 +1,7 @@
 package de.bistrosoft.palaver.menueplanverwaltung;
 
-import de.palaver.domain.artikelverwaltung.Artikel;
-import de.palaver.domain.artikelverwaltung.Mengeneinheit;
+import de.palaver.management.artikel.Artikel;
+import de.palaver.management.artikel.Mengeneinheit;
 
 public class ArtikelBedarf {
 

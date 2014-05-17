@@ -18,8 +18,8 @@ import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
-import de.palaver.domain.artikelverwaltung.Mengeneinheit;
-import de.palaver.service.artikelverwaltung.MengeneinheitService;
+import de.palaver.management.artikel.Mengeneinheit;
+import de.palaver.management.artikel.service.MengeneinheitService;
 import de.palaver.view.IErstellen;
 
 public class MengeneinheitErstellen extends OverErstellen implements View,

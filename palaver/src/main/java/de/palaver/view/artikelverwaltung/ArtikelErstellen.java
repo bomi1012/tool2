@@ -33,15 +33,15 @@ import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
-import de.palaver.domain.artikelverwaltung.Artikel;
-import de.palaver.domain.artikelverwaltung.Kategorie;
-import de.palaver.domain.artikelverwaltung.Lagerort;
-import de.palaver.domain.artikelverwaltung.Mengeneinheit;
 import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
-import de.palaver.service.artikelverwaltung.ArtikelService;
-import de.palaver.service.artikelverwaltung.KategorieService;
-import de.palaver.service.artikelverwaltung.LagerorService;
-import de.palaver.service.artikelverwaltung.MengeneinheitService;
+import de.palaver.management.artikel.Artikel;
+import de.palaver.management.artikel.Kategorie;
+import de.palaver.management.artikel.Lagerort;
+import de.palaver.management.artikel.Mengeneinheit;
+import de.palaver.management.artikel.service.ArtikelService;
+import de.palaver.management.artikel.service.KategorieService;
+import de.palaver.management.artikel.service.LagerorService;
+import de.palaver.management.artikel.service.MengeneinheitService;
 import de.palaver.service.person.lieferantenverwaltung.LieferantenService;
 
 /**

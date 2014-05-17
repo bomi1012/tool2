@@ -1,12 +1,12 @@
-package de.palaver.service.artikelverwaltung;
+package de.palaver.management.artikel.service;
 
 import java.sql.SQLException;
 import java.util.List;
 
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
-import de.palaver.dao.artikelverwaltung.LagerortDAO;
-import de.palaver.domain.artikelverwaltung.Lagerort;
+import de.palaver.management.artikel.Lagerort;
+import de.palaver.management.artikel.DAO.LagerortDAO;
 
 public class LagerorService {
 	private static LagerorService instance = null;

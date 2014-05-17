@@ -24,8 +24,8 @@ import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.palaver.Application;
-import de.palaver.domain.artikelverwaltung.Artikel;
-import de.palaver.service.artikelverwaltung.ArtikelService;
+import de.palaver.management.artikel.Artikel;
+import de.palaver.management.artikel.service.ArtikelService;
 
 /**
  * @author Sebastian Walz Diese Klasse gibt eine Tabelle aus, in der alle
@@ -143,14 +143,14 @@ public class ArtikelAnzeigen extends OverAnzeigen implements View {
 	private void setTable() {
 		m_filterTable.setContainerDataSource(m_container);
 		m_filterTable.setVisibleColumns(new Object[] { FIELD_NAME, FIELD_ARTIKEL_NR, FIELD_LIEFERANT, FIELD_KATEGORIE, 
-				FIELD_LAGERORT, FIELD_PREIS, FIELD_STANDARD, FIELD_GRUNDBEDARF, FIELD_BESTELLGROESSE_LT1, FIELD_NOTIZ });			
+				FIELD_LAGERORT, FIELD_PREIS, FIELD_STANDARD, FIELD_GRUNDBEDARF, FIELD_BESTELLGROESSE, FIELD_NOTIZ });			
 		m_filterTable.sort(new Object[] { FIELD_NAME }, new boolean[] { true });			
 		m_filterTable.setColumnWidth(FIELD_KATEGORIE, 70);
 		m_filterTable.setColumnWidth(FIELD_ARTIKEL_NR, 60);
 		m_filterTable.setColumnHeader(FIELD_ARTIKEL_NR, "nummer");
 		m_filterTable.setColumnWidth(FIELD_PREIS, 50);
-		m_filterTable.setColumnWidth(FIELD_BESTELLGROESSE_LT1, 50);
-		m_filterTable.setColumnHeader(FIELD_BESTELLGROESSE_LT1, "gebinde");
+		m_filterTable.setColumnWidth(FIELD_BESTELLGROESSE, 50);
+		m_filterTable.setColumnHeader(FIELD_BESTELLGROESSE, "gebinde");
 
 		m_filterTable.setCellStyleGenerator(new CellStyleGenerator() {
 			@Override
@@ -162,6 +162,7 @@ public class ArtikelAnzeigen extends OverAnzeigen implements View {
 				if (FIELD_GRUNDBEDARF.equals(propertyId)) {
 					return artikel.isGrundbedarf() ? "check" : "cross";
 				}
+				System.out.println("PID: " + propertyId);
 				return "";				}
 		});
 		m_filterTable.setColumnWidth(FIELD_STANDARD, 60);

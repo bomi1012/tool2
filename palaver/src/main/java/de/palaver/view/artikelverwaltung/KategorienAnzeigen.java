@@ -17,8 +17,8 @@ import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.palaver.Application;
-import de.palaver.domain.artikelverwaltung.Kategorie;
-import de.palaver.service.artikelverwaltung.KategorieService;
+import de.palaver.management.artikel.Kategorie;
+import de.palaver.management.artikel.service.KategorieService;
 
 @SuppressWarnings("serial")
 public class KategorienAnzeigen extends OverAnzeigen implements View {

@@ -1,4 +1,4 @@
-package de.palaver.domain.artikelverwaltung;
+package de.palaver.management.artikel;
 
 import de.palaver.domain.EntityName;
 

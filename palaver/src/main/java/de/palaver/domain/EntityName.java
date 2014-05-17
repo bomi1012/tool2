@@ -7,7 +7,7 @@ public class EntityName extends EntityId {
 	public void setName(String name) { m_name = name; }
 	
 	public EntityName() {
-		super();
+		this(null, null);
 	}
 	
 	public EntityName(Long id, String name) {
@@ -16,7 +16,7 @@ public class EntityName extends EntityId {
 	}
 
 	public EntityName(String name) {
-		m_name = name;
+		this(null, name);
 	}
 
 	@Override

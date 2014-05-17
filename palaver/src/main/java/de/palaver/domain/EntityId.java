@@ -6,11 +6,10 @@ public class EntityId {
 	public void setId(Long id) { m_id = id; }
 	
 	public EntityId() {
-		super();
+		this(null);
 	}
 	
 	public EntityId(Long id) {
-		super();
 		m_id = id;
 	}
 	

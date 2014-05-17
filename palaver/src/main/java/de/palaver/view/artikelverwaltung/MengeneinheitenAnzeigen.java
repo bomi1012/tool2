@@ -17,8 +17,8 @@ import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.palaver.Application;
-import de.palaver.domain.artikelverwaltung.Mengeneinheit;
-import de.palaver.service.artikelverwaltung.MengeneinheitService;
+import de.palaver.management.artikel.Mengeneinheit;
+import de.palaver.management.artikel.service.MengeneinheitService;
 
 @SuppressWarnings("serial")
 public class MengeneinheitenAnzeigen extends OverAnzeigen implements View {
