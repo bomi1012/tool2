@@ -96,6 +96,8 @@ public class ChangeSupplierBean extends ChangeFieldsAbstract implements View, Va
 		m_innerBoxSupplier.addComponent(horizontalLayoutBuilder());	
 		m_innerBoxSupplier.addComponent(new Hr());
 		m_innerBoxSupplier.addComponent(m_control);
+		
+		m_innerBoxSupplier.setComponentAlignment(m_control, Alignment.MIDDLE_RIGHT);
 
 		m_innerBoxPerson = new VerticalLayout();	
 		m_innerBoxPerson.setWidth(WIDTH_FULL);
@@ -112,7 +114,6 @@ public class ChangeSupplierBean extends ChangeFieldsAbstract implements View, Va
 		
 		setComponentAlignment(m_innerBoxSupplier, Alignment.MIDDLE_CENTER);		
 		setComponentAlignment(m_innerBoxPerson, Alignment.MIDDLE_CENTER);	
-		setComponentAlignment(m_control, Alignment.MIDDLE_RIGHT);
 		
 		componentPersonShowOrHide(false);
 	}
