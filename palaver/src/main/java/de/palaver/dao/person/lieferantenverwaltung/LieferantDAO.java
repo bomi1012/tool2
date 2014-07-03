@@ -37,7 +37,7 @@ public class LieferantDAO extends AbstractDAO {
 			+ FIELD_ID + " = " + TABLE_ARTIKEL + ".lieferant_fk" + " WHERE "
 			+ TABLE_ARTIKEL + ".grundbedarf = {0} AND " + TABLE_ARTIKEL + "."
 			+ ACTIVE;
-
+	
 	private static final String INSERT_QUERY = "INSERT INTO " + TABLE + "("
 			+ "`" + FIELD_NAME + "`, " + "`" + FIELD_LIEFERANTNUMMER + "`, "
 			+ "`" + FIELD_BEZEICHNUNG + "`, " + "`" + FIELD_NOTIZ + "`, " + "`"
@@ -51,6 +51,7 @@ public class LieferantDAO extends AbstractDAO {
 			+ FIELD_MEHRERELIEFERTERMINE + " = {4}, " + FIELD_ADRESSE_FK
 			+ " = {5}, " + FIELD_KONTAKTE_FK + " = {6} WHERE " + FIELD_ID
 			+ " = {7}";
+
 
 	private Lieferant m_lieferant;
 	private ArrayList<Lieferant> m_list;
@@ -99,7 +100,7 @@ public class LieferantDAO extends AbstractDAO {
 		}
 		return m_list;
 	}
-
+	
 	private Lieferant setLieferant(ResultSet set) throws SQLException,
 			ConnectException, DAOException {
 		return new Lieferant(set.getLong(FIELD_ID), set.getString(FIELD_NAME),

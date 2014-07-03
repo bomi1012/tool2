@@ -8,16 +8,16 @@ import de.palaver.dao.DAOException;
 import de.palaver.management.artikel.Lagerort;
 import de.palaver.management.artikel.DAO.LagerortDAO;
 
-public class LagerorService {
-	private static LagerorService instance = null;
+public class LagerortService {
+	private static LagerortService instance = null;
 	
-	private LagerorService() {
+	private LagerortService() {
 		super();
 	}
 
-	public static LagerorService getInstance() {
+	public static LagerortService getInstance() {
 		if (instance == null) {
-			instance = new LagerorService();
+			instance = new LagerortService();
 		}
 		return instance;
 	}

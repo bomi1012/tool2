@@ -45,18 +45,17 @@ import de.palaver.view.MitarbeiterAnzeigen;
 import de.palaver.view.MitarbeiterErstellen;
 import de.palaver.view.NachrichtAnzeigen;
 import de.palaver.view.RollenAnzeigen;
-import de.palaver.view.artikelverwaltung.ArtikelAnzeigen;
-import de.palaver.view.artikelverwaltung.ArtikelErstellen;
-import de.palaver.view.artikelverwaltung.KategorieErstellen;
-import de.palaver.view.artikelverwaltung.KategorienAnzeigen;
-import de.palaver.view.artikelverwaltung.LagerortErstellen;
-import de.palaver.view.artikelverwaltung.LagerorteAnzeigen;
-import de.palaver.view.artikelverwaltung.MengeneinheitErstellen;
-import de.palaver.view.artikelverwaltung.MengeneinheitenAnzeigen;
-import de.palaver.view.bestellverwaltung.BestellungenAnzeigenTable;
-import de.palaver.view.bestellverwaltung.GrundbedarfGenerierenAnsicht;
+import de.palaver.view.artikelverwaltung.ChangeItemBean;
+import de.palaver.view.artikelverwaltung.ChangeKategoryBean;
+import de.palaver.view.artikelverwaltung.ChangeQuantityUnitBean;
+import de.palaver.view.artikelverwaltung.ChangeWarehouseBean;
+import de.palaver.view.artikelverwaltung.ShowItemsBean;
+import de.palaver.view.artikelverwaltung.ShowKategoriesBean;
+import de.palaver.view.artikelverwaltung.ShowQuantitiesUnitBean;
+import de.palaver.view.artikelverwaltung.ShowWarehousesBean;
 import de.palaver.view.lieferantenverwaltung.LieferantAnzeigenTable;
-import de.palaver.view.lieferantenverwaltung.LieferantErstellen;
+import de.palaver.view.lieferantenverwaltung.neu.ChangeSupplierBean;
+import de.palaver.view.lieferantenverwaltung.neu.ShowSupplierBean;
 
 @SuppressWarnings("serial")
 public class MainLayout extends VerticalLayout implements Command {
@@ -245,27 +244,29 @@ public class MainLayout extends VerticalLayout implements Command {
 	public void menuSelected(final MenuItem selectedItem) {
 		if (((Application) UI.getCurrent().getData()).getCahnge() == false) {
 			if (selectedItem.getText().equals(IConstants.MENU_ARTIKEL_NEU)) {
-				ViewHandler.getInstance().switchView(ArtikelErstellen.class);
+				ViewHandler.getInstance().switchView(ChangeItemBean.class);
 			} else if (selectedItem.getText().equals(IConstants.MENU_ARTIKEL_ANZEIGEN)) {
-				ViewHandler.getInstance().switchView(ArtikelAnzeigen.class);
+				ViewHandler.getInstance().switchView(ShowItemsBean.class);
 			} else if (selectedItem.getText().equals(IConstants.MENU_MENGENEINHEIT_ANZEIGEN)) {
-				ViewHandler.getInstance().switchView(MengeneinheitenAnzeigen.class);
+				ViewHandler.getInstance().switchView(ShowQuantitiesUnitBean.class);
 			} else if (selectedItem.getText().equals(IConstants.MENU_KATEGORIE_ANZEIGEN)) {
-				ViewHandler.getInstance().switchView(KategorienAnzeigen.class);
+				ViewHandler.getInstance().switchView(ShowKategoriesBean.class);
 			} else if (selectedItem.getText().equals(IConstants.MENU_LAGERORT_ANZEIGEN)) {
-				ViewHandler.getInstance().switchView(LagerorteAnzeigen.class);
+				ViewHandler.getInstance().switchView(ShowWarehousesBean.class);
 			} else if (selectedItem.getText().equals(IConstants.MENU_MENGENEINHEIT_NEU)) {
-				ViewHandler.getInstance().switchView(MengeneinheitErstellen.class);
+				ViewHandler.getInstance().switchView(ChangeQuantityUnitBean.class);
 			} else if (selectedItem.getText().equals(IConstants.MENU_KATEGORIE_NEU)) {
-				ViewHandler.getInstance().switchView(KategorieErstellen.class);
+				ViewHandler.getInstance().switchView(ChangeKategoryBean.class);
 			} else if (selectedItem.getText().equals(IConstants.MENU_LAGERORT_NEU)) {
-				ViewHandler.getInstance().switchView(LagerortErstellen.class);
+				ViewHandler.getInstance().switchView(ChangeWarehouseBean.class);
 			} else if(selectedItem.getText().equals(IConstants.MENU_BESTELLUNG_ANZEIGEN)) {
-				ViewHandler.getInstance().switchView(BestellungenAnzeigenTable.class);
+				//ViewHandler.getInstance().switchView(BestellungenAnzeigenTable.class);
 			} else if(selectedItem.getText().equals(IConstants.MENU_GRUNDBEDARF)) {
-				ViewHandler.getInstance().switchView(GrundbedarfGenerierenAnsicht.class);
+				//ViewHandler.getInstance().switchView(GrundbedarfGenerierenAnsicht.class);
 			} else if(selectedItem.getText().equals(IConstants.MENU_LIEFERANT_NEW)) {
-				ViewHandler.getInstance().switchView(LieferantErstellen.class);
+				ViewHandler.getInstance().switchView(ChangeSupplierBean.class);
+			} else if (selectedItem.getText().equals(IConstants.MENU_LIEFERANT_ANZEIGEN)) {
+				ViewHandler.getInstance().switchView(ShowSupplierBean.class);
 			}
 			
 			

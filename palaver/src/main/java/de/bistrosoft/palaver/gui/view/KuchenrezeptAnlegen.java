@@ -51,7 +51,7 @@ import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
 import de.palaver.management.artikel.Artikel;
 import de.palaver.management.artikel.service.ArtikelService;
-import de.palaver.view.artikelverwaltung.ArtikelErstellen;
+import de.palaver.view.artikelverwaltung.ChangeItemBean;
 
 /**
  * @author Christine Hartkorn, Jasmin Baumgartner
@@ -623,7 +623,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 		win.setWidth("400px");
 		win.setHeight("600px");
 
-		ArtikelErstellen ae = new ArtikelErstellen();
+		ChangeItemBean ae = new ChangeItemBean();
 		addComponent(ae);
 
 		win.setContent(ae);

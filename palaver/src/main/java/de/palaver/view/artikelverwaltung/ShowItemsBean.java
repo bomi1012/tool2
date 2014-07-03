@@ -1,7 +1,3 @@
-/**
- * Created by Sebastian Walz
- * 24.04.2013 16:03:13
- */
 package de.palaver.view.artikelverwaltung;
 
 import org.slf4j.Logger;
@@ -12,55 +8,49 @@ import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomTable;
 import com.vaadin.ui.CustomTable.CellStyleGenerator;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.UI;
 
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.ViewDataObject;
+import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
 import de.palaver.management.artikel.Artikel;
 import de.palaver.management.artikel.service.ArtikelService;
+import de.palaver.view.manager.HTMLComponents;
+import de.palaver.view.manager.TemplateBuilder;
 
-/**
- * @author Sebastian Walz Diese Klasse gibt eine Tabelle aus, in der alle
- *         Artikel angezeigt werden. Klick man doppelt auf einen, kommt man
- *         direkt zur UpdateForm.
- */
 @SuppressWarnings("serial")
-public class ArtikelAnzeigen extends OverAnzeigen implements View {
-	private static final Logger LOG = LoggerFactory.getLogger(ArtikelAnzeigen.class.getName());
-	private static final String ARTIKELN_ALL = "Alle Artikeln";
-	private HorizontalLayout m_filterControl;
-	private BeanItemContainer<Artikel> m_container = null;
+public class ShowItemsBean extends TemplateBuilder implements View {
+	private static final Logger LOG = LoggerFactory.getLogger(ShowItemsBean.class.getName());	
+	private static final long serialVersionUID = -2340836709411564164L;
+	private static final String TITLE = "Alle Artikeln";
+	private BeanItemContainer<Artikel> m_container;
+
+	private Artikel m_artikel;
 	
-	public ArtikelAnzeigen() {
+	public ShowItemsBean() {
 		super();
-		template();
+		m_container = null;
+		componetsManager();
+		templateBuilder();
 		listeners();
 		beans();
 	}
+	
+	private void componetsManager() {		
+		m_filterControlPanel = filterHorisontalLayoutWithHeadTitle(TITLE, STYLE_HEADLINE_STANDART, WIDTH_FULL);
+		m_filterTable = HTMLComponents.filterTable(true, true);
+		m_control = controlPanel(this);		
+	}
 
-	private void template() {
-		this.setSizeFull();
-		this.setMargin(true);
-		m_headlineLabel = headLine(m_headlineLabel, ARTIKELN_ALL, STYLE_HEADLINE);
-		m_filterControl = filterLayout(m_headlineLabel);		
-		m_filterTable = filterTable();
-		m_control = controlPanelEditAndNew();
-		
-		this.setSpacing(true);				
-		this.addComponent(m_filterControl);		
-		this.addComponent(m_filterTable);
-		this.setExpandRatio(m_filterTable, 1);
-		this.addComponent(m_control);
-		this.setComponentAlignment(m_control, Alignment.BOTTOM_RIGHT);
-		
+	private void templateBuilder() {
+		defaultShowPageFilterTable(m_filterControlPanel, m_filterTable, m_control);
 	}
 
 	private void listeners() {
@@ -68,7 +58,7 @@ public class ArtikelAnzeigen extends OverAnzeigen implements View {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
-					m_editButton.setEnabled(true);
+					m_buttonEdit.setEnabled(true);
 					m_artikel = (Artikel) event.getProperty().getValue();
 				}
 			}
@@ -78,66 +68,45 @@ public class ArtikelAnzeigen extends OverAnzeigen implements View {
 			@Override
 			public void itemClick(ItemClickEvent event) {
 				if (event.isDoubleClick()) {
-					m_editButton.click();
+					m_buttonEdit.click();
 				}
 			}
 		});
 		
-		m_editButton.addClickListener(new ClickListener() {
+		m_buttonEdit.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (m_artikel != null) {
-					windowModal(m_artikel);
-					//ViewHandler.getInstance().switchView(ArtikelErstellen.class, new ViewDataObject<Artikel>(m_artikel));
+					ViewHandler.getInstance().switchView(ChangeItemBean.class, new ViewDataObject<Artikel>(m_artikel));
 				}
 				else {
 					((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_ARTIKEL_AUSWAEHLEN);
 				}
 			}
 		});
-		m_createButton.addClickListener(new ClickListener() {
+		
+		m_buttonCreate.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				windowModal(null);
+				ViewHandler.getInstance().switchView(ChangeItemBean.class);
 			}
 		});	
 		
-		m_filterButton.addClickListener(new ClickListener() {
+		m_buttonFilter.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				m_filterTable.resetFilters();
 			}
 		});
 	}
-
-	private void windowModal(Artikel artikel) {
-		m_window = windowUI(m_window, ARTIKEL, "90%", "95%");		
-		if(artikel != null) {
-			m_artikelErstellen = new ArtikelErstellen(artikel);
-		} else {
-			m_artikelErstellen = new ArtikelErstellen();
-	}
-		addComponent(m_artikelErstellen);
-		m_window.setContent(m_artikelErstellen);
-		m_window.setModal(true);
-		UI.getCurrent().addWindow(m_window);
-		m_artikelErstellen.m_speichernButton.addClickListener(new ClickListener() {					
-			@Override
-			public void buttonClick(ClickEvent event) {	
-				m_container.addItem(m_artikelErstellen.m_artikel);
-				setTable();
-			}
-		});
-		m_artikelErstellen.m_deaktivierenButton.addClickListener(new ClickListener() {					
-			@Override
-			public void buttonClick(ClickEvent event) {	
-				if(m_artikelErstellen.m_okRemove) {
-					m_container.removeItem(m_artikel);
-					setTable();
-					m_okRemove = false;
-				}
-			}
-		});	
+	
+	private void beans() {
+		try {
+			m_container = new BeanItemContainer<Artikel>(Artikel.class, ArtikelService.getInstance().getActiveArtikeln());
+			setTable();
+		} catch (Exception e) {
+			LOG.error(e.toString());
+		}		
 	}
 	
 	private void setTable() {
@@ -162,22 +131,15 @@ public class ArtikelAnzeigen extends OverAnzeigen implements View {
 				if (FIELD_GRUNDBEDARF.equals(propertyId)) {
 					return artikel.isGrundbedarf() ? "check" : "cross";
 				}
-				System.out.println("PID: " + propertyId);
 				return "";				}
 		});
 		m_filterTable.setColumnWidth(FIELD_STANDARD, 60);
 		m_filterTable.setColumnWidth(FIELD_GRUNDBEDARF, 80);
 	}
 	
-	private void beans() {
-		try {
-			m_container = new BeanItemContainer<Artikel>(Artikel.class, ArtikelService.getInstance().getActiveArtikeln());
-			setTable();
-		} catch (Exception e) {
-			LOG.error(e.toString());
-		}		
-	}
-	
 	@Override
-	public void getViewParam(ViewData data) {	 }
+	public void getViewParam(ViewData data) {
+		// TODO Auto-generated method stub
+		
+	}
 }
