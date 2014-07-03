@@ -45,16 +45,16 @@ import de.palaver.view.MitarbeiterAnzeigen;
 import de.palaver.view.MitarbeiterErstellen;
 import de.palaver.view.NachrichtAnzeigen;
 import de.palaver.view.RollenAnzeigen;
-import de.palaver.view.artikelverwaltung.ChangeItemBean;
-import de.palaver.view.artikelverwaltung.ChangeKategoryBean;
-import de.palaver.view.artikelverwaltung.ChangeQuantityUnitBean;
-import de.palaver.view.artikelverwaltung.ChangeWarehouseBean;
-import de.palaver.view.artikelverwaltung.ShowItemsBean;
-import de.palaver.view.artikelverwaltung.ShowKategoriesBean;
-import de.palaver.view.artikelverwaltung.ShowQuantitiesUnitBean;
-import de.palaver.view.artikelverwaltung.ShowWarehousesBean;
-import de.palaver.view.lieferantenverwaltung.ChangeSupplierBean;
-import de.palaver.view.lieferantenverwaltung.ShowSupplierBean;
+import de.palaver.view.bean.artikelverwaltung.ChangeItemBean;
+import de.palaver.view.bean.artikelverwaltung.ChangeKategoryBean;
+import de.palaver.view.bean.artikelverwaltung.ChangeQuantityUnitBean;
+import de.palaver.view.bean.artikelverwaltung.ChangeWarehouseBean;
+import de.palaver.view.bean.artikelverwaltung.ShowItemsBean;
+import de.palaver.view.bean.artikelverwaltung.ShowKategoriesBean;
+import de.palaver.view.bean.artikelverwaltung.ShowQuantitiesUnitBean;
+import de.palaver.view.bean.artikelverwaltung.ShowWarehousesBean;
+import de.palaver.view.bean.lieferantenverwaltung.ChangeSupplierBean;
+import de.palaver.view.bean.lieferantenverwaltung.ShowSupplierBean;
 
 @SuppressWarnings("serial")
 public class MainLayout extends VerticalLayout implements Command {

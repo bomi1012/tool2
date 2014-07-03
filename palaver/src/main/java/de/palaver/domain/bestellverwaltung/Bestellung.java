@@ -4,7 +4,7 @@ import java.sql.Date;
 
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.palaver.domain.EntityId;
-import de.palaver.domain.person.lieferantenverwaltung.Supplier;
+import de.palaver.management.supplier.Supplier;
 
 /**
  * Die Klasse Bestellung spiegelt den Bestellung aus der Datenbank wieder.

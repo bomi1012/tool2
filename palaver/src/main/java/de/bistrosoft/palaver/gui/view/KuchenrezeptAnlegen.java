@@ -51,7 +51,7 @@ import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
 import de.palaver.management.artikel.Artikel;
 import de.palaver.management.artikel.service.ArtikelService;
-import de.palaver.view.artikelverwaltung.ChangeItemBean;
+import de.palaver.view.bean.artikelverwaltung.ChangeItemBean;
 
 /**
  * @author Christine Hartkorn, Jasmin Baumgartner

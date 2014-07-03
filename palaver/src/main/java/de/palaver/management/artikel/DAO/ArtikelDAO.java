@@ -13,12 +13,12 @@ import de.hska.awp.palaver2.util.Util;
 import de.palaver.dao.AbstractDAO;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
-import de.palaver.dao.person.lieferantenverwaltung.LieferantDAO;
-import de.palaver.domain.person.lieferantenverwaltung.Supplier;
 import de.palaver.management.artikel.Artikel;
 import de.palaver.management.artikel.Kategorie;
 import de.palaver.management.artikel.Lagerort;
 import de.palaver.management.artikel.Mengeneinheit;
+import de.palaver.management.supplier.Supplier;
+import de.palaver.management.supplier.DAO.SupplierDAO;
 
 /**
  * Klasse ArtikelDAO. Die Klasse stellt für den Artikel alle notwendigen
@@ -283,7 +283,7 @@ public class ArtikelDAO extends AbstractDAO {
 				set.getString(FIELD_NAME), 
 				MengeneinheitDAO.getInstance().getMengeneinheitById(set.getLong(FIELD_MENGENEINHEIT_FK)), //TODO
 				KategorieDAO.getInstance().getKategorieById(set.getLong(FIELD_KATEGORIE_FK)),  //TODO
-				LieferantDAO.getInstance().getActiveLieferantById(set.getLong(FIELD_LIEFERANT_FK)),  //TODO
+				SupplierDAO.getInstance().getActiveLieferantById(set.getLong(FIELD_LIEFERANT_FK)),  //TODO
 				LagerortDAO.getInstance().getLagerortById(set.getLong(FIELD_LAGERORT_FK)),  //TODO
 				set.getString(FIELD_ARTIKELNUMMER), 
 				set.getDouble(FIELD_BESTELLGROESSE), 
