@@ -1,4 +1,4 @@
-package de.palaver.view.lieferantenverwaltung.neu;
+package de.palaver.view.lieferantenverwaltung;
 
 import java.util.List;
 

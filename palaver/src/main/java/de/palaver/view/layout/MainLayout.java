@@ -53,9 +53,8 @@ import de.palaver.view.artikelverwaltung.ShowItemsBean;
 import de.palaver.view.artikelverwaltung.ShowKategoriesBean;
 import de.palaver.view.artikelverwaltung.ShowQuantitiesUnitBean;
 import de.palaver.view.artikelverwaltung.ShowWarehousesBean;
-import de.palaver.view.lieferantenverwaltung.LieferantAnzeigenTable;
-import de.palaver.view.lieferantenverwaltung.neu.ChangeSupplierBean;
-import de.palaver.view.lieferantenverwaltung.neu.ShowSupplierBean;
+import de.palaver.view.lieferantenverwaltung.ChangeSupplierBean;
+import de.palaver.view.lieferantenverwaltung.ShowSupplierBean;
 
 @SuppressWarnings("serial")
 public class MainLayout extends VerticalLayout implements Command {
@@ -279,9 +278,6 @@ public class MainLayout extends VerticalLayout implements Command {
 				ViewHandler.getInstance()
 						.switchView(MitarbeiterErstellen.class);
 			}  else if (selectedItem.getText().equals(
-					IConstants.MENU_LIEFERANT_ANZEIGEN)) {
-				ViewHandler.getInstance().switchView(LieferantAnzeigenTable.class);
-			} else if (selectedItem.getText().equals(
 					IConstants.MENU_MITARBEITER_ANZEIGEN)) {
 				ViewHandler.getInstance().switchView(MitarbeiterAnzeigen.class);
 			}   else if (selectedItem.getText().equals(IConstants.MENU_LOGOUT)) {

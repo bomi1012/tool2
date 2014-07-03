@@ -35,8 +35,7 @@ import de.palaver.management.artikel.service.KategorieService;
 import de.palaver.management.artikel.service.LagerortService;
 import de.palaver.management.artikel.service.MengeneinheitService;
 import de.palaver.service.person.lieferantenverwaltung.LieferantenService;
-import de.palaver.view.lieferantenverwaltung.LieferantErstellen;
-import de.palaver.view.lieferantenverwaltung.neu.ChangeSupplierBean;
+import de.palaver.view.lieferantenverwaltung.ChangeSupplierBean;
 import de.palaver.view.manager.TemplateBuilder;
 
 public class ChangeItemBean extends TemplateBuilder implements View, ValueChangeListener {
@@ -306,7 +305,7 @@ public class ChangeItemBean extends TemplateBuilder implements View, ValueChange
 	}
 		
 	private void loadContent() {
-		Object[] objects = {new LieferantErstellen(), new ChangeQuantityUnitBean(), 
+		Object[] objects = {new ChangeSupplierBean(), new ChangeQuantityUnitBean(), 
 				new ChangeWarehouseBean(), new ChangeKategoryBean()};
 		
 		for (Object object : objects) {

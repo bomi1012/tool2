@@ -1,4 +1,4 @@
-package de.palaver.view.lieferantenverwaltung.neu;
+package de.palaver.view.lieferantenverwaltung;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;

@@ -25,9 +25,9 @@ import de.palaver.view.artikelverwaltung.ShowItemsBean;
 import de.palaver.view.artikelverwaltung.ShowKategoriesBean;
 import de.palaver.view.artikelverwaltung.ShowQuantitiesUnitBean;
 import de.palaver.view.artikelverwaltung.ShowWarehousesBean;
-import de.palaver.view.lieferantenverwaltung.neu.ChangeContactPersonBean;
-import de.palaver.view.lieferantenverwaltung.neu.ChangeSupplierBean;
-import de.palaver.view.lieferantenverwaltung.neu.ShowSupplierBean;
+import de.palaver.view.lieferantenverwaltung.ChangeContactPersonBean;
+import de.palaver.view.lieferantenverwaltung.ChangeSupplierBean;
+import de.palaver.view.lieferantenverwaltung.ShowSupplierBean;
 
 public class TemplateBuilder extends AbstractView {
 	

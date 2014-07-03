@@ -1,4 +1,4 @@
-package de.palaver.view.lieferantenverwaltung.neu;
+package de.palaver.view.lieferantenverwaltung;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -134,7 +134,7 @@ public class ChangeContactPersonBean extends ChangeFieldsAbstract implements Vie
 			@Override
 			public void buttonClick(ClickEvent event) {
 				ViewHandler.getInstance()
-					.switchView(ChangeSupplierBean.class);
+				.switchView(ChangeSupplierBean.class, new ViewDataObject<Lieferant>(m_supplier));
 			}
 		});	
 		
