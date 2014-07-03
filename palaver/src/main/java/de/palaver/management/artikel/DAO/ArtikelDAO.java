@@ -14,7 +14,7 @@ import de.palaver.dao.AbstractDAO;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
 import de.palaver.dao.person.lieferantenverwaltung.LieferantDAO;
-import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
+import de.palaver.domain.person.lieferantenverwaltung.Supplier;
 import de.palaver.management.artikel.Artikel;
 import de.palaver.management.artikel.Kategorie;
 import de.palaver.management.artikel.Lagerort;
@@ -274,7 +274,7 @@ public class ArtikelDAO extends AbstractDAO {
 				set.getString(11), 
 				new Kategorie(set.getLong(12), set.getString(13)),
 				new Lagerort(set.getLong(14), set.getString(15)), 
-				new Lieferant(set.getLong(16), set.getString(17)),
+				new Supplier(set.getLong(16), set.getString(17)),
 				new Mengeneinheit(set.getLong(18), set.getString(19)));	
 	}
 	

@@ -18,7 +18,7 @@ import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
-import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
+import de.palaver.domain.person.lieferantenverwaltung.Supplier;
 import de.palaver.service.person.lieferantenverwaltung.LieferantenService;
 import de.palaver.view.manager.HTMLComponents;
 import de.palaver.view.manager.TemplateBuilder;
@@ -28,9 +28,9 @@ public class ShowSupplierBean extends TemplateBuilder implements View {
 	private static final Logger LOG = LoggerFactory.getLogger(ShowSupplierBean.class.getName());	
 	private static final long serialVersionUID = -2340836709414164L;
 	private static final String TITLE = "Lieferanten Artikeln";
-	private BeanItemContainer<Lieferant> m_container;
+	private BeanItemContainer<Supplier> m_container;
 
-	private Lieferant m_lieferant;
+	private Supplier m_supplier;
 	
 	public ShowSupplierBean() {
 		super();
@@ -57,7 +57,7 @@ public class ShowSupplierBean extends TemplateBuilder implements View {
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
 					m_buttonEdit.setEnabled(true);
-					m_lieferant = (Lieferant) event.getProperty().getValue();
+					m_supplier = (Supplier) event.getProperty().getValue();
 				}
 			}
 		});
@@ -74,8 +74,8 @@ public class ShowSupplierBean extends TemplateBuilder implements View {
 		m_buttonEdit.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (m_lieferant != null) {
-					ViewHandler.getInstance().switchView(ChangeSupplierBean.class, new ViewDataObject<Lieferant>(m_lieferant));
+				if (m_supplier != null) {
+					ViewHandler.getInstance().switchView(ChangeSupplierBean.class, new ViewDataObject<Supplier>(m_supplier));
 				}
 				else {
 					((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_LIEFERANT_AUSWAEHLEN);
@@ -100,7 +100,7 @@ public class ShowSupplierBean extends TemplateBuilder implements View {
 	
 	private void beans() {
 		try {
-			m_container = new BeanItemContainer<Lieferant>(Lieferant.class, LieferantenService.getInstance().getAllLieferanten());
+			m_container = new BeanItemContainer<Supplier>(Supplier.class, LieferantenService.getInstance().getAllLieferanten());
 			setTable();
 		} catch (Exception e) {
 			LOG.error(e.toString());

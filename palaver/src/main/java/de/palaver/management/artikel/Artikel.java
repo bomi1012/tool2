@@ -3,7 +3,7 @@ package de.palaver.management.artikel;
 import java.io.Serializable;
 
 import de.palaver.domain.EntityName;
-import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
+import de.palaver.domain.person.lieferantenverwaltung.Supplier;
 
 public class Artikel extends EntityName implements Serializable {
 	private static final long serialVersionUID = 6557876739298794189L;
@@ -11,7 +11,7 @@ public class Artikel extends EntityName implements Serializable {
 	private Mengeneinheit m_mengeneinheit;
 	private Kategorie m_kategorie;
 	private Lagerort m_lagerort;
-	private Lieferant m_lieferant;
+	private Supplier m_supplier;
 	private String m_artikelnr;
 	private Double m_bestellgroesse;
 	private Float m_preis;
@@ -35,7 +35,7 @@ public class Artikel extends EntityName implements Serializable {
 	 * @param id
 	 * @param mengeneinheit
 	 * @param kategorie
-	 * @param lieferant
+	 * @param supplier
 	 * @param artikelnr
 	 * @param name
 	 * @param bestellgroesse
@@ -50,7 +50,7 @@ public class Artikel extends EntityName implements Serializable {
 	 */
 	public Artikel(Long id, String name, 
 			Mengeneinheit mengeneinheit, Kategorie kategorie, 
-			Lieferant lieferant, Lagerort lagerort, String artikelnr, 
+			Supplier supplier, Lagerort lagerort, String artikelnr, 
 			Double bestellgroesse, Float preis,
 			Integer durchschnittLT1, Integer durchschnittLT2, 
 			String notiz, boolean standard, 
@@ -58,7 +58,7 @@ public class Artikel extends EntityName implements Serializable {
 		super(id, name);
 		m_mengeneinheit = mengeneinheit;
 		m_kategorie = kategorie;
-		m_lieferant = lieferant;
+		m_supplier = supplier;
 		m_artikelnr = artikelnr;
 		m_bestellgroesse = bestellgroesse;
 		m_durchschnittLT1 = durchschnittLT1;
@@ -100,11 +100,11 @@ public class Artikel extends EntityName implements Serializable {
 	public Artikel(long id, String name, String  artikelnr, double bestellgroesse,
 			float preis, boolean standard, boolean grundbedarf, boolean fuerRezepte,
 			int durchschnittLT1, int durchschnittLT2, String notiz, Kategorie kategorie,
-			Lagerort lagerort, Lieferant lieferant, Mengeneinheit mengeneinheit) {
+			Lagerort lagerort, Supplier supplier, Mengeneinheit mengeneinheit) {
 		super(id, name);
 		m_mengeneinheit = mengeneinheit;
 		m_kategorie = kategorie;
-		m_lieferant = lieferant;
+		m_supplier = supplier;
 		m_artikelnr = artikelnr;
 		m_bestellgroesse = bestellgroesse;
 		m_durchschnittLT1 = durchschnittLT1;
@@ -141,12 +141,12 @@ public class Artikel extends EntityName implements Serializable {
 		m_kategorie = kategorie;
 	}
 
-	public Lieferant getLieferant() {
-		return m_lieferant;
+	public Supplier getLieferant() {
+		return m_supplier;
 	}
 
-	public void setLieferant(Lieferant lieferant) {
-		m_lieferant = lieferant;
+	public void setLieferant(Supplier supplier) {
+		m_supplier = supplier;
 	}
 
 	public Double getBestellgroesse() {

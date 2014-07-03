@@ -4,7 +4,7 @@ import java.sql.Date;
 
 import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.palaver.domain.EntityId;
-import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
+import de.palaver.domain.person.lieferantenverwaltung.Supplier;
 
 /**
  * Die Klasse Bestellung spiegelt den Bestellung aus der Datenbank wieder.
@@ -13,7 +13,7 @@ import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
 public class Bestellung extends EntityId implements java.io.Serializable {
 	private static final long serialVersionUID = -4115989551813492575L;
 
-	private Lieferant m_lieferant;
+	private Supplier m_supplier;
 	private Mitarbeiter m_mitarbeiter;
 	private Date m_datum;
 	private Date m_lieferdatum1;
@@ -25,10 +25,10 @@ public class Bestellung extends EntityId implements java.io.Serializable {
 		super();
 	}
 	
-	public Bestellung(Long id, Lieferant lieferant, Mitarbeiter mitarbeiter,
+	public Bestellung(Long id, Supplier supplier, Mitarbeiter mitarbeiter,
 			Date datum, Date lieferdatum1, Date lieferdatum2, boolean status, String kategorie) {
 		super(id);
-		m_lieferant = lieferant;
+		m_supplier = supplier;
 		m_mitarbeiter = mitarbeiter;
 		m_datum = datum;
 		m_lieferdatum1 = lieferdatum1;
@@ -37,10 +37,10 @@ public class Bestellung extends EntityId implements java.io.Serializable {
 		m_kategorie = kategorie;
 	}
 
-	public Bestellung(Lieferant lieferant, Mitarbeiter mitarbeiter,
+	public Bestellung(Supplier supplier, Mitarbeiter mitarbeiter,
 			Date lieferdatum1, Date lieferdatum2, boolean status, String kategorie) {
 		super();
-		m_lieferant = lieferant;
+		m_supplier = supplier;
 		m_mitarbeiter = mitarbeiter;
 		m_lieferdatum1 = lieferdatum1;
 		m_lieferdatum2 = lieferdatum2;
@@ -51,11 +51,11 @@ public class Bestellung extends EntityId implements java.io.Serializable {
 
 
 
-	public Lieferant getLieferant() {
-		return m_lieferant;
+	public Supplier getLieferant() {
+		return m_supplier;
 	}
-	public void setLieferant(Lieferant lieferant) {
-		m_lieferant = lieferant;
+	public void setLieferant(Supplier supplier) {
+		m_supplier = supplier;
 	}
 
 	public Mitarbeiter getMitarbeiter() {

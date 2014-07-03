@@ -6,17 +6,17 @@ import de.palaver.domain.person.Kontakte;
 
 public class Ansprechpartner extends EntityName {
 
-	private Lieferant m_lieferant;
+	private Supplier m_supplier;
 	private String m_bezeichnung;
 	private Adresse m_adresse;
 	private Kontakte m_kontakte;
 	
-	public Lieferant getLieferant() {
-		return m_lieferant;
+	public Supplier getLieferant() {
+		return m_supplier;
 	}
 
-	public void setLieferant(Lieferant lieferant) {
-		m_lieferant = lieferant;
+	public void setLieferant(Supplier supplier) {
+		m_supplier = supplier;
 	}
 
 	public String getBezeichnung() {
@@ -47,19 +47,19 @@ public class Ansprechpartner extends EntityName {
 		super();
 	}
 
-	public Ansprechpartner(long id, String name, Lieferant lieferant, String bezeichnung,
+	public Ansprechpartner(long id, String name, Supplier supplier, String bezeichnung,
 			Adresse adresse, Kontakte kontakte) {
 		super(id, name);
-		m_lieferant = lieferant;
+		m_supplier = supplier;
 		m_bezeichnung = bezeichnung;
 		m_adresse = adresse;
 		m_kontakte = kontakte;
 	}
 	
-	public Ansprechpartner(String name, Lieferant lieferant, String bezeichnung,
+	public Ansprechpartner(String name, Supplier supplier, String bezeichnung,
 			Adresse adresse, Kontakte kontakte) {
 		super(name);
-		m_lieferant = lieferant;
+		m_supplier = supplier;
 		m_bezeichnung = bezeichnung;
 		m_adresse = adresse;
 		m_kontakte = kontakte;

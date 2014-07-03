@@ -10,7 +10,7 @@ import de.hska.awp.palaver2.util.Util;
 import de.palaver.dao.AbstractDAO;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
-import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
+import de.palaver.domain.person.lieferantenverwaltung.Supplier;
 import de.palaver.service.person.AdresseService;
 import de.palaver.service.person.KontakteService;
 
@@ -53,8 +53,8 @@ public class LieferantDAO extends AbstractDAO {
 			+ " = {7}";
 
 
-	private Lieferant m_lieferant;
-	private ArrayList<Lieferant> m_list;
+	private Supplier m_supplier;
+	private ArrayList<Supplier> m_list;
 
 	public LieferantDAO() {
 		super();
@@ -70,19 +70,19 @@ public class LieferantDAO extends AbstractDAO {
 		return instance;
 	}
 
-	public Lieferant getActiveLieferantById(long id) throws ConnectException,
+	public Supplier getActiveLieferantById(long id) throws ConnectException,
 			DAOException, SQLException {
-		m_lieferant = null;
+		m_supplier = null;
 		m_set = getManaged(MessageFormat.format(GET_LIEFERANT_BY_ID, id));
 		while (m_set.next()) {
-			m_lieferant = setLieferant(m_set);
+			m_supplier = setLieferant(m_set);
 		}
-		return m_lieferant;
+		return m_supplier;
 	}
 
-	public List<Lieferant> getActiveLieferanten() throws ConnectException,
+	public List<Supplier> getActiveLieferanten() throws ConnectException,
 			DAOException, SQLException {
-		m_list = new ArrayList<Lieferant>();
+		m_list = new ArrayList<Supplier>();
 		m_set = getManaged(GET_ALL_ACTIVE_LIEFERANTEN);
 		while (m_set.next()) {
 			m_list.add(setLieferant(m_set));
@@ -90,9 +90,9 @@ public class LieferantDAO extends AbstractDAO {
 		return m_list;
 	}
 
-	public List<Lieferant> getLieferantenByGrundbedarf(boolean hatGrundbedarf)
+	public List<Supplier> getLieferantenByGrundbedarf(boolean hatGrundbedarf)
 			throws SQLException, ConnectException, DAOException {
-		m_list = new ArrayList<Lieferant>();
+		m_list = new ArrayList<Supplier>();
 		m_set = getManaged(MessageFormat.format(GET_LIEFERANTEN_GRUNDBEDARF,
 				hatGrundbedarf));
 		while (m_set.next()) {
@@ -101,53 +101,55 @@ public class LieferantDAO extends AbstractDAO {
 		return m_list;
 	}
 	
-	private Lieferant setLieferant(ResultSet set) throws SQLException,
+	private Supplier setLieferant(ResultSet set) throws SQLException,
 			ConnectException, DAOException {
-		return new Lieferant(set.getLong(FIELD_ID), set.getString(FIELD_NAME),
+		return new Supplier(set.getLong(FIELD_ID), set.getString(FIELD_NAME),
 				set.getString(FIELD_LIEFERANTNUMMER),
 				set.getString(FIELD_BEZEICHNUNG),
 				set.getBoolean(FIELD_MEHRERELIEFERTERMINE),
-				set.getString(FIELD_NOTIZ), AdresseService.getInstance()
+				set.getString(FIELD_NOTIZ), 
+				
+				AdresseService.getInstance()
 						.getAdresseById(set.getLong(FIELD_ADRESSE_FK)),
 				KontakteService.getInstance().getKontakteById(
 						set.getLong(FIELD_KONTAKTE_FK)));
 	}
 
-	public Long createLieferant(Lieferant lieferant) throws ConnectException,
+	public Long createLieferant(Supplier supplier) throws ConnectException,
 			DAOException {
 		String kontakt = null;
 		String adresse = null;
-		if (lieferant.getKontakte() != null) {
-			kontakt = String.valueOf(lieferant.getKontakte().getId());
+		if (supplier.getKontakte() != null) {
+			kontakt = String.valueOf(supplier.getKontakte().getId());
 		}
-		if (lieferant.getAdresse() != null) {
-			adresse = String.valueOf(lieferant.getAdresse().getId());
+		if (supplier.getAdresse() != null) {
+			adresse = String.valueOf(supplier.getAdresse().getId());
 		}
 
 		return insert(MessageFormat.format(INSERT_QUERY,
-				"'" + lieferant.getName() + "'",
-				"'" + lieferant.getLieferantnummer() + "'",
-				"'" + lieferant.getBezeichnung() + "'",
-				"'" + lieferant.getNotiz() + "'",
-				Util.convertBoolean(lieferant.isMehrereliefertermine()),
+				"'" + supplier.getName() + "'",
+				"'" + supplier.getLieferantnummer() + "'",
+				"'" + supplier.getBezeichnung() + "'",
+				"'" + supplier.getNotiz() + "'",
+				Util.convertBoolean(supplier.isMehrereliefertermine()),
 				adresse, kontakt));
 	}
 
-	public void updateLieferant(Lieferant lieferant) throws ConnectException,
+	public void updateLieferant(Supplier supplier) throws ConnectException,
 			DAOException {
 		String kontakt = null;
 		String adresse = null;
-		if (lieferant.getKontakte() != null) {
-			kontakt = String.valueOf(lieferant.getKontakte().getId());
+		if (supplier.getKontakte() != null) {
+			kontakt = String.valueOf(supplier.getKontakte().getId());
 		}
-		if (lieferant.getAdresse() != null) {
-			adresse = String.valueOf(lieferant.getAdresse().getId());
+		if (supplier.getAdresse() != null) {
+			adresse = String.valueOf(supplier.getAdresse().getId());
 		}
-		putManaged(MessageFormat.format(UPDATE_QUERY, "'" + lieferant.getName()
-				+ "'", "'" + lieferant.getLieferantnummer() + "'", "'"
-				+ lieferant.getBezeichnung() + "'", "'" + lieferant.getNotiz()
-				+ "'", Util.convertBoolean(lieferant.isMehrereliefertermine()),
-				adresse, kontakt, lieferant.getId()));
+		putManaged(MessageFormat.format(UPDATE_QUERY, "'" + supplier.getName()
+				+ "'", "'" + supplier.getLieferantnummer() + "'", "'"
+				+ supplier.getBezeichnung() + "'", "'" + supplier.getNotiz()
+				+ "'", Util.convertBoolean(supplier.isMehrereliefertermine()),
+				adresse, kontakt, supplier.getId()));
 
 	}
 

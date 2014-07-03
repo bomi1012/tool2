@@ -4,7 +4,7 @@ import de.palaver.domain.EntityName;
 import de.palaver.domain.person.Adresse;
 import de.palaver.domain.person.Kontakte;
 
-public class Lieferant extends EntityName {
+public class Supplier extends EntityName {
 
 	private String m_lieferantnummer;
 	private String m_bezeichnung;
@@ -61,11 +61,11 @@ public class Lieferant extends EntityName {
 		m_notiz = notiz;
 	}
 
-	public Lieferant() {
+	public Supplier() {
 		super();
 	}
 
-	public Lieferant(long id, String name, String lieferantnummer,
+	public Supplier(long id, String name, String lieferantnummer,
 			String bezeichnung, boolean mehrereliefertermine, String notiz,
 			Adresse adresse, Kontakte kontakte) {
 		super(id, name);
@@ -77,7 +77,7 @@ public class Lieferant extends EntityName {
 		m_notiz = notiz;
 	}
 
-	public Lieferant(String name, String lieferantnummer, String bezeichnung,
+	public Supplier(String name, String lieferantnummer, String bezeichnung,
 			boolean mehrereliefertermine, String notiz, Adresse adresse,
 			Kontakte kontakte) {
 		super(name);
@@ -89,7 +89,7 @@ public class Lieferant extends EntityName {
 		m_notiz = notiz;
 	}
 
-	public Lieferant(long id, String name) {
+	public Supplier(long id, String name) {
 		this(id, name, null, null, false, null, null, null);
 	}
 }

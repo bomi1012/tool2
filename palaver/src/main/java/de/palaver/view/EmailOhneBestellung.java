@@ -28,7 +28,7 @@ import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
-import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
+import de.palaver.domain.person.lieferantenverwaltung.Supplier;
 import de.palaver.service.emailversand.MailService;
 
 /**
@@ -55,7 +55,7 @@ public class EmailOhneBestellung extends VerticalLayout implements View {
 	private String nachrichtInput;
 	private String anhang = null;
 	private boolean lieferanten = false;
-	private Lieferant lieferant;
+	private Supplier supplier;
 
 	private Button senden = new Button(IConstants.BUTTON_SENDEN);
 	private Button verwerfen = new Button(IConstants.BUTTON_DISCARD);
@@ -168,8 +168,8 @@ public class EmailOhneBestellung extends VerticalLayout implements View {
 	
 	@Override
 	public void getViewParam(ViewData data) {
-		lieferant = (Lieferant) ((ViewDataObject<?>) data).getData();
-		empfaengerInput = lieferant.getKontakte().getEmail();
+		supplier = (Supplier) ((ViewDataObject<?>) data).getData();
+		empfaengerInput = supplier.getKontakte().getEmail();
 		empfaenger.setValue(empfaengerInput);
 		lieferanten = true;
 

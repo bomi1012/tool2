@@ -28,7 +28,7 @@ import de.palaver.Application;
 import de.palaver.domain.person.Adresse;
 import de.palaver.domain.person.Kontakte;
 import de.palaver.domain.person.lieferantenverwaltung.Ansprechpartner;
-import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
+import de.palaver.domain.person.lieferantenverwaltung.Supplier;
 import de.palaver.service.person.lieferantenverwaltung.AnsprechpartnerService;
 import de.palaver.view.layout.popup.YesNoPopup;
 import de.palaver.view.manager.HTMLComponents;
@@ -58,7 +58,7 @@ public class ChangeSupplierBean extends ChangeFieldsAbstract implements View, Va
 
 	public void init() {
 		m_toCreate = true;
-		m_supplier = new Lieferant();
+		m_supplier = new Supplier();
 	} 
 	
 	private void componetsManager() {
@@ -140,7 +140,7 @@ public class ChangeSupplierBean extends ChangeFieldsAbstract implements View, Va
 				if (m_toCreate) {
 					addToDB(new Kontakte());
 					addToDB(new Adresse());
-					addToDB(new Lieferant());
+					addToDB(new Supplier());
 					if (ChangeSupplierBean.this.getParent() instanceof Window) {
 						close();
 					} else {
@@ -286,9 +286,9 @@ public class ChangeSupplierBean extends ChangeFieldsAbstract implements View, Va
 	}
 	
 	private void goToContactPersonBean(Object obj) {
-		if (obj instanceof Lieferant) {
+		if (obj instanceof Supplier) {
 			ViewHandler.getInstance()
-				.switchView(ChangeContactPersonBean.class, new ViewDataObject<Lieferant>((Lieferant) obj));
+				.switchView(ChangeContactPersonBean.class, new ViewDataObject<Supplier>((Supplier) obj));
 		} else if (obj instanceof Ansprechpartner) {
 			ViewHandler.getInstance()
 				.switchView(ChangeContactPersonBean.class, 
@@ -301,8 +301,8 @@ public class ChangeSupplierBean extends ChangeFieldsAbstract implements View, Va
 	public void valueChange(ValueChangeEvent event) { }
 	@Override
 	public void getViewParam(ViewData data) {
-		if(((ViewDataObject<?>) data).getData() instanceof Lieferant) { 
-			m_supplier = (Lieferant)((ViewDataObject<?>) data).getData();
+		if(((ViewDataObject<?>) data).getData() instanceof Supplier) { 
+			m_supplier = (Supplier)((ViewDataObject<?>) data).getData();
 			
 			m_nameField.setValue(m_supplier.getName());
 			m_descriptionField.setValue(m_supplier.getBezeichnung());

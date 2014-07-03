@@ -15,7 +15,7 @@ import com.vaadin.ui.VerticalLayout;
 import de.palaver.domain.person.Adresse;
 import de.palaver.domain.person.Kontakte;
 import de.palaver.domain.person.lieferantenverwaltung.Ansprechpartner;
-import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
+import de.palaver.domain.person.lieferantenverwaltung.Supplier;
 import de.palaver.service.person.AdresseService;
 import de.palaver.service.person.KontakteService;
 import de.palaver.service.person.lieferantenverwaltung.AnsprechpartnerService;
@@ -29,7 +29,7 @@ abstract public class ChangeFieldsAbstract extends TemplateBuilder{
 	
 	protected Kontakte m_kontakte;
 	protected Adresse m_adresse;
-	protected Lieferant m_supplier;
+	protected Supplier m_supplier;
 	protected Ansprechpartner m_contactPerson;
 	
 	protected VerticalLayout m_leftVLayout;
@@ -166,8 +166,8 @@ abstract public class ChangeFieldsAbstract extends TemplateBuilder{
 			}
 		}	
 		
-		if (obj instanceof Lieferant) {
-			m_supplier = new Lieferant( 
+		if (obj instanceof Supplier) {
+			m_supplier = new Supplier( 
 					m_nameField.getValue(), m_numberField.getValue(),
 					m_descriptionField.getValue(), m_mehrerLieferterminCheckbox.getValue(), 
 					m_commentField.getValue(), m_adresse, m_kontakte);
@@ -232,14 +232,14 @@ abstract public class ChangeFieldsAbstract extends TemplateBuilder{
 				LOG.error("Adresse_ERROR_Update: " + e.toString());
 			}
 		}		
-		if(obj instanceof Lieferant) {
+		if(obj instanceof Supplier) {
 			try {
-				((Lieferant) obj).setName(m_nameField.getValue());
-				((Lieferant) obj).setBezeichnung(m_descriptionField.getValue());
-				((Lieferant) obj).setLieferantnummer(m_numberField.getValue());
-				((Lieferant) obj).setMehrereliefertermine(m_mehrerLieferterminCheckbox.getValue());
-				((Lieferant) obj).setNotiz(m_commentField.getValue());
-				LieferantenService.getInstance().updateLieferant((Lieferant) obj);
+				((Supplier) obj).setName(m_nameField.getValue());
+				((Supplier) obj).setBezeichnung(m_descriptionField.getValue());
+				((Supplier) obj).setLieferantnummer(m_numberField.getValue());
+				((Supplier) obj).setMehrereliefertermine(m_mehrerLieferterminCheckbox.getValue());
+				((Supplier) obj).setNotiz(m_commentField.getValue());
+				LieferantenService.getInstance().updateLieferant((Supplier) obj);
 			} catch (Exception e) {
 				LOG.error("Lieferant_ERROR_Update: " + e.toString());
 			}

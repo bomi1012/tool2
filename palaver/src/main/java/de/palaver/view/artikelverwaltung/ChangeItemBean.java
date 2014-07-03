@@ -25,7 +25,7 @@ import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
-import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
+import de.palaver.domain.person.lieferantenverwaltung.Supplier;
 import de.palaver.management.artikel.Artikel;
 import de.palaver.management.artikel.Kategorie;
 import de.palaver.management.artikel.Lagerort;
@@ -241,7 +241,7 @@ public class ChangeItemBean extends TemplateBuilder implements View, ValueChange
 				m_artikel.setDurchschnittLT1(m_durchschnittLT1.getValue()); // GebindeAnzahl
 				m_artikel.setDurchschnittLT2(m_durchschnittLT2.getValue()); // GebindeAnzahl
 				m_artikel.setKategorie((Kategorie) m_kategorieSelect.getValue()); // kategorie
-				m_artikel.setLieferant((Lieferant) m_lieferantSelect.getValue()); // Lieferant
+				m_artikel.setLieferant((Supplier) m_lieferantSelect.getValue()); // Lieferant
 				m_artikel.setLagerort((Lagerort) m_lagerortSelect.getValue());
 				m_artikel.setMengeneinheit((Mengeneinheit) m_mengeneinheitSelect
 						.getValue()); 
@@ -348,8 +348,8 @@ public class ChangeItemBean extends TemplateBuilder implements View, ValueChange
 		try {
 			if(object instanceof ChangeSupplierBean) { 
 				m_lieferantSelect.removeAllItems();			
-				for (Lieferant lieferant : LieferantenService.getInstance().getAllLieferanten()) {
-					m_lieferantSelect.addItem(lieferant);
+				for (Supplier supplier : LieferantenService.getInstance().getAllLieferanten()) {
+					m_lieferantSelect.addItem(supplier);
 				}
 				 
 			}

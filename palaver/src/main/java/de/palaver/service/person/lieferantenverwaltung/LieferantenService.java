@@ -9,7 +9,7 @@ import de.palaver.dao.person.AdresseDAO;
 import de.palaver.dao.person.KontakteDAO;
 import de.palaver.dao.person.lieferantenverwaltung.AnsprechpartnerDAO;
 import de.palaver.dao.person.lieferantenverwaltung.LieferantDAO;
-import de.palaver.domain.person.lieferantenverwaltung.Lieferant;
+import de.palaver.domain.person.lieferantenverwaltung.Supplier;
 
 
 public class LieferantenService {
@@ -27,32 +27,32 @@ public class LieferantenService {
 		return instance;
 	}
 
-	public List<Lieferant> getAllLieferanten() throws ConnectException, DAOException, SQLException {
+	public List<Supplier> getAllLieferanten() throws ConnectException, DAOException, SQLException {
 		return LieferantDAO.getInstance().getActiveLieferanten();
 	}
 
-	public List<Lieferant> getLieferantenByGrundbedarf(boolean b) throws SQLException, ConnectException, DAOException {
+	public List<Supplier> getLieferantenByGrundbedarf(boolean b) throws SQLException, ConnectException, DAOException {
 		return LieferantDAO.getInstance().getLieferantenByGrundbedarf(b);
 	}
 
-	public Long createLieferant(Lieferant lieferant) throws ConnectException, DAOException {
-		return LieferantDAO.getInstance().createLieferant(lieferant);
+	public Long createLieferant(Supplier supplier) throws ConnectException, DAOException {
+		return LieferantDAO.getInstance().createLieferant(supplier);
 	}
 
-	public void updateLieferant(Lieferant lieferant) throws ConnectException, DAOException {
-		LieferantDAO.getInstance().updateLieferant(lieferant);
+	public void updateLieferant(Supplier supplier) throws ConnectException, DAOException {
+		LieferantDAO.getInstance().updateLieferant(supplier);
 		
 	}
 
-	public void deleteLieferant(Lieferant lieferant) throws ConnectException, DAOException {
+	public void deleteLieferant(Supplier supplier) throws ConnectException, DAOException {
 		
-		AnsprechpartnerDAO.getInstance().deleteAnsprechpartnerByLieferantId(lieferant.getId());
-		LieferantDAO.getInstance().deleteLieferant(lieferant.getId());
-		if(lieferant.getAdresse() != null) {
-			AdresseDAO.getInstance().deleteAdresse(lieferant.getAdresse().getId());
+		AnsprechpartnerDAO.getInstance().deleteAnsprechpartnerByLieferantId(supplier.getId());
+		LieferantDAO.getInstance().deleteLieferant(supplier.getId());
+		if(supplier.getAdresse() != null) {
+			AdresseDAO.getInstance().deleteAdresse(supplier.getAdresse().getId());
 		}
-		if(lieferant.getKontakte() != null) {
-			KontakteDAO.getInstance().deleteKontakte(lieferant.getKontakte().getId());
+		if(supplier.getKontakte() != null) {
+			KontakteDAO.getInstance().deleteKontakte(supplier.getKontakte().getId());
 		}
 	}
 
