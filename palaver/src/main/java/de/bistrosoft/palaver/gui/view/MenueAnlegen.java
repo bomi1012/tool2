@@ -45,7 +45,6 @@ import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.TwinColTouch;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
@@ -55,6 +54,7 @@ import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
+import de.palaver.management.emploee.Employee;
 
 /**
  * @author Jasmin Baumgartner, Eike Becher, Michael Marschall
@@ -388,9 +388,9 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			tblMenueRezepte.setVisibleColumns(new Object[] { "name",
 					"rezeptart", "mitarbeiter" });
 
-			List<Mitarbeiter> mitarbeiter = Mitarbeiterverwaltung.getInstance()
+			List<Employee> employee = Mitarbeiterverwaltung.getInstance()
 					.getAllMitarbeiter();
-			for (Mitarbeiter e : mitarbeiter) {
+			for (Employee e : employee) {
 				nsKoch.addItem(e);
 			}
 
@@ -559,7 +559,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		}
 
 		menue.setName(tfMenuename.getValue());
-		menue.setKoch((Mitarbeiter) nsKoch.getValue());
+		menue.setKoch((Employee) nsKoch.getValue());
 		menue.setMenueart((Menueart) nsMenueart.getValue());
 		menue.setGeschmack((Geschmack) nsGeschmack.getValue());
 

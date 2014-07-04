@@ -18,10 +18,10 @@ import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.Util;
 import de.hska.awp.palaver2.data.MitarbeiterDAO;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.palaver.dao.AbstractDAO;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
+import de.palaver.management.emploee.Employee;
 
 public class MenueDAO extends AbstractDAO {
 	private static MenueDAO instance;
@@ -85,7 +85,7 @@ public class MenueDAO extends AbstractDAO {
 			m.setName(set.getString(2));
 			m.setAufwand(set.getBoolean(3));
 			m.setFavorit(set.getBoolean(4));
-			Mitarbeiter k = new Mitarbeiter();
+			Employee k = new Employee();
 			k.setId(set.getLong(5));
 			k.setName(set.getString(6));
 			k.setVorname(set.getString(7));

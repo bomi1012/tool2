@@ -6,7 +6,7 @@ package de.hska.awp.palaver2.util;
 
 import java.io.Serializable;
 
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.palaver.management.emploee.Employee;
 import de.palaver.view.layout.MainLayout;
 
 /**
@@ -18,14 +18,14 @@ public class SessionData implements Serializable
 {
 	private MainLayout 		layout;
 	
-	private Mitarbeiter		user;
+	private Employee		user;
 	
 	public SessionData()
 	{
 		this(null, null);
 	}
 	
-	public SessionData(MainLayout layout, Mitarbeiter user)
+	public SessionData(MainLayout layout, Employee user)
 	{
 		super();
 		this.setLayout(layout);
@@ -42,12 +42,12 @@ public class SessionData implements Serializable
 		this.layout = layout;
 	}
 
-	public Mitarbeiter getUser()
+	public Employee getUser()
 	{
 		return user;
 	}
 
-	public void setUser(Mitarbeiter user)
+	public void setUser(Employee user)
 	{
 		this.user = user;
 	}

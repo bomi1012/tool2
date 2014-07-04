@@ -5,13 +5,13 @@ import java.util.List;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.palaver.management.emploee.Employee;
 
 public class Menue {
 	private Long id;
 	private String name;
 	private List<Rezept> rezepte;
-	private Mitarbeiter koch;
+	private Employee koch;
 	private Boolean hauptgericht;
 	private Geschmack geschmack;
 	private boolean aufwand;
@@ -72,7 +72,7 @@ public class Menue {
 
 	}
 
-	public Menue(Long id, String name, Mitarbeiter koch) {
+	public Menue(Long id, String name, Employee koch) {
 		this.id = id;
 		this.name = name;
 		this.koch = koch;
@@ -82,7 +82,7 @@ public class Menue {
 		this.id = id;
 	}
 
-	public Menue(Long id, String name, Mitarbeiter koch, Geschmack geschmack,
+	public Menue(Long id, String name, Employee koch, Geschmack geschmack,
 			Menueart menueart, Boolean aufwand, Boolean favorit) {
 		this.id = id;
 		this.name = name;
@@ -98,7 +98,7 @@ public class Menue {
 		this.name = name;
 	}
 
-	public Menue(String name, Mitarbeiter koch) {
+	public Menue(String name, Employee koch) {
 		this.name = name;
 		this.koch = koch;
 	}
@@ -170,11 +170,11 @@ public class Menue {
 		this.name = name;
 	}
 
-	public Mitarbeiter getKoch() {
+	public Employee getKoch() {
 		return koch;
 	}
 
-	public void setKoch(Mitarbeiter koch) {
+	public void setKoch(Employee koch) {
 		this.koch = koch;
 		this.kochname = koch.getBenutzername();
 	}

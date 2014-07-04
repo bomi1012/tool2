@@ -6,7 +6,7 @@ package de.bistrosoft.palaver.rezeptverwaltung.domain;
 import java.sql.Date;
 import java.util.List;
 
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.palaver.management.emploee.Employee;
 
 public class Rezept implements java.io.Serializable {
 
@@ -15,7 +15,7 @@ public class Rezept implements java.io.Serializable {
 	// Variablen
 	private Long id;
 	private Rezeptart rezeptart;
-	private Mitarbeiter mitarbeiter;
+	private Employee employee;
 	private String name;
 	private String kommentar;
 	private Date erstellt;
@@ -29,42 +29,42 @@ public class Rezept implements java.io.Serializable {
 		super();
 	}
 
-	public Rezept(Rezeptart rezeptart, Mitarbeiter mitarbeiter, String name,
+	public Rezept(Rezeptart rezeptart, Employee employee, String name,
 			String kommentar) {
 		super();
 		this.rezeptart = rezeptart;
-		this.mitarbeiter = mitarbeiter;
+		this.employee = employee;
 		this.name = name;
 		this.kommentar = kommentar;
 	}
 
-	public Rezept(Long id, Rezeptart rezeptart, Mitarbeiter mitarbeiter,
+	public Rezept(Long id, Rezeptart rezeptart, Employee employee,
 			String name, String kommentar) {
 		super();
 		this.id = id;
 		this.rezeptart = rezeptart;
-		this.mitarbeiter = mitarbeiter;
+		this.employee = employee;
 		this.name = name;
 		this.kommentar = kommentar;
 	}
 
-	public Rezept(Long id, Rezeptart rezeptart, Mitarbeiter mitarbeiter,
+	public Rezept(Long id, Rezeptart rezeptart, Employee employee,
 			String name, String kommentar, Date erstellt) {
 		super();
 		this.id = id;
 		this.rezeptart = rezeptart;
-		this.mitarbeiter = mitarbeiter;
+		this.employee = employee;
 		this.name = name;
 		this.kommentar = kommentar;
 		this.erstellt = erstellt;
 	}
 	
-	public Rezept(Long id, Rezeptart rezeptart, Mitarbeiter mitarbeiter,
+	public Rezept(Long id, Rezeptart rezeptart, Employee employee,
 			String name, String kommentar, Date erstellt, Boolean aktiv) {
 		super();
 		this.id = id;
 		this.rezeptart = rezeptart;
-		this.mitarbeiter = mitarbeiter;
+		this.employee = employee;
 		this.name = name;
 		this.kommentar = kommentar;
 		this.erstellt = erstellt;
@@ -109,12 +109,12 @@ public class Rezept implements java.io.Serializable {
 		this.rezeptart = rezeptart;
 	}
 
-	public Mitarbeiter getMitarbeiter() {
-		return this.mitarbeiter;
+	public Employee getMitarbeiter() {
+		return this.employee;
 	}
 
-	public void setMitarbeiter(Mitarbeiter mitarbeiter) {
-		this.mitarbeiter = mitarbeiter;
+	public void setMitarbeiter(Employee employee) {
+		this.employee = employee;
 	}
 
 	public String getName() {

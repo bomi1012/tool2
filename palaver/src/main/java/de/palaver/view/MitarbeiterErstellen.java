@@ -28,8 +28,6 @@ import com.vaadin.ui.TwinColSelect;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Rollenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
@@ -38,6 +36,8 @@ import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
+import de.palaver.management.emploee.Employee;
+import de.palaver.management.emploee.Rollen;
 
 /**
  * View 
@@ -63,7 +63,7 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 	private TextField benutzername = new TextField("Benutzername");
 	private TwinColSelect rollen = new TwinColSelect();
 
-	private Mitarbeiter mitarbeiter = new Mitarbeiter();
+	private Employee employee = new Employee();
 	private List<Rollen> rollenlist = new ArrayList<Rollen>();
 	public String valueString = null;
 
@@ -211,20 +211,20 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 
 				if (validiereEingabe()) {
 			
-					mitarbeiter.setName(name.getValue());
-					mitarbeiter.setVorname(vorname.getValue());
-					mitarbeiter.setEmail(email.getValue());
+					employee.setName(name.getValue());
+					employee.setVorname(vorname.getValue());
+					employee.setEmail(email.getValue());
 					try {
-						mitarbeiter.setPasswort(Util.encryptPassword(passwort.getValue()).toString());
+						employee.setPasswort(Util.encryptPassword(passwort.getValue()).toString());
 					} catch (UnsupportedEncodingException e1) {
 						log.error(e1.toString());
 					} catch (NoSuchAlgorithmException e1) {
 						log.error(e1.toString());
 					}
-					mitarbeiter.setEintrittsdatum(eintrittsdatum.getValue());
-					mitarbeiter.setAustrittsdatum(austrittsdatum.getValue());
+					employee.setEintrittsdatum(eintrittsdatum.getValue());
+					employee.setAustrittsdatum(austrittsdatum.getValue());
 	
-					mitarbeiter.setBenutzername(benutzername.getValue());
+					employee.setBenutzername(benutzername.getValue());
 	
 					// Listbuilder: ValueChangeListener gibt einen String der IDs
 					// zurück z.B. [1, 3]
@@ -254,11 +254,11 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 						}
 					}
 	
-					mitarbeiter.setRollen(rollenlist);
+					employee.setRollen(rollenlist);
 	
 					try {
 						boolean vorhanden = false;
-						List<Mitarbeiter> ml = Mitarbeiterverwaltung.getInstance().getAllMitarbeiter();
+						List<Employee> ml = Mitarbeiterverwaltung.getInstance().getAllMitarbeiter();
 						for (int i = 0; i < ml.size(); i++) {
 							if (benutzername.getValue().equals(ml.get(i).getBenutzername())) {
 								vorhanden = true;
@@ -266,7 +266,7 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 						}
 						if (vorhanden == false) {
 	
-							Mitarbeiterverwaltung.getInstance().createMitarbeiter(mitarbeiter);
+							Mitarbeiterverwaltung.getInstance().createMitarbeiter(employee);
 							ViewHandler.getInstance().switchView(MitarbeiterAnzeigen.class);
 						} else {
 							Notification notification = new Notification("Der Benutzername ist bereits vorhanden!");
@@ -282,7 +282,7 @@ public class MitarbeiterErstellen extends VerticalLayout implements View {
 		});
 
 		// Berechtigung: Nur Administrator/Chef darf Mitarbeiter anlegen
-		Mitarbeiter m = ((Application) UI.getCurrent().getData()).getUser();
+		Employee m = ((Application) UI.getCurrent().getData()).getUser();
 		if (m.getRollen() != null) {
 			for (int i = 0; i < m.getRollen().size(); i++) {
 				if (m.getRollen().get(i).getName().equals(Rollen.ADMINISTRATOR)) {

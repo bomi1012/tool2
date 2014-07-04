@@ -26,8 +26,6 @@ import com.vaadin.ui.TwinColSelect;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Rollenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
@@ -37,6 +35,8 @@ import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
+import de.palaver.management.emploee.Employee;
+import de.palaver.management.emploee.Rollen;
 
 /**
  * View 
@@ -70,7 +70,7 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 	private String austrittsdatumInput;
 	private String benutzernameInput;
 
-	private Mitarbeiter mitarbeiter = new Mitarbeiter();
+	private Employee employee = new Employee();
 	private List<Rollen> rollenlist = new ArrayList<Rollen>();
 	public String valueString = null;
 
@@ -280,15 +280,15 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 			@Override
 			public void buttonClick(ClickEvent event) {
 
-				mitarbeiter.setName(nameInput);
-				mitarbeiter.setVorname(vornameInput);
-				mitarbeiter.setEmail(emailInput);
+				employee.setName(nameInput);
+				employee.setVorname(vornameInput);
+				employee.setEmail(emailInput);
 
-				if (passwortInput.equals(mitarbeiter.getPasswort())) {
-					mitarbeiter.setPasswort(passwortInput);
+				if (passwortInput.equals(employee.getPasswort())) {
+					employee.setPasswort(passwortInput);
 				} else {
 					try {
-						mitarbeiter.setPasswort(Util.encryptPassword(passwortInput).toString());
+						employee.setPasswort(Util.encryptPassword(passwortInput).toString());
 					} catch (UnsupportedEncodingException e1) {
 						log.error(e1.toString());
 					} catch (NoSuchAlgorithmException e1) {
@@ -296,9 +296,9 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 					}
 				}
 
-				mitarbeiter.setEintrittsdatum(eintrittsdatumInput);
-				mitarbeiter.setAustrittsdatum(austrittsdatumInput);
-				mitarbeiter.setBenutzername(benutzernameInput);
+				employee.setEintrittsdatum(eintrittsdatumInput);
+				employee.setAustrittsdatum(austrittsdatumInput);
+				employee.setBenutzername(benutzernameInput);
 
 				// Listbuilder: ValueChangeListener gibt einen String der IDs
 				// zurück z.B. [1, 3]
@@ -329,10 +329,10 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 					}
 				}
 
-				mitarbeiter.setRollen(rollenlist);
+				employee.setRollen(rollenlist);
 
 				try {
-					Mitarbeiterverwaltung.getInstance().updateMitarbeiter(mitarbeiter);
+					Mitarbeiterverwaltung.getInstance().updateMitarbeiter(employee);
 				} catch (Exception e) {
 					log.error(e.toString());
 				}
@@ -345,37 +345,37 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 
 	@Override
 	public void getViewParam(ViewData data) {
-		mitarbeiter = (Mitarbeiter) ((ViewDataObject<?>) data).getData();
+		employee = (Employee) ((ViewDataObject<?>) data).getData();
 
 		try {
-			mitarbeiter = Mitarbeiterverwaltung.getInstance().getMitarbeiterById(mitarbeiter.getId());
+			employee = Mitarbeiterverwaltung.getInstance().getMitarbeiterById(employee.getId());
 		} catch (Exception e) {
 			log.error(e.toString());
 		}
 
-		name.setValue(mitarbeiter.getName());
+		name.setValue(employee.getName());
 
-		vorname.setValue(mitarbeiter.getVorname());
+		vorname.setValue(employee.getVorname());
 
-		email.setValue(mitarbeiter.getEmail());
+		email.setValue(employee.getEmail());
 
-		eintrittsdatum.setValue(mitarbeiter.getEintrittsdatum());
+		eintrittsdatum.setValue(employee.getEintrittsdatum());
 
-		austrittsdatum.setValue(mitarbeiter.getAustrittsdatum());
+		austrittsdatum.setValue(employee.getAustrittsdatum());
 
-		benutzername.setValue(mitarbeiter.getBenutzername());
+		benutzername.setValue(employee.getBenutzername());
 
-		passwort.setValue(mitarbeiter.getPasswort());
+		passwort.setValue(employee.getPasswort());
 
-		for (int i = 0; i < mitarbeiter.getRollen().size(); i++) {
-			rollen.select(mitarbeiter.getRollen().get(i).getId());
+		for (int i = 0; i < employee.getRollen().size(); i++) {
+			rollen.select(employee.getRollen().get(i).getId());
 
 		}
 
 		// Berechtigung: Administrator darf Mitarbeiter bearbeiten und der
 		// eigene Mitarbeiter darf sich selber bearbeiten mit Ausnahme der
 		// Rollen
-		Mitarbeiter m = ((Application) UI.getCurrent().getData()).getUser();
+		Employee m = ((Application) UI.getCurrent().getData()).getUser();
 		if (m.getRollen() != null) {
 			for (int i = 0; i < m.getRollen().size(); i++) {
 				if (m.getRollen().get(i).getName().equals(Rollen.ADMINISTRATOR)) {
@@ -392,7 +392,7 @@ public class MitarbeiterBearbeiten extends VerticalLayout implements View {
 
 			}
 		}
-		if (m.getId() == mitarbeiter.getId()) {
+		if (m.getId() == employee.getId()) {
 			name.setEnabled(true);
 			vorname.setEnabled(true);
 			email.setEnabled(true);

@@ -45,8 +45,6 @@ import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Zubereitungverwaltung;
 import de.bistrosoft.palaver.util.TwinColTouch;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
@@ -57,6 +55,8 @@ import de.palaver.Application;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
 import de.palaver.management.artikel.Artikel;
+import de.palaver.management.emploee.Employee;
+import de.palaver.management.emploee.Rollen;
 import de.palaver.view.bean.artikelverwaltung.ChangeItemBean;
 
 /**
@@ -457,9 +457,9 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		zubereitung.removeAllItems();
 
 		try {
-			List<Mitarbeiter> mitarbeiter = Mitarbeiterverwaltung.getInstance()
+			List<Employee> employee = Mitarbeiterverwaltung.getInstance()
 					.getAllMitarbeiter();
-			for (Mitarbeiter e : mitarbeiter) {
+			for (Employee e : employee) {
 				mitarbeiterNs.addItem(e);
 			}
 
@@ -605,7 +605,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		rez.setRezeptart((Rezeptart) rezeptartNs.getValue());
 
 		try {
-			rez.setMitarbeiter((Mitarbeiter) mitarbeiterNs.getValue());
+			rez.setMitarbeiter((Employee) mitarbeiterNs.getValue());
 
 		} catch (Exception e1) {
 			e1.printStackTrace();
@@ -697,7 +697,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 
 		// setzt Mitarbeiter
 		try {
-			rezept.setMitarbeiter((Mitarbeiter) mitarbeiterNs.getValue());
+			rezept.setMitarbeiter((Employee) mitarbeiterNs.getValue());
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}

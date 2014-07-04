@@ -28,11 +28,11 @@ import de.bistrosoft.palaver.menueplanverwaltung.service.Menueplanverwaltung;
 import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.palaver.Application;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
+import de.palaver.management.emploee.Employee;
+import de.palaver.management.emploee.Rollen;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.interfaces.DragFilter;
@@ -54,7 +54,7 @@ public class MenueplanGridLayout extends CustomComponent {
 	private Menueplan menueplan = null;
 
 	List<Regel> regeln;
-	private List<Mitarbeiter> mitarbeiter;
+	private List<Employee> employee;
 
 	public Menueplan getMenueplan() {
 		return menueplan;
@@ -66,7 +66,7 @@ public class MenueplanGridLayout extends CustomComponent {
 
 	// Seitenlayout erstellen
 	public MenueplanGridLayout(int week, int year,
-			List<Mitarbeiter> mitarbeiter, List<Regel> regeln) {
+			List<Employee> employee, List<Regel> regeln) {
 		Menueplan mpl = null;
 		try {
 			mpl = Menueplanverwaltung.getInstance().getMenueplanForLayout(
@@ -83,7 +83,7 @@ public class MenueplanGridLayout extends CustomComponent {
 			mpl = new Menueplan(new Week(week, year));
 		}
 		this.regeln = regeln;
-		this.mitarbeiter = mitarbeiter;
+		this.employee = employee;
 
 		generierePlan(mpl);
 	}
@@ -196,7 +196,7 @@ public class MenueplanGridLayout extends CustomComponent {
 
 		// Fülle Zeile für Köche mit DropDowm-Boxen für Namen
 		for (int col = 1; col < COLUMNS; col++) {
-			KoecheComponent koeche = new KoecheComponent(mitarbeiter);
+			KoecheComponent koeche = new KoecheComponent(employee);
 			layout.addComponent(koeche, col, 1);
 			layout.setComponentAlignment(koeche, Alignment.MIDDLE_CENTER);
 		}

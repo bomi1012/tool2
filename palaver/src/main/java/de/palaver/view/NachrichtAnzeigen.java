@@ -23,8 +23,6 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Rollenverwaltung;
 import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
@@ -34,6 +32,8 @@ import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
+import de.palaver.management.emploee.Employee;
+import de.palaver.management.emploee.Rollen;
 
 @SuppressWarnings("serial")
 public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChangeListener {
@@ -58,7 +58,7 @@ public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChan
 
 	private String neuernachrichtentextinput;
 
-	Mitarbeiter m = null;
+	Employee m = null;
 
 	private int NACHRICHT_MAXLENGTH = 300;
 
@@ -96,7 +96,7 @@ public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChan
 		// Nachrichtlayout zusammenbauen
 		try {
 
-			Mitarbeiter m2 = ((Application) UI.getCurrent().getData()).getUser();
+			Employee m2 = ((Application) UI.getCurrent().getData()).getUser();
 			m = Mitarbeiterverwaltung.getInstance().getMitarbeiterById(m2.getId());
 			List<Rollen> rlist = m.getRollen();
 			if (rlist != null) {

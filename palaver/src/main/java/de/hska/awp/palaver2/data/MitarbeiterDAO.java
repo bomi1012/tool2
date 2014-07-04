@@ -6,12 +6,12 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
 import de.palaver.dao.AbstractDAO;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
+import de.palaver.management.emploee.Employee;
+import de.palaver.management.emploee.Rollen;
 
 /**
  * Die Klasse stellt Methoden für den Datenbankzugriff für das Objekt
@@ -65,13 +65,13 @@ public class MitarbeiterDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public List<Mitarbeiter> getAllMitarbeiter() throws ConnectException, DAOException, SQLException {
-		List<Mitarbeiter> list = new ArrayList<Mitarbeiter>();
+	public List<Employee> getAllMitarbeiter() throws ConnectException, DAOException, SQLException {
+		List<Employee> list = new ArrayList<Employee>();
 		openConnection();
 		ResultSet set = get(GET_ALL_MITARBEITER);
 		openConnection();
 		while (set.next()) {
-			list.add(new Mitarbeiter(set.getLong("id"), set.getString("name"), set.getString("vorname"), set.getString("email"), set
+			list.add(new Employee(set.getLong("id"), set.getString("name"), set.getString("vorname"), set.getString("email"), set
 					.getString("passwort"), set.getString("eintrittsdatum"), set.getString("austrittsdatum"), getRollenByMitarbeiterId(set
 					.getLong("id")), set.getString("benutzername")));
 		}
@@ -88,21 +88,21 @@ public class MitarbeiterDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public Mitarbeiter getMitarbeiterById(Long id) throws ConnectException, DAOException, SQLException {
+	public Employee getMitarbeiterById(Long id) throws ConnectException, DAOException, SQLException {
 
 		if (id == null) {
 			return null;
 		}
-		Mitarbeiter mitarbeiter = null;
+		Employee employee = null;
 		ResultSet set = getManaged(MessageFormat.format(GET_MITARBEITER_BY_ID, id));
 
 		while (set.next()) {
-			mitarbeiter = new Mitarbeiter(set.getLong("id"), set.getString("name"), set.getString("vorname"), set.getString("email"),
+			employee = new Employee(set.getLong("id"), set.getString("name"), set.getString("vorname"), set.getString("email"),
 					set.getString("passwort"), set.getString("eintrittsdatum"), set.getString("austrittsdatum"),
 					getRollenByMitarbeiterId(set.getLong("id")), set.getString("benutzername"));
 		}
 
-		return mitarbeiter;
+		return employee;
 	}
 
 	/**
@@ -114,14 +114,14 @@ public class MitarbeiterDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public List<Mitarbeiter> getMitarbeiterByRollenId(Long id) throws ConnectException, DAOException, SQLException {
+	public List<Employee> getMitarbeiterByRollenId(Long id) throws ConnectException, DAOException, SQLException {
 
-		List<Mitarbeiter> list = new ArrayList<Mitarbeiter>();
+		List<Employee> list = new ArrayList<Employee>();
 
 		ResultSet set = getManaged(MessageFormat.format(GET_MITARBEITER_BY_ROLLEN_ID, id));
 
 		while (set.next()) {
-			list.add(new Mitarbeiter(set.getLong("id"), set.getString("name"), set.getString("vorname"), set.getString("email"), set
+			list.add(new Employee(set.getLong("id"), set.getString("name"), set.getString("vorname"), set.getString("email"), set
 					.getString("passwort"), set.getString("eintrittsdatum"), set.getString("austrittsdatum"), set.getString("benutzername")));
 
 		}
@@ -139,19 +139,19 @@ public class MitarbeiterDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public Mitarbeiter getMitarbeiterByIdForNachricht(Long id) throws ConnectException, DAOException, SQLException {
+	public Employee getMitarbeiterByIdForNachricht(Long id) throws ConnectException, DAOException, SQLException {
 
 		if (id == null) {
 			return null;
 		}
-		Mitarbeiter mitarbeiter = null;
+		Employee employee = null;
 		ResultSet set = getManaged(MessageFormat.format(GET_MITARBEITER_BY_ID, id));
 
 		while (set.next()) {
-			mitarbeiter = new Mitarbeiter(set.getLong("id"), set.getString("name"), set.getString("vorname"), set.getString("email"),
+			employee = new Employee(set.getLong("id"), set.getString("name"), set.getString("vorname"), set.getString("email"),
 					set.getString("passwort"), set.getString("eintrittsdatum"), set.getString("austrittsdatum"), set.getString("benutzername"));
 		}
-		return mitarbeiter;
+		return employee;
 
 	}
 
@@ -164,14 +164,14 @@ public class MitarbeiterDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public List<Mitarbeiter> getMitarbeiterByName(String name) throws ConnectException, DAOException, SQLException {
+	public List<Employee> getMitarbeiterByName(String name) throws ConnectException, DAOException, SQLException {
 
-		List<Mitarbeiter> list = new ArrayList<Mitarbeiter>();
+		List<Employee> list = new ArrayList<Employee>();
 
 		ResultSet set = getManaged(GET_MITARBEITER_BY_NAME + name + "%'");
 
 		while (set.next()) {
-			list.add(new Mitarbeiter(set.getLong(ID), set.getString(NAME), set.getString(VORNAME), set.getString(EMAIL), set.getString(PASSWORT),
+			list.add(new Employee(set.getLong(ID), set.getString(NAME), set.getString(VORNAME), set.getString(EMAIL), set.getString(PASSWORT),
 					set.getString(EINTRITTSDATUM), set.getString(AUSTRITTSDATUM), RollenDAO.getInstance().getRollenByMitarbeiterId(set.getLong(ID)),
 					set.getString(BENUTZERNAME)));
 		}
@@ -188,44 +188,44 @@ public class MitarbeiterDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public Mitarbeiter getMitarbeiterByBenutzername(String name) throws ConnectException, DAOException, SQLException {
+	public Employee getMitarbeiterByBenutzername(String name) throws ConnectException, DAOException, SQLException {
 
-		Mitarbeiter mitarbeiter = new Mitarbeiter();
+		Employee employee = new Employee();
 
 		ResultSet set = getManaged(GET_MITARBEITER_BY_BENUTZERNAME + name + "'");
 
 		while (set.next()) {
-			mitarbeiter = new Mitarbeiter(set.getLong(ID), set.getString(NAME), set.getString(VORNAME), set.getString(EMAIL),
+			employee = new Employee(set.getLong(ID), set.getString(NAME), set.getString(VORNAME), set.getString(EMAIL),
 					set.getString(PASSWORT), set.getString(EINTRITTSDATUM), set.getString(AUSTRITTSDATUM),
 					getRollenByMitarbeiterId(set.getLong(ID)), set.getString(BENUTZERNAME));
 		}
 
-		return mitarbeiter;
+		return employee;
 	}
 
 	/**
 	 * Die Methode erzeugt einen Mitarbeiter in der Datenbank.
 	 * 
-	 * @param mitarbeiter
+	 * @param employee
 	 * @throws ConnectException
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public void createMitarbeiter(Mitarbeiter mitarbeiter) throws ConnectException, DAOException, SQLException {
+	public void createMitarbeiter(Employee employee) throws ConnectException, DAOException, SQLException {
 		String inserq = "INSERT INTO " + TABLE + "(" + NAME + "," + VORNAME + "," + EMAIL + "," + PASSWORT + "," + EINTRITTSDATUM + ","
-				+ AUSTRITTSDATUM + "," + BENUTZERNAME + ")" + "VALUES" + "('" + mitarbeiter.getName() + "','" + mitarbeiter.getVorname() + "','"
-				+ mitarbeiter.getEmail() + "','" + mitarbeiter.getPasswort() + "','" + mitarbeiter.getEintrittsdatum() + "','"
-				+ mitarbeiter.getAustrittsdatum() + "','" + mitarbeiter.getBenutzername() + "')";
+				+ AUSTRITTSDATUM + "," + BENUTZERNAME + ")" + "VALUES" + "('" + employee.getName() + "','" + employee.getVorname() + "','"
+				+ employee.getEmail() + "','" + employee.getPasswort() + "','" + employee.getEintrittsdatum() + "','"
+				+ employee.getAustrittsdatum() + "','" + employee.getBenutzername() + "')";
 		this.putManaged(inserq);
 
-		List<Mitarbeiter> mitarbeiterlist = getAllMitarbeiter();
+		List<Employee> mitarbeiterlist = getAllMitarbeiter();
 
-		Mitarbeiter mitarbeiterdb = getMitarbeiterById(mitarbeiterlist.get(mitarbeiterlist.size() - 1).getId());
+		Employee mitarbeiterdb = getMitarbeiterById(mitarbeiterlist.get(mitarbeiterlist.size() - 1).getId());
 
-		if (mitarbeiter.getRollen() != null) {
-			for (int i = 0; i < mitarbeiter.getRollen().size(); i++) {
+		if (employee.getRollen() != null) {
+			for (int i = 0; i < employee.getRollen().size(); i++) {
 
-				MitarbeiterHasRollenDAO.getInstance().createMitarbeiterHasRollen(mitarbeiterdb, mitarbeiter.getRollen().get(i));
+				MitarbeiterHasRollenDAO.getInstance().createMitarbeiterHasRollen(mitarbeiterdb, employee.getRollen().get(i));
 
 			}
 		}
@@ -235,24 +235,24 @@ public class MitarbeiterDAO extends AbstractDAO {
 	 * Die Methode aktualisiert einen Mitarbeiter mitsamt seiner dazugehörigen
 	 * Rollen in der Datenbank.
 	 * 
-	 * @param mitarbeiter
+	 * @param employee
 	 * @throws ConnectException
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public void updateMitarbeiter(Mitarbeiter mitarbeiter) throws ConnectException, DAOException, SQLException {
-		String updateq = "UPDATE " + TABLE + " SET " + NAME + "='" + mitarbeiter.getName() + "'," + VORNAME + "='" + mitarbeiter.getVorname()
-				+ "'," + EMAIL + "='" + mitarbeiter.getEmail() + "'," + PASSWORT + "='" + mitarbeiter.getPasswort() + "'," + EINTRITTSDATUM + "='"
-				+ mitarbeiter.getEintrittsdatum() + "'," + AUSTRITTSDATUM + "='" + mitarbeiter.getAustrittsdatum() + "'," + BENUTZERNAME + "='"
-				+ mitarbeiter.getBenutzername() + "' WHERE " + ID + "='" + mitarbeiter.getId() + "'";
+	public void updateMitarbeiter(Employee employee) throws ConnectException, DAOException, SQLException {
+		String updateq = "UPDATE " + TABLE + " SET " + NAME + "='" + employee.getName() + "'," + VORNAME + "='" + employee.getVorname()
+				+ "'," + EMAIL + "='" + employee.getEmail() + "'," + PASSWORT + "='" + employee.getPasswort() + "'," + EINTRITTSDATUM + "='"
+				+ employee.getEintrittsdatum() + "'," + AUSTRITTSDATUM + "='" + employee.getAustrittsdatum() + "'," + BENUTZERNAME + "='"
+				+ employee.getBenutzername() + "' WHERE " + ID + "='" + employee.getId() + "'";
 		this.putManaged(updateq);
-		if (mitarbeiter.getRollen() != null) {
-			for (int i = 0; i < mitarbeiter.getRollen().size(); i++) {
-				MitarbeiterHasRollenDAO.getInstance().deleteMitarbeiterHasRollen(mitarbeiter);
+		if (employee.getRollen() != null) {
+			for (int i = 0; i < employee.getRollen().size(); i++) {
+				MitarbeiterHasRollenDAO.getInstance().deleteMitarbeiterHasRollen(employee);
 
 			}
-			for (int i = 0; i < mitarbeiter.getRollen().size(); i++) {
-				MitarbeiterHasRollenDAO.getInstance().createMitarbeiterHasRollen(mitarbeiter, mitarbeiter.getRollen().get(i));
+			for (int i = 0; i < employee.getRollen().size(); i++) {
+				MitarbeiterHasRollenDAO.getInstance().createMitarbeiterHasRollen(employee, employee.getRollen().get(i));
 			}
 		}
 	}

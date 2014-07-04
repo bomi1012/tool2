@@ -12,8 +12,8 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 
 import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.palaver.Application;
+import de.palaver.management.emploee.Rollen;
 import fi.jasoft.dragdroplayouts.DDAbsoluteLayout;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 import fi.jasoft.dragdroplayouts.DDGridLayout.GridLayoutTargetDetails;

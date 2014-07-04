@@ -8,10 +8,10 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.VerticalLayout;
 
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
+import de.palaver.management.emploee.Employee;
 
 public class KoecheComponent extends CustomComponent {
 
@@ -25,7 +25,7 @@ public class KoecheComponent extends CustomComponent {
 	private NativeSelect nsKoch2 = new NativeSelect();
 
 	
-	public KoecheComponent(List<Mitarbeiter> mitarbeiter) {
+	public KoecheComponent(List<Employee> employee) {
 
 		setCompositionRoot(vl);
 		vl.setSizeFull();
@@ -41,26 +41,26 @@ public class KoecheComponent extends CustomComponent {
 		vl.setComponentAlignment(nsKoch1, Alignment.TOP_CENTER);
 		vl.setComponentAlignment(nsKoch2, Alignment.BOTTOM_CENTER);
 
-		for (Mitarbeiter m : mitarbeiter) {
+		for (Employee m : employee) {
 			nsKoch1.addItem(m);
 			nsKoch2.addItem(m);
 		}
 
 	}
 
-	public Mitarbeiter getKoch1() {
-		return (Mitarbeiter) nsKoch1.getValue();
+	public Employee getKoch1() {
+		return (Employee) nsKoch1.getValue();
 	}
 
-	public void setKoch1(Mitarbeiter koch) {
+	public void setKoch1(Employee koch) {
 		nsKoch1.select(koch);
 	}
 
-	public Mitarbeiter getKoch2() {
-		return (Mitarbeiter) nsKoch2.getValue();
+	public Employee getKoch2() {
+		return (Employee) nsKoch2.getValue();
 	}
 
-	public void setKoch2(Mitarbeiter koch) {
+	public void setKoch2(Employee koch) {
 		nsKoch2.select(koch);
 	}
 

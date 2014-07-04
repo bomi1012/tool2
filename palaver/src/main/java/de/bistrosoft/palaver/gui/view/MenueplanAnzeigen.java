@@ -39,8 +39,6 @@ import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
 import de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
@@ -48,6 +46,8 @@ import de.hska.awp.palaver2.util.ViewData;
 import de.palaver.Application;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
+import de.palaver.management.emploee.Employee;
+import de.palaver.management.emploee.Rollen;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 
 /**
@@ -66,7 +66,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 	final int week = curWeek.getWeek();
 	final int year = curWeek.getYear();
 
-	List<Mitarbeiter> mitarbeiter;
+	List<Employee> employee;
 	List<Regel> regeln;
 
 	MenueplanGridLayout ersteMenueplan;
@@ -546,7 +546,7 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 
 	private void ladeDaten() {
 		try {
-			mitarbeiter = Mitarbeiterverwaltung.getInstance()
+			employee = Mitarbeiterverwaltung.getInstance()
 					.getAllMitarbeiter();
 		} catch (ConnectException e) {
 			e.printStackTrace();
@@ -557,13 +557,13 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 		}
 		regeln = Regelverwaltung.getInstance().getAllAktivRegeln();
 
-		ersteMenueplan = new MenueplanGridLayout(week, year, mitarbeiter,
+		ersteMenueplan = new MenueplanGridLayout(week, year, employee,
 				regeln);
-		zweiteMenueplan = new MenueplanGridLayout(week + 1, year, mitarbeiter,
+		zweiteMenueplan = new MenueplanGridLayout(week + 1, year, employee,
 				regeln);
-		dritteMenueplan = new MenueplanGridLayout(week + 2, year, mitarbeiter,
+		dritteMenueplan = new MenueplanGridLayout(week + 2, year, employee,
 				regeln);
-		vierteMenueplan = new MenueplanGridLayout(week + 3, year, mitarbeiter,
+		vierteMenueplan = new MenueplanGridLayout(week + 3, year, employee,
 				regeln);
 
 		shownMenueplan = zweiteMenueplan;

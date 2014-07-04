@@ -19,7 +19,6 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
@@ -29,6 +28,7 @@ import de.hska.awp.palaver2.util.ViewHandler;
 import de.hska.awp.palaver2.util.customFilter;
 import de.hska.awp.palaver2.util.customFilterDecorator;
 import de.palaver.Application;
+import de.palaver.management.emploee.Employee;
 
 /**
  * View 
@@ -47,7 +47,7 @@ public class MitarbeiterAnzeigen extends VerticalLayout implements View {
 	private Label headline;
 
 	private HorizontalLayout head;
-	private Mitarbeiter mitarbeiter;
+	private Employee employee;
 
 	public MitarbeiterAnzeigen() {
 		super();
@@ -86,7 +86,7 @@ public class MitarbeiterAnzeigen extends VerticalLayout implements View {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
-					mitarbeiter = (Mitarbeiter) event.getProperty().getValue();
+					employee = (Employee) event.getProperty().getValue();
 				}
 			}
 		});
@@ -95,7 +95,7 @@ public class MitarbeiterAnzeigen extends VerticalLayout implements View {
 			@Override
 			public void itemClick(ItemClickEvent event) {
 				if (event.isDoubleClick()) {
-					ViewHandler.getInstance().switchView(MitarbeiterBearbeiten.class, new ViewDataObject<Mitarbeiter>(mitarbeiter));
+					ViewHandler.getInstance().switchView(MitarbeiterBearbeiten.class, new ViewDataObject<Employee>(employee));
 				}
 
 			}
@@ -105,8 +105,8 @@ public class MitarbeiterAnzeigen extends VerticalLayout implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (mitarbeiter != null) {
-					ViewHandler.getInstance().switchView(MitarbeiterBearbeiten.class, new ViewDataObject<Mitarbeiter>(mitarbeiter));
+				if (employee != null) {
+					ViewHandler.getInstance().switchView(MitarbeiterBearbeiten.class, new ViewDataObject<Employee>(employee));
 				}
 				else {
 					((Application) UI.getCurrent().getData())
@@ -115,9 +115,9 @@ public class MitarbeiterAnzeigen extends VerticalLayout implements View {
 			}
 		});
 
-		BeanItemContainer<Mitarbeiter> container;
+		BeanItemContainer<Employee> container;
 		try {
-			container = new BeanItemContainer<Mitarbeiter>(Mitarbeiter.class, Mitarbeiterverwaltung.getInstance().getAllMitarbeiter());
+			container = new BeanItemContainer<Employee>(Employee.class, Mitarbeiterverwaltung.getInstance().getAllMitarbeiter());
 			table.setContainerDataSource(container);
 			table.setVisibleColumns(new Object[] { "name", "vorname", "email", "eintrittsdatum", "austrittsdatum", "benutzername" });
 			table.sort(new Object[] { "name" }, new boolean[] { true });

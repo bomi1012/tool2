@@ -4,9 +4,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 import de.hska.awp.palaver2.data.MitarbeiterDAO;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
+import de.palaver.management.emploee.Employee;
 
 /**
  * Die Klasse ermöglicht die Verwaltung der Mitarbeiter.
@@ -37,9 +37,9 @@ public class Mitarbeiterverwaltung extends MitarbeiterDAO {
 	 * @throws ConnectException
 	 * @return List<Mitarbeiter>
 	 */
-	public List<Mitarbeiter> getAllMitarbeiter() throws ConnectException, DAOException, SQLException {
+	public List<Employee> getAllMitarbeiter() throws ConnectException, DAOException, SQLException {
 
-		List<Mitarbeiter> result = null;
+		List<Employee> result = null;
 
 		result = super.getAllMitarbeiter();
 
@@ -54,9 +54,9 @@ public class Mitarbeiterverwaltung extends MitarbeiterDAO {
 	 * @throws ConnectException
 	 * @return List<Mitarbeiter>
 	 */
-	public List<Mitarbeiter> getMitarbeiterByName(String name) throws ConnectException, DAOException, SQLException {
+	public List<Employee> getMitarbeiterByName(String name) throws ConnectException, DAOException, SQLException {
 
-		List<Mitarbeiter> result = null;
+		List<Employee> result = null;
 
 		result = super.getMitarbeiterByName(name);
 
@@ -71,9 +71,9 @@ public class Mitarbeiterverwaltung extends MitarbeiterDAO {
 	 * @throws ConnectException
 	 * @return Mitarbeiter
 	 */
-	public Mitarbeiter getMitarbeiterById(Long id) throws ConnectException, DAOException, SQLException {
-		Mitarbeiter mitarbeiter = super.getMitarbeiterById(id);
-		return mitarbeiter;
+	public Employee getMitarbeiterById(Long id) throws ConnectException, DAOException, SQLException {
+		Employee employee = super.getMitarbeiterById(id);
+		return employee;
 	}
 
 	/**
@@ -84,9 +84,9 @@ public class Mitarbeiterverwaltung extends MitarbeiterDAO {
 	 * @throws ConnectException
 	 * @return List<Mitarbeiter>
 	 */
-	public List<Mitarbeiter> getMitarbeiterByRollenId(Long id) throws ConnectException, DAOException, SQLException {
+	public List<Employee> getMitarbeiterByRollenId(Long id) throws ConnectException, DAOException, SQLException {
 
-		List<Mitarbeiter> result = null;
+		List<Employee> result = null;
 
 		result = super.getMitarbeiterByRollenId(id);
 
@@ -96,17 +96,17 @@ public class Mitarbeiterverwaltung extends MitarbeiterDAO {
 	/**
 	 * Die Methode erzeugt einen Mitarbeiter.
 	 */
-	public void createMitarbeiter(Mitarbeiter mitarbeiter) throws ConnectException, DAOException, SQLException {
+	public void createMitarbeiter(Employee employee) throws ConnectException, DAOException, SQLException {
 
-		super.createMitarbeiter(mitarbeiter);
+		super.createMitarbeiter(employee);
 	}
 
 	/**
 	 * Die Methode aktualisiert einen Mitarbeiter.
 	 */
-	public void updateMitarbeiter(Mitarbeiter mitarbeiter) throws ConnectException, DAOException, SQLException {
+	public void updateMitarbeiter(Employee employee) throws ConnectException, DAOException, SQLException {
 
-		super.updateMitarbeiter(mitarbeiter);
+		super.updateMitarbeiter(employee);
 	}
 
 }

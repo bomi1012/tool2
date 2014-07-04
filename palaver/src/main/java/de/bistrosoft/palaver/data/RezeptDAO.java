@@ -15,7 +15,6 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Zubereitungverwaltung;
 import de.hska.awp.palaver2.data.MitarbeiterDAO;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.palaver.dao.AbstractDAO;
 import de.palaver.dao.ConnectException;
@@ -26,6 +25,7 @@ import de.palaver.management.artikel.DAO.ArtikelDAO;
 import de.palaver.management.artikel.DAO.MengeneinheitDAO;
 import de.palaver.management.artikel.service.ArtikelService;
 import de.palaver.management.artikel.service.MengeneinheitService;
+import de.palaver.management.emploee.Employee;
 
 public class RezeptDAO extends AbstractDAO {
 
@@ -176,7 +176,7 @@ public class RezeptDAO extends AbstractDAO {
 				Rezept rezept = new Rezept();
 				rezept.setId(set.getLong(1));
 				rezept.setName(set.getString(2));
-				Mitarbeiter koch = new Mitarbeiter();
+				Employee koch = new Employee();
 				koch.setId(set.getLong(3));
 				koch.setVorname(set.getString(4));
 				koch.setName(set.getString(5));
@@ -202,7 +202,7 @@ public class RezeptDAO extends AbstractDAO {
 			rezept.setName(set.getString(2));
 			rezept.setErstellt(set.getDate(3));
 			rezept.setRezeptart(new Rezeptart(set.getLong(4), set.getString(5)));
-			Mitarbeiter koch = new Mitarbeiter();
+			Employee koch = new Employee();
 			koch.setId(set.getLong(6));
 			koch.setVorname(set.getString(7));
 			koch.setName(set.getString(8));
@@ -359,7 +359,7 @@ public class RezeptDAO extends AbstractDAO {
 			Rezeptart rezArt = Rezeptartverwaltung.getInstance()
 					.getRezeptartById(set.getLong("rezeptart_fk"));
 			rez.setRezeptart(rezArt);
-			Mitarbeiter koch = Mitarbeiterverwaltung.getInstance()
+			Employee koch = Mitarbeiterverwaltung.getInstance()
 					.getMitarbeiterById(set.getLong("mitarbeiter_fk"));
 			rez.setMitarbeiter(koch);
 			rezepte.add(rez);

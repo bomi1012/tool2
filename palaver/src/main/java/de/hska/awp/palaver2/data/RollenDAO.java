@@ -6,12 +6,12 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
 import de.palaver.dao.AbstractDAO;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
+import de.palaver.management.emploee.Employee;
+import de.palaver.management.emploee.Rollen;
 
 /**
  * Die Klasse stellt Methoden für den Datenbankzugriff für das Objekt Rollen
@@ -147,14 +147,14 @@ public class RollenDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	private List<Mitarbeiter> getMitarbeiterByRollenId(Long id) throws ConnectException, DAOException, SQLException {
+	private List<Employee> getMitarbeiterByRollenId(Long id) throws ConnectException, DAOException, SQLException {
 
-		List<Mitarbeiter> list = new ArrayList<Mitarbeiter>();
+		List<Employee> list = new ArrayList<Employee>();
 
 		ResultSet set = getMany(MessageFormat.format(GET_MITARBEITER_BY_ROLLEN_ID, id));
 
 		while (set.next()) {
-			list.add(new Mitarbeiter(set.getLong("id"), set.getString("name"), set.getString("vorname"), set.getString("email"), set
+			list.add(new Employee(set.getLong("id"), set.getString("name"), set.getString("vorname"), set.getString("email"), set
 					.getString("passwort"), set.getString("eintrittsdatum"), set.getString("austrittsdatum"), set.getString("benutzername")));
 
 		}
@@ -172,19 +172,19 @@ public class RollenDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	private Mitarbeiter getMitarbeiterByIdForNachricht(Long id) throws ConnectException, DAOException, SQLException {
+	private Employee getMitarbeiterByIdForNachricht(Long id) throws ConnectException, DAOException, SQLException {
 
 		if (id == null) {
 			return null;
 		}
-		Mitarbeiter mitarbeiter = null;
+		Employee employee = null;
 		ResultSet set = getMany(MessageFormat.format(GET_MITARBEITER_BY_ID, id));
 
 		while (set.next()) {
-			mitarbeiter = new Mitarbeiter(set.getLong("id"), set.getString("name"), set.getString("vorname"), set.getString("email"),
+			employee = new Employee(set.getLong("id"), set.getString("name"), set.getString("vorname"), set.getString("email"),
 					set.getString("passwort"), set.getString("eintrittsdatum"), set.getString("austrittsdatum"), set.getString("benutzername"));
 		}
-		return mitarbeiter;
+		return employee;
 
 	}
 

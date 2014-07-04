@@ -1,14 +1,14 @@
 package de.bistrosoft.palaver.menueplanverwaltung;
 
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
+import de.palaver.management.emploee.Employee;
 
 public class KochInMenueplan {
-	private Mitarbeiter koch;
+	private Employee koch;
 	private Integer spalte;
 	private Integer position;
 
 
-	public KochInMenueplan(Mitarbeiter koch, Integer col, Integer position) {
+	public KochInMenueplan(Employee koch, Integer col, Integer position) {
 		this.koch = koch;
 		this.spalte = col;
 		this.position = position;
@@ -17,11 +17,11 @@ public class KochInMenueplan {
 	public KochInMenueplan() {
 	}
 
-	public Mitarbeiter getKoch() {
+	public Employee getKoch() {
 		return koch;
 	}
 
-	public void setKoch(Mitarbeiter koch) {
+	public void setKoch(Employee koch) {
 		this.koch = koch;
 	}
 

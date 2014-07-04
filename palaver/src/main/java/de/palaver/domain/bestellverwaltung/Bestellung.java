@@ -2,8 +2,8 @@ package de.palaver.domain.bestellverwaltung;
 
 import java.sql.Date;
 
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.palaver.domain.EntityId;
+import de.palaver.management.emploee.Employee;
 import de.palaver.management.supplier.Supplier;
 
 /**
@@ -14,7 +14,7 @@ public class Bestellung extends EntityId implements java.io.Serializable {
 	private static final long serialVersionUID = -4115989551813492575L;
 
 	private Supplier m_supplier;
-	private Mitarbeiter m_mitarbeiter;
+	private Employee m_employee;
 	private Date m_datum;
 	private Date m_lieferdatum1;
 	private Date m_lieferdatum2;
@@ -25,11 +25,11 @@ public class Bestellung extends EntityId implements java.io.Serializable {
 		super();
 	}
 	
-	public Bestellung(Long id, Supplier supplier, Mitarbeiter mitarbeiter,
+	public Bestellung(Long id, Supplier supplier, Employee employee,
 			Date datum, Date lieferdatum1, Date lieferdatum2, boolean status, String kategorie) {
 		super(id);
 		m_supplier = supplier;
-		m_mitarbeiter = mitarbeiter;
+		m_employee = employee;
 		m_datum = datum;
 		m_lieferdatum1 = lieferdatum1;
 		m_lieferdatum2 = lieferdatum2;
@@ -37,11 +37,11 @@ public class Bestellung extends EntityId implements java.io.Serializable {
 		m_kategorie = kategorie;
 	}
 
-	public Bestellung(Supplier supplier, Mitarbeiter mitarbeiter,
+	public Bestellung(Supplier supplier, Employee employee,
 			Date lieferdatum1, Date lieferdatum2, boolean status, String kategorie) {
 		super();
 		m_supplier = supplier;
-		m_mitarbeiter = mitarbeiter;
+		m_employee = employee;
 		m_lieferdatum1 = lieferdatum1;
 		m_lieferdatum2 = lieferdatum2;
 		m_status = status;
@@ -58,11 +58,11 @@ public class Bestellung extends EntityId implements java.io.Serializable {
 		m_supplier = supplier;
 	}
 
-	public Mitarbeiter getMitarbeiter() {
-		return m_mitarbeiter;
+	public Employee getMitarbeiter() {
+		return m_employee;
 	}
-	public void setMitarbeiter(Mitarbeiter mitarbeiter) {
-		m_mitarbeiter = mitarbeiter;
+	public void setMitarbeiter(Employee employee) {
+		m_employee = employee;
 	}
 
 	public Date getDatum() {

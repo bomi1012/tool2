@@ -4,10 +4,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 import de.hska.awp.palaver2.data.NachrichtDAO;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
+import de.palaver.management.emploee.Rollen;
 
 /**
  * @author PhilippT

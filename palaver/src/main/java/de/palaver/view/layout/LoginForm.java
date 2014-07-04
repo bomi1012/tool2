@@ -25,11 +25,11 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver2.data.MitarbeiterDAO;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
 import de.hska.awp.palaver2.util.Util;
 import de.palaver.Application;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
+import de.palaver.management.emploee.Employee;
 
 /**
  * @author Sebastian
@@ -109,7 +109,7 @@ public class LoginForm extends VerticalLayout {
 					username.focus();
 				} else {
 					try {
-						Mitarbeiter current = MitarbeiterDAO.getInstance().getMitarbeiterByBenutzername(username.getValue());
+						Employee current = MitarbeiterDAO.getInstance().getMitarbeiterByBenutzername(username.getValue());
 						if (current.getPasswort() != null && current.getPasswort().equals(Util.encryptPassword(password.getValue()))) {
 							((Application) UI.getCurrent().getData()).login(current);
 

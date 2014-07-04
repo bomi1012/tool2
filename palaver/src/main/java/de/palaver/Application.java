@@ -23,8 +23,8 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
+import de.palaver.management.emploee.Employee;
+import de.palaver.management.emploee.Rollen;
 import de.palaver.view.layout.LoginForm;
 import de.palaver.view.layout.MainLayout;
 
@@ -39,7 +39,7 @@ public class Application extends UI
 
     private static final Logger				log					= LoggerFactory.getLogger(Application.class.getName());
     
-    private Mitarbeiter						user;
+    private Employee						user;
     
     private de.palaver.view.layout.MainLayout						layout;
     
@@ -116,14 +116,14 @@ public class Application extends UI
 //        layout.addComponent(MainLayout.getInstance());
     }
 	
-	public Mitarbeiter getUser()
+	public Employee getUser()
 	{
 		return user;
 	}
 	
-	public void setUser(Mitarbeiter mitarbeiter)
+	public void setUser(Employee employee)
 	{
-		this.user = mitarbeiter;
+		this.user = employee;
 	}
 	
 	public MainLayout getLayout()
@@ -131,7 +131,7 @@ public class Application extends UI
 		return layout;
 	}
 	
-	public void login(Mitarbeiter user)
+	public void login(Employee user)
 	{
 		setUser(user);
 		layout = new MainLayout();

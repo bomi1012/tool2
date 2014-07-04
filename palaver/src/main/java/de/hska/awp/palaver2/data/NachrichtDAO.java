@@ -6,12 +6,12 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Mitarbeiter;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.domain.Rollen;
 import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
 import de.palaver.dao.AbstractDAO;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
+import de.palaver.management.emploee.Employee;
+import de.palaver.management.emploee.Rollen;
 
 /**
  * Die Klasse stellt Methoden für den Datenbankzugriff für das Objekt Nachricht
@@ -61,7 +61,7 @@ public class NachrichtDAO extends AbstractDAO {
 		ResultSet set = getManaged(MessageFormat.format(GET_NACHRICHT_BY_ID, id));
 
 		while (set.next()) {
-			nachricht = new Nachricht(set.getLong("id"), set.getString("nachricht"), new Mitarbeiter(), new Rollen());
+			nachricht = new Nachricht(set.getLong("id"), set.getString("nachricht"), new Employee(), new Rollen());
 		}
 		return nachricht;
 
@@ -86,7 +86,7 @@ public class NachrichtDAO extends AbstractDAO {
 		ResultSet set = getManaged(MessageFormat.format(GET_NACHRICHT_BY_Rolle, rolle.getId()));
 
 		while (set.next()) {
-			list.add(new Nachricht(set.getLong("id"), set.getString("nachricht"), new Mitarbeiter(), new Rollen()));
+			list.add(new Nachricht(set.getLong("id"), set.getString("nachricht"), new Employee(), new Rollen()));
 		}
 		return list;
 
@@ -128,7 +128,7 @@ public class NachrichtDAO extends AbstractDAO {
 		List<Nachricht> list = new ArrayList<Nachricht>();
 		ResultSet set = getManaged(GET_ALL_NACHRICHTEN);
 		while (set.next()) {
-			list.add(new Nachricht(set.getLong("id"), set.getString("nachricht"), new Mitarbeiter(), new Rollen()));
+			list.add(new Nachricht(set.getLong("id"), set.getString("nachricht"), new Employee(), new Rollen()));
 		}
 		return list;
 	}
