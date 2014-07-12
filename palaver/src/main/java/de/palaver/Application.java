@@ -24,7 +24,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 import de.palaver.management.emploee.Employee;
-import de.palaver.management.emploee.Rollen;
+import de.palaver.management.emploee.Rolle;
 import de.palaver.view.layout.LoginForm;
 import de.palaver.view.layout.MainLayout;
 
@@ -162,12 +162,9 @@ public class Application extends UI
 		currentApplication.remove();
 	}
 	
-	public Boolean userHasPersmission(String role)
-	{
-		for (Rollen e : user.getRollen())
-		{
-			if (e.getName().equals(role))
-			{
+	public Boolean userHasPersmission(String role) {
+		for (Rolle e : user.getRollen()) {
+			if (e.getName().equals(role)) {
 				return true;
 			}
 		}

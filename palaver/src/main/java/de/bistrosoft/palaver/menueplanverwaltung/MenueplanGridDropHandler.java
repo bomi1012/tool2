@@ -13,7 +13,7 @@ import com.vaadin.ui.UI;
 
 import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
 import de.palaver.Application;
-import de.palaver.management.emploee.Rollen;
+import de.palaver.management.emploee.Rolle;
 import fi.jasoft.dragdroplayouts.DDAbsoluteLayout;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 import fi.jasoft.dragdroplayouts.DDGridLayout.GridLayoutTargetDetails;
@@ -151,7 +151,7 @@ public class MenueplanGridDropHandler extends AbstractDefaultLayoutDropHandler {
 											} else {
 												if (!((Application) UI
 														.getCurrent().getData())
-														.userHasPersmission(Rollen.ADMINISTRATOR)) {
+														.userHasPersmission(Rolle.ADMINISTRATOR)) {
 													layout.removeComponent(finalSourceComp);
 													layout.removeComponent(finalDestComp);
 
@@ -257,7 +257,7 @@ public class MenueplanGridDropHandler extends AbstractDefaultLayoutDropHandler {
 											} else {
 												if (!((Application) UI
 														.getCurrent().getData())
-														.userHasPersmission(Rollen.ADMINISTRATOR)) {
+														.userHasPersmission(Rolle.ADMINISTRATOR)) {
 													layout.removeComponent(finalSourceComp);
 													layout.removeComponent(finalDestComp);
 

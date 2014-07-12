@@ -45,7 +45,6 @@ import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Zubereitungverwaltung;
 import de.bistrosoft.palaver.util.TwinColTouch;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -56,7 +55,8 @@ import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
 import de.palaver.management.artikel.Artikel;
 import de.palaver.management.emploee.Employee;
-import de.palaver.management.emploee.Rollen;
+import de.palaver.management.emploee.Rolle;
+import de.palaver.management.employee.service.EmployeeService;
 import de.palaver.view.bean.artikelverwaltung.ChangeItemBean;
 
 /**
@@ -275,7 +275,7 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		btDeaktivieren.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (((Application) UI.getCurrent().getData()).userHasPersmission(Rollen.ADMINISTRATOR) || 
+				if (((Application) UI.getCurrent().getData()).userHasPersmission(Rolle.ADMINISTRATOR) || 
 						((Application) UI.getCurrent().getData()).getUser().getId() == rezept.getMitarbeiter().getId()){					
 					try {
 						Rezeptverwaltung.getInstance().deaktiviereRezept(rezept.getId(), true);
@@ -457,8 +457,8 @@ public class RezeptAnlegen extends VerticalLayout implements View,
 		zubereitung.removeAllItems();
 
 		try {
-			List<Employee> employee = Mitarbeiterverwaltung.getInstance()
-					.getAllMitarbeiter();
+			List<Employee> employee = EmployeeService.getInstance()
+					.getAllEmployees();
 			for (Employee e : employee) {
 				mitarbeiterNs.addItem(e);
 			}

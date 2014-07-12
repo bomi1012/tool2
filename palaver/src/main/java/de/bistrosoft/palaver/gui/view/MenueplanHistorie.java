@@ -25,7 +25,6 @@ import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
 import de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -33,6 +32,7 @@ import de.palaver.Application;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
 import de.palaver.management.emploee.Employee;
+import de.palaver.management.employee.service.EmployeeService;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 
 /**
@@ -133,7 +133,7 @@ public class MenueplanHistorie extends VerticalLayout implements View {
 								List<Employee> employee=null;
 								List<Regel> regeln=null;
 								try {
-									employee = Mitarbeiterverwaltung.getInstance().getAllMitarbeiter();
+									employee = EmployeeService.getInstance().getAllEmployees();
 									regeln = Regelverwaltung.getInstance().getAllAktivRegeln();
 								} catch (ConnectException e) {
 								} catch (DAOException e) {

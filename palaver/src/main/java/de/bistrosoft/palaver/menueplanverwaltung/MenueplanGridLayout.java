@@ -32,7 +32,7 @@ import de.palaver.Application;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
 import de.palaver.management.emploee.Employee;
-import de.palaver.management.emploee.Rollen;
+import de.palaver.management.emploee.Rolle;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.interfaces.DragFilter;
@@ -381,7 +381,7 @@ public class MenueplanGridLayout extends CustomComponent {
 										} else {
 											if (!((Application) UI.getCurrent()
 													.getData())
-													.userHasPersmission(Rollen.ADMINISTRATOR)) {
+													.userHasPersmission(Rolle.ADMINISTRATOR)) {
 
 												mc.remove();
 

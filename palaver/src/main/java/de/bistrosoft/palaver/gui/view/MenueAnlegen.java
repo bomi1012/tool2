@@ -7,9 +7,9 @@ import java.util.List;
 
 import org.tepi.filtertable.FilterTable;
 
-import com.vaadin.data.Validator;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.Validator;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.event.Transferable;
@@ -45,7 +45,6 @@ import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.TwinColTouch;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -55,6 +54,7 @@ import de.palaver.Application;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
 import de.palaver.management.emploee.Employee;
+import de.palaver.management.employee.service.EmployeeService;
 
 /**
  * @author Jasmin Baumgartner, Eike Becher, Michael Marschall
@@ -388,8 +388,8 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			tblMenueRezepte.setVisibleColumns(new Object[] { "name",
 					"rezeptart", "mitarbeiter" });
 
-			List<Employee> employee = Mitarbeiterverwaltung.getInstance()
-					.getAllMitarbeiter();
+			List<Employee> employee = EmployeeService.getInstance()
+					.getAllEmployees();
 			for (Employee e : employee) {
 				nsKoch.addItem(e);
 			}

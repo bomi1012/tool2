@@ -23,9 +23,6 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Rollenverwaltung;
-import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
 import de.hska.awp.palaver2.nachrichtenverwaltung.service.Nachrichtenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
@@ -33,7 +30,10 @@ import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
 import de.palaver.management.emploee.Employee;
-import de.palaver.management.emploee.Rollen;
+import de.palaver.management.emploee.InternMessage;
+import de.palaver.management.emploee.Rolle;
+import de.palaver.management.employee.service.EmployeeService;
+import de.palaver.management.employee.service.RolleService;
 
 @SuppressWarnings("serial")
 public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChangeListener {
@@ -53,8 +53,8 @@ public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChan
 	private ComboBox combobox = new ComboBox();
 	Button speichern = new Button(IConstants.BUTTON_SEND);
 
-	private List<Nachricht> nl = new ArrayList<Nachricht>();
-	private Nachricht nachricht = new Nachricht();
+	private List<InternMessage> nl = new ArrayList<InternMessage>();
+	private InternMessage internMessage = new InternMessage();
 
 	private String neuernachrichtentextinput;
 
@@ -97,8 +97,8 @@ public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChan
 		try {
 
 			Employee m2 = ((Application) UI.getCurrent().getData()).getUser();
-			m = Mitarbeiterverwaltung.getInstance().getMitarbeiterById(m2.getId());
-			List<Rollen> rlist = m.getRollen();
+			m = EmployeeService.getInstance().getEmployee(m2.getId());
+			List<Rolle> rlist = m.getRollen();
 			if (rlist != null) {
 				for (int i = 0; i < rlist.size(); i++) {
 					if (rlist.get(i).getNachrichten() != null) {
@@ -117,7 +117,7 @@ public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChan
 		if (nl != null) {
 
 			// Sortieren der Nachrichten nach der gröÃŸten ID
-			final List<Nachricht> neu = new ArrayList<Nachricht>();
+			final List<InternMessage> neu = new ArrayList<InternMessage>();
 			if (nl != null) {
 				for (int z = 0; z < nl.size(); z++) {
 					long zahl = 0;
@@ -141,7 +141,7 @@ public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChan
 
 				von = new Label("Von:");
 				von.setWidth("100%");
-				von.setValue("Von: " + nl.get(i).getMitarbeiterBySenderFk().getBenutzername());
+				von.setValue("Von: " + nl.get(i).getMitarbeiterSender().getBenutzername());
 
 				final Button loeschbutton = new Button();
 				loeschbutton.setIcon(new ThemeResource(IConstants.ICON_DELETE));
@@ -189,8 +189,8 @@ public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChan
 		combobox.setNullSelectionAllowed(false);
 		combobox.setRequired(true);
 		try {
-			List<Rollen> rollen = Rollenverwaltung.getInstance().getAllRollen();
-			for (Rollen i : rollen) {
+			List<Rolle> rolle = RolleService.getInstance().getAllRolles();
+			for (Rolle i : rolle) {
 				combobox.addItem(i);
 			}
 		} catch (Exception e) {
@@ -226,13 +226,13 @@ public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChan
 				
 				if (validiereNachricht()) {
 					
-					nachricht.setNachricht(neuernachrichtentext.getValue());
+					internMessage.setNachricht(neuernachrichtentext.getValue());
 	
-					nachricht.setEmpfaengerRolle((Rollen) combobox.getValue());
+					internMessage.setEmpfaengerRolle((Rolle) combobox.getValue());
 	
 					try {
-						nachricht.setMitarbeiterBySenderFk(((Application) UI.getCurrent().getData()).getUser());
-						Nachrichtenverwaltung.getInstance().createNachricht(nachricht);
+						internMessage.setMitarbeiterSender(((Application) UI.getCurrent().getData()).getUser());
+						Nachrichtenverwaltung.getInstance().createNachricht(internMessage);
 						Notification notification = new Notification("Die Nachricht wurde gesendet!");
 						notification.setDelayMsec(500);
 						notification.show(Page.getCurrent());

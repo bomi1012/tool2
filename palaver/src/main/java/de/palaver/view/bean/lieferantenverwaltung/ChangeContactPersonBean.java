@@ -17,9 +17,10 @@ import de.palaver.management.info.person.Adresse;
 import de.palaver.management.info.person.Kontakte;
 import de.palaver.management.supplier.Ansprechpartner;
 import de.palaver.management.supplier.Supplier;
+import de.palaver.view.bean.helpers.ChangeFieldsPersonAbstract;
 import de.palaver.view.bean.helpers.HTMLComponents;
 
-public class ChangeContactPersonBean extends ChangeFieldsAbstract implements View, ValueChangeListener {
+public class ChangeContactPersonBean extends ChangeFieldsPersonAbstract implements View, ValueChangeListener {
 	private static final long serialVersionUID = 6321945037675101L;
 	private boolean m_toCreate;	
 	private VerticalLayout m_innerBoxContactPerson;
@@ -94,16 +95,16 @@ public class ChangeContactPersonBean extends ChangeFieldsAbstract implements Vie
 					addToDB(new Adresse());
 					addToDB(new Ansprechpartner());
 				} else {
-					if (m_contactPerson.getKontakte() != null) {
-						if (!checkFields(m_contactPerson.getKontakte())) {
-							removeFromDB(m_contactPerson.getKontakte());	
-							m_contactPerson.setKontakte(null);
+					if (m_contactPerson.getKontakt() != null) {
+						if (!checkFields(m_contactPerson.getKontakt())) {
+							removeFromDB(m_contactPerson.getKontakt());	
+							m_contactPerson.setKontakt(null);
 						} else {
-							updateInDB(m_contactPerson.getKontakte());							
+							updateInDB(m_contactPerson.getKontakt());							
 						}
 					} else {
 						addToDB(new Kontakte());
-						m_contactPerson.setKontakte(m_kontakte);
+						m_contactPerson.setKontakt(m_kontakte);
 					}
 					
 					if (m_contactPerson.getAdresse() != null) {
@@ -170,12 +171,12 @@ public class ChangeContactPersonBean extends ChangeFieldsAbstract implements Vie
 			m_nameField.setValue(m_contactPerson.getName());
 			m_descriptionField.setValue(m_contactPerson.getBezeichnung());
 			
-			if(m_contactPerson.getKontakte() != null) {
-				m_telephonField.setValue(m_contactPerson.getKontakte().getTelefon());
-				m_handyField.setValue(m_contactPerson.getKontakte().getHandy());
-				m_faxField.setValue(m_contactPerson.getKontakte().getFax());
-				m_emailField.setValue(m_contactPerson.getKontakte().getEmail());
-				m_webField.setValue(m_contactPerson.getKontakte().getWww());
+			if(m_contactPerson.getKontakt() != null) {
+				m_telephonField.setValue(m_contactPerson.getKontakt().getTelefon());
+				m_handyField.setValue(m_contactPerson.getKontakt().getHandy());
+				m_faxField.setValue(m_contactPerson.getKontakt().getFax());
+				m_emailField.setValue(m_contactPerson.getKontakt().getEmail());
+				m_webField.setValue(m_contactPerson.getKontakt().getWww());
 			}
 			
 			if(m_contactPerson.getAdresse() != null) {

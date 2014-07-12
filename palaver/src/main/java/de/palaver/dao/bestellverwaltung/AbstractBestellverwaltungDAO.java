@@ -4,13 +4,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import de.hska.awp.palaver2.data.MitarbeiterDAO;
 import de.palaver.dao.AbstractDAO;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
 import de.palaver.domain.bestellverwaltung.Bestellposition;
 import de.palaver.domain.bestellverwaltung.Bestellung;
 import de.palaver.management.artikel.DAO.ArtikelDAO;
+import de.palaver.management.employee.service.EmployeeService;
 import de.palaver.management.supplier.DAO.SupplierDAO;
 
 public class AbstractBestellverwaltungDAO extends AbstractDAO {
@@ -71,7 +71,7 @@ public class AbstractBestellverwaltungDAO extends AbstractDAO {
 		return 	new Bestellung(
 				set.getLong(FIELD_ID), 
 				SupplierDAO.getInstance().getActiveLieferantById(set.getLong(FIELD_LIEFERANT_FK)), 
-				MitarbeiterDAO.getInstance().getMitarbeiterById(set.getLong(FIELD_MITARBEITER_FK)), 
+				EmployeeService.getInstance().getEmployee(set.getLong(FIELD_MITARBEITER_FK)), 
 				set.getDate(FIELD_DATUM), 
 				set.getDate(FIELD_LIEFERDATUM1), 
 				set.getDate(FIELD_LIEFERDATUM2), 

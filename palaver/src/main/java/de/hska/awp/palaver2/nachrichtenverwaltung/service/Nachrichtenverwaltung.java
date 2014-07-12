@@ -4,10 +4,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 import de.hska.awp.palaver2.data.NachrichtDAO;
-import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
-import de.palaver.management.emploee.Rollen;
+import de.palaver.management.emploee.InternMessage;
+import de.palaver.management.emploee.Rolle;
 
 /**
  * @author PhilippT
@@ -28,44 +28,44 @@ public class Nachrichtenverwaltung extends NachrichtDAO {
 		return instance;
 	}
 
-	public Nachricht getNachrichtById(Long id) throws ConnectException, DAOException, SQLException {
+	public InternMessage getNachrichtById(Long id) throws ConnectException, DAOException, SQLException {
 
-		final Nachricht nachricht = super.getNachrichtById(id);
+		final InternMessage internMessage = super.getNachrichtById(id);
 
-		if (nachricht == null) {
+		if (internMessage == null) {
 			return null;
 		}
 
-		return nachricht;
+		return internMessage;
 	}
 
-	public List<Nachricht> getNachrichtByRolle(Rollen rolle) throws ConnectException, DAOException, SQLException {
+	public List<InternMessage> getNachrichtByRolle(Rolle rolle) throws ConnectException, DAOException, SQLException {
 		if (rolle == null) {
 			return null;
 		}
 
-		List<Nachricht> nachrichten = null;
+		List<InternMessage> nachrichten = null;
 		nachrichten = super.getNachrichtByRolle(rolle);
 
 		return nachrichten;
 
 	}
 
-	public List<Nachricht> getNachrichtByRolleId(Long rid) throws ConnectException, DAOException, SQLException {
+	public List<InternMessage> getNachrichtByRolleId(Long rid) throws ConnectException, DAOException, SQLException {
 		if (rid == null) {
 			return null;
 		}
 
-		List<Nachricht> nachrichten = null;
+		List<InternMessage> nachrichten = null;
 		nachrichten = super.getNachrichtByRolleId(rid);
 
 		return nachrichten;
 
 	}
 
-	public List<Nachricht> getAllNachricht() throws ConnectException, DAOException, SQLException {
+	public List<InternMessage> getAllNachricht() throws ConnectException, DAOException, SQLException {
 
-		final List<Nachricht> nachrichten = super.getAllNachricht();
+		final List<InternMessage> nachrichten = super.getAllNachricht();
 
 		if (nachrichten == null) {
 			return null;
@@ -74,24 +74,24 @@ public class Nachrichtenverwaltung extends NachrichtDAO {
 		return nachrichten;
 	}
 
-	public void createNachricht(Nachricht nachricht) throws ConnectException, DAOException, SQLException {
+	public void createNachricht(InternMessage internMessage) throws ConnectException, DAOException, SQLException {
 
-		if (nachricht == null) {
+		if (internMessage == null) {
 			return;
 		}
-		super.createNachricht(nachricht);
+		super.createNachricht(internMessage);
 	}
 
-	public void deleteNachricht(Nachricht nachricht) throws ConnectException, DAOException, SQLException {
+	public void deleteNachricht(InternMessage internMessage) throws ConnectException, DAOException, SQLException {
 
-		if (nachricht == null) {
+		if (internMessage == null) {
 			return;
 		}
-		nachricht = getNachrichtById(nachricht.getId());
-		if (nachricht == null) {
+		internMessage = getNachrichtById(internMessage.getId());
+		if (internMessage == null) {
 			return;
 		}
-		super.deleteNachricht(nachricht.getId());
+		super.deleteNachricht(internMessage.getId());
 
 	}
 

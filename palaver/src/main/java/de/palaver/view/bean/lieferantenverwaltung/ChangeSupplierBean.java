@@ -30,10 +30,11 @@ import de.palaver.management.info.person.Kontakte;
 import de.palaver.management.supplier.Ansprechpartner;
 import de.palaver.management.supplier.Supplier;
 import de.palaver.management.supplier.service.AnsprechpartnerService;
+import de.palaver.view.bean.helpers.ChangeFieldsPersonAbstract;
 import de.palaver.view.bean.helpers.HTMLComponents;
 import de.palaver.view.layout.popup.YesNoPopup;
 
-public class ChangeSupplierBean extends ChangeFieldsAbstract implements View, ValueChangeListener {
+public class ChangeSupplierBean extends ChangeFieldsPersonAbstract implements View, ValueChangeListener {
 	private static final long serialVersionUID = 63219450376751801L;
 	private static final String TEXT = "Neuer Lieferant wurde erstellt. <br> " +
 			"Möchten Sie den Ansprechpartner hinzufügen?";

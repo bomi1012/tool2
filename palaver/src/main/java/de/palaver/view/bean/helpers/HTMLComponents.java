@@ -9,9 +9,11 @@ import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
+import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.TwinColSelect;
 
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.customFilter;
@@ -67,6 +69,17 @@ public class HTMLComponents {
 		button.setVisible(isVisible);
 		button.setEnabled(isEnable);
 		return button;
+	}
+	
+	protected static PasswordField passwordField(String title, String errorMessage, boolean required, int minLength, int maxLength) {
+		PasswordField passwordField = new PasswordField(title);
+		passwordField.setImmediate(true);
+		if (required) {
+			passwordField.addValidator(new StringLengthValidator(errorMessage, minLength, maxLength, true));
+		}
+		passwordField.setMaxLength(maxLength);
+		passwordField.setRequired(required);
+		return passwordField;
 	}
 	
 	protected static TextField textFieldConfiguration(String name, String width, boolean required, String descript, Object object) {
@@ -141,5 +154,27 @@ public class HTMLComponents {
 		button.setStyleName(styleName);
 		button.setIcon(new ThemeResource(icon));
 		return button;
+	}
+	
+	protected static TwinColSelect twinColSelect(String title, String source, String target, 
+			int rows, int standard , boolean visible, boolean enabled) {
+		
+		TwinColSelect twinColSelect = new TwinColSelect(title);
+		twinColSelect.setRows(rows);
+		twinColSelect.setLeftColumnCaption(source);
+		twinColSelect.setRightColumnCaption(target);
+		twinColSelect.setVisible(visible);
+		twinColSelect.setEnabled(enabled);
+		
+		switch (standard) {
+		case 0:
+			twinColSelect.setNullSelectionAllowed(true);
+			twinColSelect.setMultiSelect(true);
+			twinColSelect.setImmediate(true);	
+			twinColSelect.setSizeFull();
+			break;
+		}
+		
+		return twinColSelect;
 	}
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.palaver.domain.EntityName;
+import de.palaver.management.info.person.Kontakte;
 
 public class Employee extends EntityName implements Serializable {
 	private static final long serialVersionUID = -590239735735958622L;
@@ -17,15 +18,10 @@ public class Employee extends EntityName implements Serializable {
 	public String getBenutzername() { return m_benutzername; }
 	public void setBenutzername(String benutzername) { m_benutzername = benutzername; }
 	
-	private String m_email;
-	public String getEmail() { return m_email; }
-	public void setEmail(String email) { m_email = email; }
-	
 	private String m_passwort;
 	public String getPasswort() { return m_passwort; }
 	public void setPasswort(String passwort) { m_passwort = passwort; }
-	
-	
+		
 	private String m_eintrittsdatum;
 	public String getEintrittsdatum() { return m_eintrittsdatum; }
 	public void setEintrittsdatum(String eintrittsdatum) { m_eintrittsdatum = eintrittsdatum; }
@@ -34,29 +30,33 @@ public class Employee extends EntityName implements Serializable {
 	public String getAustrittsdatum() { return m_austrittsdatum; }
 	public void setAustrittsdatum(String austrittsdatum) { m_austrittsdatum = austrittsdatum; }
 	
-	private List<Rollen> m_rollen = new ArrayList<Rollen>();
-	public List<Rollen> getRollen() { return m_rollen; }
-	public void setRollen(List<Rollen> rollen) { m_rollen = rollen; }
+	private List<Rolle> m_rolle = new ArrayList<Rolle>();
+	public List<Rolle> getRollen() { return m_rolle; }
+	public void setRollen(List<Rolle> rolle) { m_rolle = rolle; }
+	
+	private Kontakte m_kontakt;
+	public Kontakte getKontakt() { return m_kontakt; }
+	public void setKontakt(Kontakte kontakt) { m_kontakt = kontakt; }
 
 	public Employee() {
-		this(null, null, null, null, null, null, null, null);
+		this(null, null, null, null, null, null, null);
 	}
 	
-	public Employee(Long id, String name, String vorname, String email, String passwort, String eintrittsdatum, String austrittsdatum,
+	public Employee(Long id, String name, String vorname, String passwort, String eintrittsdatum, String austrittsdatum,
 			String benutzername) {
-		this(id, name, vorname, email, passwort, eintrittsdatum, austrittsdatum, null, benutzername);
+		this(id, name, vorname, passwort, eintrittsdatum, austrittsdatum, null, benutzername, null);
 	}
 
-	public Employee(Long id, String name, String vorname, String email, String passwort, String eintrittsdatum, String austrittsdatum,
-			List<Rollen> rollen, String benutzername) {
+	public Employee(Long id, String name, String vorname, String passwort, String eintrittsdatum, String austrittsdatum,
+			List<Rolle> rolle, String benutzername, Kontakte kontakt) {
 		super(id, name);
 		m_vorname = vorname;
-		m_email = email;
 		m_passwort = passwort;
 		m_eintrittsdatum = eintrittsdatum;
 		m_austrittsdatum = austrittsdatum;
-		m_rollen = rollen;
+		m_rolle = rolle;
 		m_benutzername = benutzername;
+		m_kontakt = kontakt;
 	}
 	
 	@Override

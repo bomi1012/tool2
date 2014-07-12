@@ -39,10 +39,8 @@ import de.bistrosoft.palaver.gui.view.ZubereitungEinst;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
-import de.palaver.management.emploee.Rollen;
+import de.palaver.management.emploee.Rolle;
 import de.palaver.view.EmailOhneBestellung;
-import de.palaver.view.MitarbeiterAnzeigen;
-import de.palaver.view.MitarbeiterErstellen;
 import de.palaver.view.NachrichtAnzeigen;
 import de.palaver.view.RollenAnzeigen;
 import de.palaver.view.bean.artikelverwaltung.ChangeItemBean;
@@ -55,6 +53,8 @@ import de.palaver.view.bean.artikelverwaltung.ShowQuantitiesUnitBean;
 import de.palaver.view.bean.artikelverwaltung.ShowWarehousesBean;
 import de.palaver.view.bean.lieferantenverwaltung.ChangeSupplierBean;
 import de.palaver.view.bean.lieferantenverwaltung.ShowSupplierBean;
+import de.palaver.view.bean.mitarbeiterverwaltung.ChangeEmployeeBean;
+import de.palaver.view.bean.mitarbeiterverwaltung.ShowEmployeeBean;
 
 @SuppressWarnings("serial")
 public class MainLayout extends VerticalLayout implements Command {
@@ -129,8 +129,8 @@ public class MainLayout extends VerticalLayout implements Command {
 		lagerortAnlegenItem.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_ADD));
 		
 		/** Bestellung */
-		if (((Application) UI.getCurrent().getData()).userHasPersmission(Rollen.ADMINISTRATOR)
-				|| ((Application) UI.getCurrent().getData()).userHasPersmission(Rollen.BESTELLER)) {
+		if (((Application) UI.getCurrent().getData()).userHasPersmission(Rolle.ADMINISTRATOR)
+				|| ((Application) UI.getCurrent().getData()).userHasPersmission(Rolle.BESTELLER)) {
 			/** Bestellung */
 			MenuItem bestellungItem = menu.addItem(IConstants.MENU_BESTELLUNG_HEADLINE, null);
 			/** 1 Level */
@@ -159,15 +159,28 @@ public class MainLayout extends VerticalLayout implements Command {
 //		bestellungItem.addItem(IConstants.MENU_BESTELLUNG_ANZEIGEN, this);
 		}
 		
-		
-		MenuItem mitarbeiterItem = menu.addItem(
-				IConstants.MENU_MITARBEITER_HEADLINE, null);
-		if (((Application) UI.getCurrent().getData())
-				.userHasPersmission(Rollen.ADMINISTRATOR)) {
-			mitarbeiterItem.addItem(IConstants.MENU_MITARBEITER_NEU, this);
+		/** Mitarbeiter */
+		MenuItem employeeItem = menu.addItem(IConstants.MENU_MITARBEITER_HEADLINE, null);
+		/** 1 Level */
+		MenuItem employeeAnzeigen = employeeItem.addItem(IConstants.MENU_MITARBEITER_ANZEIGEN, this);
+		employeeAnzeigen.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_LUPE));
+		if (((Application) UI.getCurrent().getData()).userHasPersmission(Rolle.ADMINISTRATOR)) {		
+			MenuItem employeeAnlegen = employeeItem.addItem(IConstants.MENU_MITARBEITER_NEU, this); 
+			employeeAnlegen.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_ADD));
 		}
-		mitarbeiterItem.addItem(IConstants.MENU_MITARBEITER_ANZEIGEN, this);
-
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		MenuItem rezeptItem = menu.addItem(IConstants.MENU_REZEPT_HEADLINE,
 				null);
 		rezeptItem.addItem(IConstants.MENU_REZEPT_NEU, this);
@@ -207,7 +220,7 @@ public class MainLayout extends VerticalLayout implements Command {
 				IConstants.MENU_EINSTELLUNGEN_HEADLINE, null);
 		einstellungItem.addItem(IConstants.MENU_HEADER, this);
 		if (((Application) UI.getCurrent().getData())
-				.userHasPersmission(Rollen.ADMINISTRATOR)) {
+				.userHasPersmission(Rolle.ADMINISTRATOR)) {
 			einstellungItem.addItem(IConstants.MENU_REGEL, this);
 		}
 		einstellungItem.addItem(IConstants.MENU_FUSSNOTE, this);
@@ -258,14 +271,20 @@ public class MainLayout extends VerticalLayout implements Command {
 				ViewHandler.getInstance().switchView(ChangeKategoryBean.class);
 			} else if (selectedItem.getText().equals(IConstants.MENU_LAGERORT_NEU)) {
 				ViewHandler.getInstance().switchView(ChangeWarehouseBean.class);
-			} else if(selectedItem.getText().equals(IConstants.MENU_BESTELLUNG_ANZEIGEN)) {
-				//ViewHandler.getInstance().switchView(BestellungenAnzeigenTable.class);
-			} else if(selectedItem.getText().equals(IConstants.MENU_GRUNDBEDARF)) {
-				//ViewHandler.getInstance().switchView(GrundbedarfGenerierenAnsicht.class);
 			} else if(selectedItem.getText().equals(IConstants.MENU_LIEFERANT_NEW)) {
 				ViewHandler.getInstance().switchView(ChangeSupplierBean.class);
 			} else if (selectedItem.getText().equals(IConstants.MENU_LIEFERANT_ANZEIGEN)) {
 				ViewHandler.getInstance().switchView(ShowSupplierBean.class);
+			} else if (selectedItem.getText().equals(IConstants.MENU_MITARBEITER_ANZEIGEN)) {
+				ViewHandler.getInstance().switchView(ShowEmployeeBean.class);
+			} else if (selectedItem.getText().equals(IConstants.MENU_MITARBEITER_NEU)) {
+				ViewHandler.getInstance().switchView(ChangeEmployeeBean.class);
+			}
+			
+			else if(selectedItem.getText().equals(IConstants.MENU_BESTELLUNG_ANZEIGEN)) {
+				//ViewHandler.getInstance().switchView(BestellungenAnzeigenTable.class);
+			} else if(selectedItem.getText().equals(IConstants.MENU_GRUNDBEDARF)) {
+				//ViewHandler.getInstance().switchView(GrundbedarfGenerierenAnsicht.class);
 			}
 			
 			
@@ -273,13 +292,6 @@ public class MainLayout extends VerticalLayout implements Command {
 			else if (selectedItem.getText().equals(
 					IConstants.MENU_LIEFERANT_NEW)) {
 				//ViewHandler.getInstance().switchView(LieferantErstellen.class);
-			} else if (selectedItem.getText().equals(
-					IConstants.MENU_MITARBEITER_NEU)) {
-				ViewHandler.getInstance()
-						.switchView(MitarbeiterErstellen.class);
-			}  else if (selectedItem.getText().equals(
-					IConstants.MENU_MITARBEITER_ANZEIGEN)) {
-				ViewHandler.getInstance().switchView(MitarbeiterAnzeigen.class);
 			}   else if (selectedItem.getText().equals(IConstants.MENU_LOGOUT)) {
 				UI.getCurrent().setContent(new LoginForm());
 				UI.getCurrent().getSession().close();
@@ -348,9 +360,11 @@ public class MainLayout extends VerticalLayout implements Command {
 			} else if (selectedItem.getText().equals("Email")) // Temp
 			{
 				ViewHandler.getInstance().switchView(EmailOhneBestellung.class);
-			} else if (selectedItem.getText().equals("Nachrichten")) {
-				ViewHandler.getInstance().switchView(NachrichtAnzeigen.class);
-			} else if (selectedItem.getText().equals(
+			} 
+//			else if (selectedItem.getText().equals("Nachrichten")) {
+//				ViewHandler.getInstance().switchView(NachrichtAnzeigen.class);
+//			} 
+			else if (selectedItem.getText().equals(
 					IConstants.MENU_ROLLEN_ANZEIGEN)) {
 				ViewHandler.getInstance().switchView(RollenAnzeigen.class);
 			} else if (selectedItem.getText().equals(

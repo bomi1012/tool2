@@ -22,12 +22,12 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Rollenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewHandler;
-import de.palaver.management.emploee.Rollen;
+import de.palaver.management.emploee.Rolle;
+import de.palaver.management.employee.service.RolleService;
 
 /**
  * 
@@ -46,7 +46,7 @@ public class RollenAnzeigen extends VerticalLayout implements View {
 
 	private Label headline;
 
-	private Rollen rollenupdate;
+	private Rolle rollenupdate;
 
 	public RollenAnzeigen() {
 		super();
@@ -71,7 +71,7 @@ public class RollenAnzeigen extends VerticalLayout implements View {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
-					rollenupdate = (Rollen) event.getProperty().getValue();
+					rollenupdate = (Rolle) event.getProperty().getValue();
 				}
 			}
 		});
@@ -136,7 +136,7 @@ public class RollenAnzeigen extends VerticalLayout implements View {
 						public void buttonClick(ClickEvent event) {
 							rollenupdate.setName(nameup.getValue());
 							try {
-								Rollenverwaltung.getInstance().updateRollen(rollenupdate);
+								RolleService.getInstance().updateRolle(rollenupdate);
 							} catch (Exception e) {
 								log.error(e.toString());
 							}
@@ -153,9 +153,9 @@ public class RollenAnzeigen extends VerticalLayout implements View {
 		layout.addComponent(table);
 		layout.setComponentAlignment(table, Alignment.MIDDLE_CENTER);
 
-		BeanItemContainer<Rollen> container;
+		BeanItemContainer<Rolle> container;
 		try {
-			container = new BeanItemContainer<Rollen>(Rollen.class, Rollenverwaltung.getInstance().getAllRollen());
+			container = new BeanItemContainer<Rolle>(Rolle.class, RolleService.getInstance().getAllRolles());
 			table.setContainerDataSource(container);
 			table.setVisibleColumns(new Object[] { "name" });
 			table.sort(new Object[] { "name" }, new boolean[] { true });

@@ -1,4 +1,4 @@
-package de.palaver.view.bean.lieferantenverwaltung;
+package de.palaver.view.bean.helpers;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -6,10 +6,13 @@ import org.slf4j.LoggerFactory;
 
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.TwinColSelect;
 import com.vaadin.ui.VerticalLayout;
 
 import de.palaver.management.info.person.Adresse;
@@ -20,12 +23,11 @@ import de.palaver.management.supplier.Ansprechpartner;
 import de.palaver.management.supplier.Supplier;
 import de.palaver.management.supplier.service.AnsprechpartnerService;
 import de.palaver.management.supplier.service.SupplierService;
-import de.palaver.view.bean.helpers.TemplateBuilder;
 
 @SuppressWarnings("serial")
-abstract public class ChangeFieldsAbstract extends TemplateBuilder{
+abstract public class ChangeFieldsPersonAbstract extends TemplateBuilder{
 
-	protected static final Logger LOG = LoggerFactory.getLogger(ChangeFieldsAbstract.class.getName());
+	protected static final Logger LOG = LoggerFactory.getLogger(ChangeFieldsPersonAbstract.class.getName());
 	
 	protected Kontakte m_kontakte;
 	protected Adresse m_adresse;
@@ -55,8 +57,16 @@ abstract public class ChangeFieldsAbstract extends TemplateBuilder{
 	protected TextField m_plzField;
 	protected TextField m_countryField;
 	
-	protected CheckBox m_mehrerLieferterminCheckbox = new CheckBox("mehrere Liefertermine");
+	protected TextField m_vornameField;
+	protected TextField m_usernameField;
+	protected PasswordField m_passwordField;
+	protected TextField m_eintrittsdatumField;
+	protected TextField m_austrittsdatumField;
 	
+	protected CheckBox m_mehrerLieferterminCheckbox = new CheckBox("mehrere Liefertermine");
+	protected TwinColSelect m_rollen = new TwinColSelect();
+
+	protected Component m_subHeadNewDaten;
 	
 	protected void getContactDataDefinition() {
 		m_subHeadKontaktDaten = title("Kontaktdaten", STYLE_HEADLINE_SUB);
@@ -113,6 +123,22 @@ abstract public class ChangeFieldsAbstract extends TemplateBuilder{
 			vl.addComponent(new Hr());
 			vl.addComponent(m_nameField);
 			vl.addComponent(m_descriptionField);
+			break;
+		case 4:
+			vl.addComponent(m_subHeadPersonDaten);
+			vl.addComponent(new Hr());
+			vl.addComponent(m_nameField);
+			vl.addComponent(m_vornameField);
+			vl.addComponent(m_usernameField);
+			vl.addComponent(m_passwordField);
+			break;
+		case 5:
+			vl.addComponent(m_subHeadNewDaten);
+			vl.addComponent(new Hr());
+			vl.addComponent(m_eintrittsdatumField);
+			vl.addComponent(m_austrittsdatumField);
+			vl.addComponent(new Label());
+			vl.addComponent(m_rollen);
 		}
 		return vl;		
 	}
@@ -147,7 +173,7 @@ abstract public class ChangeFieldsAbstract extends TemplateBuilder{
 				try {
 					m_kontakte.setId(KontakteService.getInstance().createKontakte(m_kontakte));
 				} catch (Exception e) {
-					LOG.error("Kontakt_ERROR_Create: " + e.toString());
+					e.printStackTrace();
 				}
 			}
 		} 
@@ -252,7 +278,7 @@ abstract public class ChangeFieldsAbstract extends TemplateBuilder{
 			} catch (Exception e) {
 				LOG.error("Ansprechpartner_ERROR_Update: " + e.toString());
 			}
-		}
+		} 
 	}
 	
 	protected boolean checkFields(Object obj) {

@@ -39,7 +39,6 @@ import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
 import de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
 import de.bistrosoft.palaver.util.CalendarWeek;
 import de.bistrosoft.palaver.util.Week;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -47,7 +46,8 @@ import de.palaver.Application;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
 import de.palaver.management.emploee.Employee;
-import de.palaver.management.emploee.Rollen;
+import de.palaver.management.emploee.Rolle;
+import de.palaver.management.employee.service.EmployeeService;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 
 /**
@@ -546,8 +546,8 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 
 	private void ladeDaten() {
 		try {
-			employee = Mitarbeiterverwaltung.getInstance()
-					.getAllMitarbeiter();
+			employee = EmployeeService.getInstance()
+					.getAllEmployees();
 		} catch (ConnectException e) {
 			e.printStackTrace();
 		} catch (DAOException e) {
@@ -571,11 +571,11 @@ public class MenueplanAnzeigen extends VerticalLayout implements View {
 
 	public void checkRollen() {
 		if (((Application) UI.getCurrent().getData())
-				.userHasPersmission(Rollen.ADMINISTRATOR)) {
+				.userHasPersmission(Rolle.ADMINISTRATOR)) {
 			btFreigeben.setVisible(true);
 		}
 		if (!((Application) UI.getCurrent().getData())
-				.userHasPersmission(Rollen.ADMINISTRATOR)) {
+				.userHasPersmission(Rolle.ADMINISTRATOR)) {
 			if (shownMenueplan.getMenueplan().getFreigegeben() == null
 					|| shownMenueplan.getMenueplan().getFreigegeben() == false) {
 				btSpeichern.setVisible(true);

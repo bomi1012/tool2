@@ -64,8 +64,8 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 	public Long createAnsprechpartner(Ansprechpartner ansprechpartner) throws ConnectException, DAOException {
 		String kontakt = null;
 		String adresse = null;
-		if (ansprechpartner.getKontakte() != null) {
-			kontakt = String.valueOf(ansprechpartner.getKontakte().getId());
+		if (ansprechpartner.getKontakt() != null) {
+			kontakt = String.valueOf(ansprechpartner.getKontakt().getId());
 		}
 		if (ansprechpartner.getAdresse() != null) {
 			adresse = String.valueOf(ansprechpartner.getAdresse().getId());
@@ -95,8 +95,8 @@ public class AnsprechpartnerDAO extends AbstractDAO {
 	public void updateAnsprechpartner(Ansprechpartner ansprechpartner) throws ConnectException, DAOException {
 		String kontakt = null;
 		String adresse = null;
-		if (ansprechpartner.getKontakte() != null) {
-			kontakt = String.valueOf(ansprechpartner.getKontakte().getId());
+		if (ansprechpartner.getKontakt() != null) {
+			kontakt = String.valueOf(ansprechpartner.getKontakt().getId());
 		}
 		if (ansprechpartner.getAdresse() != null) {
 			adresse = String.valueOf(ansprechpartner.getAdresse().getId());

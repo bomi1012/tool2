@@ -4,7 +4,6 @@
 package de.bistrosoft.palaver.data;
 
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -25,7 +24,6 @@ import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.Week;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.palaver.dao.AbstractDAO;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
@@ -34,6 +32,7 @@ import de.palaver.management.artikel.Mengeneinheit;
 import de.palaver.management.artikel.service.ArtikelService;
 import de.palaver.management.artikel.service.MengeneinheitService;
 import de.palaver.management.emploee.Employee;
+import de.palaver.management.employee.service.EmployeeService;
 
 /**
  * @author Eike
@@ -131,7 +130,7 @@ public class MenueplanDAO extends AbstractDAO {
 			while (setMenues.next()) {
 				Long id = setMenues.getLong(1);
 				String name = setMenues.getString(2);
-				Employee koch = Mitarbeiterverwaltung.getInstance().getMitarbeiterById(setMenues.getLong(5));
+				Employee koch = EmployeeService.getInstance().getEmployee(setMenues.getLong(5));
 				// TODO: = new Mitarbeiter(name, vorname);
 				Menue menue = new Menue(id, name, koch);
 				int row = setMenues.getInt("zeile");
@@ -344,7 +343,7 @@ public class MenueplanDAO extends AbstractDAO {
 			Long kochId = set.getLong("koch");
 			
 			KochInMenueplan k = new KochInMenueplan();
-			k.setKoch(Mitarbeiterverwaltung.getInstance().getMitarbeiterById(kochId));
+			k.setKoch(EmployeeService.getInstance().getEmployee(kochId));
 			k.setPosition(position);
 			k.setSpalte(spalte);
 			

@@ -35,11 +35,11 @@ public class Ansprechpartner extends EntityName {
 		m_adresse = adresse;
 	}
 
-	public Kontakte getKontakte() {
+	public Kontakte getKontakt() {
 		return m_kontakte;
 	}
 
-	public void setKontakte(Kontakte kontakte) {
+	public void setKontakt(Kontakte kontakte) {
 		m_kontakte = kontakte;
 	}
 

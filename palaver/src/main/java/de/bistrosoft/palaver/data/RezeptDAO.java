@@ -14,8 +14,6 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
 import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Zubereitungverwaltung;
-import de.hska.awp.palaver2.data.MitarbeiterDAO;
-import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
 import de.palaver.dao.AbstractDAO;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
@@ -26,6 +24,7 @@ import de.palaver.management.artikel.DAO.MengeneinheitDAO;
 import de.palaver.management.artikel.service.ArtikelService;
 import de.palaver.management.artikel.service.MengeneinheitService;
 import de.palaver.management.emploee.Employee;
+import de.palaver.management.employee.service.EmployeeService;
 
 public class RezeptDAO extends AbstractDAO {
 
@@ -92,7 +91,7 @@ public class RezeptDAO extends AbstractDAO {
 		while (set.next()) {
 			list.add(new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
 					.getRezeptartById(set.getLong("rezeptart_fk")),
-					MitarbeiterDAO.getInstance().getMitarbeiterById(
+					EmployeeService.getInstance().getEmployee(
 							set.getLong("mitarbeiter_fk")), set
 							.getString("name"), set.getString("kommentar")));
 		}
@@ -122,7 +121,7 @@ public class RezeptDAO extends AbstractDAO {
 		while (set.next()) {
 			list.add(new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
 					.getRezeptartById(set.getLong("rezeptart_fk")),
-					MitarbeiterDAO.getInstance().getMitarbeiterById(
+					EmployeeService.getInstance().getEmployee(
 							set.getLong("mitarbeiter_fk")), set
 							.getString("name"), set.getString("kommentar")));
 		}
@@ -138,7 +137,7 @@ public class RezeptDAO extends AbstractDAO {
 		while (set.next()) {
 			list.add(new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
 					.getRezeptartById(set.getLong("rezeptart_fk")),
-					MitarbeiterDAO.getInstance().getMitarbeiterById(
+					EmployeeService.getInstance().getEmployee(
 							set.getLong("mitarbeiter_fk")), set
 							.getString("name"), set.getString("kommentar")));
 		}
@@ -155,7 +154,7 @@ public class RezeptDAO extends AbstractDAO {
 			Rezept rezept = new Rezept(set.getLong("id"), RezeptartDAO
 					.getInstance()
 					.getRezeptartById(set.getLong("rezeptart_fk")),
-					MitarbeiterDAO.getInstance().getMitarbeiterById(
+					EmployeeService.getInstance().getEmployee(
 							set.getLong("mitarbeiter_fk")),
 					set.getString("name"), set.getString("kommentar"),
 					set.getDate("erstellt"));
@@ -223,7 +222,7 @@ public class RezeptDAO extends AbstractDAO {
 		while (set.next()) {
 			rezept = new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
 					.getRezeptartById(set.getLong("rezeptart_fk")),
-					MitarbeiterDAO.getInstance().getMitarbeiterById(
+					EmployeeService.getInstance().getEmployee(
 							set.getLong("mitarbeiter_fk")),
 					set.getString("name"), set.getString("kommentar"));
 			rezept.setZubereitung(Zubereitungverwaltung.getInstance().getZubereitungByRezept(set.getLong("id")));
@@ -243,7 +242,7 @@ public class RezeptDAO extends AbstractDAO {
 		while (set.next()) {
 			result = new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
 					.getRezeptartById(set.getLong("rezeptart_fk")),
-					MitarbeiterDAO.getInstance().getMitarbeiterById(
+					EmployeeService.getInstance().getEmployee(
 							set.getLong("mitarbeiter_fk")),
 					set.getString("name"), null);
 		}
@@ -258,8 +257,8 @@ public class RezeptDAO extends AbstractDAO {
 		ResultSet set = getManaged(GET_ARTIKEL_REZEPT_BY_ID);
 		while (set.next()) {
 			rezept.add(new Rezept(RezeptartDAO.getInstance().getRezeptartById(
-					set.getLong("id")), MitarbeiterDAO.getInstance()
-					.getMitarbeiterById(set.getLong("id")), set
+					set.getLong("id")), EmployeeService.getInstance()
+					.getEmployee(set.getLong("id")), set
 					.getString("name"), null));
 		}
 		return rezept;
@@ -359,8 +358,8 @@ public class RezeptDAO extends AbstractDAO {
 			Rezeptart rezArt = Rezeptartverwaltung.getInstance()
 					.getRezeptartById(set.getLong("rezeptart_fk"));
 			rez.setRezeptart(rezArt);
-			Employee koch = Mitarbeiterverwaltung.getInstance()
-					.getMitarbeiterById(set.getLong("mitarbeiter_fk"));
+			Employee koch = EmployeeService.getInstance()
+					.getEmployee(set.getLong("mitarbeiter_fk"));
 			rez.setMitarbeiter(koch);
 			rezepte.add(rez);
 		}

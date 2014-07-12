@@ -1,6 +1,5 @@
 package de.bistrosoft.palaver.menueplanverwaltung;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import com.vaadin.ui.Alignment;
@@ -8,9 +7,6 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.VerticalLayout;
 
-import de.hska.awp.palaver2.mitarbeiterverwaltung.service.Mitarbeiterverwaltung;
-import de.palaver.dao.ConnectException;
-import de.palaver.dao.DAOException;
 import de.palaver.management.emploee.Employee;
 
 public class KoecheComponent extends CustomComponent {

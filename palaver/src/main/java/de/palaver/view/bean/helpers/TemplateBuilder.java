@@ -11,12 +11,17 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
+import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.TwinColSelect;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+import de.palaver.Application;
+import de.palaver.management.emploee.Rolle;
 import de.palaver.view.bean.artikelverwaltung.ChangeItemBean;
 import de.palaver.view.bean.artikelverwaltung.ChangeKategoryBean;
 import de.palaver.view.bean.artikelverwaltung.ChangeQuantityUnitBean;
@@ -28,6 +33,8 @@ import de.palaver.view.bean.artikelverwaltung.ShowWarehousesBean;
 import de.palaver.view.bean.lieferantenverwaltung.ChangeContactPersonBean;
 import de.palaver.view.bean.lieferantenverwaltung.ChangeSupplierBean;
 import de.palaver.view.bean.lieferantenverwaltung.ShowSupplierBean;
+import de.palaver.view.bean.mitarbeiterverwaltung.ChangeEmployeeBean;
+import de.palaver.view.bean.mitarbeiterverwaltung.ShowEmployeeBean;
 
 public class TemplateBuilder extends AbstractView {
 	
@@ -102,7 +109,8 @@ public class TemplateBuilder extends AbstractView {
 			buttons.add(m_buttonEdit);
 		} else if (object instanceof ChangeItemBean || object instanceof ChangeQuantityUnitBean ||
 				object instanceof ChangeKategoryBean || object instanceof ChangeWarehouseBean ||
-				object instanceof ChangeSupplierBean || object instanceof ChangeContactPersonBean) {
+				object instanceof ChangeSupplierBean || object instanceof ChangeContactPersonBean ||
+				object instanceof ChangeEmployeeBean) {
 			m_buttonSpeichern = button(BUTTON_TEXT_SAVE, BUTTON_ICON_SAVE, true, true);
 			m_buttonVerwerfen = button(BUTTON_TEXT_VERWERFEN, BUTTON_ICON_VERWERFEN, true, true);
 			m_buttonDeaktiviren = button(BUTTON_TEXT_DEAKTIVIEREN,BUTTON_ICON_DEAKTIVIEREN, false, true);
@@ -110,6 +118,16 @@ public class TemplateBuilder extends AbstractView {
 			buttons.add(m_buttonVerwerfen);
 			buttons.add(m_buttonSpeichern);
 			buttons.add(m_buttonDeaktiviren);
+		} else if (object instanceof ShowEmployeeBean) {
+			if (((Application) UI.getCurrent().getData()).userHasPersmission(Rolle.ADMINISTRATOR)) {		
+				m_buttonCreate = button(BUTTON_TEXT_CREATE, BUTTON_ICON_CREATE, true, true);
+				m_buttonEdit = button(BUTTON_TEXT_EDIT, BUTTON_ICON_EDIT, true, false);
+			} else {
+				m_buttonCreate = button(BUTTON_TEXT_CREATE, BUTTON_ICON_CREATE, false, false);
+				m_buttonEdit = button(BUTTON_TEXT_EDIT, BUTTON_ICON_EDIT, false, false);
+			}
+			buttons.add(m_buttonCreate);
+			buttons.add(m_buttonEdit);
 		}
 
 		HorizontalLayout horizontalLayout = new HorizontalLayout();
@@ -182,6 +200,10 @@ public class TemplateBuilder extends AbstractView {
 		return HTMLComponents.textFieldConfiguration(name, width, required, descript, object);
 	}
 	
+	protected PasswordField passwordField(String title, String errorMessage, boolean required, int minLength, int maxLength) {
+		return HTMLComponents.passwordField(title, errorMessage, required, minLength, maxLength);		
+	}
+	
 	protected TextArea textArea(String name, String width, String height, boolean required, String descript, Object object) {
 		return HTMLComponents.textAREAConfiguration(name, width, height, required, descript, object);
 	}
@@ -196,5 +218,10 @@ public class TemplateBuilder extends AbstractView {
 	
 	protected IntStepper intStepper(String name, String width, int min, int max, String desc)  {
 		return HTMLComponents.intStepperConfiguration(name, width, min, max, desc);
+	}
+	
+	protected TwinColSelect twinColSelect(String title, String source, String target, 
+			int rows, int standard , boolean visible, boolean enabled) {
+		return HTMLComponents.twinColSelect(title, source, target, rows, standard, visible, enabled);
 	}
 }

@@ -17,11 +17,11 @@ import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.Util;
-import de.hska.awp.palaver2.data.MitarbeiterDAO;
 import de.palaver.dao.AbstractDAO;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
 import de.palaver.management.emploee.Employee;
+import de.palaver.management.employee.service.EmployeeService;
 
 public class MenueDAO extends AbstractDAO {
 	private static MenueDAO instance;
@@ -65,10 +65,9 @@ public class MenueDAO extends AbstractDAO {
 
 		while (set.next()) {
 			list.add(new Menue(set.getLong(ID), set.getString("name"),
-					MitarbeiterDAO.getInstance()
-							.getMitarbeiterById(set.getLong("koch"))
+					EmployeeService.getInstance()
+							.getEmployee(set.getLong("koch"))
 							.getVorname()));
-
 		}
 
 		return list;
@@ -107,8 +106,8 @@ public class MenueDAO extends AbstractDAO {
 
 		while (set.next()) {
 			list.add(new Menue(set.getLong("id"), set.getString("name"),
-					MitarbeiterDAO.getInstance()
-							.getMitarbeiterById(set.getLong("koch"))
+					EmployeeService.getInstance()
+							.getEmployee(set.getLong("koch"))
 							.getVorname(), MenueartDAO.getInstance()
 							.getMenueartById(set.getLong("menueart_fk")),
 					GeschmackDAO.getInstance().getGeschmackById(
@@ -125,8 +124,8 @@ public class MenueDAO extends AbstractDAO {
 
 		while (set.next()) {
 			list.add(new Menue(set.getLong("id"), set.getString("name"),
-					MitarbeiterDAO.getInstance()
-							.getMitarbeiterById(set.getLong("koch"))
+					EmployeeService.getInstance()
+							.getEmployee(set.getLong("koch"))
 							.getVorname(), MenueartDAO.getInstance()
 							.getMenueartById(set.getLong("menueart_fk")),
 					GeschmackDAO.getInstance().getGeschmackById(
@@ -144,7 +143,7 @@ public class MenueDAO extends AbstractDAO {
 
 		while (set.next()) {
 			menue = new Menue(set.getLong("id"), set.getString("name"),
-					MitarbeiterDAO.getInstance().getMitarbeiterById(
+					EmployeeService.getInstance().getEmployee(
 							set.getLong("koch")), GeschmackDAO.getInstance()
 							.getGeschmackById(set.getLong("geschmack_fk")),
 					MenueartDAO.getInstance().getMenueartById(
@@ -178,7 +177,7 @@ public class MenueDAO extends AbstractDAO {
 		while (set.next()) {
 			list = new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
 					.getRezeptartById(set.getLong("rezeptart_fk")),
-					MitarbeiterDAO.getInstance().getMitarbeiterById(
+					EmployeeService.getInstance().getEmployee(
 							set.getLong("mitarbeiter_fk")),
 					set.getString("name"), null);
 		}
@@ -194,7 +193,7 @@ public class MenueDAO extends AbstractDAO {
 		while (set.next()) {
 			list = new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
 					.getRezeptartById(set.getLong("rezeptart_fk")),
-					MitarbeiterDAO.getInstance().getMitarbeiterById(
+					EmployeeService.getInstance().getEmployee(
 							set.getLong("mitarbeiter_fk")),
 					set.getString("name"), null);
 		}
@@ -210,7 +209,7 @@ public class MenueDAO extends AbstractDAO {
 		while (set.next()) {
 			list.add(new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
 					.getRezeptartById(set.getLong("rezeptart_fk")),
-					MitarbeiterDAO.getInstance().getMitarbeiterById(
+					EmployeeService.getInstance().getEmployee(
 							set.getLong("mitarbeiter_fk")), set
 							.getString("name"), null));
 		}
@@ -227,7 +226,7 @@ public class MenueDAO extends AbstractDAO {
 
 		while (set.next()) {
 			result = new Menue(set.getLong("id"), set.getString("name"),
-					MitarbeiterDAO.getInstance().getMitarbeiterById(
+					EmployeeService.getInstance().getEmployee(
 							set.getLong("koch")));
 		}
 		return result;
@@ -242,7 +241,7 @@ public class MenueDAO extends AbstractDAO {
 
 		while (set.next()) {
 			result = new Menue(set.getLong("id"), set.getString("name"),
-					MitarbeiterDAO.getInstance().getMitarbeiterById(
+					EmployeeService.getInstance().getEmployee(
 							set.getLong("koch")), GeschmackDAO.getInstance()
 							.getGeschmackById(set.getLong("geschmack_fk")),
 					MenueartDAO.getInstance().getMenueartById(

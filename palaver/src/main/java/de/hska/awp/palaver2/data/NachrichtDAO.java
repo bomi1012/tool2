@@ -6,12 +6,13 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hska.awp.palaver2.nachrichtenverwaltung.domain.Nachricht;
 import de.palaver.dao.AbstractDAO;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
 import de.palaver.management.emploee.Employee;
-import de.palaver.management.emploee.Rollen;
+import de.palaver.management.emploee.InternMessage;
+import de.palaver.management.emploee.Rolle;
+import de.palaver.management.employee.service.EmployeeService;
 
 /**
  * Die Klasse stellt Methoden für den Datenbankzugriff für das Objekt Nachricht
@@ -52,18 +53,18 @@ public class NachrichtDAO extends AbstractDAO {
 	 * @throws SQLException
 	 */
 
-	public Nachricht getNachrichtById(Long id) throws ConnectException, DAOException, SQLException {
+	public InternMessage getNachrichtById(Long id) throws ConnectException, DAOException, SQLException {
 
 		if (id == null) {
 			return null;
 		}
-		Nachricht nachricht = null;
+		InternMessage internMessage = null;
 		ResultSet set = getManaged(MessageFormat.format(GET_NACHRICHT_BY_ID, id));
 
 		while (set.next()) {
-			nachricht = new Nachricht(set.getLong("id"), set.getString("nachricht"), new Employee(), new Rollen());
+			internMessage = new InternMessage(set.getLong("id"), set.getString("nachricht"), new Employee(), new Rolle());
 		}
-		return nachricht;
+		return internMessage;
 
 	}
 
@@ -76,17 +77,17 @@ public class NachrichtDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public List<Nachricht> getNachrichtByRolle(Rollen rolle) throws ConnectException, DAOException, SQLException {
+	public List<InternMessage> getNachrichtByRolle(Rolle rolle) throws ConnectException, DAOException, SQLException {
 
 		if (rolle == null) {
 			return null;
 		}
-		List<Nachricht> list = new ArrayList<Nachricht>();
+		List<InternMessage> list = new ArrayList<InternMessage>();
 
 		ResultSet set = getManaged(MessageFormat.format(GET_NACHRICHT_BY_Rolle, rolle.getId()));
 
 		while (set.next()) {
-			list.add(new Nachricht(set.getLong("id"), set.getString("nachricht"), new Employee(), new Rollen()));
+			list.add(new InternMessage(set.getLong("id"), set.getString("nachricht"), new Employee(), new Rolle()));
 		}
 		return list;
 
@@ -101,15 +102,15 @@ public class NachrichtDAO extends AbstractDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	public List<Nachricht> getNachrichtByRolleId(Long rid) throws ConnectException, DAOException, SQLException {
+	public List<InternMessage> getNachrichtByRolleId(Long rid) throws ConnectException, DAOException, SQLException {
 
-		List<Nachricht> list = new ArrayList<Nachricht>();
+		List<InternMessage> list = new ArrayList<InternMessage>();
 
 		ResultSet set = getManaged(MessageFormat.format(GET_NACHRICHT_BY_ROLLE_ID, rid));
 
 		while (set.next()) {
-			list.add(new Nachricht(set.getLong("id"), set.getString("nachricht"), MitarbeiterDAO.getInstance().getMitarbeiterByIdForNachricht(
-					set.getLong("sender_fk")), new Rollen()));
+			list.add(new InternMessage(set.getLong("id"), set.getString("nachricht"), EmployeeService.getInstance()
+					.getEmployee(set.getLong("sender_fk")), new Rolle()));
 		}
 
 		return list;
@@ -124,11 +125,11 @@ public class NachrichtDAO extends AbstractDAO {
 	 * @throws SQLException
 	 */
 
-	public List<Nachricht> getAllNachricht() throws ConnectException, DAOException, SQLException {
-		List<Nachricht> list = new ArrayList<Nachricht>();
+	public List<InternMessage> getAllNachricht() throws ConnectException, DAOException, SQLException {
+		List<InternMessage> list = new ArrayList<InternMessage>();
 		ResultSet set = getManaged(GET_ALL_NACHRICHTEN);
 		while (set.next()) {
-			list.add(new Nachricht(set.getLong("id"), set.getString("nachricht"), new Employee(), new Rollen()));
+			list.add(new InternMessage(set.getLong("id"), set.getString("nachricht"), new Employee(), new Rolle()));
 		}
 		return list;
 	}
@@ -136,20 +137,20 @@ public class NachrichtDAO extends AbstractDAO {
 	/**
 	 * Methode um eine neue Nachricht anzulegen. Nachricht wird mitgeliefert
 	 * 
-	 * @param nachricht
+	 * @param internMessage
 	 * @throws ConnectException
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
 
-	public void createNachricht(Nachricht nachricht) throws ConnectException, DAOException, SQLException {
+	public void createNachricht(InternMessage internMessage) throws ConnectException, DAOException, SQLException {
 
-		if (nachricht == null) {
+		if (internMessage == null) {
 			throw new NullPointerException("keine Nachricht übergeben");
 
 		}
-		String anlegen = "Insert into nachrichten (nachricht, sender_fk, empf_rolle_fk) values('" + nachricht.getNachricht() + "',"
-				+ nachricht.getMitarbeiterBySenderFk().getId() + "," + nachricht.getEmpfaengerRolle().getId() + ")";
+		String anlegen = "Insert into nachrichten (nachricht, sender_fk, empf_rolle_fk) values('" + internMessage.getNachricht() + "',"
+				+ internMessage.getMitarbeiterSender().getId() + "," + internMessage.getEmpfaengerRolle().getId() + ")";
 		putManaged(anlegen);
 
 	}
