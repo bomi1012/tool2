@@ -71,9 +71,13 @@ public class HTMLComponents {
 		return button;
 	}
 	
-	protected static PasswordField passwordField(String title, String errorMessage, boolean required, int minLength, int maxLength) {
+	protected static PasswordField passwordField(String title, String width, String errorMessage, boolean required, 
+			int minLength, int maxLength, boolean isVisible, boolean isEnabled) {
 		PasswordField passwordField = new PasswordField(title);
+		passwordField.setWidth(width);
 		passwordField.setImmediate(true);
+		passwordField.setVisible(isVisible);
+		passwordField.setEnabled(isEnabled);
 		if (required) {
 			passwordField.addValidator(new StringLengthValidator(errorMessage, minLength, maxLength, true));
 		}
@@ -148,8 +152,9 @@ public class HTMLComponents {
 	}
 
 	protected static Button buttonAsIconConfiguration(String text,
-			String baseTheme, String styleName, String icon) {
+			String baseTheme, String styleName, String icon, boolean isVisible) {
 		Button button = new Button(text);
+		button.setVisible(isVisible);
 		button.setPrimaryStyleName(baseTheme);
 		button.setStyleName(styleName);
 		button.setIcon(new ThemeResource(icon));

@@ -1,6 +1,9 @@
 package de.palaver.domain;
 
-public class EntityId {
+import java.io.Serializable;
+
+public class EntityId implements Serializable {
+	private static final long serialVersionUID = -321119544534476482L;
 	protected Long m_id;
 	public Long getId() { return m_id; }
 	public void setId(Long id) { m_id = id; }

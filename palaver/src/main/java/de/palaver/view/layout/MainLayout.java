@@ -1,5 +1,6 @@
 package de.palaver.view.layout;
 
+import org.apache.commons.lang.SerializationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,8 +38,10 @@ import de.bistrosoft.palaver.gui.view.RezeptAnlegen;
 import de.bistrosoft.palaver.gui.view.RezeptAnzeigenTabelle;
 import de.bistrosoft.palaver.gui.view.ZubereitungEinst;
 import de.hska.awp.palaver2.util.IConstants;
+import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
+import de.palaver.management.emploee.Employee;
 import de.palaver.management.emploee.Rolle;
 import de.palaver.view.EmailOhneBestellung;
 import de.palaver.view.NachrichtAnzeigen;
@@ -168,7 +171,14 @@ public class MainLayout extends VerticalLayout implements Command {
 			MenuItem employeeAnlegen = employeeItem.addItem(IConstants.MENU_MITARBEITER_NEU, this); 
 			employeeAnlegen.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_ADD));
 		}
+		employeeItem.addSeparator();
+		MenuItem settings = employeeItem.addItem(IConstants.MENU_MITARBEITER_SETTINGS, null);
+		settings.setIcon(new ThemeResource(IConstants.ICON_WRENCH));
 		
+		MenuItem myProfile = settings.addItem(IConstants.MENU_MITARBEITER_PROFILE, this);
+		myProfile.setIcon(new ThemeResource(IConstants.ICON_USER));
+		MenuItem password = settings.addItem(IConstants.MENU_MITARBEITER_PASSWORD, this);
+		password.setIcon(new ThemeResource(IConstants.ICON_USER_KEY));
 		
 		
 		
@@ -279,6 +289,10 @@ public class MainLayout extends VerticalLayout implements Command {
 				ViewHandler.getInstance().switchView(ShowEmployeeBean.class);
 			} else if (selectedItem.getText().equals(IConstants.MENU_MITARBEITER_NEU)) {
 				ViewHandler.getInstance().switchView(ChangeEmployeeBean.class);
+			} else if (selectedItem.getText().equals(IConstants.MENU_MITARBEITER_PROFILE)) {
+				Employee e = (Employee) SerializationUtils.clone(((Application) UI.getCurrent().getData()).getUser());
+				ViewHandler.getInstance().switchView(ChangeEmployeeBean.class, 
+						new ViewDataObject<Employee>(e));
 			}
 			
 			else if(selectedItem.getText().equals(IConstants.MENU_BESTELLUNG_ANZEIGEN)) {

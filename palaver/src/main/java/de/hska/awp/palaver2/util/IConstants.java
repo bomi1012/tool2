@@ -33,6 +33,9 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&passw
 	String		MENU_LIEFERANT_ANZEIGEN = "Alle Lieferanten anzeigen";
 	String		MENU_MITARBEITER_HEADLINE = "Mitarbeiter";
 	String		MENU_MITARBEITER_ANZEIGEN = "Alle Mitarbeiter anzeigen";
+	String		MENU_MITARBEITER_SETTINGS = "Einstellungen";
+	String		MENU_MITARBEITER_PROFILE = "Mein Profile";
+	String		MENU_MITARBEITER_PASSWORD = "Passwort ändern";
 	String      MENU_MITARBEITER_NEU = "Mitarbeiter anlegen";
 	String		MENU_EINSTELLUNGEN_HEADLINE = "Einstellungen";
 	String		MENU_BESTELLUNG_HEADLINE = "Bestellung";
@@ -130,6 +133,10 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&passw
 	String 		ICON_PAGE_SAVE = "icons/page_save.png";
 	String 		ICON_FOLDER_PAGE_WHITE = "icons/folder_page_white.png";
 	String 		ICON_PAGE_WHITE_LUPE = "icons/page_white_magnify.png";
+	String 		ICON_WRENCH = "icons/wrench.png";
+	String 		ICON_USER = "icons/report_user.png";
+	String 		ICON_USER_KEY = "icons/report_key.png";
+	
 	String 		ICON_PAGE_WHITE_ADD = "icons/page_white_add.png";
 	String 		ICON_PAGE_GEAR = "icons/page_gear.png";
 	String 		ICON_BASKET_ADD = "icons/basket_add.png";

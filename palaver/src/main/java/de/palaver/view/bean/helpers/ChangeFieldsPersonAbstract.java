@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
@@ -56,7 +57,7 @@ abstract public class ChangeFieldsPersonAbstract extends TemplateBuilder{
 	protected TextField m_cityField;
 	protected TextField m_plzField;
 	protected TextField m_countryField;
-	
+	protected Button m_changePassword;
 	protected TextField m_vornameField;
 	protected TextField m_usernameField;
 	protected PasswordField m_passwordField;
@@ -125,12 +126,19 @@ abstract public class ChangeFieldsPersonAbstract extends TemplateBuilder{
 			vl.addComponent(m_descriptionField);
 			break;
 		case 4:
+			HorizontalLayout horizontalLayout = new HorizontalLayout();
+			horizontalLayout.setWidth(WIDTH_FULL);
+			horizontalLayout.addComponent(m_passwordField);
+			horizontalLayout.addComponent(m_changePassword);
+			horizontalLayout.setExpandRatio(m_passwordField, 2);
+			horizontalLayout.setExpandRatio(m_changePassword, 2);
+			
 			vl.addComponent(m_subHeadPersonDaten);
 			vl.addComponent(new Hr());
 			vl.addComponent(m_nameField);
 			vl.addComponent(m_vornameField);
 			vl.addComponent(m_usernameField);
-			vl.addComponent(m_passwordField);
+			vl.addComponent(horizontalLayout);
 			break;
 		case 5:
 			vl.addComponent(m_subHeadNewDaten);

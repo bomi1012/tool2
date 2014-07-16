@@ -76,7 +76,7 @@ public class ChangeSupplierBean extends ChangeFieldsPersonAbstract implements Vi
 
 		m_subHeadContactPerson = title("Alle Ansprechpartnern", STYLE_HEADLINE_SUB);
 		m_addUserButton = buttonAsIcon(" neuer Ansprechpartner", BaseTheme.BUTTON_LINK, 
-				"cursor-hand lieferant", "icons/user_add.png");
+				"cursor-hand lieferant", "icons/user_add.png", true);
 					
 		m_leftVLayout = vertikalLayoutBuilder(0, "90%");		
 		m_centerVLayout = vertikalLayoutBuilder(1, "90%");

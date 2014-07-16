@@ -188,8 +188,8 @@ public class TemplateBuilder extends AbstractView {
 		return HTMLComponents.buttonConfiguration(text, icon, visible, enable);
 	}
 	
-	protected Button buttonAsIcon(String text, String baseTheme, String StyleName, String icon) {
-		return HTMLComponents.buttonAsIconConfiguration(text, baseTheme, StyleName, icon);
+	protected Button buttonAsIcon(String text, String baseTheme, String StyleName, String icon, boolean isVisible) {
+		return HTMLComponents.buttonAsIconConfiguration(text, baseTheme, StyleName, icon, isVisible);
 	}
 	
 	protected Label title(String title, String style) {
@@ -200,8 +200,10 @@ public class TemplateBuilder extends AbstractView {
 		return HTMLComponents.textFieldConfiguration(name, width, required, descript, object);
 	}
 	
-	protected PasswordField passwordField(String title, String errorMessage, boolean required, int minLength, int maxLength) {
-		return HTMLComponents.passwordField(title, errorMessage, required, minLength, maxLength);		
+	protected PasswordField passwordField(String title, String width, String errorMessage, boolean required, 
+			int minLength, int maxLength, boolean isVisible, boolean isEnabled) {
+		return HTMLComponents.passwordField(title, width, errorMessage, required, minLength, maxLength,
+				isVisible, isEnabled);		
 	}
 	
 	protected TextArea textArea(String name, String width, String height, boolean required, String descript, Object object) {

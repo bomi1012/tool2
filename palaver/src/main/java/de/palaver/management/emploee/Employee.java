@@ -1,13 +1,12 @@
 package de.palaver.management.emploee;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.palaver.domain.EntityName;
 import de.palaver.management.info.person.Kontakte;
 
-public class Employee extends EntityName implements Serializable {
+public class Employee extends EntityName {
 	private static final long serialVersionUID = -590239735735958622L;
 	
 	private String m_vorname;

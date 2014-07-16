@@ -2,7 +2,8 @@ package de.palaver.management.info.person;
 
 import de.palaver.domain.EntityId;
 
-public class Kontakte extends EntityId{
+public class Kontakte extends EntityId {
+	private static final long serialVersionUID = -1596761912104967382L;
 	private String m_email;
 	private String m_handy;
 	private String m_telefon;

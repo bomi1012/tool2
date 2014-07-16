@@ -12,12 +12,14 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.BaseTheme;
 
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.Util;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
+import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
 import de.palaver.management.emploee.Employee;
 import de.palaver.management.emploee.Rolle;
@@ -31,6 +33,7 @@ public class ChangeEmployeeBean extends ChangeFieldsPersonAbstract implements Vi
 	private boolean m_toCreate;
 	private Employee m_empl;
 	private VerticalLayout m_innerBox;
+	
 
 	public ChangeEmployeeBean() {
 		super();
@@ -52,7 +55,9 @@ public class ChangeEmployeeBean extends ChangeFieldsPersonAbstract implements Vi
 		m_nameField = textField("Nachname", WIDTH_FULL, true, "Nachname", this);
 		m_vornameField = textField("Vorname", WIDTH_FULL, true, "Vorname", this);
 		m_usernameField = textField("Benutzername", WIDTH_FULL, true, "Benutzername", this);
-		m_passwordField = passwordField("Passwort", "Bitte gültigen Passwort eingeben", true, 6, 45);
+		m_passwordField = passwordField("Passwort", WIDTH_FULL, "Bitte gültigen Passwort eingeben", true, 6, 45, true, true);
+		m_changePassword = buttonAsIcon(" Passwort ändern", BaseTheme.BUTTON_LINK, 
+				"cursor-hand margin-key", "icons/report_key.png", false);
 		m_eintrittsdatumField = textField("Eintrittsdatum", WIDTH_FULL, false, "Eintrittsdatum", this);
 		m_austrittsdatumField= textField("Austrittsdatum", WIDTH_FULL, false, "Austrittsdatum", this);		
 		m_subHeadNewDaten = title("Weitere Informationen", STYLE_HEADLINE_SUB);		
@@ -60,7 +65,8 @@ public class ChangeEmployeeBean extends ChangeFieldsPersonAbstract implements Vi
 		m_rollen = twinColSelect(null, "Verfügbare Rollen", "Ausgewählte Rollen", 8, 0, visible(), enabled());		
 		m_leftVLayout = vertikalLayoutBuilder(4, "90%");	
 		m_centerVLayout = vertikalLayoutBuilder(1, "90%");
-		m_rightVLayout = vertikalLayoutBuilder(5, "90%"); 
+		m_rightVLayout = vertikalLayoutBuilder(5, "90%"); 		
+
 		
 		m_control = controlPanel(this);	
 	}
@@ -88,7 +94,10 @@ public class ChangeEmployeeBean extends ChangeFieldsPersonAbstract implements Vi
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (validiereEingabe()) {
-					saveItem();				
+					saveItem();		
+					((Application) UI.getCurrent().getData()).showDialog(String.format(MESSAGE_SUSSEFULL_ARG_1, 
+							"Mitarbeiter"));
+					ViewHandler.getInstance().switchView(ShowEmployeeBean.class);
 				}							
 			}
 
@@ -172,7 +181,7 @@ public class ChangeEmployeeBean extends ChangeFieldsPersonAbstract implements Vi
 		m_buttonVerwerfen.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				
+				ViewHandler.getInstance().switchView(ShowEmployeeBean.class);
 			}
 		});
 		
@@ -183,7 +192,15 @@ public class ChangeEmployeeBean extends ChangeFieldsPersonAbstract implements Vi
 				//sehe m_control
 			}
 		});
-		
+	}
+	
+	public void changePasswortListener() {
+		m_changePassword.addClickListener(new ClickListener() {			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				System.out.print("hallo");  
+			}
+		});
 	}
 	
 	private void setDataToTwinColSelect() {
@@ -235,21 +252,28 @@ public class ChangeEmployeeBean extends ChangeFieldsPersonAbstract implements Vi
 			m_usernameField.setValue(m_empl.getBenutzername());
 			m_eintrittsdatumField.setValue(m_empl.getEintrittsdatum());
 			m_austrittsdatumField.setValue(m_empl.getAustrittsdatum());
-			m_passwordField.setValue("secret");
 			m_passwordField.setEnabled(false);
 			m_passwordField.setRequired(false);
+			m_passwordField.removeAllValidators();
+			m_changePassword.setVisible(true);
 			
-			m_emailField.setValue(m_empl.getKontakt().getEmail());
-			m_faxField.setValue(m_empl.getKontakt().getFax());
-			m_handyField.setValue(m_empl.getKontakt().getHandy());
-			m_telephonField.setValue(m_empl.getKontakt().getTelefon());
-			m_webField.setValue(m_empl.getKontakt().getWww());
+			if(m_empl.getKontakt() != null) {
+			
+				m_emailField.setValue(m_empl.getKontakt().getEmail());
+				m_faxField.setValue(m_empl.getKontakt().getFax());
+				m_handyField.setValue(m_empl.getKontakt().getHandy());
+				m_telephonField.setValue(m_empl.getKontakt().getTelefon());
+				m_webField.setValue(m_empl.getKontakt().getWww());
+				
+			}
 			
 			if (m_empl.getRollen() != null && m_empl.getRollen().size() > 0) {
 				for (Rolle r : m_empl.getRollen()) {
 					m_rollen.select(r.getId());
 				}
 			}
+			
+			changePasswortListener();
 		}		
 	}
 }

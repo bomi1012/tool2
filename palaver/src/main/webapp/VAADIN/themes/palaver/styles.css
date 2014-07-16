@@ -200,6 +200,11 @@ border-top: 1px solid rgb(50,205,50);
 	cursor: pointer;
 }
 
+.margin-key  {
+	margin-top: 15px;
+	margin-left: 20px;
+}
+
 .menueplan-add .v-icon{
 display: block;
 margin-left: auto;
