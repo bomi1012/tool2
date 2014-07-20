@@ -12,6 +12,8 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window.CloseEvent;
+import com.vaadin.ui.Window.CloseListener;
 import com.vaadin.ui.themes.BaseTheme;
 
 import de.hska.awp.palaver2.util.IConstants;
@@ -198,11 +200,27 @@ public class ChangeEmployeeBean extends ChangeFieldsPersonAbstract implements Vi
 		m_changePassword.addClickListener(new ClickListener() {			
 			@Override
 			public void buttonClick(ClickEvent event) {
-				System.out.print("hallo");  
+				getWindowFactory(new ChangePasswordBean(m_empl));
 			}
 		});
 	}
 	
+	protected void getWindowFactory(ChangePasswordBean object) {
+		if(object instanceof ChangePasswordBean) {
+			addComponent((ChangePasswordBean) object);
+			m_window = windowUI(CHANGE_OLD_PASSWORD, true, false, "500", "250");
+			m_window.setContent((ChangePasswordBean) object);
+		}
+		
+		UI.getCurrent().addWindow(m_window);
+		m_window.addCloseListener(new CloseListener() {			
+			@Override
+			public void windowClose(CloseEvent e) {
+				System.out.print("hallo");
+			}
+		});
+	}
+
 	private void setDataToTwinColSelect() {
 		try {
 			for (Rolle rolle : RolleService.getInstance().getAllRolles()) {

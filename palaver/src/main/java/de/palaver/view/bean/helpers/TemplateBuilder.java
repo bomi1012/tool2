@@ -34,6 +34,7 @@ import de.palaver.view.bean.lieferantenverwaltung.ChangeContactPersonBean;
 import de.palaver.view.bean.lieferantenverwaltung.ChangeSupplierBean;
 import de.palaver.view.bean.lieferantenverwaltung.ShowSupplierBean;
 import de.palaver.view.bean.mitarbeiterverwaltung.ChangeEmployeeBean;
+import de.palaver.view.bean.mitarbeiterverwaltung.ChangePasswordBean;
 import de.palaver.view.bean.mitarbeiterverwaltung.ShowEmployeeBean;
 
 public class TemplateBuilder extends AbstractView {
@@ -128,6 +129,11 @@ public class TemplateBuilder extends AbstractView {
 			}
 			buttons.add(m_buttonCreate);
 			buttons.add(m_buttonEdit);
+		} else if (object instanceof ChangePasswordBean) {
+			m_buttonSpeichern = button(BUTTON_TEXT_SAVE, BUTTON_ICON_SAVE, true, true);
+			m_buttonVerwerfen = button(BUTTON_TEXT_VERWERFEN, BUTTON_ICON_VERWERFEN, true, true);
+			buttons.add(m_buttonSpeichern);
+			buttons.add(m_buttonVerwerfen);
 		}
 
 		HorizontalLayout horizontalLayout = new HorizontalLayout();

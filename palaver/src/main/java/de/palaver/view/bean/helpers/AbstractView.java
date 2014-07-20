@@ -39,6 +39,8 @@ public class AbstractView extends VerticalLayout{
 	protected static final String CREATE_NEW_KATEGORIE = "Erstelen neue Kategorie";
 	protected static final String CREATE_NEW_LAGERORT = "Erstelen neuen Lagerort";
 	
+	protected static final String CHANGE_OLD_PASSWORD = "Passwort ändern";
+	
 	protected static final String MESSAGE_LEER_ARG_1 = "Tragen Sie bitte im Feld %s den Wert ein";
 	protected static final String MESSAGE_EXISTS_ARG_1 = "Der Name %s ist bereits im System vorhanden";	
 	protected static final String MESSAGE_SUSSEFULL_ARG_1 = "%s wurde erfolgreich gespeichert";

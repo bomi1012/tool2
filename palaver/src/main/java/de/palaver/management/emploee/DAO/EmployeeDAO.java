@@ -34,6 +34,9 @@ public class EmployeeDAO extends EmployeeHasRollenDAO {
 			"`name` = {0}, `vorname` = {1}, `eintrittsdatum` = {2}, `austrittsdatum` = {3}, " +
 			"`benutzername` = {4}, `kontakte_fk` = {5} WHERE " + FIELD_ID + " = {6}";
 	
+	private static final String UPDATE_PASSWORD_QUERY = "UPDATE " + TABLE_EMPLOYEE + " SET " + 
+			"`passwort` = {0} WHERE " + FIELD_ID + " = {1}";
+	
 	private static EmployeeDAO instance = null;
 
 	public static EmployeeDAO getInstance() {
@@ -88,7 +91,7 @@ public class EmployeeDAO extends EmployeeHasRollenDAO {
 				"'" + employee.getEintrittsdatum() + "'",
 				"'" + employee.getAustrittsdatum() + "'",
 				"'" + employee.getBenutzername() + "'",
-				"'" + kontakt + "'"));
+				 kontakt));
 	}
 	
 	public void update(Employee employee) throws ConnectException, DAOException {
@@ -103,8 +106,14 @@ public class EmployeeDAO extends EmployeeHasRollenDAO {
 				"'" + employee.getEintrittsdatum() + "'",
 				"'" + employee.getAustrittsdatum() + "'",
 				"'" + employee.getBenutzername() + "'",
-				"'" + kontakt + "'", 
+				kontakt, 
 				employee.getId()));
+		
+	}
+	
+	public void changePassword(String passwort, Long id) throws ConnectException, DAOException {
+		putManaged(MessageFormat.format(UPDATE_PASSWORD_QUERY,
+				"'" + passwort + "'", id));
 		
 	}
 	
@@ -118,6 +127,4 @@ public class EmployeeDAO extends EmployeeHasRollenDAO {
 				set.getString(BENUTZERNAME), 
 				KontakteService.getInstance().getKontakteById(set.getLong(FIELD_KONTAKTE_FK)));
 	}
-
-
 }

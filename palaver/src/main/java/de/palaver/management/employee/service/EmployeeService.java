@@ -68,4 +68,8 @@ public class EmployeeService {
 	private void removeRelation(Long employeeId) throws ConnectException, DAOException {
 		EmployeeHasRollenDAO.getInstance().deleteRelationsByEmployeeId(employeeId);		
 	}
+
+	public void changePassword(Employee employee) throws ConnectException, DAOException {
+		EmployeeDAO.getInstance().changePassword(employee.getPasswort(), employee.getId());		
+	}
 }
