@@ -2,15 +2,15 @@ package de.bistrosoft.palaver.menueplanverwaltung.domain;
 
 import java.util.List;
 
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.palaver.management.emploee.Employee;
+import de.palaver.management.recipe.Fussnote;
+import de.palaver.management.recipe.Geschmack;
+import de.palaver.management.recipe.Recipe;
 
 public class Menue {
 	private Long id;
 	private String name;
-	private List<Rezept> rezepte;
+	private List<Recipe> rezepte;
 	private Employee koch;
 	private Boolean hauptgericht;
 	private Geschmack geschmack;
@@ -114,11 +114,11 @@ public class Menue {
 		this.fussnoten = fussnoten;
 	}
 
-	public List<Rezept> getRezepte() {
+	public List<Recipe> getRezepte() {
 		return rezepte;
 	}
 
-	public void setRezepte(List<Rezept> rezepte) {
+	public void setRezepte(List<Recipe> rezepte) {
 		this.rezepte = rezepte;
 	}
 

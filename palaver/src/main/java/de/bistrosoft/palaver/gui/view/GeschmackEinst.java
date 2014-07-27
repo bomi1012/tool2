@@ -22,13 +22,13 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
+import de.palaver.management.recipe.Geschmack;
 
 /**
  * @author Michael Marschall Jan Lauinger - Geschmack hinzufügen
@@ -238,7 +238,7 @@ public class GeschmackEinst extends VerticalLayout implements View {
 		geschmackNeu.setContent(vl);
 
 		tfBezeichnung.setImmediate(true);
-		tfBezeichnung.setValue(geschmack.getBezeichnung());
+		tfBezeichnung.setValue(geschmack.getName());
 		tfBezeichnung.addValidator(new StringLengthValidator(
 				"Bitte gültige Bezeichnung eingeben", 3, 50, false));
 
@@ -259,7 +259,7 @@ public class GeschmackEinst extends VerticalLayout implements View {
 	}
 
 	private void speichern() {
-		geschmack.setBezeichnung(tfBezeichnung.getValue());
+		geschmack.setName(tfBezeichnung.getValue());
 
 		try {
 			Geschmackverwaltung.getInstance().createGeschmack(geschmack);
@@ -276,7 +276,7 @@ public class GeschmackEinst extends VerticalLayout implements View {
 	}
 
 	private void update() {
-		geschmack.setBezeichnung(tfBezeichnung.getValue());
+		geschmack.setName(tfBezeichnung.getValue());
 
 		try {
 			Geschmackverwaltung.getInstance().updateGeschmack(geschmack);

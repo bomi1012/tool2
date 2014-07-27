@@ -23,13 +23,11 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueart;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueartverwaltung;
 import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
 import de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Zubereitungverwaltung;
@@ -40,6 +38,9 @@ import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
+import de.palaver.management.recipe.Fussnote;
+import de.palaver.management.recipe.Geschmack;
+import de.palaver.management.recipe.Zubereitung;
 
 @SuppressWarnings({ "serial", "deprecation" })
 public class RegelAnlegen extends VerticalLayout implements View,
@@ -664,14 +665,14 @@ public class RegelAnlegen extends VerticalLayout implements View,
 
 			// Container setzen
 			for (Zubereitung z : zb) {
-				kriterienZubereitung.addItem(z.getBezeichnung());
+				kriterienZubereitung.addItem(z.getName());
 			}
 			for (Fussnote f : fn) {
 				kriterienFussnote.addItem(f.getBezeichnung());
 			}
 
 			for (Geschmack ge : g) {
-				kriterienGeschmack.addItem(ge.getBezeichnung());
+				kriterienGeschmack.addItem(ge.getName());
 			}
 
 			for (Menueart m : ma) {

@@ -1,34 +1,42 @@
-package de.bistrosoft.palaver.rezeptverwaltung.domain;
+package de.palaver.management.recipe;
 
-/*
- * @author Jasmin Baumgartner
+import java.util.HashSet;
+import java.util.Set;
+
+import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasFussnote;
+
+/**
+ * @author Jan Lauinger
  */
-public class Geschmack implements java.io.Serializable {
 
-	private static final long serialVersionUID = 2070753066033963562L;
+public class Fussnote implements java.io.Serializable {
+
+	private static final long serialVersionUID = 6494109377137286448L;
 
 	// Variablen
 	private Long id;
 	private String name;
-	private Boolean inaktiv;
+	private String abkuerzung;
+	private Set<MenueHasFussnote> menueHasFussnotes = new HashSet<MenueHasFussnote>(
+			0);
 
 	// Konstruktoren
-	public Geschmack() {
-		super();
+	public Fussnote() {
 	}
 
-	public Geschmack(String name) {
+	public Fussnote(String name) {
 		this.name = name;
 	}
 
-	public Geschmack(Long id) {
-		this.id = id;
-	}
-
-	public Geschmack(Long id, String name, Boolean inaktiv) {
+	public Fussnote(Long id, String name, String abkuerzung) {
 		this.id = id;
 		this.name = name;
-		this.inaktiv = inaktiv;
+		this.abkuerzung = abkuerzung;
+	}
+
+	public Fussnote(String name, String abkuerzung) {
+		this.name = name;
+		this.abkuerzung = abkuerzung;
 	}
 
 	// Getter- und Setter
@@ -40,20 +48,28 @@ public class Geschmack implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public Boolean getInaktiv() {
-		return inaktiv;
-	}
-
-	public void setInaktiv(Boolean inaktiv) {
-		this.inaktiv = inaktiv;
-	}
-
 	public String getBezeichnung() {
 		return this.name;
 	}
 
 	public void setBezeichnung(String name) {
 		this.name = name;
+	}
+
+	public String getAbkuerzung() {
+		return this.abkuerzung;
+	}
+
+	public void setAbkuerzung(String abkuerzung) {
+		this.abkuerzung = abkuerzung;
+	}
+
+	public Set<MenueHasFussnote> getMenueHasFussnotes() {
+		return this.menueHasFussnotes;
+	}
+
+	public void setMenueHasFussnotes(Set<MenueHasFussnote> MenueHasFussnotes) {
+		this.menueHasFussnotes = menueHasFussnotes;
 	}
 
 	/*
@@ -65,9 +81,11 @@ public class Geschmack implements java.io.Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result
+				+ ((abkuerzung == null) ? 0 : abkuerzung.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((inaktiv == null) ? 0 : inaktiv.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+
 		return result;
 	}
 
@@ -84,22 +102,23 @@ public class Geschmack implements java.io.Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Geschmack other = (Geschmack) obj;
+		Fussnote other = (Fussnote) obj;
+		if (abkuerzung == null) {
+			if (other.abkuerzung != null)
+				return false;
+		} else if (!abkuerzung.equals(other.abkuerzung))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
-			return false;
-		if (inaktiv == null) {
-			if (other.inaktiv != null)
-				return false;
-		} else if (!inaktiv.equals(other.inaktiv))
 			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
+
 		return true;
 	}
 
@@ -112,4 +131,5 @@ public class Geschmack implements java.io.Serializable {
 	public String toString() {
 		return name;
 	}
+
 }

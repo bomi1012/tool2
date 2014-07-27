@@ -5,8 +5,8 @@ import java.util.List;
 
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
+import de.palaver.management.recipe.Zubereitung;
 import de.bistrosoft.palaver.data.ZubereitungDAO;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
 
 /**
  * @author Michael Marschall

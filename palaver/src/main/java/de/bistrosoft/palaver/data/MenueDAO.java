@@ -11,9 +11,6 @@ import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasFussnote;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasRezept;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueart;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.Util;
@@ -22,6 +19,9 @@ import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
 import de.palaver.management.emploee.Employee;
 import de.palaver.management.employee.service.EmployeeService;
+import de.palaver.management.recipe.Fussnote;
+import de.palaver.management.recipe.Geschmack;
+import de.palaver.management.recipe.Recipe;
 
 public class MenueDAO extends AbstractDAO {
 	private static MenueDAO instance;
@@ -157,13 +157,13 @@ public class MenueDAO extends AbstractDAO {
 		return menue;
 	}
 
-	public List<Rezept> getRezepteByMenue() throws ConnectException,
+	public List<Recipe> getRezepteByMenue() throws ConnectException,
 			DAOException, SQLException {
-		List<Rezept> list = new ArrayList<Rezept>();
+		List<Recipe> list = new ArrayList<Recipe>();
 		ResultSet set = getManaged(GET_REZEPTE_BY_MENUE);
 
 		while (set.next()) {
-			list.add(new Rezept(set.getLong("id")));
+			list.add(new Recipe(set.getLong("id"), null, null, null, null));
 		}
 
 		return list;
@@ -171,11 +171,11 @@ public class MenueDAO extends AbstractDAO {
 
 	public String getHauptgerichtByMenue(Long id) throws ConnectException,
 			DAOException, SQLException {
-		Rezept list = null;
+		Recipe list = null;
 		ResultSet set = getManaged(MessageFormat.format(GET_HAUPTGERICHT, id));
 
 		while (set.next()) {
-			list = new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
+			list = new Recipe(set.getLong("id"), RezeptartDAO.getInstance()
 					.getRezeptartById(set.getLong("rezeptart_fk")),
 					EmployeeService.getInstance().getEmployee(
 							set.getLong("mitarbeiter_fk")),
@@ -185,13 +185,13 @@ public class MenueDAO extends AbstractDAO {
 		return list.getName();
 	}
 
-	public Rezept getHauptgerichtMenue(Long id) throws ConnectException,
+	public Recipe getHauptgerichtMenue(Long id) throws ConnectException,
 			DAOException, SQLException {
-		Rezept list = null;
+		Recipe list = null;
 		ResultSet set = getManaged(MessageFormat.format(GET_HAUPTGERICHT, id));
 
 		while (set.next()) {
-			list = new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
+			list = new Recipe(set.getLong("id"), RezeptartDAO.getInstance()
 					.getRezeptartById(set.getLong("rezeptart_fk")),
 					EmployeeService.getInstance().getEmployee(
 							set.getLong("mitarbeiter_fk")),
@@ -201,13 +201,13 @@ public class MenueDAO extends AbstractDAO {
 		return list;
 	}
 
-	public List<Rezept> getBeilagenByMenue(Long id) throws ConnectException,
+	public List<Recipe> getBeilagenByMenue(Long id) throws ConnectException,
 			DAOException, SQLException {
-		List<Rezept> list = new ArrayList<Rezept>();
+		List<Recipe> list = new ArrayList<Recipe>();
 		ResultSet set = getManaged(MessageFormat.format(GET_Beilagen, id));
 
 		while (set.next()) {
-			list.add(new Rezept(set.getLong("id"), RezeptartDAO.getInstance()
+			list.add(new Recipe(set.getLong("id"), RezeptartDAO.getInstance()
 					.getRezeptartById(set.getLong("rezeptart_fk")),
 					EmployeeService.getInstance().getEmployee(
 							set.getLong("mitarbeiter_fk")), set
@@ -251,7 +251,7 @@ public class MenueDAO extends AbstractDAO {
 					.getFussnoteByMenue(set.getLong("id"));
 			result.setFussnoten(fussnoten);
 		}
-		List<Rezept> rezepte = Rezeptverwaltung.getInstance()
+		List<Recipe> rezepte = Rezeptverwaltung.getInstance()
 				.getRezepteByMenue(result);
 		result.setRezepte(rezepte);
 		return result;
@@ -310,8 +310,8 @@ public class MenueDAO extends AbstractDAO {
 		}
 
 		Menueverwaltung.getInstance().RezepteDelete(menue);
-		for (Rezept rezept : menue.getRezepte()) {
-			RezepteAdd(new MenueHasRezept(menue, rezept));
+		for (Recipe recipe : menue.getRezepte()) {
+			RezepteAdd(new MenueHasRezept(menue, recipe));
 		}
 	}
 
@@ -360,8 +360,8 @@ public class MenueDAO extends AbstractDAO {
 			FussnoteAdd(new MenueHasFussnote(fs, menue));
 		}
 
-		for (Rezept rezept : menue.getRezepte()) {
-			RezepteAdd(new MenueHasRezept(menue, rezept));
+		for (Recipe recipe : menue.getRezepte()) {
+			RezepteAdd(new MenueHasRezept(menue, recipe));
 		}
 	}
 

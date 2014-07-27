@@ -32,10 +32,10 @@ import de.palaver.view.bean.artikelverwaltung.ShowQuantitiesUnitBean;
 import de.palaver.view.bean.artikelverwaltung.ShowWarehousesBean;
 import de.palaver.view.bean.lieferantenverwaltung.ChangeContactPersonBean;
 import de.palaver.view.bean.lieferantenverwaltung.ChangeSupplierBean;
-import de.palaver.view.bean.lieferantenverwaltung.ShowSupplierBean;
+import de.palaver.view.bean.lieferantenverwaltung.ShowSuppliersBean;
 import de.palaver.view.bean.mitarbeiterverwaltung.ChangeEmployeeBean;
 import de.palaver.view.bean.mitarbeiterverwaltung.ChangePasswordBean;
-import de.palaver.view.bean.mitarbeiterverwaltung.ShowEmployeeBean;
+import de.palaver.view.bean.mitarbeiterverwaltung.ShowEmployeesBean;
 
 public class TemplateBuilder extends AbstractView {
 	
@@ -102,7 +102,7 @@ public class TemplateBuilder extends AbstractView {
 		List<Button> buttons = new ArrayList<Button>();
 		if(object instanceof ShowItemsBean || object instanceof ShowQuantitiesUnitBean ||
 				object instanceof ShowKategoriesBean || object instanceof ShowWarehousesBean ||
-				object instanceof ShowSupplierBean) { 
+				object instanceof ShowSuppliersBean) { 
 			m_buttonCreate = button(BUTTON_TEXT_CREATE, BUTTON_ICON_CREATE, true, true);
 			m_buttonEdit = button(BUTTON_TEXT_EDIT, BUTTON_ICON_EDIT, true, false);
 			
@@ -119,7 +119,7 @@ public class TemplateBuilder extends AbstractView {
 			buttons.add(m_buttonVerwerfen);
 			buttons.add(m_buttonSpeichern);
 			buttons.add(m_buttonDeaktiviren);
-		} else if (object instanceof ShowEmployeeBean) {
+		} else if (object instanceof ShowEmployeesBean) {
 			if (((Application) UI.getCurrent().getData()).userHasPersmission(Rolle.ADMINISTRATOR)) {		
 				m_buttonCreate = button(BUTTON_TEXT_CREATE, BUTTON_ICON_CREATE, true, true);
 				m_buttonEdit = button(BUTTON_TEXT_EDIT, BUTTON_ICON_EDIT, true, false);

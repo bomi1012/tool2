@@ -123,7 +123,7 @@ public class ChangePasswordBean extends TemplateBuilder implements View, ValueCh
 			Window win = (Window) ChangePasswordBean.this.getParent();
 			win.close();
 		} else {
-			ViewHandler.getInstance().switchView(ShowEmployeeBean.class);
+			ViewHandler.getInstance().switchView(ShowEmployeesBean.class);
 		}
 	}
 

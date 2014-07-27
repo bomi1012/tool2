@@ -6,10 +6,10 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
 import de.palaver.dao.AbstractDAO;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
+import de.palaver.management.recipe.Zubereitung;
 
 /**
  * @author Michael Marschall
@@ -98,7 +98,7 @@ public class ZubereitungDAO extends AbstractDAO {
 	public void createZubereitung(Zubereitung zubereitung)
 			throws ConnectException, DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(name) VALUES('"
-				+ zubereitung.getBezeichnung() + "');";
+				+ zubereitung.getName() + "');";
 		this.putManaged(INSERT_QUERY);
 	}
 
@@ -106,7 +106,7 @@ public class ZubereitungDAO extends AbstractDAO {
 	public void updateZubereitung(Zubereitung zubereitung)
 			throws ConnectException, DAOException, SQLException {
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + NAME + "='"
-				+ zubereitung.getBezeichnung() + "'" + " WHERE " + ID + "='"
+				+ zubereitung.getName() + "'" + " WHERE " + ID + "='"
 				+ zubereitung.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
 	}

@@ -6,10 +6,10 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import de.palaver.dao.AbstractDAO;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
+import de.palaver.management.recipe.Fussnote;
 
 /**
  * @author Michael Marschall

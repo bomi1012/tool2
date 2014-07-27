@@ -10,9 +10,9 @@ import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import de.hska.awp.palaver2.util.IConstants;
 import de.palaver.Application;
+import de.palaver.management.recipe.Fussnote;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
 public class Regel {
@@ -377,12 +377,12 @@ public class Regel {
 		Menue menue = mc.getMenue();
 		if (menue.getGeschmack() != null) {
 			if (operator.equals(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
-				if (kriterienlist.indexOf(menue.getGeschmack().getBezeichnung()
+				if (kriterienlist.indexOf(menue.getGeschmack().getName()
 						.toString()) == -1) {
 					return this;
 				}
 			} else if (operator.equals(IConstants.INFO_REGEL_OPERATOR_VERBOTEN)) {
-				if (kriterienlist.indexOf(menue.getGeschmack().getBezeichnung()
+				if (kriterienlist.indexOf(menue.getGeschmack().getName()
 						.toString()) >= 0) {
 					return this;
 				}
@@ -434,12 +434,12 @@ public class Regel {
 		Menue menue = mc.getMenue();
 		if (menue.getGeschmack() != null) {
 			if (operator.equals(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
-				if (kriterienlist.indexOf(menue.getGeschmack().getBezeichnung()
+				if (kriterienlist.indexOf(menue.getGeschmack().getName()
 						.toString()) == -1) {
 					return this;
 				}
 			} else if (operator.equals(IConstants.INFO_REGEL_OPERATOR_VERBOTEN)) {
-				if (kriterienlist.indexOf(menue.getGeschmack().getBezeichnung()
+				if (kriterienlist.indexOf(menue.getGeschmack().getName()
 						.toString()) >= 0) {
 					return this;
 				}

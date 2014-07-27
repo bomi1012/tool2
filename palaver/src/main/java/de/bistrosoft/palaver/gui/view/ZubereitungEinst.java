@@ -22,13 +22,13 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Zubereitungverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
+import de.palaver.management.recipe.Zubereitung;
 
 /**
  * @author Michael Marschall
@@ -237,7 +237,7 @@ public class ZubereitungEinst extends VerticalLayout implements View {
 		zubNeu.setContent(vl);
 
 		tfBezeichnung.setImmediate(true);
-		tfBezeichnung.setValue(zub.getBezeichnung());
+		tfBezeichnung.setValue(zub.getName());
 		tfBezeichnung.addValidator(new StringLengthValidator(
 				"Bitte gültige Bezeichnung eingeben", 3, 50, false));
 
@@ -258,7 +258,7 @@ public class ZubereitungEinst extends VerticalLayout implements View {
 	}
 
 	private void speichern() {
-		zub.setBezeichnung(tfBezeichnung.getValue());
+		zub.setName(tfBezeichnung.getValue());
 
 		try {
 			Zubereitungverwaltung.getInstance().createZubereitung(zub);
@@ -277,7 +277,7 @@ public class ZubereitungEinst extends VerticalLayout implements View {
 	}
 
 	private void update() {
-		zub.setBezeichnung(tfBezeichnung.getValue());
+		zub.setName(tfBezeichnung.getValue());
 
 		try {
 			Zubereitungverwaltung.getInstance().updateZubereitung(zub);

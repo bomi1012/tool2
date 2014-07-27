@@ -17,9 +17,6 @@ import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueart;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueplanItem;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueartverwaltung;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
@@ -33,6 +30,9 @@ import de.palaver.management.artikel.service.ArtikelService;
 import de.palaver.management.artikel.service.MengeneinheitService;
 import de.palaver.management.emploee.Employee;
 import de.palaver.management.employee.service.EmployeeService;
+import de.palaver.management.recipe.Fussnote;
+import de.palaver.management.recipe.Geschmack;
+import de.palaver.management.recipe.Recipe;
 
 /**
  * @author Eike
@@ -136,7 +136,7 @@ public class MenueplanDAO extends AbstractDAO {
 				int row = setMenues.getInt("zeile");
 				int col = setMenues.getInt("spalte");
 				// Rezepte hinzufügen
-				List<Rezept> rezepte = Rezeptverwaltung.getInstance()
+				List<Recipe> rezepte = Rezeptverwaltung.getInstance()
 						.getRezepteByMenue(menue);
 				menue.setRezepte(rezepte);
 				List<Fussnote> fussnoten = Fussnotenverwaltung.getInstance()

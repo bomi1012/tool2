@@ -11,15 +11,10 @@ import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenplan;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.KuchenplanHasKuchenrezept;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenrezept;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Fussnotekuchenverwaltung;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
 import de.bistrosoft.palaver.util.Week;
 import de.palaver.dao.AbstractDAO;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
-import de.palaver.management.artikel.Artikel;
-import de.palaver.management.artikel.Mengeneinheit;
-import de.palaver.management.artikel.service.ArtikelService;
-import de.palaver.management.artikel.service.MengeneinheitService;
 
 /**
  * @author Christine Hartkorn, Eike Becher
@@ -81,34 +76,7 @@ public class KuchenplanDAO extends AbstractDAO {
 		return instance;
 	}
 
-	// Methode, die alle Kuchenartikel in einer Woche zurückliefert
-	public List<RezeptHasArtikel> getKuchenartikelByWeek(Week week, char zeichen, int tag) {
-		List<RezeptHasArtikel> ab = new ArrayList<RezeptHasArtikel>();
-
-		try {
-			ResultSet set = getManaged(MessageFormat.format(
-					GET_ARTIKEL_BY_WEEK, week.getWeek(), week.getYear(), zeichen, tag));
-
-			while (set.next()) {
-				Artikel art = ArtikelService.getInstance().getArtikelById(
-						set.getLong("artikel_fk"));
-				Double menge = set.getDouble("menge");
-				Mengeneinheit einheit = MengeneinheitService.getInstance()
-						.getMengeneinheitById(set.getLong("einheit"));
-
-				ab.add(new RezeptHasArtikel(art, einheit, menge));
-			}
-		} catch (ConnectException e) {
-			e.printStackTrace();
-		} catch (DAOException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return ab;
-	}
-
+	
 	// Methode, die einen kompletten Kuchenplan einer Woche zurückliefert
 	public Kuchenplan getKuchenplanByWeekWithItems(Week week)
 			throws ConnectException, DAOException, SQLException {

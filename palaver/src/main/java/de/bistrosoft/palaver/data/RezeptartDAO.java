@@ -6,10 +6,10 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
 import de.palaver.dao.AbstractDAO;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
+import de.palaver.management.recipe.Recipetype;
 
 /**
  * @author Michael Marschall
@@ -30,7 +30,7 @@ public class RezeptartDAO extends AbstractDAO {
 
 	private static RezeptartDAO instance = null;
 
-	Rezeptart rezeptart;
+	Recipetype recipetype;
 
 	// Konstruktor
 	public RezeptartDAO() {
@@ -47,52 +47,52 @@ public class RezeptartDAO extends AbstractDAO {
 	}
 
 	// Methode, die alle Rezeptarten in einer Liste zurückliefert
-	public List<Rezeptart> getAllRezeptart() throws ConnectException,
+	public List<Recipetype> getAllRezeptart() throws ConnectException,
 			DAOException, SQLException {
-		List<Rezeptart> list = new ArrayList<Rezeptart>();
+		List<Recipetype> list = new ArrayList<Recipetype>();
 		ResultSet set = getManaged(GET_ALL_REZEPTART);
 		while (set.next()) {
-			list.add(new Rezeptart(set.getLong(ID), set.getString(NAME)));
+			list.add(new Recipetype(set.getLong(ID), set.getString(NAME)));
 		}
 		return list;
 	}
 
 	// Methode, die eine Rezeptart über die ID zurückliefert
-	public Rezeptart getRezeptartById(Long id) throws ConnectException,
+	public Recipetype getRezeptartById(Long id) throws ConnectException,
 			DAOException, SQLException {
 		ResultSet set = getManaged(MessageFormat
 				.format(GET_REZEPTART_BY_ID, id));
 		while (set.next()) {
-			rezeptart = new Rezeptart(set.getLong(ID), set.getString(NAME));
+			recipetype = new Recipetype(set.getLong(ID), set.getString(NAME));
 		}
-		return rezeptart;
+		return recipetype;
 	}
 
 	// Methode, die eine Rezeptart zu einem Rezept über die ID zurückliefert
-	public Rezeptart getRezeptartByRezept(Long id) throws ConnectException,
+	public Recipetype getRezeptartByRezept(Long id) throws ConnectException,
 			DAOException, SQLException {
 		ResultSet set = getManaged(MessageFormat.format(
 				GET_REZEPTART_BY_REZEPT, id));
 		while (set.next()) {
-			rezeptart = new Rezeptart(set.getLong(ID), set.getString(NAME));
+			recipetype = new Recipetype(set.getLong(ID), set.getString(NAME));
 		}
-		return rezeptart;
+		return recipetype;
 	}
 
 	// Methode, die eine Rezeptart erstellt
-	public void createRezeptart(Rezeptart rezeptart) throws ConnectException,
+	public void createRezeptart(Recipetype recipetype) throws ConnectException,
 			DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(name) VALUES('"
-				+ rezeptart.getName() + "');";
+				+ recipetype.getName() + "');";
 		this.putManaged(INSERT_QUERY);
 	}
 
 	// Methode, die eine Rezeptart Ã¤ndert
-	public void updateRezeptart(Rezeptart rezeptart) throws ConnectException,
+	public void updateRezeptart(Recipetype recipetype) throws ConnectException,
 			DAOException, SQLException {
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + NAME + "='"
-				+ rezeptart.getName() + "'" + " WHERE " + ID + "='"
-				+ rezeptart.getId() + "'";
+				+ recipetype.getName() + "'" + " WHERE " + ID + "='"
+				+ recipetype.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
 	}
 }

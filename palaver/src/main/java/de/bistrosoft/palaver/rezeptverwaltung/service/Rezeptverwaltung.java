@@ -7,23 +7,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.bistrosoft.palaver.data.FussnoteDAO;
+import de.bistrosoft.palaver.data.GeschmackDAO;
+import de.bistrosoft.palaver.data.RezeptartDAO;
+import de.bistrosoft.palaver.data.ZubereitungDAO;
+import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
 import de.palaver.management.artikel.Artikel;
 import de.palaver.management.artikel.DAO.ArtikelDAO;
-import de.bistrosoft.palaver.data.FussnoteDAO;
-import de.bistrosoft.palaver.data.GeschmackDAO;
-import de.bistrosoft.palaver.data.RezeptDAO;
-import de.bistrosoft.palaver.data.RezeptartDAO;
-import de.bistrosoft.palaver.data.ZubereitungDAO;
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasArtikel;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasZubereitung;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Zubereitung;
+import de.palaver.management.recipe.Fussnote;
+import de.palaver.management.recipe.Geschmack;
+import de.palaver.management.recipe.Recipe;
+import de.palaver.management.recipe.Recipetype;
+import de.palaver.management.recipe.RezeptHasArtikel;
+import de.palaver.management.recipe.Zubereitung;
+import de.palaver.management.recipe.DAO.RezeptDAO;
 
 /**
  * @author Jan Lauinger
@@ -44,9 +43,9 @@ public class Rezeptverwaltung extends RezeptDAO {
 		return instance;
 	}
 
-	public void createRezept(Rezept Rezept) throws ConnectException,
+	public void createRezept(Recipe Recipe) throws ConnectException,
 			DAOException, SQLException {
-		super.createRezept(Rezept);
+		super.createRezept(Recipe);
 	}
 
 	public List<Zubereitung> getAllZubereitung() throws ConnectException,
@@ -56,11 +55,6 @@ public class Rezeptverwaltung extends RezeptDAO {
 		result = ZubereitungDAO.getInstance().getAllZubereitung();
 
 		return result;
-	}
-
-	public void saveArtikel(Rezept rezept) throws ConnectException,
-			DAOException, SQLException {
-		super.saveArtikel(rezept);
 	}
 
 	public List<Artikel> getAllArtikelByRezeptId() throws ConnectException,
@@ -77,9 +71,9 @@ public class Rezeptverwaltung extends RezeptDAO {
 		return result;
 	}
 
-	public List<Rezeptart> Rezeptart() throws ConnectException, DAOException,
+	public List<Recipetype> Recipetype() throws ConnectException, DAOException,
 			SQLException {
-		List<Rezeptart> result = null;
+		List<Recipetype> result = null;
 
 		result = RezeptartDAO.getInstance().getAllRezeptart();
 
@@ -95,18 +89,12 @@ public class Rezeptverwaltung extends RezeptDAO {
 		return result;
 	}
 
-	public void ZubereitungAdd(RezeptHasZubereitung rezeptHasZubereitung)
-			throws ConnectException, DAOException, SQLException {
-		super.ZubereitungAdd(rezeptHasZubereitung);
-
-	}
-
-	public void updateRezept(Rezept rezept) throws ConnectException,
+	public void updateRezept(Recipe recipe) throws ConnectException,
 			DAOException, SQLException {
-		super.updateRezept(rezept);
+		super.updateRezept(recipe);
 	}
 
-	public List<Rezept> getRezepteByMenue(Menue menue) {
+	public List<Recipe> getRezepteByMenue(Menue menue) {
 		try {
 			return super.getRezepteByMenue(menue);
 		} catch (Exception e) {
@@ -115,7 +103,7 @@ public class Rezeptverwaltung extends RezeptDAO {
 		return null;
 	}
 
-	public List<RezeptHasArtikel> ladeArtikelFuerRezept(Rezept rez) {
+	public List<RezeptHasArtikel> ladeArtikelFuerRezept(Recipe rez) {
 		try {
 			return super.ladeArtikelFuerRezept(rez);
 		} catch (ConnectException e) {
@@ -129,14 +117,14 @@ public class Rezeptverwaltung extends RezeptDAO {
 		return new ArrayList<RezeptHasArtikel>();
 	}
 
-	public void deleteZutatenZuRezept(Rezept rezept) throws ConnectException,
+	public void deleteZutatenZuRezept(Recipe recipe) throws ConnectException,
 			DAOException, SQLException {
-		super.deleteZutatenZuRezept(rezept);
+		super.deleteZutatenZuRezept(recipe);
 	}
 
-	public void deleteZubereitungZuRezept(Rezept rezept)
+	public void deleteZubereitungZuRezept(Recipe recipe)
 			throws ConnectException, DAOException {
-		super.deleteZubereitungZuRezept(rezept);
+		super.deleteZubereitungZuRezept(recipe);
 	}
 
 	// public void addZutat(RezeptHasArtikel rezeptHasArtikel) throws
@@ -146,7 +134,7 @@ public class Rezeptverwaltung extends RezeptDAO {
 	// super.addZutat(rezeptHasArtikel);
 	// }
 
-	public void setRezeptDisabled(Rezept rezeptAusTb) throws ConnectException,
+	public void setRezeptDisabled(Recipe rezeptAusTb) throws ConnectException,
 			DAOException, SQLException {
 		super.setRezeptDisabled(rezeptAusTb);
 	}

@@ -15,7 +15,7 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&passw
 //	Produktiv
 //String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver?user=root&password=BaDAbU352M";
 //	TEST
-//String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/test?user=root&password=BaDAbU352M";
+//String		DB_CONNECTION_URL = "jdbc:mysql://localhost:1433/palaver_test?user=root&password=BaDAbU352M";
 	
 	// Menuepunkte mit Unterpunkten
 	String		MENU_ARTIKEL_HEADLINE = "Artikel";

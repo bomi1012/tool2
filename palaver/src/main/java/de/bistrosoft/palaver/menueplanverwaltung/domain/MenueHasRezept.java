@@ -1,33 +1,33 @@
 package de.bistrosoft.palaver.menueplanverwaltung.domain;
 
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
+import de.palaver.management.recipe.Recipe;
 
 public class MenueHasRezept implements java.io.Serializable {
 
 	private MenueHasRezeptId id;
 	private Menue menue;
-	private Rezept rezept;
+	private Recipe recipe;
 	private Boolean hauptgericht;
 
 	public MenueHasRezept() {
 	}
 
-	public MenueHasRezept(MenueHasRezeptId id, Menue menue, Rezept rezept) {
+	public MenueHasRezept(MenueHasRezeptId id, Menue menue, Recipe recipe) {
 		this.id = id;
 		this.menue = menue;
-		this.rezept = rezept;
+		this.recipe = recipe;
 	}
 
-	public MenueHasRezept(Menue menue, Rezept rezept) {
+	public MenueHasRezept(Menue menue, Recipe recipe) {
 
 		this.menue = menue;
-		this.rezept = rezept;
+		this.recipe = recipe;
 	}
 
-	public MenueHasRezept(Menue menue, Rezept rezept, Boolean hauptgericht) {
+	public MenueHasRezept(Menue menue, Recipe recipe, Boolean hauptgericht) {
 
 		this.menue = menue;
-		this.rezept = rezept;
+		this.recipe = recipe;
 		this.hauptgericht = hauptgericht;
 	}
 
@@ -39,12 +39,12 @@ public class MenueHasRezept implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public Rezept getRezept() {
-		return rezept; // /stand bei beidem noch this.
+	public Recipe getRezept() {
+		return recipe; // /stand bei beidem noch this.
 	}
 
-	public void setRezept(Rezept rezept) {
-		this.rezept = rezept;
+	public void setRezept(Recipe recipe) {
+		this.recipe = recipe;
 	}
 
 	public Menue getMenue() {
@@ -67,7 +67,7 @@ public class MenueHasRezept implements java.io.Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((rezept == null) ? 0 : rezept.hashCode());
+		result = prime * result + ((recipe == null) ? 0 : recipe.hashCode());
 		result = prime * result + ((menue == null) ? 0 : menue.hashCode());
 		return result;
 	}
@@ -81,10 +81,10 @@ public class MenueHasRezept implements java.io.Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		MenueHasRezept other = (MenueHasRezept) obj;
-		if (rezept == null) {
-			if (other.rezept != null)
+		if (recipe == null) {
+			if (other.recipe != null)
 				return false;
-		} else if (!rezept.equals(other.rezept))
+		} else if (!recipe.equals(other.recipe))
 			return false;
 		if (menue == null) {
 			if (other.menue != null)
@@ -96,7 +96,7 @@ public class MenueHasRezept implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "menueHasFussnote [fussnote=" + rezept + ", menue=" + menue
+		return "menueHasFussnote [fussnote=" + recipe + ", menue=" + menue
 				+ "]";
 	}
 

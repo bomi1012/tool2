@@ -1,4 +1,4 @@
-package de.palaver.view.bean.mitarbeiterverwaltung;
+package de.palaver.view.bean.lieferantenverwaltung;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,46 +18,46 @@ import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
-import de.palaver.management.emploee.Employee;
+import de.palaver.management.supplier.Supplier;
+import de.palaver.management.supplier.service.SupplierService;
 import de.palaver.view.bean.helpers.HTMLComponents;
 import de.palaver.view.bean.helpers.TemplateBuilder;
-import de.palaver.view.bean.helpers.wrappers.EmployeeWrapper;
 
-public class ShowEmployeeBean extends TemplateBuilder implements View {
-	private static final Logger LOG = LoggerFactory.getLogger(ShowEmployeeBean.class.getName());	
-	private static final long serialVersionUID = -40836709414164L;
-	private static final String TITLE = "Alle Mitarbeiter";
-	protected Employee m_employee;
-	private BeanItemContainer<EmployeeWrapper> m_container;
-	public ShowEmployeeBean() {
+@SuppressWarnings("serial")
+public class ShowSuppliersBean extends TemplateBuilder implements View {
+	private static final Logger LOG = LoggerFactory.getLogger(ShowSuppliersBean.class.getName());	
+	private static final long serialVersionUID = -2340836709414164L;
+	private static final String TITLE = "Lieferanten Artikeln";
+	private BeanItemContainer<Supplier> m_container;
+
+	private Supplier m_supplier;
+	
+	public ShowSuppliersBean() {
 		super();
-		componetsManager();	
+		m_container = null;
+		componetsManager();
 		templateBuilder();
 		listeners();
 		beans();
 	}
-			
-	private void componetsManager() {
-		m_filterControlPanel = filterHorisontalLayoutWithHeadTitle(TITLE, STYLE_HEADLINE_STANDART, WIDTH_FULL);		
-		m_filterTable = HTMLComponents.filterTable(true, true);
-		m_control = controlPanel(this);	
-	}
 	
+	private void componetsManager() {		
+		m_filterControlPanel = filterHorisontalLayoutWithHeadTitle(TITLE, STYLE_HEADLINE_STANDART, WIDTH_FULL);
+		m_filterTable = HTMLComponents.filterTable(true, true);
+		m_control = controlPanel(this);		
+	}
+
 	private void templateBuilder() {
 		defaultShowPageFilterTable(m_filterControlPanel, m_filterTable, m_control);
 	}
-	
-	@SuppressWarnings("serial")
+
 	private void listeners() {
 		m_filterTable.addValueChangeListener(new ValueChangeListener() {
-
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
-					if (m_buttonEdit.isVisible()) {
-						m_buttonEdit.setEnabled(true); 
-					}
-					m_employee = ((EmployeeWrapper) event.getProperty().getValue()).getEmployee();
+					m_buttonEdit.setEnabled(true);
+					m_supplier = (Supplier) event.getProperty().getValue();
 				}
 			}
 		});
@@ -74,11 +74,11 @@ public class ShowEmployeeBean extends TemplateBuilder implements View {
 		m_buttonEdit.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (m_employee != null) {
-					ViewHandler.getInstance().switchView(ChangeEmployeeBean.class, new ViewDataObject<Employee>(m_employee));
+				if (m_supplier != null) {
+					ViewHandler.getInstance().switchView(ChangeSupplierBean.class, new ViewDataObject<Supplier>(m_supplier));
 				}
 				else {
-					((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_MITARBEITER_AUSWAEHLEN);
+					((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_LIEFERANT_AUSWAEHLEN);
 				}
 			}
 		});
@@ -86,7 +86,7 @@ public class ShowEmployeeBean extends TemplateBuilder implements View {
 		m_buttonCreate.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				ViewHandler.getInstance().switchView(ChangeEmployeeBean.class);
+				ViewHandler.getInstance().switchView(ChangeSupplierBean.class);
 			}
 		});	
 		
@@ -100,26 +100,21 @@ public class ShowEmployeeBean extends TemplateBuilder implements View {
 	
 	private void beans() {
 		try {
-			m_container = new BeanItemContainer<EmployeeWrapper>(EmployeeWrapper.class, EmployeeWrapper.getEmployeeWrappers());
+			m_container = new BeanItemContainer<Supplier>(Supplier.class, SupplierService.getInstance().getAllLieferanten());
 			setTable();
 		} catch (Exception e) {
 			LOG.error(e.toString());
 		}		
 	}
-
+	
 	private void setTable() {
 		m_filterTable.setContainerDataSource(m_container);
-		m_filterTable.setVisibleColumns(new Object[] { "username",  "fullname", "email", "rolles"});
-		m_filterTable.sort(new Object[] { "username" }, new boolean[] { true });
-		
-		m_filterTable.setColumnHeader("username", "Benutzername");
-		m_filterTable.setColumnHeader("fullname", "Vor- und Nachname");
-		m_filterTable.setColumnHeader("rolles", "Rolle");
+		m_filterTable.setVisibleColumns(new Object[] { "name", "lieferantnummer", "adresse", "kontakte", "bezeichnung", "notiz" });
+		m_filterTable.sort(new Object[] { "name" }, new boolean[] { true });	
 	}
-
-
+	
 	@Override
 	public void getViewParam(ViewData data) {
-		
+		// TODO Auto-generated method stub		
 	}
 }

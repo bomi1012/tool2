@@ -34,8 +34,6 @@ import de.bistrosoft.palaver.gui.view.MenueartEinst;
 import de.bistrosoft.palaver.gui.view.MenueplanAnzeigen;
 import de.bistrosoft.palaver.gui.view.MenueplanHistorie;
 import de.bistrosoft.palaver.gui.view.RegelnAnzeigen;
-import de.bistrosoft.palaver.gui.view.RezeptAnlegen;
-import de.bistrosoft.palaver.gui.view.RezeptAnzeigenTabelle;
 import de.bistrosoft.palaver.gui.view.ZubereitungEinst;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.ViewDataObject;
@@ -55,9 +53,11 @@ import de.palaver.view.bean.artikelverwaltung.ShowKategoriesBean;
 import de.palaver.view.bean.artikelverwaltung.ShowQuantitiesUnitBean;
 import de.palaver.view.bean.artikelverwaltung.ShowWarehousesBean;
 import de.palaver.view.bean.lieferantenverwaltung.ChangeSupplierBean;
-import de.palaver.view.bean.lieferantenverwaltung.ShowSupplierBean;
+import de.palaver.view.bean.lieferantenverwaltung.ShowSuppliersBean;
 import de.palaver.view.bean.mitarbeiterverwaltung.ChangeEmployeeBean;
-import de.palaver.view.bean.mitarbeiterverwaltung.ShowEmployeeBean;
+import de.palaver.view.bean.mitarbeiterverwaltung.ShowEmployeesBean;
+import de.palaver.view.bean.rezeptverwaltung.ChangeRecipeBean;
+import de.palaver.view.bean.rezeptverwaltung.ShowRecipesBean;
 
 @SuppressWarnings("serial")
 public class MainLayout extends VerticalLayout implements Command {
@@ -284,16 +284,22 @@ public class MainLayout extends VerticalLayout implements Command {
 			} else if(selectedItem.getText().equals(IConstants.MENU_LIEFERANT_NEW)) {
 				ViewHandler.getInstance().switchView(ChangeSupplierBean.class);
 			} else if (selectedItem.getText().equals(IConstants.MENU_LIEFERANT_ANZEIGEN)) {
-				ViewHandler.getInstance().switchView(ShowSupplierBean.class);
+				ViewHandler.getInstance().switchView(ShowSuppliersBean.class);
 			} else if (selectedItem.getText().equals(IConstants.MENU_MITARBEITER_ANZEIGEN)) {
-				ViewHandler.getInstance().switchView(ShowEmployeeBean.class);
+				ViewHandler.getInstance().switchView(ShowEmployeesBean.class);
 			} else if (selectedItem.getText().equals(IConstants.MENU_MITARBEITER_NEU)) {
 				ViewHandler.getInstance().switchView(ChangeEmployeeBean.class);
 			} else if (selectedItem.getText().equals(IConstants.MENU_MITARBEITER_PROFILE)) {
-				Employee e = (Employee) SerializationUtils.clone(((Application) UI.getCurrent().getData()).getUser());
+				Employee employeeCopy = (Employee) SerializationUtils.clone(((Application) UI.getCurrent().getData()).getUser());
 				ViewHandler.getInstance().switchView(ChangeEmployeeBean.class, 
-						new ViewDataObject<Employee>(e));
-			}
+						new ViewDataObject<Employee>(employeeCopy));
+			} else if (selectedItem.getText().equals( IConstants.MENU_REZEPT_ANZEIGEN)) {
+				ViewHandler.getInstance().switchView(ShowRecipesBean.class);
+			} else if (selectedItem.getText().equals(IConstants.MENU_REZEPT_NEU)) {
+				ViewHandler.getInstance().switchView(ChangeRecipeBean.class);
+			} 
+			
+			
 			
 			else if(selectedItem.getText().equals(IConstants.MENU_BESTELLUNG_ANZEIGEN)) {
 				//ViewHandler.getInstance().switchView(BestellungenAnzeigenTable.class);
@@ -327,13 +333,6 @@ public class MainLayout extends VerticalLayout implements Command {
 //				ViewHandler.getInstance().switchView(BestellungAnzeigen.class);
 //			} 
 			else if (selectedItem.getText().equals(
-					IConstants.MENU_REZEPT_ANZEIGEN)) {
-				ViewHandler.getInstance().switchView(
-						RezeptAnzeigenTabelle.class);
-			} else if (selectedItem.getText()
-					.equals(IConstants.MENU_REZEPT_NEU)) {
-				ViewHandler.getInstance().switchView(RezeptAnlegen.class);
-			} else if (selectedItem.getText().equals(
 					IConstants.MENU_MENUPLAN_HEADLINE)) {
 				ViewHandler.getInstance().switchView(MenueplanAnzeigen.class);
 			} else if (selectedItem.getText().equals(

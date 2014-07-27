@@ -257,7 +257,7 @@ public class ChangeSupplierBean extends ChangeFieldsPersonAbstract implements Vi
 			Window win = (Window) ChangeSupplierBean.this.getParent();
 			win.close();
 		} else {
-			ViewHandler.getInstance().switchView(ShowSupplierBean.class);
+			ViewHandler.getInstance().switchView(ShowSuppliersBean.class);
 		}
 	}
 			
@@ -281,7 +281,7 @@ public class ChangeSupplierBean extends ChangeFieldsPersonAbstract implements Vi
 			public void buttonClick(ClickEvent event) {
 				m_window.close();
 				ViewHandler.getInstance()
-					.switchView(ShowSupplierBean.class);
+					.switchView(ShowSuppliersBean.class);
 			}
 		});
 	}

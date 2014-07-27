@@ -1,7 +1,7 @@
 package de.bistrosoft.palaver.menueplanverwaltung.domain;
 
 
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
+import de.palaver.management.recipe.Fussnote;
 
 public class MenueHasFussnote implements java.io.Serializable {
 

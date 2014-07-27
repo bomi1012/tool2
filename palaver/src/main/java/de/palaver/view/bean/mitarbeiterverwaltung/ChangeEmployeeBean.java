@@ -99,7 +99,7 @@ public class ChangeEmployeeBean extends ChangeFieldsPersonAbstract implements Vi
 					saveItem();		
 					((Application) UI.getCurrent().getData()).showDialog(String.format(MESSAGE_SUSSEFULL_ARG_1, 
 							"Mitarbeiter"));
-					ViewHandler.getInstance().switchView(ShowEmployeeBean.class);
+					ViewHandler.getInstance().switchView(ShowEmployeesBean.class);
 				}							
 			}
 
@@ -183,7 +183,7 @@ public class ChangeEmployeeBean extends ChangeFieldsPersonAbstract implements Vi
 		m_buttonVerwerfen.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				ViewHandler.getInstance().switchView(ShowEmployeeBean.class);
+				ViewHandler.getInstance().switchView(ShowEmployeesBean.class);
 			}
 		});
 		

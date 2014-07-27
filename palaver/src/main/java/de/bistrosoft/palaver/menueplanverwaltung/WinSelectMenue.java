@@ -16,7 +16,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
@@ -28,12 +27,12 @@ import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
 import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
 import de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import de.hska.awp.palaver2.util.IConstants;
 import de.palaver.Application;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
 import de.palaver.management.emploee.Employee;
+import de.palaver.management.recipe.Fussnote;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
 /**
@@ -288,7 +287,7 @@ public class WinSelectMenue extends Window {
 					tfMenueart.setEnabled(false);
 					if (menue.getGeschmack() != null) {
 						tfGeschmack.setValue(menue.getGeschmack()
-								.getBezeichnung());
+								.getName());
 					}
 					tfGeschmack.setEnabled(false);
 					chbFavorit.setValue(menue.getFavorit());

@@ -22,9 +22,9 @@ import com.vaadin.ui.themes.Reindeer;
 
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.palaver.Application;
+import de.palaver.management.recipe.Fussnote;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
 /**

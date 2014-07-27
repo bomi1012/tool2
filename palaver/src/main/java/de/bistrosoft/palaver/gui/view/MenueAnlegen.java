@@ -38,9 +38,6 @@ import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueart;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueartverwaltung;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Fussnote;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezept;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
@@ -55,6 +52,10 @@ import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
 import de.palaver.management.emploee.Employee;
 import de.palaver.management.employee.service.EmployeeService;
+import de.palaver.management.recipe.Fussnote;
+import de.palaver.management.recipe.Geschmack;
+import de.palaver.management.recipe.Recipe;
+import de.palaver.view.bean.rezeptverwaltung.ChangeRecipeBean;
 
 /**
  * @author Jasmin Baumgartner, Eike Becher, Michael Marschall
@@ -98,12 +99,12 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	private Button btNeuesRezept = new Button("Neues Rezept");
 
 	private FilterTable tblMenueRezepte = new FilterTable();
-	private BeanItemContainer<Rezept> ctMenue;
+	private BeanItemContainer<Recipe> ctMenue;
 	private FilterTable tblRezepte = new FilterTable();
-	private BeanItemContainer<Rezept> ctRezepte;
+	private BeanItemContainer<Recipe> ctRezepte;
 
-	private List<Rezept> tmpRezepte = new ArrayList<Rezept>();
-	List<Rezept> listrezept = new ArrayList<Rezept>();
+	private List<Recipe> tmpRezepte = new ArrayList<Recipe>();
+	List<Recipe> listrezept = new ArrayList<Recipe>();
 	List<Fussnote> listfussnote = new ArrayList<Fussnote>();
 	Menue menue = new Menue();
 
@@ -204,11 +205,11 @@ public class MenueAnlegen extends VerticalLayout implements View,
 //		hlRezepte.setComponentAlignment(tblMenueRezepte, Alignment.TOP_LEFT);
 //		hlRezepte.setComponentAlignment(tblRezepte, Alignment.TOP_RIGHT);
 		tblRezepte.setVisibleColumns(new Object[] { "name", "rezeptart",
-				"mitarbeiter" });
+				"employee" });
 		tblRezepte.setFilterFieldValue("mitarbeiter", ((Application) UI
 				.getCurrent().getData()).getUser().getVorname());
 		tblMenueRezepte.setVisibleColumns(new Object[] { "name", "rezeptart",
-				"mitarbeiter" });
+				"employee" });
 
 		tcsFussnoten.setWidth("100%");
 		tcsFussnoten.setImmediate(true);
@@ -266,7 +267,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			@Override
 			public void drop(DragAndDropEvent event) {
 				Transferable t = event.getTransferable();
-				Rezept selected = (Rezept) t.getData("itemId");
+				Recipe selected = (Recipe) t.getData("itemId");
 				ctRezepte.removeItem(selected);
 				tmpRezepte.add(selected);
 				ctMenue.addItem(selected);
@@ -285,7 +286,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			@Override
 			public void drop(DragAndDropEvent event) {
 				Transferable t = event.getTransferable();
-				Rezept selected = (Rezept) t.getData("itemId");
+				Recipe selected = (Recipe) t.getData("itemId");
 				ctRezepte.addItem(selected);
 				tmpRezepte.remove(selected);
 				ctMenue.removeItem(selected);
@@ -339,7 +340,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		win.setWidth("1200px");
 		win.setHeight("850px");
 
-		RezeptAnlegen ra = new RezeptAnlegen();
+		ChangeRecipeBean ra = new ChangeRecipeBean(); 
 		addComponent(ra);
 
 		win.setContent(ra);
@@ -349,7 +350,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			@Override
 			public void windowClose(CloseEvent e) {
 				try {
-					ctRezepte = new BeanItemContainer<Rezept>(Rezept.class,
+					ctRezepte = new BeanItemContainer<Recipe>(Recipe.class,
 							Rezeptverwaltung.getInstance().getAllRezepteForMenue());
 				} catch (IllegalArgumentException e1) {
 					// TODO Auto-generated catch block
@@ -366,7 +367,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 				}
 				tblRezepte.setContainerDataSource(ctRezepte);
 				tblRezepte.setVisibleColumns(new Object[] { "name", "rezeptart",
-				"mitarbeiter" });
+				"employee" });
 			}
 		});
 	}
@@ -375,18 +376,18 @@ public class MenueAnlegen extends VerticalLayout implements View,
 
 		// Inhalte laden
 		try {
-			ctRezepte = new BeanItemContainer<Rezept>(Rezept.class,
+			ctRezepte = new BeanItemContainer<Recipe>(Recipe.class,
 					Rezeptverwaltung.getInstance().getAllRezepteForMenue());
 			tblRezepte.setContainerDataSource(ctRezepte);
 
 			tblRezepte.setVisibleColumns(new Object[] { "name", "rezeptart",
-					"mitarbeiter" });
+					"employee" });
 
-			ctMenue = new BeanItemContainer<Rezept>(Rezept.class);
+			ctMenue = new BeanItemContainer<Recipe>(Recipe.class);
 			tblMenueRezepte.setContainerDataSource(ctMenue);
 
 			tblMenueRezepte.setVisibleColumns(new Object[] { "name",
-					"rezeptart", "mitarbeiter" });
+					"rezeptart", "employee" });
 
 			List<Employee> employee = EmployeeService.getInstance()
 					.getAllEmployees();
@@ -426,17 +427,17 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		if (dataParam instanceof Menue) {
 			menue = (Menue) dataParam;
 			ladeMenue();
-		} else if (dataParam instanceof Rezept) {
-			Rezept rezept = (Rezept) dataParam;
-			ladeRezept(rezept);
+		} else if (dataParam instanceof Recipe) {
+			Recipe recipe = (Recipe) dataParam;
+			ladeRezept(recipe);
 		}
 	}
 
-	public void ladeRezept(Rezept rezept) {
-		if (rezept.getId() == null) {
+	public void ladeRezept(Recipe recipe) {
+		if (recipe.getId() == null) {
 			try {
-				rezept = Rezeptverwaltung.getInstance().getRezeptByName(
-						rezept.getName());
+				recipe = Rezeptverwaltung.getInstance().getRezeptByName(
+						recipe.getName());
 			} catch (ConnectException e) {
 				e.printStackTrace();
 			} catch (DAOException e) {
@@ -445,10 +446,10 @@ public class MenueAnlegen extends VerticalLayout implements View,
 				e.printStackTrace();
 			}
 		}
-		tfMenuename.setValue(rezept.getName());
-		tblMenueRezepte.addItem(rezept);
-		tmpRezepte.add(rezept);
-		tblRezepte.removeItem(rezept);
+		tfMenuename.setValue(recipe.getName());
+		tblMenueRezepte.addItem(recipe);
+		tmpRezepte.add(recipe);
+		tblRezepte.removeItem(recipe);
 		((Application) UI.getCurrent().getData())
 				.showDialog(IConstants.INFO_MENUE_ALS_REZEPT);
 	}
@@ -480,7 +481,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		if (menue.getRezepte() != null) {
 			tmpRezepte = menue.getRezepte();
 		} else {
-			tmpRezepte = new ArrayList<Rezept>();
+			tmpRezepte = new ArrayList<Recipe>();
 		}
 
 		tfMenuename.setValue(menue.getName());
@@ -507,7 +508,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 
 		tblMenueRezepte.setContainerDataSource(ctRezepte);
 		tmpRezepte = menue.getRezepte();
-		for (Rezept r : tmpRezepte) {
+		for (Recipe r : tmpRezepte) {
 			ctRezepte.removeItem(r);
 			ctMenue.addItem(r);
 
@@ -643,8 +644,8 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			return false;
 		}
 		int countHauptmenue = 0;
-		for (Rezept rezept : tmpRezepte) {
-			if (rezept.getRezeptart().getId() == 1L) {
+		for (Recipe recipe : tmpRezepte) {
+			if (recipe.getRezeptart().getId() == 1L) {
 				++countHauptmenue;
 			}
 		}

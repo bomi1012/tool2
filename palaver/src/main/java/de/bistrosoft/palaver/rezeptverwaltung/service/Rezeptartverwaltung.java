@@ -5,8 +5,8 @@ import java.util.List;
 
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
+import de.palaver.management.recipe.Recipetype;
 import de.bistrosoft.palaver.data.RezeptartDAO;
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Rezeptart;
 
 /**
  * @author Michael Marschall
@@ -27,27 +27,27 @@ public class Rezeptartverwaltung extends RezeptartDAO {
 		return instance;
 	}
 
-	public List<Rezeptart> getAllRezeptart() throws ConnectException,
+	public List<Recipetype> getAllRezeptart() throws ConnectException,
 			DAOException, SQLException {
-		List<Rezeptart> result = null;
+		List<Recipetype> result = null;
 		result = super.getAllRezeptart();
 		return result;
 	}
 
-	public Rezeptart getRezeptartById(Long id) throws ConnectException,
+	public Recipetype getRezeptartById(Long id) throws ConnectException,
 			DAOException, SQLException {
-		Rezeptart rezeptart = null;
-		rezeptart = super.getRezeptartById(id);
-		return rezeptart;
+		Recipetype recipetype = null;
+		recipetype = super.getRezeptartById(id);
+		return recipetype;
 	}
 
-	public void createRezeptart(Rezeptart rezeptart) throws ConnectException,
+	public void createRezeptart(Recipetype recipetype) throws ConnectException,
 			DAOException, SQLException {
-		super.createRezeptart(rezeptart);
+		super.createRezeptart(recipetype);
 	}
 
-	public void updateRezeptart(Rezeptart rezeptart) throws ConnectException,
+	public void updateRezeptart(Recipetype recipetype) throws ConnectException,
 			DAOException, SQLException {
-		super.updateRezeptart(rezeptart);
+		super.updateRezeptart(recipetype);
 	}
 }

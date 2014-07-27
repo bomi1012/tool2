@@ -6,10 +6,10 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.bistrosoft.palaver.rezeptverwaltung.domain.Geschmack;
 import de.palaver.dao.AbstractDAO;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
+import de.palaver.management.recipe.Geschmack;
 
 /**
  * 
@@ -104,7 +104,7 @@ public class GeschmackDAO extends AbstractDAO {
 		ResultSet set = getManaged(MessageFormat.format(GET_GESCHMACK_BY_NAME,
 				NAME));
 		while (set.next()) {
-			geschmack = new Geschmack(set.getLong("id"));
+			geschmack = new Geschmack(set.getLong("id"), null, false);
 		}
 		return geschmack;
 
@@ -124,7 +124,7 @@ public class GeschmackDAO extends AbstractDAO {
 	public void createGeschmack(Geschmack geschmack) throws ConnectException,
 			DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE
-				+ "(name, inaktiv) VALUES('" + geschmack.getBezeichnung()
+				+ "(name, inaktiv) VALUES('" + geschmack.getName()
 				+ "' " + ", false)";
 		this.putManaged(INSERT_QUERY);
 	}
@@ -133,7 +133,7 @@ public class GeschmackDAO extends AbstractDAO {
 	public void updateGeschmack(Geschmack geschmack) throws ConnectException,
 			DAOException, SQLException {
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + NAME + "= '"
-				+ geschmack.getBezeichnung() + "' WHERE " + ID + " = "
+				+ geschmack.getName() + "' WHERE " + ID + " = "
 				+ geschmack.getId() + ";";
 		this.putManaged(UPDATE_QUERY);
 
