@@ -655,7 +655,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 
 			// Container
 			List<Zubereitung> zb = Zubereitungverwaltung.getInstance()
-					.getAllZubereitung();
+					.getAllZubereitungs();
 			List<Fussnote> fn = Fussnotenverwaltung.getInstance()
 					.getAllFussnote();
 			List<Menueart> ma = Menueartverwaltung.getInstance()

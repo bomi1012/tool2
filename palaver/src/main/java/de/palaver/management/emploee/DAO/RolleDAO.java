@@ -11,6 +11,8 @@ import de.palaver.dao.DAOException;
 import de.palaver.management.emploee.Rolle;
 
 public class RolleDAO extends EmployeeHasRollenDAO {
+	private static final long serialVersionUID = -8513973754601711817L;
+
 	private static RolleDAO instance = null;
 
 	private static final String GET_ALL_ROLLES = "SELECT * FROM " + TABLE_ROLLE;	

@@ -645,7 +645,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		}
 		int countHauptmenue = 0;
 		for (Recipe recipe : tmpRezepte) {
-			if (recipe.getRezeptart().getId() == 1L) {
+			if (recipe.getRecipetype().getId() == 1L) {
 				++countHauptmenue;
 			}
 		}

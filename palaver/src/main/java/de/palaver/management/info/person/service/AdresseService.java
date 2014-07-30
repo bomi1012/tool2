@@ -9,16 +9,16 @@ import de.palaver.management.info.person.DAO.AdresseDAO;
 
 public class AdresseService {
 
-	private static AdresseService instance = null;
+	private static AdresseService m_instance = null;
 	public AdresseService() {
 		super();
 	}
 
 	public static AdresseService getInstance() {
-		if (instance == null) {
-			instance = new AdresseService();
+		if (m_instance == null) {
+			m_instance = new AdresseService();
 		}
-		return instance;
+		return m_instance;
 	}
 
 	public Adresse getAdresseById(long id) throws ConnectException, DAOException, SQLException {

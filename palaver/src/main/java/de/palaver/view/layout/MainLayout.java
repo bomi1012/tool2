@@ -180,10 +180,13 @@ public class MainLayout extends VerticalLayout implements Command {
 		MenuItem password = settings.addItem(IConstants.MENU_MITARBEITER_PASSWORD, this);
 		password.setIcon(new ThemeResource(IConstants.ICON_USER_KEY));
 		
-		
-		
-		
-		
+		/** Rezept */
+		MenuItem recipeItem = menu.addItem(IConstants.MENU_REZEPT_HEADLINE, null);
+		/** 1 Level */
+		MenuItem recipeShow = recipeItem.addItem(IConstants.MENU_REZEPT_ANZEIGEN, this);
+		recipeShow.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_LUPE));
+		MenuItem recipeAnlegen = recipeItem.addItem(IConstants.MENU_REZEPT_NEW, this);
+		recipeAnlegen.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_ADD));
 		
 		
 		

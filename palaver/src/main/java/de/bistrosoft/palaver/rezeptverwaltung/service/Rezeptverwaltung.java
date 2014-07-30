@@ -10,7 +10,6 @@ import java.util.List;
 import de.bistrosoft.palaver.data.FussnoteDAO;
 import de.bistrosoft.palaver.data.GeschmackDAO;
 import de.bistrosoft.palaver.data.RezeptartDAO;
-import de.bistrosoft.palaver.data.ZubereitungDAO;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
@@ -22,13 +21,14 @@ import de.palaver.management.recipe.Recipe;
 import de.palaver.management.recipe.Recipetype;
 import de.palaver.management.recipe.RezeptHasArtikel;
 import de.palaver.management.recipe.Zubereitung;
-import de.palaver.management.recipe.DAO.RezeptDAO;
+import de.palaver.management.recipe.DAO.RecipeDAO;
+import de.palaver.management.recipe.DAO.ZubereitungDAO;
 
 /**
  * @author Jan Lauinger
  * 
  */
-public class Rezeptverwaltung extends RezeptDAO {
+public class Rezeptverwaltung extends RecipeDAO {
 
 	private static Rezeptverwaltung instance = null;
 
@@ -52,7 +52,7 @@ public class Rezeptverwaltung extends RezeptDAO {
 			DAOException, SQLException {
 		List<Zubereitung> result = null;
 
-		result = ZubereitungDAO.getInstance().getAllZubereitung();
+		result = ZubereitungDAO.getInstance().getAllZubereitungs();
 
 		return result;
 	}

@@ -22,7 +22,7 @@ public class EmployeeWrapper {
 	private Label m_username = new Label();
 	public Label getUsername() { return m_username; }
 	
-	private Label m_fullname = new Label();;
+	private Label m_fullname = new Label();
 	public Label getFullname() { return m_fullname; }
 	
 	private Label m_email = new Label();

@@ -64,7 +64,7 @@ public class ChangeEmployeeBean extends ChangeFieldsPersonAbstract implements Vi
 		m_austrittsdatumField= textField("Austrittsdatum", WIDTH_FULL, false, "Austrittsdatum", this);		
 		m_subHeadNewDaten = title("Weitere Informationen", STYLE_HEADLINE_SUB);		
 		getContactDataDefinition();		
-		m_rollen = twinColSelect(null, "Verfügbare Rollen", "Ausgewählte Rollen", 8, 0, visible(), enabled());		
+		m_rollenColSelect = twinColSelect(null, "Verfügbare Rollen", "Ausgewählte Rollen", 8, 0, visible(), enabled());		
 		m_leftVLayout = vertikalLayoutBuilder(4, "90%");	
 		m_centerVLayout = vertikalLayoutBuilder(1, "90%");
 		m_rightVLayout = vertikalLayoutBuilder(5, "90%"); 		
@@ -171,8 +171,8 @@ public class ChangeEmployeeBean extends ChangeFieldsPersonAbstract implements Vi
 
 			private List<Rolle> setRolles() {
 				List<Rolle> rolleList = new ArrayList<Rolle>();
-				for (Object rolleId : m_rollen.getItemIds()) {					
-					if (m_rollen.isSelected((Long) rolleId))	{				
+				for (Object rolleId : m_rollenColSelect.getItemIds()) {					
+					if (m_rollenColSelect.isSelected((Long) rolleId))	{				
 						rolleList.add(new Rolle((Long) rolleId, null));
 					} 							
 				}
@@ -224,12 +224,12 @@ public class ChangeEmployeeBean extends ChangeFieldsPersonAbstract implements Vi
 	private void setDataToTwinColSelect() {
 		try {
 			for (Rolle rolle : RolleService.getInstance().getAllRolles()) {
-				m_rollen.addItem(rolle.getId());
-				m_rollen.setItemCaption(rolle.getId(), rolle.getName());
+				m_rollenColSelect.addItem(rolle.getId());
+				m_rollenColSelect.setItemCaption(rolle.getId(), rolle.getName());
 			}
 			if (!m_toCreate && m_empl.getRollen() != null) {
 				for (Rolle rolle : m_empl.getRollen()) {
-					m_rollen.select(rolle.getId());
+					m_rollenColSelect.select(rolle.getId());
 				}
 			}
 		} catch (Exception e) {
@@ -287,7 +287,7 @@ public class ChangeEmployeeBean extends ChangeFieldsPersonAbstract implements Vi
 			
 			if (m_empl.getRollen() != null && m_empl.getRollen().size() > 0) {
 				for (Rolle r : m_empl.getRollen()) {
-					m_rollen.select(r.getId());
+					m_rollenColSelect.select(r.getId());
 				}
 			}
 			

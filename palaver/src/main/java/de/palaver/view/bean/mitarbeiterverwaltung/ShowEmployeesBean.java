@@ -39,7 +39,7 @@ public class ShowEmployeesBean extends TemplateBuilder implements View {
 			
 	private void componetsManager() {
 		m_filterControlPanel = filterHorisontalLayoutWithHeadTitle(TITLE, STYLE_HEADLINE_STANDART, WIDTH_FULL);		
-		m_filterTable = HTMLComponents.filterTable(true, true);
+		m_filterTable = HTMLComponents.filterTable(true, true, WIDTH_FULL, WIDTH_FULL);
 		m_control = controlPanel(this);	
 	}
 	

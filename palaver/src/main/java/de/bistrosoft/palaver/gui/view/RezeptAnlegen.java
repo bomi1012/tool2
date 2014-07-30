@@ -35,7 +35,6 @@
 //import com.vaadin.ui.Window;
 //import com.vaadin.ui.Window.CloseEvent;
 //
-//import de.bistrosoft.palaver.rezeptverwaltung.domain.RezeptHasZubereitung;
 //import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
 //import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 //import de.bistrosoft.palaver.rezeptverwaltung.service.Zubereitungverwaltung;
@@ -53,10 +52,9 @@
 //import de.palaver.management.emploee.Rolle;
 //import de.palaver.management.employee.service.EmployeeService;
 //import de.palaver.management.recipe.Recipe;
-//import de.palaver.management.recipe.RezeptHasArtikel;
 //import de.palaver.management.recipe.Recipetype;
+//import de.palaver.management.recipe.RezeptHasArtikel;
 //import de.palaver.management.recipe.Zubereitung;
-//import de.palaver.management.recipe.DAO.RezeptDAO;
 //import de.palaver.view.bean.artikelverwaltung.ChangeItemBean;
 //
 ///**
@@ -464,7 +462,7 @@
 //			}
 //
 //			List<Zubereitung> zb = Zubereitungverwaltung.getInstance()
-//					.getAllZubereitung();
+//					.getAllZubereitungs();
 //			for (Zubereitung z : zb) {
 //				zubereitung.addItem(z);
 //			}

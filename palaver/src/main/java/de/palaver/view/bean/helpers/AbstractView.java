@@ -1,6 +1,14 @@
 package de.palaver.view.bean.helpers;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.NativeSelect;
+import com.vaadin.ui.TextArea;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -45,6 +53,13 @@ public class AbstractView extends VerticalLayout{
 	protected static final String MESSAGE_EXISTS_ARG_1 = "Der Name %s ist bereits im System vorhanden";	
 	protected static final String MESSAGE_SUSSEFULL_ARG_1 = "%s wurde erfolgreich gespeichert";
 	
+	private Map<Component, Object> m_data;
+	public Map<Component, Object> getData() { return m_data; }
+	
+	public AbstractView() {
+		super();
+		m_data = new HashMap<Component, Object>();
+	}
 	
 	public class Hr extends Label {
 		@SuppressWarnings("deprecation")
@@ -61,5 +76,16 @@ public class AbstractView extends VerticalLayout{
 		win.setHeight(height);
 		
 		return win;
+	}
+	
+	protected void setValueToComponent(Map<Component, Object> hashMap) {
+		for (Entry<Component, Object> element : hashMap.entrySet()) {
+			if (element.getKey() instanceof TextField) 
+				((TextField) element.getKey()).setValue((String) element.getValue());
+			if (element.getKey() instanceof NativeSelect) 
+				((NativeSelect) element.getKey()).setValue(element.getValue());
+			if (element.getKey() instanceof TextArea) 
+				((TextArea) element.getKey()).setValue((String) element.getValue());
+		}
 	}
 }

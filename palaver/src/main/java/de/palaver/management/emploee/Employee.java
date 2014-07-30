@@ -38,7 +38,11 @@ public class Employee extends EntityName {
 	public void setKontakt(Kontakte kontakt) { m_kontakt = kontakt; }
 
 	public Employee() {
-		this(null, null, null, null, null, null, null);
+		super();
+	}
+	
+	public Employee(Long id, String benutzername) {
+		this(id, null, null, null, null, null, benutzername);
 	}
 	
 	public Employee(Long id, String name, String vorname, String passwort, String eintrittsdatum, String austrittsdatum,

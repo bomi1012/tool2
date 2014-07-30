@@ -374,6 +374,7 @@ public class ChangeItemBean extends TemplateBuilder implements View, ValueChange
 			}
 		} catch (Exception e) {
 			LOG.error(e.toString());
+			e.printStackTrace();
 		}
 	}
 	

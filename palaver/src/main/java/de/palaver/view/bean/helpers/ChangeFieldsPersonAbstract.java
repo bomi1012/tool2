@@ -65,7 +65,7 @@ abstract public class ChangeFieldsPersonAbstract extends TemplateBuilder{
 	protected TextField m_austrittsdatumField;
 	
 	protected CheckBox m_mehrerLieferterminCheckbox = new CheckBox("mehrere Liefertermine");
-	protected TwinColSelect m_rollen = new TwinColSelect();
+	protected TwinColSelect m_rollenColSelect = new TwinColSelect();
 
 	protected Component m_subHeadNewDaten;
 	
@@ -146,7 +146,7 @@ abstract public class ChangeFieldsPersonAbstract extends TemplateBuilder{
 			vl.addComponent(m_eintrittsdatumField);
 			vl.addComponent(m_austrittsdatumField);
 			vl.addComponent(new Label());
-			vl.addComponent(m_rollen);
+			vl.addComponent(m_rollenColSelect);
 		}
 		return vl;		
 	}

@@ -56,7 +56,7 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&passw
 	String 		MENU_REZEPT_HEADLINE = "Rezept";
 	String 		MENU_REZEPT_NEU = "Rezept anlegen";
 	String 		MENU_REZEPT_ANZEIGEN = "Alle Rezepte anzeigen";
-	String 		MENU_REZEPT_AENDERN = "Ändern";
+	String 		MENU_REZEPT_NEW = "Rezept anlegen";
 	String 		MENU_REZEPT_LOESCHEN = "Löschen";
 	String 		MENU_MENUPLAN_HEADLINE = "Menüplan";
 	String 		MENU_MENUPLAN_AKTUELL = "Aktueller Menüplan";

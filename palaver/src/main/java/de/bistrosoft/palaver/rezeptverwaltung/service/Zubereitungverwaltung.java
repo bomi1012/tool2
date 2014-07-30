@@ -6,7 +6,7 @@ import java.util.List;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
 import de.palaver.management.recipe.Zubereitung;
-import de.bistrosoft.palaver.data.ZubereitungDAO;
+import de.palaver.management.recipe.DAO.ZubereitungDAO;
 
 /**
  * @author Michael Marschall
@@ -27,24 +27,10 @@ public class Zubereitungverwaltung extends ZubereitungDAO {
 		return instance;
 	}
 
-	public List<Zubereitung> getAllZubereitung() throws ConnectException,
+	public List<Zubereitung> getAllZubereitungs() throws ConnectException,
 			DAOException, SQLException {
 		List<Zubereitung> result = null;
-		result = super.getAllZubereitung();
-		return result;
-	}
-
-	public List<Zubereitung> getZubereitungByRezept(Long rezeptId)
-			throws ConnectException, DAOException, SQLException {
-		List<Zubereitung> result = null;
-		result = super.getZubereitungByRezept(rezeptId);
-		return result;
-	}
-
-	public Zubereitung getZubereitungById(Long id) throws ConnectException,
-			DAOException, SQLException {
-		Zubereitung result = null;
-		result = super.getZubereitungById(id);
+		result = super.getAllZubereitungs();
 		return result;
 	}
 
