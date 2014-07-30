@@ -36,6 +36,8 @@ import de.palaver.view.bean.lieferantenverwaltung.ShowSuppliersBean;
 import de.palaver.view.bean.mitarbeiterverwaltung.ChangeEmployeeBean;
 import de.palaver.view.bean.mitarbeiterverwaltung.ChangePasswordBean;
 import de.palaver.view.bean.mitarbeiterverwaltung.ShowEmployeesBean;
+import de.palaver.view.bean.rezeptverwaltung.ChangeRecipeBean;
+import de.palaver.view.bean.rezeptverwaltung.ShowRecipesBean;
 
 public class TemplateBuilder extends AbstractView {
 	
@@ -47,6 +49,8 @@ public class TemplateBuilder extends AbstractView {
 	protected static final String 		BUTTON_TEXT_VERWERFEN = "Verwerfen";
 	protected static final String 		BUTTON_TEXT_DEAKTIVIEREN = "Deaktivieren";
 	private static final String 		BUTTON_TEXT_EDIT = "Bearbeiten";
+	protected static final String 		BUTTON_TEXT_ADD_ITEM = "Artikel anlegen";
+	protected static final String 		BUTTON_TEXT_ADD_TO_MENUE = "In Menü überführen";
 
 	private static final String			BUTTON_ICON_EDIT = "icons/page_edit.png";
 	protected static final String		BUTTON_ICON_CREATE = "icons/page_add.png";
@@ -54,6 +58,7 @@ public class TemplateBuilder extends AbstractView {
 	protected static final String		BUTTON_ICON_VERWERFEN = "icons/page_refresh.png";
 	protected static final String		BUTTON_ICON_DEAKTIVIEREN = "img/Delete.ico";
 	private static final String 		BUTTON_FILTER_ICON_PATH = "img/disable_filter.ico";
+	private static final String			BUTTON_ICON_GO = "icons/page_go.png";
 	
 	protected Button m_buttonEdit;		
 	protected Button m_buttonCreate;
@@ -61,6 +66,8 @@ public class TemplateBuilder extends AbstractView {
 	protected Button m_buttonSpeichern;
 	protected Button m_buttonVerwerfen;
 	protected Button m_buttonDeaktiviren;
+	protected Button m_buttonAddItem;
+	protected Button m_buttonAddToMenue;
 	
 	protected Label 				m_headLine;
 	protected Window 				m_window;
@@ -68,6 +75,9 @@ public class TemplateBuilder extends AbstractView {
 	protected FilterTable 			m_filterTable; 
 	protected HorizontalLayout 		m_control;
 	protected Table 				m_table;
+
+
+
 	
 	public TemplateBuilder() {
 		super();
@@ -102,7 +112,7 @@ public class TemplateBuilder extends AbstractView {
 		List<Button> buttons = new ArrayList<Button>();
 		if(object instanceof ShowItemsBean || object instanceof ShowQuantitiesUnitBean ||
 				object instanceof ShowKategoriesBean || object instanceof ShowWarehousesBean ||
-				object instanceof ShowSuppliersBean) { 
+				object instanceof ShowSuppliersBean || object instanceof ShowRecipesBean) { 
 			m_buttonCreate = button(BUTTON_TEXT_CREATE, BUTTON_ICON_CREATE, true, true);
 			m_buttonEdit = button(BUTTON_TEXT_EDIT, BUTTON_ICON_EDIT, true, false);
 			
@@ -134,6 +144,17 @@ public class TemplateBuilder extends AbstractView {
 			m_buttonVerwerfen = button(BUTTON_TEXT_VERWERFEN, BUTTON_ICON_VERWERFEN, true, true);
 			buttons.add(m_buttonSpeichern);
 			buttons.add(m_buttonVerwerfen);
+		} else if (object instanceof ChangeRecipeBean) {
+			m_buttonSpeichern = button(BUTTON_TEXT_SAVE, BUTTON_ICON_SAVE, true, true);
+			m_buttonVerwerfen = button(BUTTON_TEXT_VERWERFEN, BUTTON_ICON_VERWERFEN, true, true);
+			m_buttonDeaktiviren = button(BUTTON_TEXT_DEAKTIVIEREN,BUTTON_ICON_DEAKTIVIEREN, false, true);
+			m_buttonAddItem = button(BUTTON_TEXT_ADD_ITEM, BUTTON_ICON_CREATE , true, true);
+			m_buttonAddToMenue = button(BUTTON_TEXT_ADD_TO_MENUE, BUTTON_ICON_GO, true, true);
+			buttons.add(m_buttonAddToMenue);
+			buttons.add(m_buttonAddItem);
+			buttons.add(m_buttonVerwerfen);
+			buttons.add(m_buttonSpeichern);
+			buttons.add(m_buttonDeaktiviren);
 		}
 
 		HorizontalLayout horizontalLayout = new HorizontalLayout();
@@ -216,8 +237,8 @@ public class TemplateBuilder extends AbstractView {
 		return HTMLComponents.textAREAConfiguration(name, width, height, required, descript, object);
 	}
 	
-	protected FilterTable filterTable(boolean filterBarVisible, boolean selectable) {
-		return HTMLComponents.filterTable(filterBarVisible, selectable);
+	protected FilterTable filterTable(boolean filterBarVisible, boolean selectable, String width, String height) {
+		return HTMLComponents.filterTable(filterBarVisible, selectable, width, height);
 	}
 	
 	protected NativeSelect nativeSelect(String name, String width, boolean required, String description, Object object) {

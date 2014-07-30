@@ -20,7 +20,7 @@ import de.palaver.management.recipe.Recipe;
 import de.palaver.management.recipe.Recipetype;
 import de.palaver.management.recipe.RezeptHasArtikel;
 
-public class RezeptDAO extends AbstractDAO {
+public class RecipeDAO extends AbstractDAO {
 
 	private final static String TABLE = "rezept";
 	private final static String NAME = "name";
@@ -31,28 +31,67 @@ public class RezeptDAO extends AbstractDAO {
 	private final static String REZEPTFK = "rezept_fk";
 	private final static String AKTIV = "aktiv";
 
-	private static RezeptDAO instance = null;
+	private static RecipeDAO m_instance = null;
+	private static final String GET_ALL_RECIPES = "SELECT r.id, r.name, r.kommentar, r.erstellt, " +
+			"ra.id, ra.name, " +
+			"m.id, m.benutzername FROM " + TABLE + " r, " +
+			"rezeptart ra, mitarbeiter m WHERE r.rezeptart_fk = ra.id AND r.mitarbeiter_fk = m.id";
+	
+	
+	
 
-	private final static String GET_REZEPT_BY_NAME = "SELECT * FROM rezept WHERE rezept.name = {0}";
+	final static String GET_REZEPT_BY_NAME = "SELECT * FROM rezept WHERE rezept.name = {0}";
 	private static final String GET_ALL_REZEPT_MENUE = "select r.id rid, r.name rname, m.id mid,m.vorname, m.name , m.benutzername ,ra.id raid,ra.name raname "
 															+"from rezept r,mitarbeiter m,rezeptart ra "
 															+"where r.mitarbeiter_fk=m.id "
 															+"AND r.rezeptart_fk=ra.id "
 															+"AND r.deaktivieren = 0";
 
-	// Konstruktor
-	public RezeptDAO() {
+	private ArrayList<Recipe> m_list;
+
+	public RecipeDAO() {
 		super();
 	}
 
-	// Instanz erzeugen
-	public static RezeptDAO getInstance() {
-		if (instance == null) {
-			instance = new RezeptDAO();
+	public static RecipeDAO getInstance() {
+		if (m_instance == null) {
+			m_instance = new RecipeDAO();
 		}
-		return instance;
+		return m_instance;
 	}
 
+	public List<Recipe> getAllRecipes() throws ConnectException, DAOException, SQLException {
+		m_list = new ArrayList<Recipe>();
+		m_set = getManaged(GET_ALL_RECIPES);
+		while (m_set.next()) {
+			m_list.add(setRecipeRelations(m_set));
+		}		
+		return m_list;		
+	}
+	
+	
+	/**
+	 * r.id
+	 * r.name
+	 * r.kommentar
+	 * r.erstellt
+	 * 
+	 * ra.id
+	 * ra.name
+	 * 
+	 * m.id
+	 * m.name
+	 * 
+	 * @param set
+	 * @return
+	 * @throws SQLException
+	 */
+	private Recipe setRecipeRelations(ResultSet set) throws SQLException {		
+		return new Recipe(set.getLong(1), set.getString(2), 
+				new Recipetype(set.getLong(5), set.getString(6)), 
+				new Employee(set.getLong(7), set.getString(8)),
+				set.getString(3), set.getDate(4));
+	}
 	
 	
 	
@@ -62,8 +101,9 @@ public class RezeptDAO extends AbstractDAO {
 	
 	
 	
-	
-	// Methode, die alle Rezepte für Menü anlegen
+
+
+		// Methode, die alle Rezepte für Menü anlegen
 		public List<Recipe> getAllRezepteForMenue() throws ConnectException,
 				DAOException, SQLException {
 			List<Recipe> list = new ArrayList<Recipe>();
@@ -79,7 +119,7 @@ public class RezeptDAO extends AbstractDAO {
 				koch.setBenutzername(set.getString(6));
 				recipe.setEmployee(koch);
 				
-				recipe.setRezeptart(new Recipetype(set.getLong(7), set.getString(8)));
+				recipe.setRecipetype(new Recipetype(set.getLong(7), set.getString(8)));
 				list.add(recipe);
 			}
 			return list;
@@ -110,7 +150,7 @@ public class RezeptDAO extends AbstractDAO {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + ","
 				+ REZEPTART + "," + KOMMENTAR + "," + MITARBEITER + ","
 				+ ERSTELLT + "," + AKTIV + ")" + " VALUES" + "('"
-				+ recipe.getName() + "'," + recipe.getRezeptart().getId()
+				+ recipe.getName() + "'," + recipe.getRecipetype().getId()
 				+ ",'" + recipe.getKommentar() + "',"
 				+ recipe.getEmployee().getId() + ",'" + recipe.getErstellt()
 				+ "',true)";
@@ -132,7 +172,7 @@ public class RezeptDAO extends AbstractDAO {
 	public void updateRezept(Recipe recipe) throws ConnectException,
 			DAOException, SQLException {
 		String INSERT_QUERY = "UPDATE rezept SET name = '" + recipe.getName()
-				+ "'," + "rezeptart_fk=" + recipe.getRezeptart().getId() + ","
+				+ "'," + "rezeptart_fk=" + recipe.getRecipetype().getId() + ","
 				+ "kommentar='" + recipe.getKommentar() + "',"
 				+ "mitarbeiter_fk = " + recipe.getEmployee().getId() + ","
 				+ "erstellt='" + recipe.getErstellt() + "' WHERE id = "
@@ -156,7 +196,7 @@ public class RezeptDAO extends AbstractDAO {
 			rez.setRezeptHasArtikelList(artikel);
 			Recipetype rezArt = Rezeptartverwaltung.getInstance()
 					.getRezeptartById(set.getLong("rezeptart_fk"));
-			rez.setRezeptart(rezArt);
+			rez.setRecipetype(rezArt);
 			Employee koch = EmployeeService.getInstance()
 					.getEmployee(set.getLong("mitarbeiter_fk"));
 			rez.setEmployee(koch);

@@ -82,7 +82,7 @@ public class ChangeSupplierBean extends ChangeFieldsPersonAbstract implements Vi
 		m_centerVLayout = vertikalLayoutBuilder(1, "90%");
 		m_rightVLayout = vertikalLayoutBuilder(2, "90%");
 		
-		m_table = HTMLComponents.table(true, true, "100%", null);
+		m_table = HTMLComponents.table(true, true, WIDTH_FULL, null);
 		m_control = controlPanel(this);	
 	}
 

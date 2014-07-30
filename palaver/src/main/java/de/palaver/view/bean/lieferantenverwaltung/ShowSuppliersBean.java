@@ -27,7 +27,7 @@ import de.palaver.view.bean.helpers.TemplateBuilder;
 public class ShowSuppliersBean extends TemplateBuilder implements View {
 	private static final Logger LOG = LoggerFactory.getLogger(ShowSuppliersBean.class.getName());	
 	private static final long serialVersionUID = -2340836709414164L;
-	private static final String TITLE = "Lieferanten Artikeln";
+	private static final String TITLE = "Lieferanten Anzeigen";
 	private BeanItemContainer<Supplier> m_container;
 
 	private Supplier m_supplier;
@@ -43,7 +43,7 @@ public class ShowSuppliersBean extends TemplateBuilder implements View {
 	
 	private void componetsManager() {		
 		m_filterControlPanel = filterHorisontalLayoutWithHeadTitle(TITLE, STYLE_HEADLINE_STANDART, WIDTH_FULL);
-		m_filterTable = HTMLComponents.filterTable(true, true);
+		m_filterTable = HTMLComponents.filterTable(true, true, WIDTH_FULL, WIDTH_FULL);
 		m_control = controlPanel(this);		
 	}
 

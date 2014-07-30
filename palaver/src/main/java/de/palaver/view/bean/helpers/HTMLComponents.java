@@ -34,9 +34,18 @@ public class HTMLComponents {
 		return filterButton;
 	}
 	
-	public static FilterTable filterTable(boolean filterBarVisible, boolean selectable) {
+	public static FilterTable filterTable(boolean filterBarVisible, boolean selectable, String width, String height) {
 		FilterTable filterTable = new FilterTable();
-		filterTable.setSizeFull();
+		if ((width != null && width.equals("100%")) && (height != null && height.equals("100%"))) {
+			filterTable.setSizeFull();
+		} else {
+			if (height != null) {
+				filterTable.setHeight(height);
+			}
+			if (width != null) {
+				filterTable.setWidth(width);
+			}
+		}
 		filterTable.setFilterBarVisible(filterBarVisible);
 		filterTable.setFilterGenerator(new customFilter());
 		filterTable.setFilterDecorator(new customFilterDecorator());

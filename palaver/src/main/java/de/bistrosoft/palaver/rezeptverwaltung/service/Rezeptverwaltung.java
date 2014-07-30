@@ -22,13 +22,13 @@ import de.palaver.management.recipe.Recipe;
 import de.palaver.management.recipe.Recipetype;
 import de.palaver.management.recipe.RezeptHasArtikel;
 import de.palaver.management.recipe.Zubereitung;
-import de.palaver.management.recipe.DAO.RezeptDAO;
+import de.palaver.management.recipe.DAO.RecipeDAO;
 
 /**
  * @author Jan Lauinger
  * 
  */
-public class Rezeptverwaltung extends RezeptDAO {
+public class Rezeptverwaltung extends RecipeDAO {
 
 	private static Rezeptverwaltung instance = null;
 
