@@ -65,6 +65,4 @@ public class RezeptHasArtikelWrapper {
 		} 
 		return wrappers;
 	}
-	
-	
 }

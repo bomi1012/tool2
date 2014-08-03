@@ -320,8 +320,4 @@ public class RecipeDAO extends AbstractDAO {
 				+ " = " + zahl + " WHERE id=" + id;
 		this.putManaged(UPDATE_QUERY);
 	}
-
-
-
-
 }

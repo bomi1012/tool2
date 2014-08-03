@@ -31,9 +31,14 @@ public class Recipe extends EntityName {
 	public List<RezeptHasArtikel> getRezeptHasArtikelList() { return m_rezeptHasArtikelList; }
 	public void setRezeptHasArtikelList(List<RezeptHasArtikel> artikel) { m_rezeptHasArtikelList = artikel; }
 	
+
 	private List<Zubereitung> m_zubereitungList;
 	public List<Zubereitung> getZubereitungList() { return m_zubereitungList; }
 	public void setZubereitungList(List<Zubereitung> zubereitung) { m_zubereitungList = zubereitung; }
+
+	private List<Zubereitung> m_zubereitung;
+	public List<Zubereitung> getZubereitung() { return m_zubereitung; }
+	public void setZubereitung(List<Zubereitung> zubereitung) { m_zubereitung = zubereitung; }
 	
 	public Recipe() {
 		super();
@@ -56,6 +61,7 @@ public class Recipe extends EntityName {
 	}
 	
 	/**
+<<<<<<< HEAD
 	 * OHNE ID und OHNE DATE-ERSTELLT
 	 * @param name
 	 * @param recipetype
@@ -66,12 +72,9 @@ public class Recipe extends EntityName {
 		this(null, name, recipetype, employee, kommentar, null);
 	}
 	
-	/**
-	 * OLD
-	 */
+
 	public Recipe(Long id, Recipetype recipetype, Employee employee,
 			String name, String kommentar) {
 		this(id, name, recipetype, employee, kommentar, null);
 	}
-
 }
