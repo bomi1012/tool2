@@ -3,13 +3,15 @@
  */
 package de.hska.awp.palaver2.util;
 
+import java.io.Serializable;
+
 import org.tepi.filtertable.FilterGenerator;
 
 import com.vaadin.data.Container.Filter;
 import com.vaadin.data.util.filter.Compare;
 import com.vaadin.ui.AbstractField;
 
-public class customFilter implements FilterGenerator {
+public class customFilter implements FilterGenerator, Serializable {
 
 	@Override
 	public Filter generateFilter(Object propertyId, Object value) {

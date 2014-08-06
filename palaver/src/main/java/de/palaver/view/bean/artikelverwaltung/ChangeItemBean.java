@@ -16,6 +16,7 @@ import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 import com.vaadin.ui.Window.CloseEvent;
 import com.vaadin.ui.Window.CloseListener;
 
@@ -50,6 +51,7 @@ public class ChangeItemBean extends TemplateBuilder implements View, ValueChange
 	private static final String TEXT_FIELD_ARTIKEL_NOTIZ = "Notiz";
 	
 	private Artikel m_artikel;
+	public Artikel getArtikel() { return m_artikel; }
 	private boolean m_toCreate;
 	
 	/** TextFields */
@@ -175,10 +177,9 @@ public class ChangeItemBean extends TemplateBuilder implements View, ValueChange
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (validiereEingabe()) {
-					saveItem();
-					((Application) UI.getCurrent().getData()).showDialog(String.format(MESSAGE_SUSSEFULL_ARG_1, 
-							"Artikel"));		
-					ViewHandler.getInstance().switchView(ShowItemsBean.class);
+					saveItem();	
+					((Application) UI.getCurrent().getData()).showDialog(
+							String.format(MESSAGE_SUSSEFULL_ARG_1, "Artikel"));	
 				}
 			}
 
@@ -252,7 +253,8 @@ public class ChangeItemBean extends TemplateBuilder implements View, ValueChange
 				
 				try {
 					if (m_toCreate) {
-						ArtikelService.getInstance().createArtikel(m_artikel);
+						ArtikelService.getInstance().createArtikel(m_artikel);		
+						close();					
 					} else {
 						ArtikelService.getInstance().updateArtikel(m_artikel);
 					}
@@ -265,7 +267,8 @@ public class ChangeItemBean extends TemplateBuilder implements View, ValueChange
 		m_buttonVerwerfen.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				ViewHandler.getInstance().switchView(ShowItemsBean.class);
+				m_artikel = null;
+				close();
 			}
 		});
 		
@@ -303,6 +306,15 @@ public class ChangeItemBean extends TemplateBuilder implements View, ValueChange
 			}
 		});			
 	}
+	
+	private void close() {
+		if (ChangeItemBean.this.getParent() instanceof Window) {					
+			Window win = (Window) ChangeItemBean.this.getParent();
+			win.close();
+		} else {
+			ViewHandler.getInstance().switchView(ShowItemsBean.class);
+		}
+	}
 		
 	private void loadContent() {
 		Object[] objects = {new ChangeSupplierBean(), new ChangeQuantityUnitBean(), 
@@ -313,6 +325,7 @@ public class ChangeItemBean extends TemplateBuilder implements View, ValueChange
 		}
 	} 
 	
+	@SuppressWarnings("serial")
 	private void getWindowFactory(final Object object) {	
 		if(object instanceof ChangeSupplierBean) {
 			addComponent((ChangeSupplierBean) object);

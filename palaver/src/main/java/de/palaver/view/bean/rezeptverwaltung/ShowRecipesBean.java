@@ -115,5 +115,11 @@ public class ShowRecipesBean  extends TemplateBuilder implements View {
 	}
 
 	@Override
-	public void getViewParam(ViewData data) { }
+	public void getViewParam(ViewData data) {
+		if(((ViewDataObject<?>) data).getData() instanceof Recipe) {
+			m_recipe = (Recipe)((ViewDataObject<?>) data).getData(); 
+			m_filterTable.resetFilters();
+			m_filterTable.setFilterFieldValue("name", ((Recipe)((ViewDataObject<?>) data).getData()).getName());
+		}
+	}
 }

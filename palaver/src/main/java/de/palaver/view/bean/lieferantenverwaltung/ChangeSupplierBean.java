@@ -46,7 +46,7 @@ public class ChangeSupplierBean extends ChangeFieldsPersonAbstract implements Vi
 	
 	private VerticalLayout m_innerBoxPerson;
 	private List<Ansprechpartner> m_contactPersonList;
-	private YesNoPopup m_yesNoPopup;
+
 	private BeanItemContainer<Ansprechpartner> m_container;
 
 	public ChangeSupplierBean() {

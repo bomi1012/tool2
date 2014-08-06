@@ -56,7 +56,7 @@ public class TemplateBuilder extends AbstractView {
 	protected static final String		BUTTON_ICON_CREATE = "icons/page_add.png";
 	protected static final String		BUTTON_ICON_SAVE = "icons/page_save.png";
 	protected static final String		BUTTON_ICON_VERWERFEN = "icons/page_refresh.png";
-	protected static final String		BUTTON_ICON_DEAKTIVIEREN = "img/Delete.ico";
+	protected static final String		BUTTON_ICON_DEAKTIVIEREN = "icons/page_delete.png";
 	private static final String 		BUTTON_FILTER_ICON_PATH = "img/disable_filter.ico";
 	private static final String			BUTTON_ICON_GO = "icons/page_go.png";
 	

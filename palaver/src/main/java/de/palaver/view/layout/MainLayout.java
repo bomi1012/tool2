@@ -194,10 +194,7 @@ public class MainLayout extends VerticalLayout implements Command {
 		
 		
 		
-		MenuItem rezeptItem = menu.addItem(IConstants.MENU_REZEPT_HEADLINE,
-				null);
-		rezeptItem.addItem(IConstants.MENU_REZEPT_NEU, this);
-		rezeptItem.addItem(IConstants.MENU_REZEPT_ANZEIGEN, this);
+
 		MenuItem menue1Item = menu
 				.addItem(IConstants.MENU_MENUE_HEADLINE, null);
 		menue1Item.addItem(IConstants.MENU_MENUE_ANLEGEN, this);

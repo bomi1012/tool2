@@ -36,22 +36,24 @@ public class RecipeDAO extends AbstractDAO {
 	private static final String GET_ALL_RECIPES = "SELECT r.id, r.name, r.kommentar, r.erstellt, " +
 			"ra.id, ra.name, " +
 			"m.id, m.benutzername FROM " + TABLE + " r, " +
-			"rezeptart ra, mitarbeiter m WHERE r.rezeptart_fk = ra.id AND r.mitarbeiter_fk = m.id";
-	
+			"rezeptart ra, mitarbeiter m WHERE r.rezeptart_fk = ra.id AND r.mitarbeiter_fk = m.id";	
 	private static final String INSERT_QUERY = "INSERT INTO " + TABLE + "("
 			+ "`" + FIELD_NAME + "`, " + "`" + FIELD_KOMMENTAR + "`, "
 			+ "`" + FIELD_ERSTELLT + "`, " + "`" + FIELD_MITARBEITER + "`, `"
 			+ FIELD_REZEPTART + "`)"
-			+ " VALUES({0},{1},{2},{3},{4})";
-	
+			+ " VALUES({0},{1},{2},{3},{4})";	
 	private static final String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + 
 			"`" + FIELD_NAME + "` = {0}, `" + FIELD_KOMMENTAR + "` = {1}, `" + FIELD_MITARBEITER + "` = {2}, " +
 			"`" + FIELD_REZEPTART + "` = {3} WHERE " + FIELD_ID + " = {4}";
+	private static final String DELETE_QUERY = "DELETE FROM " + TABLE  + " WHERE `" + FIELD_ID + "` = {0}";
+	
+	
 	
 	private static final String INSERT_QUERY_ZUBEREITUNG = "INSERT INTO " + TABLE_RECIPE_ZUBEREITUNG  +
 			" (`rezept_fk`, `zubereitung_fk`) VALUES({0},{1})";
 	private static final String DELETE_QUERY_ZUBEREITUNG = "DELETE FROM " + TABLE_RECIPE_ZUBEREITUNG  +
 			" WHERE `" + FIELD_REZEPT_FK + "` = {0}";
+	
 	
 	
 	
@@ -98,6 +100,10 @@ public class RecipeDAO extends AbstractDAO {
 				"'" + recipe.getKommentar() + "'",
 				recipe.getEmployee().getId(), recipe.getRecipetype().getId(),
 				recipe.getId()));
+	}
+	
+	public void removeRecipe(Long id) throws ConnectException, DAOException {
+		putManaged(MessageFormat.format(DELETE_QUERY, id));			
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////
@@ -320,4 +326,6 @@ public class RecipeDAO extends AbstractDAO {
 				+ " = " + zahl + " WHERE id=" + id;
 		this.putManaged(UPDATE_QUERY);
 	}
+
+
 }

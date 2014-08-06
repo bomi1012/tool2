@@ -1,5 +1,6 @@
 package de.hska.awp.palaver2.util;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.Locale;
 
@@ -10,7 +11,8 @@ import com.vaadin.server.Resource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.datefield.Resolution;
 //https://github.com/tepi/FilteringTable/blob/master/src/org/tepi/filtertable/demo/DemoFilterDecorator.java
-public class customFilterDecorator implements FilterDecorator {
+@SuppressWarnings("serial")
+public class customFilterDecorator implements FilterDecorator, Serializable {
 
 	@Override
 	public String getEnumFilterDisplayName(Object propertyId, Object value) {

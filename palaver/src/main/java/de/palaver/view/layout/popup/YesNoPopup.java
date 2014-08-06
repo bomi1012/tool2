@@ -16,7 +16,7 @@ import de.palaver.view.ViewAbstract;
 @SuppressWarnings("serial")
 public class YesNoPopup extends ViewAbstract implements View, ValueChangeListener {
 
-	private Image m_userImage;
+	private Image m_image;
 	private Label m_textLabel;
 	private HorizontalLayout m_messageLayout;
 	private HorizontalLayout m_control;
@@ -30,18 +30,18 @@ public class YesNoPopup extends ViewAbstract implements View, ValueChangeListene
 		this.setSizeFull();
 		this.setMargin(true);	
 		
-		m_userImage = new Image();
-		m_userImage.setSource(new ThemeResource(image));		
+		m_image = new Image();
+		m_image.setSource(new ThemeResource(image));		
 		m_textLabel = new Label(text, Label.CONTENT_XHTML);
 		m_control = controlYesNo();
 		
 		m_messageLayout = new HorizontalLayout();
 		m_messageLayout.setWidth(FULL);		
-		m_messageLayout.addComponent(m_userImage);
+		m_messageLayout.addComponent(m_image);
 		m_messageLayout.addComponent(m_textLabel);
-		m_messageLayout.setExpandRatio(m_userImage, 1);
+		m_messageLayout.setExpandRatio(m_image, 1);
 		m_messageLayout.setExpandRatio(m_textLabel, 4);
-		m_messageLayout.setComponentAlignment(m_userImage, Alignment.MIDDLE_CENTER);
+		m_messageLayout.setComponentAlignment(m_image, Alignment.MIDDLE_CENTER);
 		m_messageLayout.setComponentAlignment(m_textLabel, Alignment.MIDDLE_RIGHT);
 				
 		m_vertikalLayout = new VerticalLayout();

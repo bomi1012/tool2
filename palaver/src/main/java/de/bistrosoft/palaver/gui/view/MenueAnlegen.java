@@ -204,11 +204,11 @@ public class MenueAnlegen extends VerticalLayout implements View,
 //		hlRezepte.setWidth("900px");
 //		hlRezepte.setComponentAlignment(tblMenueRezepte, Alignment.TOP_LEFT);
 //		hlRezepte.setComponentAlignment(tblRezepte, Alignment.TOP_RIGHT);
-		tblRezepte.setVisibleColumns(new Object[] { "name", "rezeptart",
+		tblRezepte.setVisibleColumns(new Object[] { "name", "recipetype",
 				"employee" });
 		tblRezepte.setFilterFieldValue("mitarbeiter", ((Application) UI
 				.getCurrent().getData()).getUser().getVorname());
-		tblMenueRezepte.setVisibleColumns(new Object[] { "name", "rezeptart",
+		tblMenueRezepte.setVisibleColumns(new Object[] { "name", "recipetype",
 				"employee" });
 
 		tcsFussnoten.setWidth("100%");
@@ -380,14 +380,14 @@ public class MenueAnlegen extends VerticalLayout implements View,
 					Rezeptverwaltung.getInstance().getAllRezepteForMenue());
 			tblRezepte.setContainerDataSource(ctRezepte);
 
-			tblRezepte.setVisibleColumns(new Object[] { "name", "rezeptart",
+			tblRezepte.setVisibleColumns(new Object[] { "name", "recipetype",
 					"employee" });
 
 			ctMenue = new BeanItemContainer<Recipe>(Recipe.class);
 			tblMenueRezepte.setContainerDataSource(ctMenue);
 
 			tblMenueRezepte.setVisibleColumns(new Object[] { "name",
-					"rezeptart", "employee" });
+					"recipetype", "employee" });
 
 			List<Employee> employee = EmployeeService.getInstance()
 					.getAllEmployees();

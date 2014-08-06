@@ -40,6 +40,11 @@ public class RecipeService {
 	public void updateRecipe(Recipe recipe) throws ConnectException, DAOException {
 		RecipeDAO.getInstance().updateRecipe(recipe);
 	}
+	public void removeRecipeFromDB(Long id) throws ConnectException, DAOException {
+		RecipeDAO.getInstance().removeRelationZubereitungsByRecipeId(id);
+		RecipeHasArtikelDAO.getInstance().removeRelationItemByRecipeId(id);
+		RecipeDAO.getInstance().removeRecipe(id);
+	}
 	
 	
 	
@@ -82,4 +87,5 @@ public class RecipeService {
 	public List<Recipetype> getAllRecipetypes() throws ConnectException, DAOException, SQLException {
 		return RecipetypeDAO.getInstance().getAllRecipetypes();
 	}
+
 }

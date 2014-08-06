@@ -24,7 +24,10 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.TwinColSelect;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window.CloseEvent;
+import com.vaadin.ui.Window.CloseListener;
 
+import de.bistrosoft.palaver.gui.view.MenueAnlegen;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
@@ -40,6 +43,7 @@ import de.palaver.management.recipe.Recipetype;
 import de.palaver.management.recipe.Zubereitung;
 import de.palaver.management.recipe.service.RecipeService;
 import de.palaver.management.util.Helper;
+import de.palaver.view.bean.artikelverwaltung.ChangeItemBean;
 import de.palaver.view.bean.helpers.HTMLComponents;
 import de.palaver.view.bean.helpers.TemplateBuilder;
 import de.palaver.view.bean.helpers.wrappers.RezeptHasArtikelWrapper;
@@ -177,12 +181,66 @@ public class ChangeRecipeBean extends TemplateBuilder implements View, ValueChan
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (validiereEingabe()) {
-					saveItem();		
+					saveItem();	
+					ViewHandler.getInstance().switchView(ShowRecipesBean.class, new ViewDataObject<Recipe>(m_recipe));
 				}							
 			}
-		});			
+		});		
+		
+		m_buttonVerwerfen.addClickListener(new ClickListener() {			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				ViewHandler.getInstance().switchView(ShowRecipesBean.class);
+			}
+		});
+		
+		m_buttonDeaktiviren.addClickListener(new ClickListener() {			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				windowModalYesNoRemove(m_recipe);	
+			}
+		});
+		
+		m_buttonAddItem.addClickListener(new ClickListener() {			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getWindowFactory(new ChangeItemBean());
+			}
+		});
+		
+		m_buttonAddToMenue.addClickListener(new ClickListener() {			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if (validiereEingabe()) {
+					saveItem();	
+					ViewHandler.getInstance().switchView(MenueAnlegen.class, new ViewDataObject<Recipe>(m_recipe));	
+				}
+			}
+		});
 	}
 	
+
+
+	@SuppressWarnings("serial")
+	private void getWindowFactory(final Object object) {	
+		if(object instanceof ChangeItemBean) {
+			addComponent((ChangeItemBean) object);
+			m_window = windowUI(CREATE_NEW_ARTIKEL, true, false, "950", "500");
+			m_window.setContent((ChangeItemBean) object);			
+		} 
+		
+		UI.getCurrent().addWindow(m_window);
+		m_window.addCloseListener(new CloseListener() {			
+			@Override
+			public void windowClose(CloseEvent e) {
+				if(((ChangeItemBean) object).getArtikel() != null) {
+					m_containerItem.addItem(((ChangeItemBean) object).getArtikel());
+				} 
+			}
+		});
+	}
+
+
 	private boolean validiereEingabe() {
 		boolean bool = true;
 		if (StringUtils.isBlank(m_nameField.getValue())) {
@@ -221,8 +279,7 @@ public class ChangeRecipeBean extends TemplateBuilder implements View, ValueChan
 				RecipeService.getInstance().updateRelationItem(m_recipe.getId(), m_containerRezeptHasArtikel.getItemIds());
 			}			
 			((Application) UI.getCurrent().getData()).showDialog(String.format(MESSAGE_SUSSEFULL_ARG_1, 
-					"Rezept"));
-			ViewHandler.getInstance().switchView(ShowRecipesBean.class);			
+					"Rezept"));			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 		
@@ -251,13 +308,13 @@ public class ChangeRecipeBean extends TemplateBuilder implements View, ValueChan
 			m_table.setVisibleColumns(new Object[] { "artikelname", "menge", "mengeneinheit", "comment" });		
 			m_table.setColumnHeader("comment", "notiz");
 		} catch (Exception e) {
+			//FIXME Popup
 			e.printStackTrace();
 		}
 	}
 	
 	private void loadContent() {
-		Object[] objects = {new Employee(), new Recipetype()};
-		
+		Object[] objects = {new Employee(), new Recipetype()};		
 		for (Object object : objects) {
 			loadAllForSelectFactory(object);
 		}
@@ -278,6 +335,7 @@ public class ChangeRecipeBean extends TemplateBuilder implements View, ValueChan
 				}				 
 			}
 		} catch (Exception e) {
+			//FIXME Popup
 			e.printStackTrace();
 		}
 	}
@@ -329,7 +387,7 @@ public class ChangeRecipeBean extends TemplateBuilder implements View, ValueChan
 		m_table.markAsDirty();
 		m_filterTable.markAsDirty();
 	}
-	//TODO: zubeeitung nicht fnkt
+
 	private void setDataToTwinColSelect() {
 		try {
 			for (Zubereitung zubereitung : RecipeService.getInstance().getAllZubereitungs()) {
@@ -347,13 +405,13 @@ public class ChangeRecipeBean extends TemplateBuilder implements View, ValueChan
 		m_nameField.addValueChangeListener(new ValueChangeListener() {			
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				m_recipe.setName(event.getProperty().getValue().toString());	
+				m_recipe.setName(String.valueOf(event.getProperty().getValue()));	
 			}
 		});
 		m_commentField.addValueChangeListener(new ValueChangeListener() {			
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				m_recipe.setKommentar(event.getProperty().getValue().toString());	
+				m_recipe.setKommentar(String.valueOf(event.getProperty().getValue()));	
 			}
 		});
 		m_employeeSelect.addValueChangeListener(new ValueChangeListener() {			
@@ -374,13 +432,8 @@ public class ChangeRecipeBean extends TemplateBuilder implements View, ValueChan
 	public void getViewParam(ViewData data) {
 		if(((ViewDataObject<?>) data).getData() instanceof Recipe) {
 			try {
-				m_recipe = (Recipe)((ViewDataObject<?>) data).getData(); 			
-				getData().clear();
-				getData().put(m_nameField, m_recipe.getName());
-				getData().put(m_employeeSelect, m_recipe.getEmployee());
-				getData().put(m_recipetypeSelect, m_recipe.getRecipetype());
-				getData().put(m_commentField, m_recipe.getKommentar());
-				
+				m_recipe = (Recipe)((ViewDataObject<?>) data).getData(); 
+				setNewInfo();
 				setValueToComponent(getData());
 				
 				m_recipe.setZubereitungList(RecipeService.getInstance().getAllZubereitungsByRecipeId(m_recipe.getId()));				
@@ -396,11 +449,21 @@ public class ChangeRecipeBean extends TemplateBuilder implements View, ValueChan
 					m_containerItem.removeItem(rezeptHasArtikelWrapper.getRezeptHasArtikel().getArtikel());
 					m_containerRezeptHasArtikel.addItem(rezeptHasArtikelWrapper);
 				}
-				
-				m_toCreate = false;		
 			} catch (Exception e) {
 				e.printStackTrace();
 			} 			
 		}
+	}
+	
+	private void setNewInfo() {
+		getData().clear();
+		getData().put(m_nameField, m_recipe.getName());
+		getData().put(m_employeeSelect, m_recipe.getEmployee());
+		getData().put(m_recipetypeSelect, m_recipe.getRecipetype());
+		getData().put(m_commentField, m_recipe.getKommentar());
+		
+		m_toCreate = false;		
+		m_headLine.setValue("Rezept bearbeiten");
+		m_buttonDeaktiviren.setVisible(true);
 	}
 }
