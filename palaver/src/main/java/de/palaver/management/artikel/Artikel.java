@@ -23,7 +23,7 @@ public class Artikel extends EntityName implements Serializable {
 	private boolean m_fuerRezept;
 	
 	public Artikel() {
-		this(null, null);
+		super();
 	}
 
 	public Artikel(Long id, String name) {

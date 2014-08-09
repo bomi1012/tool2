@@ -4,8 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.vaadin.risto.stepper.IntStepper;
+
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
@@ -15,6 +18,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+import de.palaver.Application;
 import de.palaver.view.layout.popup.YesNoPopup;
 
 public class AbstractView extends VerticalLayout {
@@ -52,6 +56,7 @@ public class AbstractView extends VerticalLayout {
 	protected static final String MESSAGE_LEER_ARG_1 = "Tragen Sie bitte im Feld %s den Wert ein";
 	protected static final String MESSAGE_EXISTS_ARG_1 = "Der Name %s ist bereits im System vorhanden";
 	protected static final String MESSAGE_SUSSEFULL_ARG_1 = "%s wurde erfolgreich gespeichert";
+	protected static final String MESSAGE_NUMBER_FORMAT = "NumberFormatException: Erlaubte Zeichnen sind '%s'";
 
 
 	private RemoveObjectStrategy m_strategy;
@@ -87,14 +92,23 @@ public class AbstractView extends VerticalLayout {
 
 	protected void setValueToComponent(Map<Component, Object> hashMap) {
 		for (Entry<Component, Object> element : hashMap.entrySet()) {
-			if (element.getKey() instanceof TextField)
-				((TextField) element.getKey()).setValue((String) element
-						.getValue());
+			if (element.getKey() instanceof TextField) {
+				if (element.getValue() instanceof Float) {
+					((TextField) element.getKey()).setValue(String.valueOf((Float) element.getValue()));
+				} else if (element.getValue() instanceof String) {
+					((TextField) element.getKey()).setValue((String) element.getValue());
+				} else if (element.getValue() instanceof Double) {
+					((TextField) element.getKey()).setValue(String.valueOf((Double) element.getValue()));
+				}
+			}
 			if (element.getKey() instanceof NativeSelect)
 				((NativeSelect) element.getKey()).setValue(element.getValue());
 			if (element.getKey() instanceof TextArea)
-				((TextArea) element.getKey()).setValue((String) element
-						.getValue());
+				((TextArea) element.getKey()).setValue((String) element.getValue());
+			if (element.getKey() instanceof CheckBox)
+				((CheckBox) element.getKey()).setValue((Boolean) element.getValue());
+			if (element.getKey() instanceof IntStepper)
+				((IntStepper) element.getKey()).setValue((Integer) element.getValue());
 		}
 	}
 
@@ -122,5 +136,9 @@ public class AbstractView extends VerticalLayout {
 				window.close();
 			}
 		});
+	}
+	
+	protected void message(String text, String wort) {
+		((Application) UI.getCurrent().getData()).showDialog(String.format(text, wort));
 	}
 }

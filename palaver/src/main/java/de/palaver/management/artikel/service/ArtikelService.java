@@ -65,16 +65,15 @@ public class ArtikelService {
 		ArtikelDAO.getInstance().updateArtikel(artikel);
 	}
 
-	public void deaktivireArtikel(Artikel artikel) throws ConnectException,
-			DAOException {
-		ArtikelDAO.getInstance().deaktivirenArtikel(artikel.getId());
-	}
-
 	public List<Artikel> getGrundbedarfByLieferantId(Long id) throws ConnectException, DAOException, SQLException {
 		return ArtikelDAO.getInstance().getGrundbedarfByLieferantId(id);
 	}
 
 	public List<Artikel> getArtikelByGrundbedarf() throws ConnectException, DAOException, SQLException {
 		return ArtikelDAO.getInstance().getArtikelByGrundbedarf();
+	}
+
+	public void removeArtikel(Long artikelId) throws ConnectException, DAOException {
+		ArtikelDAO.getInstance().removeArtikel(artikelId);
 	}
 }

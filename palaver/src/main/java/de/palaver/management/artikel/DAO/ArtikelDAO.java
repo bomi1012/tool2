@@ -224,10 +224,6 @@ public class ArtikelDAO extends AbstractDAO {
 				+ " WHERE id = " + artikel.getId());
 	}
 		
-	public void deaktivirenArtikel(Long id) throws ConnectException, DAOException {
-		putManaged("UPDATE artikel SET `status` = " + 1 + " WHERE id = " + id);
-	}
-
 	/**
 	 * a.id,
 	 * a.name, 
@@ -305,5 +301,9 @@ public class ArtikelDAO extends AbstractDAO {
 		}
 		closeConnection();
 		return m_list;
+	}
+
+	public void removeArtikel(Long artikelId) throws ConnectException, DAOException {
+		putManaged("DELETE FROM artikel WHERE id = " + artikelId);
 	}	
 }

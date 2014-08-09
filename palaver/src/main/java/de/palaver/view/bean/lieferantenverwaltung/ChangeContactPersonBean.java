@@ -45,8 +45,8 @@ public class ChangeContactPersonBean extends ChangeFieldsPersonAbstract implemen
 		m_headLine = title("Neuen Ansprechpartner anlegen", STYLE_HEADLINE_STANDART);
 		
 		m_subHeadInformation = title("Information", STYLE_HEADLINE_SUB);
-		m_nameField = textField("Ansprechpartnername", WIDTH_FULL, true, "Ansprechpartnername", this);
-		m_descriptionField = textField("Bezeichnung", WIDTH_FULL, false, "Bezeichnung", this);
+		m_nameField = textField("Ansprechpartnername", WIDTH_FULL, true, "Ansprechpartnername", 0);
+		m_descriptionField = textField("Bezeichnung", WIDTH_FULL, false, "Bezeichnung", 0);
 		
 		getContactDataDefinition();
 		getAddressDataDefinition();	

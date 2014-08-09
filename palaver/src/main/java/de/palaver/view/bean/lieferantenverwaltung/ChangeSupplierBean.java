@@ -66,10 +66,10 @@ public class ChangeSupplierBean extends ChangeFieldsPersonAbstract implements Vi
 		m_headLine = title("Lieferant ändern", STYLE_HEADLINE_STANDART);
 		
 		m_subHeadPersonDaten = title("Persönliche Daten", STYLE_HEADLINE_SUB);
-		m_nameField = textField("Lieferantname", WIDTH_FULL, true, "Lieferantname", this);
-		m_numberField = textField("Lieferantnummer", WIDTH_FULL, false, "Lieferantnummer", this);
-		m_descriptionField = textField("Bezeichnung", WIDTH_FULL, false, "Bezeichnung", this);
-		m_commentField = textArea("Kommentar", WIDTH_FULL, "60", false, "Kommentar", this);
+		m_nameField = textField("Lieferantname", WIDTH_FULL, true, "Lieferantname", 0);
+		m_numberField = textField("Lieferantnummer", WIDTH_FULL, false, "Lieferantnummer", 0);
+		m_descriptionField = textField("Bezeichnung", WIDTH_FULL, false, "Bezeichnung", 0);
+		m_commentField = textArea("Kommentar", WIDTH_FULL, "60", false, "Kommentar", 0);
 		
 		getContactDataDefinition();
 		getAddressDataDefinition();

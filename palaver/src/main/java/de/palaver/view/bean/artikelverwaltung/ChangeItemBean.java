@@ -1,7 +1,6 @@
 package de.palaver.view.bean.artikelverwaltung;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.lang.StringUtils;
 import org.vaadin.risto.stepper.IntStepper;
 
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -20,12 +19,10 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.Window.CloseEvent;
 import com.vaadin.ui.Window.CloseListener;
 
-import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
-import de.palaver.Application;
 import de.palaver.management.artikel.Artikel;
 import de.palaver.management.artikel.Kategorie;
 import de.palaver.management.artikel.Lagerort;
@@ -41,7 +38,6 @@ import de.palaver.view.bean.lieferantenverwaltung.ChangeSupplierBean;
 
 public class ChangeItemBean extends TemplateBuilder implements View, ValueChangeListener {
 	private static final long serialVersionUID = 8763219450376751801L;
-	private static final Logger LOG = LoggerFactory.getLogger(ChangeItemBean.class.getName());
 
 	private static final String TITLE_NEW_ARTIKEL = "Neuer Artikel erstellen";
 	private static final String TEXT_FIELD_ARTIKEL_NAME = "Artikelname";
@@ -49,6 +45,10 @@ public class ChangeItemBean extends TemplateBuilder implements View, ValueChange
 	private static final String TEXT_FIELD_ARTIKEL_NUMMER = "Artikelnummer";
 	private static final String TEXT_FIELD_ARTIKEL_GEBINDE = "Gebinde";
 	private static final String TEXT_FIELD_ARTIKEL_NOTIZ = "Notiz";
+	private static final String TEXT_FIELD_ARTIKEL_MENGENEINHEIT = "Mengeneinheit";
+	private static final String TEXT_FIELD_ARTIKEL_LIEFERANT = "Lieferant";
+	private static final String TEXT_FIELD_ARTIKEL_KATEGORIE = "Kategorie";
+	private static final String TEXT_FIELD_ARTIKEL_LAGERORT = "Lagerort";
 	
 	private Artikel m_artikel;
 	public Artikel getArtikel() { return m_artikel; }
@@ -57,7 +57,7 @@ public class ChangeItemBean extends TemplateBuilder implements View, ValueChange
 	/** TextFields */
 	private TextField m_nameField;
 	private TextField m_preisField;
-	private TextField m_nummerField;
+	private TextField m_numberField;
 	private TextField m_gebindeField;
 	private TextField m_notizField;
 
@@ -90,10 +90,11 @@ public class ChangeItemBean extends TemplateBuilder implements View, ValueChange
 		init();
 		componetsManager();
 		templateBuilder();
-		listener();
-		loadContent();
+		clickListener();
+		changeListner();
+		loadContentNativeSelect();
 	}
-	
+
 	public void init() {
 		m_toCreate = true;
 		m_artikel = new Artikel();
@@ -101,16 +102,17 @@ public class ChangeItemBean extends TemplateBuilder implements View, ValueChange
 	
 	private void componetsManager() {
 		m_headLine = title(TITLE_NEW_ARTIKEL, STYLE_HEADLINE_STANDART);
-		m_nameField = textField(TEXT_FIELD_ARTIKEL_NAME, WIDTH_FULL, true, TEXT_FIELD_ARTIKEL_NAME, this);
-		m_preisField = textField(TEXT_FIELD_ARTIKEL_PREIS, WIDTH_FULL, false, TEXT_FIELD_ARTIKEL_PREIS, this);
-		m_nummerField = textField(TEXT_FIELD_ARTIKEL_NUMMER, WIDTH_FULL, false, TEXT_FIELD_ARTIKEL_NUMMER, this);
-		m_gebindeField = textField(TEXT_FIELD_ARTIKEL_GEBINDE, WIDTH_FULL, true, TEXT_FIELD_ARTIKEL_GEBINDE, this);
-		m_notizField = textField(TEXT_FIELD_ARTIKEL_NOTIZ, WIDTH_FULL, false, TEXT_FIELD_ARTIKEL_NOTIZ, this);
+		m_nameField = textField(TEXT_FIELD_ARTIKEL_NAME, WIDTH_FULL, true, TEXT_FIELD_ARTIKEL_NAME, 45);
+		m_preisField = textField(TEXT_FIELD_ARTIKEL_PREIS, WIDTH_FULL, false, TEXT_FIELD_ARTIKEL_PREIS, 10);
+		m_numberField = textField(TEXT_FIELD_ARTIKEL_NUMMER, WIDTH_FULL, false, TEXT_FIELD_ARTIKEL_NUMMER, 45);
+		m_gebindeField = textField(TEXT_FIELD_ARTIKEL_GEBINDE, WIDTH_FULL, true, TEXT_FIELD_ARTIKEL_GEBINDE, 17);
+		m_notizField = textField(TEXT_FIELD_ARTIKEL_NOTIZ, WIDTH_FULL, false, TEXT_FIELD_ARTIKEL_NOTIZ, 90);
 		
-		m_lieferantSelect = nativeSelect("Lieferant", WIDTH_FULL, true, "Lieferant", this);
-		m_mengeneinheitSelect = nativeSelect("Mengeneinheit", WIDTH_FULL, true, "Mengeneinheit", this);
-		m_kategorieSelect = nativeSelect("Kategorie", WIDTH_FULL, true, "Kategorie", this);
-		m_lagerortSelect = nativeSelect("Lagerort", WIDTH_FULL, true, "Lagerort", this);
+		m_lieferantSelect = nativeSelect(TEXT_FIELD_ARTIKEL_LIEFERANT, WIDTH_FULL, true, TEXT_FIELD_ARTIKEL_LIEFERANT, this);
+		m_mengeneinheitSelect = nativeSelect(TEXT_FIELD_ARTIKEL_MENGENEINHEIT, WIDTH_FULL, true, 
+				TEXT_FIELD_ARTIKEL_MENGENEINHEIT, this);
+		m_kategorieSelect = nativeSelect(TEXT_FIELD_ARTIKEL_KATEGORIE, WIDTH_FULL, true, TEXT_FIELD_ARTIKEL_KATEGORIE, this);
+		m_lagerortSelect = nativeSelect(TEXT_FIELD_ARTIKEL_LAGERORT, WIDTH_FULL, true, TEXT_FIELD_ARTIKEL_LAGERORT, this);
 		
 		m_addLieferantButton = button(BUTTON_TEXT_CREATE, BUTTON_ICON_CREATE, true, true); 
 		m_addMengeneinheitButton= button(BUTTON_TEXT_CREATE, BUTTON_ICON_CREATE, true, true); 
@@ -137,7 +139,7 @@ public class ChangeItemBean extends TemplateBuilder implements View, ValueChange
 		innerBox.addComponent(m_headLine);
 		innerBox.addComponent(new Hr());
 		innerBox.addComponent(m_nameField);
-		innerBox.addComponent(m_nummerField);
+		innerBox.addComponent(m_numberField);
 		innerBox.addComponent(m_preisField);
 		innerBox.addComponent(m_notizField);
 		
@@ -163,94 +165,43 @@ public class ChangeItemBean extends TemplateBuilder implements View, ValueChange
 	}
 	
 	@SuppressWarnings("serial")
-	private void listener() {
-		/** ValueChangeListene */
-		m_grundbedarfCheckbox.addValueChangeListener(new ValueChangeListener() {
-			@Override
-			public void valueChange(final ValueChangeEvent event) {
-				m_durchschnittLT1.setVisible(!m_durchschnittLT1.isVisible());
-				m_durchschnittLT2.setVisible(!m_durchschnittLT2.isVisible());
-			}
-		});
-		
+	private void clickListener() {
 		m_buttonSpeichern.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (validiereEingabe()) {
 					saveItem();	
-					((Application) UI.getCurrent().getData()).showDialog(
-							String.format(MESSAGE_SUSSEFULL_ARG_1, "Artikel"));	
+					close();
 				}
 			}
 
 			private boolean validiereEingabe() {
-				boolean isNotValid = false;
-				/** preis */
-				if (!m_preisField.getValue().isEmpty()) {
-					try {
-						Float.parseFloat(m_preisField.getValue());
-					} catch (NumberFormatException e) {
-						((Application) UI.getCurrent().getData())
-								.showDialog(IConstants.INFO_ARTIKEL_PREIS);
-						return isNotValid;
+				boolean isValid = true;
+				if (StringUtils.isBlank(m_nameField.getValue())) {
+					message(MESSAGE_LEER_ARG_1, TEXT_FIELD_ARTIKEL_NAME);
+					isValid = false;
+				} else if (m_mengeneinheitSelect.getValue() == null) {
+					message(MESSAGE_LEER_ARG_1, TEXT_FIELD_ARTIKEL_MENGENEINHEIT);
+					isValid = false;
+				} else if (m_kategorieSelect.getValue() == null) {
+					message(MESSAGE_LEER_ARG_1, TEXT_FIELD_ARTIKEL_KATEGORIE);
+					isValid = false;
+				} else if (m_lieferantSelect.getValue() == null) {
+					message(MESSAGE_LEER_ARG_1, TEXT_FIELD_ARTIKEL_LIEFERANT);
+					isValid = false;
+				} else if (m_lagerortSelect.getValue() == null) {
+					message(MESSAGE_LEER_ARG_1, TEXT_FIELD_ARTIKEL_LAGERORT);
+					isValid = false;
+				} else if (!m_fuerRezepteCheckbox.getValue()) {
+					if (StringUtils.isBlank(m_gebindeField.getValue())) {
+						message(MESSAGE_LEER_ARG_1, TEXT_FIELD_ARTIKEL_GEBINDE);
+						isValid = false;
 					}
 				}
-				
-				try {
-					Double.parseDouble(m_gebindeField.getValue());
-				} catch (NumberFormatException e) {
-					((Application) UI.getCurrent().getData())
-							.showDialog(IConstants.INFO_ARTIKEL_GEBINDE);
-					return isNotValid;
-				}
-
-				if (m_nameField.getValue() == "") {
-					((Application) UI.getCurrent().getData())
-							.showDialog(IConstants.INFO_ARTIKEL_NAME);
-					return isNotValid;
-				}
-				
-				if (m_mengeneinheitSelect.getValue() == null) {
-					((Application) UI.getCurrent().getData())
-							.showDialog(IConstants.INFO_ARTIKEL_MENGENEINHEIT_B);
-					return isNotValid;
-				}
-				
-				if (m_kategorieSelect.getValue() == null) {
-					((Application) UI.getCurrent().getData())
-							.showDialog(IConstants.INFO_ARTIKEL_KATEGORIE);
-					return isNotValid;
-				}
-				
-				if (!m_fuerRezepteCheckbox.getValue()) {
-					if (m_gebindeField.getValue() == null
-							|| Double.parseDouble(m_gebindeField.getValue().toString()) < 0.1) {
-						((Application) UI.getCurrent().getData())
-								.showDialog(IConstants.INFO_ARTIKEL_GEBINDE);
-						return isNotValid;
-					}
-				}
-				return true;
+				return isValid;
 			}
 			
 			private void saveItem() {
-				m_artikel.setName(m_nameField.getValue());// name
-				m_artikel.setArtikelnr(m_nummerField.getValue()); // nr
-				m_artikel.setPreis((m_preisField.getValue() == "") ? 0F : 
-						Float.parseFloat(m_preisField.getValue().replace(',', '.')));// price
-				m_artikel.setNotiz(m_notizField.getValue());// Notiz
-				m_artikel.setDurchschnittLT1(m_durchschnittLT1.getValue()); // GebindeAnzahl
-				m_artikel.setDurchschnittLT2(m_durchschnittLT2.getValue()); // GebindeAnzahl
-				m_artikel.setKategorie((Kategorie) m_kategorieSelect.getValue()); // kategorie
-				m_artikel.setLieferant((Supplier) m_lieferantSelect.getValue()); // Lieferant
-				m_artikel.setLagerort((Lagerort) m_lagerortSelect.getValue());
-				m_artikel.setMengeneinheit((Mengeneinheit) m_mengeneinheitSelect
-						.getValue()); 
-				m_artikel.setBestellgroesse(Double.parseDouble(m_gebindeField.getValue()));
-				m_artikel.setGrundbedarf(m_grundbedarfCheckbox.getValue()); // grundbedarf
-				m_artikel.setStandard(m_standardCheckbox.getValue());
-				m_artikel.setFuerRezept(m_fuerRezepteCheckbox.getValue());				
-				
 				try {
 					if (m_toCreate) {
 						ArtikelService.getInstance().createArtikel(m_artikel);		
@@ -258,8 +209,9 @@ public class ChangeItemBean extends TemplateBuilder implements View, ValueChange
 					} else {
 						ArtikelService.getInstance().updateArtikel(m_artikel);
 					}
+					message(MESSAGE_SUSSEFULL_ARG_1, "Artikel");	
 				} catch (Exception e) {
-					LOG.error(e.toString());
+					e.printStackTrace();
 				}
 			}
 		});
@@ -275,8 +227,7 @@ public class ChangeItemBean extends TemplateBuilder implements View, ValueChange
 		m_buttonDeaktiviren.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				//TODO: visible = false --> implementieren!
-				//sehe m_control
+				windowModalYesNoRemove(m_artikel);	
 			}
 		});
 
@@ -307,16 +258,124 @@ public class ChangeItemBean extends TemplateBuilder implements View, ValueChange
 		});			
 	}
 	
+	@SuppressWarnings("serial")
+	private void changeListner() {
+		m_nameField.addValueChangeListener(new ValueChangeListener() {			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				m_artikel.setName((String) event.getProperty().getValue());
+			}
+		});
+		m_numberField.addValueChangeListener(new ValueChangeListener() {			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				m_artikel.setArtikelnr((String) event.getProperty().getValue());
+			}
+		});
+		m_preisField.addValueChangeListener(new ValueChangeListener() {			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				try {
+					m_artikel.setPreis(Float.parseFloat(((String) event.getProperty().getValue()).replace(',', '.')));
+				} catch (NumberFormatException nfe) {
+			    	message(MESSAGE_NUMBER_FORMAT, "0-9.");
+			    	if (m_artikel.getPreis() != null) {
+			    		m_preisField.setValue(String.valueOf(m_artikel.getPreis())); 
+			    	} else {
+			    		m_preisField.setValue(StringUtils.EMPTY);
+			    	}
+			    }	
+			}
+		});
+		m_notizField.addValueChangeListener(new ValueChangeListener() {			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				m_artikel.setNotiz((String) event.getProperty().getValue());
+			}
+		});		
+		m_durchschnittLT1.addValueChangeListener(new ValueChangeListener() {			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				m_artikel.setDurchschnittLT1((Integer) event.getProperty().getValue());
+			}
+		});
+		m_durchschnittLT2.addValueChangeListener(new ValueChangeListener() {			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				m_artikel.setDurchschnittLT2((Integer) event.getProperty().getValue());
+			}
+		});
+		m_kategorieSelect.addValueChangeListener(new ValueChangeListener() {			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				m_artikel.setKategorie((Kategorie) event.getProperty().getValue());
+			}
+		});
+		m_mengeneinheitSelect.addValueChangeListener(new ValueChangeListener() {			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				m_artikel.setMengeneinheit((Mengeneinheit) event.getProperty().getValue());
+			}
+		});
+		m_lagerortSelect.addValueChangeListener(new ValueChangeListener() {			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				m_artikel.setLagerort((Lagerort) event.getProperty().getValue());
+			}
+		});
+		m_lieferantSelect.addValueChangeListener(new ValueChangeListener() {			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				m_artikel.setLieferant((Supplier) event.getProperty().getValue());
+			}
+		});		
+		m_gebindeField.addValueChangeListener(new ValueChangeListener() {			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				try {
+					m_artikel.setBestellgroesse(Double.parseDouble(((String) event.getProperty().getValue()).replace(',', '.')));
+				} catch (NumberFormatException nfe) {
+			    	message(MESSAGE_NUMBER_FORMAT, "0-9.");
+			    	if (m_artikel.getBestellgroesse() != null) {
+			    		m_gebindeField.setValue(String.valueOf(m_artikel.getBestellgroesse())); 
+			    	} else {
+			    		m_gebindeField.setValue(StringUtils.EMPTY);
+			    	}
+			    }	
+			}
+		});
+		m_grundbedarfCheckbox.addValueChangeListener(new ValueChangeListener() {
+			@Override
+			public void valueChange(final ValueChangeEvent event) {
+				m_artikel.setGrundbedarf((Boolean) event.getProperty().getValue());
+				m_durchschnittLT1.setVisible(!m_durchschnittLT1.isVisible());
+				m_durchschnittLT2.setVisible(!m_durchschnittLT2.isVisible());
+			}
+		});
+		m_standardCheckbox.addValueChangeListener(new ValueChangeListener() {			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				m_artikel.setStandard((Boolean) event.getProperty().getValue());
+			}
+		});
+		
+		m_fuerRezepteCheckbox.addValueChangeListener(new ValueChangeListener() {			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				m_artikel.setFuerRezept((Boolean) event.getProperty().getValue());
+			}
+		});
+	}
+	
 	private void close() {
-		if (ChangeItemBean.this.getParent() instanceof Window) {					
-			Window win = (Window) ChangeItemBean.this.getParent();
-			win.close();
+		if (ChangeItemBean.this.getParent() instanceof Window) {	
+			((Window) ChangeItemBean.this.getParent()).close();
 		} else {
 			ViewHandler.getInstance().switchView(ShowItemsBean.class);
 		}
-	}
-		
-	private void loadContent() {
+	}	
+			
+	private void loadContentNativeSelect() {
 		Object[] objects = {new ChangeSupplierBean(), new ChangeQuantityUnitBean(), 
 				new ChangeWarehouseBean(), new ChangeKategoryBean()};
 		
@@ -386,41 +445,41 @@ public class ChangeItemBean extends TemplateBuilder implements View, ValueChange
 				}
 			}
 		} catch (Exception e) {
-			LOG.error(e.toString());
 			e.printStackTrace();
 		}
 	}
-	
-	///////////////////////////////////////////////////////////////////////////
-	
 
 	@Override
 	public void getViewParam(ViewData data) {		
 		if(((ViewDataObject<?>) data).getData() instanceof Artikel) {
 			m_artikel = (Artikel)((ViewDataObject<?>) data).getData();
-			
-			m_nameField.setValue(m_artikel.getName());
-			m_nummerField.setValue(m_artikel.getArtikelnr());
-			m_preisField.setValue(String.valueOf(m_artikel.getPreis()));
-			m_lieferantSelect.select(m_artikel.getLieferant());
-			m_kategorieSelect.select(m_artikel.getKategorie());
-			m_lagerortSelect.select(m_artikel.getLagerort());
-			m_fuerRezepteCheckbox.setValue(m_artikel.isFuerRezept());
-			m_gebindeField.setValue(String.valueOf(m_artikel.getBestellgroesse()));
-			m_standardCheckbox.setValue(m_artikel.isStandard());
-			m_grundbedarfCheckbox.setValue(m_artikel.isGrundbedarf());
-			m_durchschnittLT1.setValue(m_artikel.getDurchschnittLT1());
-			m_durchschnittLT2.setValue(m_artikel.getDurchschnittLT2());
-			m_notizField.setValue(m_artikel.getNotiz());
-			m_mengeneinheitSelect.select(m_artikel.getMengeneinheit());
-			
-			m_toCreate = false;
+			setNewInfo();			
+			setValueToComponent(getData());	
 		} 
 	}
 
+	private void setNewInfo() {
+		getData().clear();
+		getData().put(m_nameField, m_artikel.getName());
+		getData().put(m_numberField, m_artikel.getArtikelnr());
+		getData().put(m_preisField, m_artikel.getPreis());
+		getData().put(m_mengeneinheitSelect, m_artikel.getMengeneinheit());
+		getData().put(m_lieferantSelect, m_artikel.getLieferant());
+		getData().put(m_kategorieSelect, m_artikel.getKategorie());
+		getData().put(m_lagerortSelect, m_artikel.getLagerort());
+		getData().put(m_fuerRezepteCheckbox, m_artikel.isFuerRezept());
+		getData().put(m_gebindeField, m_artikel.getBestellgroesse());
+		getData().put(m_standardCheckbox, m_artikel.isStandard());
+		getData().put(m_grundbedarfCheckbox, m_artikel.isGrundbedarf());
+		getData().put(m_durchschnittLT1, m_artikel.getDurchschnittLT1());
+		getData().put(m_durchschnittLT2, m_artikel.getDurchschnittLT2());
+		getData().put(m_notizField, m_artikel.getNotiz());
+
+		m_toCreate = false;		
+		m_headLine.setValue("Artikel bearbeiten");
+		m_buttonDeaktiviren.setVisible(true);		
+	}
 
 	@Override
-	public void valueChange(ValueChangeEvent event) {
-			
-	}
+	public void valueChange(ValueChangeEvent event) { }
 }

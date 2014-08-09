@@ -89,7 +89,7 @@ public class ChangeRecipeBean extends TemplateBuilder implements View, ValueChan
 
 	private void componetsManager() {
 		m_headLine = title("Rezept anlegen", STYLE_HEADLINE_STANDART);
-		m_nameField = textField("Rezeptname", WIDTH_FULL, true, "Rezeptname", this);
+		m_nameField = textField("Rezeptname", WIDTH_FULL, true, "Rezeptname", 0);
 		m_employeeSelect = nativeSelect("Mitarbeiter", WIDTH_FULL, true, "Mitarbeiter", this);
 		m_recipetypeSelect = nativeSelect("Rezeptart", WIDTH_FULL, true, "Rezeptart", this);
 		m_commentField = textArea("Kommentar", WIDTH_FULL, "60", false, "Kommentar", this);
@@ -219,8 +219,6 @@ public class ChangeRecipeBean extends TemplateBuilder implements View, ValueChan
 		});
 	}
 	
-
-
 	@SuppressWarnings("serial")
 	private void getWindowFactory(final Object object) {	
 		if(object instanceof ChangeItemBean) {
@@ -239,7 +237,6 @@ public class ChangeRecipeBean extends TemplateBuilder implements View, ValueChan
 			}
 		});
 	}
-
 
 	private boolean validiereEingabe() {
 		boolean bool = true;
@@ -278,8 +275,7 @@ public class ChangeRecipeBean extends TemplateBuilder implements View, ValueChan
 				RecipeService.getInstance().updateRelationZubereitung(m_recipe.getId(), setZubereitungs());
 				RecipeService.getInstance().updateRelationItem(m_recipe.getId(), m_containerRezeptHasArtikel.getItemIds());
 			}			
-			((Application) UI.getCurrent().getData()).showDialog(String.format(MESSAGE_SUSSEFULL_ARG_1, 
-					"Rezept"));			
+			message(MESSAGE_SUSSEFULL_ARG_1, "Rezept");	
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 		
@@ -360,8 +356,7 @@ public class ChangeRecipeBean extends TemplateBuilder implements View, ValueChan
 				}
 				mark();
 			}
-		});
-		
+		});		
 		
 		m_filterTable.setDropHandler(new DropHandler() {
 			@Override

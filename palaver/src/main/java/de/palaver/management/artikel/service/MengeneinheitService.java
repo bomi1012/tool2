@@ -50,8 +50,8 @@ public class MengeneinheitService {
 	public void updateMengeneinheit(Mengeneinheit mengeneinheit) throws ConnectException, DAOException, SQLException {
 		MengeneinheitDAO.getInstance().updateMengeneinheit(mengeneinheit);
 	}
-	public void deleteMengeneinheit(Long id) throws ConnectException, DAOException {
-		MengeneinheitDAO.getInstance().deleteMengeneinheit(id);
+	public void removeMengeneinheit(Long id) throws ConnectException, DAOException {
+		MengeneinheitDAO.getInstance().removeMengeneinheit(id);
 		
 	}
 }

@@ -50,8 +50,8 @@ public class KategorieService {
 			DAOException, SQLException {
 		KategorieDAO.getInstance().updateKategorie(kategorie);
 	}
-	
-	public void deleteKategorie(Long id) throws ConnectException, DAOException {
-		KategorieDAO.getInstance().deleteKategorie(id); 		
+
+	public void removeKategorie(Long id) throws ConnectException, DAOException {
+		KategorieDAO.getInstance().removeKategorie(id); 	
 	}
 }

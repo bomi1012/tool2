@@ -71,20 +71,20 @@ abstract public class ChangeFieldsPersonAbstract extends TemplateBuilder{
 	
 	protected void getContactDataDefinition() {
 		m_subHeadKontaktDaten = title("Kontaktdaten", STYLE_HEADLINE_SUB);
-		m_telephonField = textField("Telefonnummer", WIDTH_FULL, false, "Telefonnummer", this);
-		m_handyField = textField("Handynummer", WIDTH_FULL, false, "Handynummer", this);		
-		m_faxField = textField("Fax", WIDTH_FULL, false, "Fax", this);
-		m_emailField = textField("E-Mail", WIDTH_FULL, false, "E-Mail", this);
-		m_webField = textField("Web", WIDTH_FULL, false, "Web", this);
+		m_telephonField = textField("Telefonnummer", WIDTH_FULL, false, "Telefonnummer", 0);
+		m_handyField = textField("Handynummer", WIDTH_FULL, false, "Handynummer", 0);		
+		m_faxField = textField("Fax", WIDTH_FULL, false, "Fax", 0);
+		m_emailField = textField("E-Mail", WIDTH_FULL, false, "E-Mail", 0);
+		m_webField = textField("Web", WIDTH_FULL, false, "Web", 0);
 	}
 	
 	protected void getAddressDataDefinition() {		
 		m_subHeadAdressDaten = title("Adresse", STYLE_HEADLINE_SUB);
-		m_streetField = textField("Straﬂe", WIDTH_FULL, false, "Straﬂe", this);
-		m_housenumberField = textField("Housenummer", WIDTH_FULL, false, "Housenummer", this);
-		m_cityField = textField("Stadt", WIDTH_FULL, false, "Stadt", this);
-		m_plzField = textField("PLZ", WIDTH_FULL, false, "PLZ", this);
-		m_countryField = textField("Land", WIDTH_FULL, false, "Land", this);
+		m_streetField = textField("Straﬂe", WIDTH_FULL, false, "Straﬂe", 0);
+		m_housenumberField = textField("Housenummer", WIDTH_FULL, false, "Housenummer", 0);
+		m_cityField = textField("Stadt", WIDTH_FULL, false, "Stadt", 0);
+		m_plzField = textField("PLZ", WIDTH_FULL, false, "PLZ", 0);
+		m_countryField = textField("Land", WIDTH_FULL, false, "Land", 0);
 	}
 	
 	protected VerticalLayout vertikalLayoutBuilder(int order, String width) {

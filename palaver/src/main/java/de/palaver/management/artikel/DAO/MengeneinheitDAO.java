@@ -99,7 +99,7 @@ public class MengeneinheitDAO extends AbstractDAO {
 				"'" + mengeneinheit.getKurz() + "'", mengeneinheit.getId()));
 	}
 
-	public void deleteMengeneinheit(Long id) throws ConnectException, DAOException {
+	public void removeMengeneinheit(Long id) throws ConnectException, DAOException {
 		putManaged(MessageFormat.format(DELETE_QUERY, id));	
 		
 	}
