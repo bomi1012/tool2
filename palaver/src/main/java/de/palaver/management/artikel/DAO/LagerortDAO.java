@@ -61,7 +61,7 @@ public class LagerortDAO extends AbstractDAO {
 		putManaged(MessageFormat.format(UPDATE_QUERY, "'" + lagerort.getName() + "'", lagerort.getId()));
 	}
 	
-	public void deleteLagerort(Long id) throws ConnectException, DAOException {
+	public void removeLagerort(Long id) throws ConnectException, DAOException {
 		putManaged(MessageFormat.format(DELETE_QUERY, id));		
 	}
 

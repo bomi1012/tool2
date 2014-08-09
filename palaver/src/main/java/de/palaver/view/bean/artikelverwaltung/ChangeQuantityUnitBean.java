@@ -1,15 +1,11 @@
 package de.palaver.view.bean.artikelverwaltung;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -17,7 +13,6 @@ import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
-import de.palaver.Application;
 import de.palaver.dao.DAOException;
 import de.palaver.management.artikel.Mengeneinheit;
 import de.palaver.management.artikel.service.MengeneinheitService;
@@ -25,12 +20,9 @@ import de.palaver.view.bean.helpers.TemplateBuilder;
 
 public class ChangeQuantityUnitBean extends TemplateBuilder implements View, ValueChangeListener {
 	private static final long serialVersionUID = -3484101562729271738L;
-	private static final Logger LOG = LoggerFactory.getLogger(ChangeQuantityUnitBean.class.getName());
-	private static final String TITLE = "Neue Mengeneinheit erstellen";
+	private static final String TITLE = "Mengeneinheit erstellen";
 	private static final String TEXT_FIELD_MENGENEINHEIT_NAME = "Mengeneinheitname";
 	private static final String TEXT_FIELD_MENGENEINHEIT_SHORT = "Kürzel";
-	
-
 	
 	private Mengeneinheit m_mengeneinheit;
 	private boolean m_toCreate;
@@ -40,9 +32,10 @@ public class ChangeQuantityUnitBean extends TemplateBuilder implements View, Val
 	public ChangeQuantityUnitBean() {
 		super();
 		init();
-		componetsManager();
+		componetsManager();		
 		templateBuilder();
-		listener();
+		clickListener();
+		changeListener();
 	}
 
 	private void init() {
@@ -52,12 +45,12 @@ public class ChangeQuantityUnitBean extends TemplateBuilder implements View, Val
 
 	private void componetsManager() {
 		m_headLine = title(TITLE, STYLE_HEADLINE_STANDART);
-		m_nameField = textField(TEXT_FIELD_MENGENEINHEIT_NAME, WIDTH_FULL, true, TEXT_FIELD_MENGENEINHEIT_NAME, this);
-		m_shortField = textField(TEXT_FIELD_MENGENEINHEIT_SHORT, WIDTH_FULL, true, TEXT_FIELD_MENGENEINHEIT_SHORT, this);
-		m_control = controlPanel(this);
+		m_nameField = textField(TEXT_FIELD_MENGENEINHEIT_NAME, WIDTH_FULL, true, TEXT_FIELD_MENGENEINHEIT_NAME, 45);
+		m_shortField = textField(TEXT_FIELD_MENGENEINHEIT_SHORT, WIDTH_FULL, true, TEXT_FIELD_MENGENEINHEIT_SHORT, 5);
+		m_control = controlPanel(this);	
 	}
 	
-	private void templateBuilder() {
+	private void templateBuilder() {	
 		setMargin(true);
 		VerticalLayout innerBox = new VerticalLayout();		
 		innerBox.setWidth("65%");
@@ -78,43 +71,37 @@ public class ChangeQuantityUnitBean extends TemplateBuilder implements View, Val
 
 	
 	@SuppressWarnings("serial")
-	private void listener() {
+	private void clickListener() {
 		m_buttonSpeichern.addClickListener(new ClickListener() {
 			private static final long serialVersionUID = -8358053287073859472L;
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (validiereEingabe()) {
-					saveItem();
-					((Application) UI.getCurrent().getData()).showDialog(String.format(MESSAGE_SUSSEFULL_ARG_1, 
-							"Mengeneinheit"));		
+					saveItem();	
 					close();					
 				}
 			}
 			private void saveItem() {
-				m_mengeneinheit.setName(m_nameField.getValue());
-				m_mengeneinheit.setKurz(m_shortField.getValue());
 				try {
 					if (m_toCreate) {
 						MengeneinheitService.getInstance().createMengeneinheit(m_mengeneinheit);
 					} else {
 						MengeneinheitService.getInstance().updateMengeneinheit(m_mengeneinheit);
 					}
+					message(MESSAGE_SUSSEFULL_ARG_1, "Mengeneinheit");	
 				} catch (Exception e) {
-					LOG.error(e.toString());
 					if (e instanceof DAOException) {
-						((Application) UI.getCurrent().getData())
-						.showDialog(String.format(MESSAGE_EXISTS_ARG_1, m_nameField.getValue()));
+						message(MESSAGE_EXISTS_ARG_1, m_nameField.getValue());	
 					}
 				}
 			}
 			private boolean validiereEingabe() {
 				boolean isValid = true;
 				if (m_nameField.getValue().equals("")) {
-					((Application) UI.getCurrent().getData()).showDialog(String.format(MESSAGE_LEER_ARG_1, "Name"));
+					message(MESSAGE_LEER_ARG_1, TEXT_FIELD_MENGENEINHEIT_NAME);	
 					isValid = false;
-				}
-				if (m_shortField.getValue().equals("")) {
-					((Application) UI.getCurrent().getData()).showDialog(String.format(MESSAGE_LEER_ARG_1, "Abkürzung"));
+				} else if (m_shortField.getValue().equals("")) {
+					message(MESSAGE_LEER_ARG_1, TEXT_FIELD_MENGENEINHEIT_SHORT);	
 					isValid = false;
 				}
 				return isValid;
@@ -131,36 +118,54 @@ public class ChangeQuantityUnitBean extends TemplateBuilder implements View, Val
 		m_buttonDeaktiviren.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				//TODO: visible = false --> implementieren!
-				//sehe m_control
+				windowModalYesNoRemove(m_mengeneinheit);
+			}
+		});
+	}
+	
+	@SuppressWarnings("serial")
+	private void changeListener() {
+		m_nameField.addValueChangeListener(new ValueChangeListener() {		
+		@Override
+		public void valueChange(ValueChangeEvent event) {
+			m_mengeneinheit.setName(String.valueOf(event.getProperty().getValue()));				
+		}
+		});
+		m_shortField.addValueChangeListener(new ValueChangeListener() {			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				m_mengeneinheit.setKurz(String.valueOf(event.getProperty().getValue()));
 			}
 		});
 	}
 
 	private void close() {
 		if (ChangeQuantityUnitBean.this.getParent() instanceof Window) {					
-			Window win = (Window) ChangeQuantityUnitBean.this.getParent();
-			win.close();
+			((Window) ChangeQuantityUnitBean.this.getParent()).close();
 		} else {
 			ViewHandler.getInstance().switchView(ShowQuantitiesUnitBean.class);
 		}
 	}
 
 	@Override
-	public void valueChange(ValueChangeEvent event) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void valueChange(final ValueChangeEvent event) { }
 
 	@Override
 	public void getViewParam(ViewData data) {
 		if(((ViewDataObject<?>) data).getData() instanceof Mengeneinheit) {
-			m_mengeneinheit = (Mengeneinheit)((ViewDataObject<?>) data).getData();
-			
-			m_nameField.setValue(m_mengeneinheit.getName());
-			m_shortField.setValue(m_mengeneinheit.getKurz());
-			
-			m_toCreate = false;
+			m_mengeneinheit = (Mengeneinheit)((ViewDataObject<?>) data).getData();			
+			setNewInfo();			
+			setValueToComponent(getData());	
 		}		
+	}
+
+	private void setNewInfo() {
+		getData().clear();
+		getData().put(m_nameField, m_mengeneinheit.getName());
+		getData().put(m_shortField, m_mengeneinheit.getKurz());
+		
+		m_toCreate = false;		
+		m_headLine.setValue("Mengeneinheit bearbeiten");
+		m_buttonDeaktiviren.setVisible(true);
 	}
 }

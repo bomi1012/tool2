@@ -101,11 +101,11 @@ public class ChangeItemBean extends TemplateBuilder implements View, ValueChange
 	
 	private void componetsManager() {
 		m_headLine = title(TITLE_NEW_ARTIKEL, STYLE_HEADLINE_STANDART);
-		m_nameField = textField(TEXT_FIELD_ARTIKEL_NAME, WIDTH_FULL, true, TEXT_FIELD_ARTIKEL_NAME, this);
-		m_preisField = textField(TEXT_FIELD_ARTIKEL_PREIS, WIDTH_FULL, false, TEXT_FIELD_ARTIKEL_PREIS, this);
-		m_nummerField = textField(TEXT_FIELD_ARTIKEL_NUMMER, WIDTH_FULL, false, TEXT_FIELD_ARTIKEL_NUMMER, this);
-		m_gebindeField = textField(TEXT_FIELD_ARTIKEL_GEBINDE, WIDTH_FULL, true, TEXT_FIELD_ARTIKEL_GEBINDE, this);
-		m_notizField = textField(TEXT_FIELD_ARTIKEL_NOTIZ, WIDTH_FULL, false, TEXT_FIELD_ARTIKEL_NOTIZ, this);
+		m_nameField = textField(TEXT_FIELD_ARTIKEL_NAME, WIDTH_FULL, true, TEXT_FIELD_ARTIKEL_NAME, 0);
+		m_preisField = textField(TEXT_FIELD_ARTIKEL_PREIS, WIDTH_FULL, false, TEXT_FIELD_ARTIKEL_PREIS, 0);
+		m_nummerField = textField(TEXT_FIELD_ARTIKEL_NUMMER, WIDTH_FULL, false, TEXT_FIELD_ARTIKEL_NUMMER, 0);
+		m_gebindeField = textField(TEXT_FIELD_ARTIKEL_GEBINDE, WIDTH_FULL, true, TEXT_FIELD_ARTIKEL_GEBINDE, 0);
+		m_notizField = textField(TEXT_FIELD_ARTIKEL_NOTIZ, WIDTH_FULL, false, TEXT_FIELD_ARTIKEL_NOTIZ, 0);
 		
 		m_lieferantSelect = nativeSelect("Lieferant", WIDTH_FULL, true, "Lieferant", this);
 		m_mengeneinheitSelect = nativeSelect("Mengeneinheit", WIDTH_FULL, true, "Mengeneinheit", this);

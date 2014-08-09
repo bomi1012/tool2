@@ -223,8 +223,8 @@ public class TemplateBuilder extends AbstractView {
 		return HTMLComponents.headLine(title, style);	
 	}
 	
-	protected TextField textField(String name, String width, boolean required, String descript, Object object) {
-		return HTMLComponents.textFieldConfiguration(name, width, required, descript, object);
+	protected TextField textField(String name, String width, boolean required, String descript, int maxLength) {
+		return HTMLComponents.textFieldConfiguration(name, width, required, descript, maxLength);
 	}
 	
 	protected PasswordField passwordField(String title, String width, String errorMessage, boolean required, 

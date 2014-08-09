@@ -35,7 +35,7 @@ public class LagerortService {
 		LagerortDAO.getInstance().updateLagerort(lagerort);
 	}
 
-	public void deleteLagerort(Long id) throws ConnectException, DAOException {
-		LagerortDAO.getInstance().deleteLagerort(id);
+	public void removeLagerort(Long id) throws ConnectException, DAOException {
+		LagerortDAO.getInstance().removeLagerort(id);
 	}
 }

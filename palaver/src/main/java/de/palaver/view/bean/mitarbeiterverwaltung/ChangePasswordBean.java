@@ -51,7 +51,7 @@ public class ChangePasswordBean extends TemplateBuilder implements View, ValueCh
 
 	private void componetsManager() {
 		m_headLine = title(TITLE, STYLE_HEADLINE_STANDART);
-		m_passwordField = textField(TEXT_FIELD_PASSWORD, WIDTH_FULL, true, TEXT_FIELD_PASSWORD, this);
+		m_passwordField = textField(TEXT_FIELD_PASSWORD, WIDTH_FULL, true, TEXT_FIELD_PASSWORD, 0);
 		m_control = controlPanel(this);
 	}
 	

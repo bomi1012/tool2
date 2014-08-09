@@ -95,7 +95,7 @@ public class HTMLComponents {
 		return passwordField;
 	}
 	
-	protected static TextField textFieldConfiguration(String name, String width, boolean required, String descript, Object object) {
+	protected static TextField textFieldConfiguration(String name, String width, boolean required, String descript, int maxLength) {
 		TextField textField = new TextField(name);
 		textField.setWidth(width);
 		if(required) {
@@ -104,9 +104,10 @@ public class HTMLComponents {
 		textField.setImmediate(true);
 		textField.setDescription(descript);
 		
-		if (object instanceof ChangeItemBean) {
-			textField.addValueChangeListener((ChangeItemBean) object); 
+		if (maxLength != 0) {
+			textField.setMaxLength(maxLength);
 		}
+		
 		return textField;
 	}
 	

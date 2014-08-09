@@ -15,6 +15,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
+import de.palaver.Application;
 import de.palaver.view.layout.popup.YesNoPopup;
 
 public class AbstractView extends VerticalLayout {
@@ -122,5 +123,9 @@ public class AbstractView extends VerticalLayout {
 				window.close();
 			}
 		});
+	}
+	
+	protected void message(String text, String wort) {
+		((Application) UI.getCurrent().getData()).showDialog(String.format(text, wort));
 	}
 }

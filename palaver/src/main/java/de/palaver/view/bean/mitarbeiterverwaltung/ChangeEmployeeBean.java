@@ -54,14 +54,14 @@ public class ChangeEmployeeBean extends ChangeFieldsPersonAbstract implements Vi
 	private void componetsManager() {
 		m_headLine = title("Mitarbeiter ändern", STYLE_HEADLINE_STANDART);		
 		m_subHeadPersonDaten = title("Persönliche Daten", STYLE_HEADLINE_SUB);
-		m_nameField = textField("Nachname", WIDTH_FULL, true, "Nachname", this);
-		m_vornameField = textField("Vorname", WIDTH_FULL, true, "Vorname", this);
-		m_usernameField = textField("Benutzername", WIDTH_FULL, true, "Benutzername", this);
+		m_nameField = textField("Nachname", WIDTH_FULL, true, "Nachname", 0);
+		m_vornameField = textField("Vorname", WIDTH_FULL, true, "Vorname", 0);
+		m_usernameField = textField("Benutzername", WIDTH_FULL, true, "Benutzername", 0);
 		m_passwordField = passwordField("Passwort", WIDTH_FULL, "Bitte gültigen Passwort eingeben", true, 6, 45, true, true);
 		m_changePassword = buttonAsIcon(" Passwort ändern", BaseTheme.BUTTON_LINK, 
 				"cursor-hand margin-key", "icons/report_key.png", false);
-		m_eintrittsdatumField = textField("Eintrittsdatum", WIDTH_FULL, false, "Eintrittsdatum", this);
-		m_austrittsdatumField= textField("Austrittsdatum", WIDTH_FULL, false, "Austrittsdatum", this);		
+		m_eintrittsdatumField = textField("Eintrittsdatum", WIDTH_FULL, false, "Eintrittsdatum", 0);
+		m_austrittsdatumField= textField("Austrittsdatum", WIDTH_FULL, false, "Austrittsdatum", 0);		
 		m_subHeadNewDaten = title("Weitere Informationen", STYLE_HEADLINE_SUB);		
 		getContactDataDefinition();		
 		m_rollenColSelect = twinColSelect(null, "Verfügbare Rollen", "Ausgewählte Rollen", 8, 0, visible(), enabled());		
