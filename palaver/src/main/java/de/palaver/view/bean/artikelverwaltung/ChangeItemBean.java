@@ -107,6 +107,7 @@ public class ChangeItemBean extends TemplateBuilder implements View, ValueChange
 		m_numberField = textField(TEXT_FIELD_ARTIKEL_NUMMER, WIDTH_FULL, false, TEXT_FIELD_ARTIKEL_NUMMER, 45);
 		m_gebindeField = textField(TEXT_FIELD_ARTIKEL_GEBINDE, WIDTH_FULL, true, TEXT_FIELD_ARTIKEL_GEBINDE, 17);
 		m_notizField = textField(TEXT_FIELD_ARTIKEL_NOTIZ, WIDTH_FULL, false, TEXT_FIELD_ARTIKEL_NOTIZ, 90);
+
 		
 		m_lieferantSelect = nativeSelect(TEXT_FIELD_ARTIKEL_LIEFERANT, WIDTH_FULL, true, TEXT_FIELD_ARTIKEL_LIEFERANT, this);
 		m_mengeneinheitSelect = nativeSelect(TEXT_FIELD_ARTIKEL_MENGENEINHEIT, WIDTH_FULL, true, 
