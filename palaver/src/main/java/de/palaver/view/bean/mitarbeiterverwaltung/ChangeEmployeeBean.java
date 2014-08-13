@@ -124,7 +124,7 @@ public class ChangeEmployeeBean extends ChangeFieldsPersonAbstract implements Vi
 			private void saveItem() {
 				if (m_toCreate) {
 					try {
-						addToDB(new Kontakte()); 
+						addToDB(new Kontakte(), 2); 
 						updateEmployee();						
 						EmployeeService.getInstance().create(m_empl);						
 					} catch (Exception e) {
@@ -135,14 +135,13 @@ public class ChangeEmployeeBean extends ChangeFieldsPersonAbstract implements Vi
 						if (m_empl.getKontakt() != null) {
 							if (!checkFields(m_empl.getKontakt())) {
 								removeFromDB(m_empl.getKontakt());	
-								m_kontakte = null;
+								m_empl.setKontakt(null);
 							} else {
-								m_kontakte = m_empl.getKontakt();
-								updateInDB(m_kontakte);	
+								updateInDB(m_empl.getKontakt());	
 								
 							}
 						} else {
-							addToDB(new Kontakte());
+							addToDB(new Kontakte(), 2);
 						}										
 						updateEmployee();
 						EmployeeService.getInstance().update(m_empl);
@@ -163,7 +162,7 @@ public class ChangeEmployeeBean extends ChangeFieldsPersonAbstract implements Vi
 					m_empl.setEintrittsdatum(m_eintrittsdatumField.getValue());
 					m_empl.setAustrittsdatum(m_austrittsdatumField.getValue());
 					m_empl.setRollen(setRolles());
-					m_empl.setKontakt(m_kontakte);	
+					m_empl.setKontakt(m_empl.getKontakt()); //TODO etu fignju ispravit'	
 				} catch (Exception e) {
 					e.printStackTrace();
 				} 

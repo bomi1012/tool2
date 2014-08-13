@@ -77,19 +77,12 @@ public class Supplier extends EntityName {
 		m_notiz = notiz;
 	}
 
-	public Supplier(String name, String lieferantnummer, String bezeichnung,
-			boolean mehrereliefertermine, String notiz, Adresse adresse,
-			Kontakte kontakte) {
-		super(name);
-		m_lieferantnummer = lieferantnummer;
-		m_bezeichnung = bezeichnung;
-		m_mehrereliefertermine = mehrereliefertermine;
-		m_adresse = adresse;
-		m_kontakte = kontakte;
-		m_notiz = notiz;
-	}
-
 	public Supplier(long id, String name) {
 		this(id, name, null, null, false, null, null, null);
+	}
+
+	public Supplier(Adresse adresse, Kontakte kontakte) {
+		m_adresse = adresse;
+		m_kontakte = kontakte;
 	}
 }

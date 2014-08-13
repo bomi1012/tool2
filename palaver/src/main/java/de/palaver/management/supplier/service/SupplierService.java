@@ -44,10 +44,9 @@ public class SupplierService {
 		
 	}
 
-	public void deleteLieferant(Supplier supplier) throws ConnectException, DAOException {
-		
+	public void removeSupplier(Supplier supplier) throws ConnectException, DAOException {		
 		AnsprechpartnerDAO.getInstance().deleteAnsprechpartnerByLieferantId(supplier.getId());
-		SupplierDAO.getInstance().deleteLieferant(supplier.getId());
+		SupplierDAO.getInstance().removeSupplier(supplier.getId());
 		if(supplier.getAdresse() != null) {
 			AdresseDAO.getInstance().deleteAdresse(supplier.getAdresse().getId());
 		}
@@ -55,6 +54,7 @@ public class SupplierService {
 			KontakteDAO.getInstance().deleteKontakte(supplier.getKontakte().getId());
 		}
 	}
+
 
 	
 	

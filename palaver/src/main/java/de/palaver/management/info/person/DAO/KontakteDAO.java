@@ -19,6 +19,12 @@ public class KontakteDAO extends AbstractDAO{
 	private static final String FIELD_HANDY = "handy";
 	private static final String FIELD_FAX = "fax";
 	private static final String FIELD_WWW = "www";
+	
+	private String email;
+	private String telefon;
+	private String handy;
+	private String fax;
+	private String www;
 
 	private static final String GET_KONTAKTE_BY_ID = "SELECT * FROM " + TABLE 
 			+ " WHERE " + FIELD_ID + " = {0}";
@@ -55,7 +61,24 @@ public class KontakteDAO extends AbstractDAO{
 		}
 		return m_kontakte;
 	}
+	
+	public long createKontakte(Kontakte kontakte) throws ConnectException, DAOException {
+		setFields(kontakte);	
+		return insert(MessageFormat.format(INSERT_QUERY, email, telefon, handy, fax, www));
+	}
 
+	public void deleteKontakte(Long id) throws ConnectException, DAOException {
+		putManaged(MessageFormat.format(DELETE_QUERY, id));		
+	}
+
+	public void updatekontakte(Kontakte kontakte) throws ConnectException, DAOException {
+		setFields(kontakte);
+		putManaged(MessageFormat.format(UPDATE_QUERY, telefon, handy, fax, email, www, kontakte.getId()));
+	}
+	
+	
+	
+	
 	private Kontakte setKontakte(ResultSet set) throws SQLException {
 		return 	new Kontakte(set.getLong(FIELD_ID), 
 				set.getString(FIELD_EMAIL), 
@@ -64,24 +87,22 @@ public class KontakteDAO extends AbstractDAO{
 				set.getString(FIELD_FAX),
 				set.getString(FIELD_WWW));	
 	}
-
-	public long createKontakte(Kontakte kontakte) throws ConnectException, DAOException {
-		return insert(MessageFormat.format(INSERT_QUERY, 
-				"'" + kontakte.getEmail() + "'",
-				"'" + kontakte.getTelefon() + "'",
-				"'" + kontakte.getHandy() + "'",
-				"'" + kontakte.getFax() + "'",
-				"'" + kontakte.getWww() + "'"));
+	
+	private void setFields(Kontakte kontakte) {
+		setFieldsToNull();
+		if (kontakte.getEmail() != null) { email = "'" + kontakte.getEmail() + "'"; }
+		if (kontakte.getTelefon() != null) { telefon = "'" + kontakte.getTelefon() + "'"; }
+		if (kontakte.getHandy() != null) { handy = "'" + kontakte.getHandy() + "'"; }
+		if (kontakte.getFax() != null) { fax = "'" + kontakte.getFax() + "'"; }
+		if (kontakte.getWww() != null) { www = "'" + kontakte.getWww() + "'"; }	
 	}
 
-	public void deleteKontakte(Long id) throws ConnectException, DAOException {
-		putManaged(MessageFormat.format(DELETE_QUERY, id));		
+	private void setFieldsToNull() {
+		email = null;
+		telefon = null;
+		handy = null;
+		fax = null;
+		www = null;
 	}
 
-	public void updatekontakte(Kontakte kontakte) throws ConnectException, DAOException {
-		putManaged(MessageFormat.format(UPDATE_QUERY, 
-				"'" + kontakte.getTelefon() + "'", "'" + kontakte.getHandy() + "'", 
-				"'" + kontakte.getFax() + "'", "'" + kontakte.getEmail() + "'",
-				"'" + kontakte.getWww() + "'", kontakte.getId()));
-	}
 }

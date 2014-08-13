@@ -64,4 +64,8 @@ public class Ansprechpartner extends EntityName {
 		m_adresse = adresse;
 		m_kontakte = kontakte;
 	}
+
+	public Ansprechpartner(Adresse adresse, Kontakte kontakte, Supplier supplier) {
+		this(null, supplier, null, adresse, kontakte);
+	}
 }

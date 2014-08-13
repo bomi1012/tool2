@@ -1,8 +1,6 @@
 package de.palaver.view.bean.helpers;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -28,12 +26,22 @@ import de.palaver.management.supplier.service.SupplierService;
 @SuppressWarnings("serial")
 abstract public class ChangeFieldsPersonAbstract extends TemplateBuilder{
 
-	protected static final Logger LOG = LoggerFactory.getLogger(ChangeFieldsPersonAbstract.class.getName());
-	
-	protected Kontakte m_kontakte;
-	protected Adresse m_adresse;
 	protected Supplier m_supplier;
-	protected Ansprechpartner m_contactPerson;
+	protected Ansprechpartner m_contactPerson;	
+	
+	private boolean m_markKontakteAsChange = false;
+	protected boolean isMarkKontakteAsChange() { return m_markKontakteAsChange; }
+	protected void markKontakteAsChange() { 
+		m_markKontakteAsChange = true; 
+		markAsChange();
+	}
+	
+	private boolean m_markAdresseAsChange = false;
+	protected boolean isMarkAdresseAsChange() { return m_markAdresseAsChange; }
+	protected void markAdresseAsChange() { 
+		m_markAdresseAsChange = true; 
+		markAsChange();
+	}
 	
 	protected VerticalLayout m_leftVLayout;
 	protected VerticalLayout m_centerVLayout;
@@ -71,20 +79,20 @@ abstract public class ChangeFieldsPersonAbstract extends TemplateBuilder{
 	
 	protected void getContactDataDefinition() {
 		m_subHeadKontaktDaten = title("Kontaktdaten", STYLE_HEADLINE_SUB);
-		m_telephonField = textField("Telefonnummer", WIDTH_FULL, false, "Telefonnummer", 0);
-		m_handyField = textField("Handynummer", WIDTH_FULL, false, "Handynummer", 0);		
-		m_faxField = textField("Fax", WIDTH_FULL, false, "Fax", 0);
-		m_emailField = textField("E-Mail", WIDTH_FULL, false, "E-Mail", 0);
-		m_webField = textField("Web", WIDTH_FULL, false, "Web", 0);
+		m_telephonField = textField("Telefonnummer", WIDTH_FULL, false, "Telefonnummer", 100);
+		m_handyField = textField("Handynummer", WIDTH_FULL, false, "Handynummer", 100);		
+		m_faxField = textField("Fax", WIDTH_FULL, false, "Fax", 100);
+		m_emailField = textField("E-Mail", WIDTH_FULL, false, "E-Mail", 100);
+		m_webField = textField("Web", WIDTH_FULL, false, "Web", 100);
 	}
 	
 	protected void getAddressDataDefinition() {		
 		m_subHeadAdressDaten = title("Adresse", STYLE_HEADLINE_SUB);
-		m_streetField = textField("Straﬂe", WIDTH_FULL, false, "Straﬂe", 0);
-		m_housenumberField = textField("Housenummer", WIDTH_FULL, false, "Housenummer", 0);
-		m_cityField = textField("Stadt", WIDTH_FULL, false, "Stadt", 0);
-		m_plzField = textField("PLZ", WIDTH_FULL, false, "PLZ", 0);
-		m_countryField = textField("Land", WIDTH_FULL, false, "Land", 0);
+		m_streetField = textField("Straﬂe", WIDTH_FULL, false, "Straﬂe", 100);
+		m_housenumberField = textField("Housenummer", WIDTH_FULL, false, "Housenummer", 100);
+		m_cityField = textField("Stadt", WIDTH_FULL, false, "Stadt", 100);
+		m_plzField = textField("PLZ", WIDTH_FULL, false, "PLZ", 10);
+		m_countryField = textField("Land", WIDTH_FULL, false, "Land", 100);
 	}
 	
 	protected VerticalLayout vertikalLayoutBuilder(int order, String width) {
@@ -171,15 +179,23 @@ abstract public class ChangeFieldsPersonAbstract extends TemplateBuilder{
 		return windowHLayout;
 	}
 	
-	protected void addToDB(Object obj) {
+	/** 
+	 * @param obj 
+	 * @param switcher 0=Supplier.get... 1=ContactPerson.get...
+	 */
+	protected void addToDB(Object obj, int switcher) {
 		if (obj instanceof Kontakte) {
-			m_kontakte = null;
-			if (checkFields(obj)) {
-				m_kontakte = new Kontakte(
-						m_emailField.getValue(), m_handyField.getValue(), m_telephonField.getValue(),
-						m_faxField.getValue(), m_webField.getValue());
+			if (isMarkKontakteAsChange()) {
 				try {
-					m_kontakte.setId(KontakteService.getInstance().createKontakte(m_kontakte));
+					switch (switcher) {
+					case 0:
+						m_supplier.getKontakte().setId(KontakteService.getInstance().createKontakte((Kontakte) obj));
+						break;
+					case 1:
+						m_contactPerson.getKontakt().setId(KontakteService.getInstance().createKontakte((Kontakte) obj));
+						break;
+					}
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -187,39 +203,39 @@ abstract public class ChangeFieldsPersonAbstract extends TemplateBuilder{
 		} 
 
 		if (obj instanceof Adresse) {
-			m_adresse = null;
-			if (checkFields(obj)) {
-				m_adresse = new Adresse(
-						m_streetField.getValue(), m_housenumberField.getValue(), 
-						m_cityField.getValue(), m_plzField.getValue(), m_countryField.getValue());
+			if (isMarkAdresseAsChange()) {
 				try {
-					m_adresse.setId(AdresseService.getInstance().createAdresse(m_adresse));
+					switch (switcher) {
+					case 0:
+						m_supplier.getAdresse().setId(AdresseService.getInstance().createAdresse((Adresse) obj));
+						break;
+					case 1:
+						m_contactPerson.getAdresse().setId(AdresseService.getInstance().createAdresse((Adresse) obj));
+						break;
+					}
 				} catch (Exception e) {
-					LOG.error("Adresse_ERROR_Create: " + e.toString());
+					e.printStackTrace();
 				}
 			}
 		}	
 		
 		if (obj instanceof Supplier) {
-			m_supplier = new Supplier( 
-					m_nameField.getValue(), m_numberField.getValue(),
-					m_descriptionField.getValue(), m_mehrerLieferterminCheckbox.getValue(), 
-					m_commentField.getValue(), m_adresse, m_kontakte);
-			try {
-				m_supplier.setId(SupplierService.getInstance().createLieferant(m_supplier));
-			} catch (Exception e) {
-				LOG.error("Lieferant_ERROR_Create: " + e.toString());
+			if (isMarkAsChange()) {
+				try {
+					m_supplier.setId(SupplierService.getInstance().createLieferant(m_supplier));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		
 		if (obj instanceof Ansprechpartner) {
-			m_contactPerson = new Ansprechpartner(
-					m_nameField.getValue(), m_supplier, 
-					m_descriptionField.getValue(), m_adresse, m_kontakte);
-			try {
-				m_contactPerson.setId(AnsprechpartnerService.getInstance().createAnsprechpartner(m_contactPerson));
-			} catch (Exception e) {
-				LOG.error("Ansprechpartner_ERROR_Create: " + e.toString());
+			if (isMarkAsChange()) {
+				try {
+					m_contactPerson.setId(AnsprechpartnerService.getInstance().createAnsprechpartner(m_contactPerson));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -229,62 +245,53 @@ abstract public class ChangeFieldsPersonAbstract extends TemplateBuilder{
 			try {
 				KontakteService.getInstance().deleteKontakte(((Kontakte) obj).getId());
 			} catch (Exception e) {
-				LOG.error("Kontakt_ERROR_Remove: " + e.toString());
+				e.printStackTrace();
 			}
 		}
 		if (obj instanceof Adresse) { 
 			try {
 				AdresseService.getInstance().deleteAdresse(((Adresse) obj).getId());
 			} catch (Exception e) {
-				LOG.error("Adresse_ERROR_Remove: " + e.toString());
+				e.printStackTrace();
 			}
 		}
 	}
 	
 	protected void updateInDB(Object obj) {
 		if (obj instanceof Kontakte) { 
-			((Kontakte) obj).setTelefon(m_telephonField.getValue());
-			((Kontakte) obj).setHandy(m_handyField.getValue()); 
-			((Kontakte) obj).setFax(m_faxField.getValue());
-			((Kontakte) obj).setEmail(m_emailField.getValue());
-			((Kontakte) obj).setWww(m_webField.getValue());
-			try {
-				KontakteService.getInstance().updatekontakte((Kontakte) obj); }
-			catch (Exception e) {
-				LOG.error("Kontakt_ERROR_Update: " + e.toString());
+			if (isMarkKontakteAsChange()) {
+				try {
+					KontakteService.getInstance().updatekontakte((Kontakte) obj); }
+				catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		if (obj instanceof Adresse) { 
-			((Adresse) obj).setStrasse(m_streetField.getValue());
-			((Adresse) obj).setHausnummer(m_housenumberField.getValue()); 
-			((Adresse) obj).setStadt(m_cityField.getValue());
-			((Adresse) obj).setPlz(m_plzField.getValue());
-			((Adresse) obj).setLand(m_countryField.getValue());
-			try {
-				AdresseService.getInstance().updateAdresse((Adresse) obj);}
-			catch (Exception e) {
-				LOG.error("Adresse_ERROR_Update: " + e.toString());
+			if (isMarkAdresseAsChange()) {
+				try {
+					AdresseService.getInstance().updateAdresse((Adresse) obj);}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}		
 		if(obj instanceof Supplier) {
-			try {
-				((Supplier) obj).setName(m_nameField.getValue());
-				((Supplier) obj).setBezeichnung(m_descriptionField.getValue());
-				((Supplier) obj).setLieferantnummer(m_numberField.getValue());
-				((Supplier) obj).setMehrereliefertermine(m_mehrerLieferterminCheckbox.getValue());
-				((Supplier) obj).setNotiz(m_commentField.getValue());
-				SupplierService.getInstance().updateLieferant((Supplier) obj);
-			} catch (Exception e) {
-				LOG.error("Lieferant_ERROR_Update: " + e.toString());
+			if (isMarkKontakteAsChange()) {
+				try {
+					SupplierService.getInstance().updateLieferant((Supplier) obj);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}		
 		if(obj instanceof Ansprechpartner) {
-			try {
-				((Ansprechpartner) obj).setName(m_nameField.getValue());
-				((Ansprechpartner) obj).setBezeichnung(m_descriptionField.getValue());
-				AnsprechpartnerService.getInstance().updateAnsprechpartner((Ansprechpartner) obj);
-			} catch (Exception e) {
-				LOG.error("Ansprechpartner_ERROR_Update: " + e.toString());
+			if (isMarkKontakteAsChange()) {
+				try {
+					AnsprechpartnerService.getInstance().updateAnsprechpartner((Ansprechpartner) obj);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		} 
 	}
@@ -310,5 +317,12 @@ abstract public class ChangeFieldsPersonAbstract extends TemplateBuilder{
 			}
 		}		
 		return false;
+	}
+
+	@Override
+	protected void resetMarkAsChange() {
+		m_markAdresseAsChange = false;
+		m_markKontakteAsChange = false;
+		super.resetMarkAsChange();	
 	}
 }

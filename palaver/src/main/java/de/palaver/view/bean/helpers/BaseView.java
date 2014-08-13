@@ -21,7 +21,7 @@ import com.vaadin.ui.Window;
 import de.palaver.Application;
 import de.palaver.view.layout.popup.YesNoPopup;
 
-public class AbstractView extends VerticalLayout {
+public class BaseView extends VerticalLayout {
 	private static final long serialVersionUID = -6995479031013214882L;
 
 	protected static final String WIDTH_FULL = "100%";
@@ -58,7 +58,10 @@ public class AbstractView extends VerticalLayout {
 	protected static final String MESSAGE_SUSSEFULL_ARG_1 = "%s wurde erfolgreich gespeichert";
 	protected static final String MESSAGE_NUMBER_FORMAT = "NumberFormatException: Erlaubte Zeichnen sind '%s'";
 
-
+	private boolean m_markAsChange = false;
+	protected boolean isMarkAsChange() { return m_markAsChange; }
+	protected void markAsChange() { m_markAsChange = true; }
+	
 	private RemoveObjectStrategy m_strategy;
 	private Map<Component, Object> m_data;
 	protected YesNoPopup m_yesNoPopup;
@@ -67,7 +70,7 @@ public class AbstractView extends VerticalLayout {
 		return m_data;
 	}
 
-	public AbstractView() {
+	public BaseView() {
 		super();
 		m_data = new HashMap<Component, Object>();
 	}
@@ -92,7 +95,7 @@ public class AbstractView extends VerticalLayout {
 
 	protected void setValueToComponent(Map<Component, Object> hashMap) {
 		for (Entry<Component, Object> element : hashMap.entrySet()) {
-			if (element.getKey() instanceof TextField) {
+			if (element.getKey() instanceof TextField && element.getValue() != null) {
 				if (element.getValue() instanceof Float) {
 					((TextField) element.getKey()).setValue(String.valueOf((Float) element.getValue()));
 				} else if (element.getValue() instanceof String) {
@@ -101,13 +104,13 @@ public class AbstractView extends VerticalLayout {
 					((TextField) element.getKey()).setValue(String.valueOf((Double) element.getValue()));
 				}
 			}
-			if (element.getKey() instanceof NativeSelect)
+			if (element.getKey() instanceof NativeSelect && element.getValue() != null)
 				((NativeSelect) element.getKey()).setValue(element.getValue());
-			if (element.getKey() instanceof TextArea)
+			if (element.getKey() instanceof TextArea && element.getValue() != null)
 				((TextArea) element.getKey()).setValue((String) element.getValue());
-			if (element.getKey() instanceof CheckBox)
+			if (element.getKey() instanceof CheckBox && element.getValue() != null)
 				((CheckBox) element.getKey()).setValue((Boolean) element.getValue());
-			if (element.getKey() instanceof IntStepper)
+			if (element.getKey() instanceof IntStepper && element.getValue() != null)
 				((IntStepper) element.getKey()).setValue((Integer) element.getValue());
 		}
 	}
@@ -140,5 +143,9 @@ public class AbstractView extends VerticalLayout {
 	
 	protected void message(String text, String wort) {
 		((Application) UI.getCurrent().getData()).showDialog(String.format(text, wort));
+	}
+	
+	protected void resetMarkAsChange() {
+		m_markAsChange = false;		
 	}
 }

@@ -41,8 +41,11 @@ public class ArtikelDAO extends AbstractDAO {
 	private final static String FIELD_STANDARD = "standard";
 	private final static String FIELD_GRUNDBEDARF = "grundbedarf";
 	private final static String FIELD_FUER_REZEPT = "fuerRezepte";
-	private final static String ACTIVE_AND = " status = 0";
-		
+	private final static String ACTIVE_AND = " status = 0";	
+	
+	private String number = null;
+	private String notiz = null;
+	
 	private final static String TABLE_WITH_RELATIONS = "SELECT " +
 			"a.id, a.name, a.artikelnr, a.bestellgroesse, a.preis, " +
 			"a.standard, a.grundbedarf, a.fuerRezepte, a.durchschnittLT1," +
@@ -188,10 +191,12 @@ public class ArtikelDAO extends AbstractDAO {
 	}
 	
 	public void createArtikel(Artikel artikel) throws ConnectException, DAOException {
+		if (artikel.getArtikelnr() != null) { number = "'" + artikel.getArtikelnr() + "'"; }
+		if (artikel.getNotiz() != null) { notiz = "'" + artikel.getNotiz() + "'"; }
+		
 				putManaged(MessageFormat.format(				
 				INSERT_QUERY, 
-				"'" + artikel.getArtikelnr() + "'",
-				"'" +artikel.getName() + "'",
+				number, "'" +artikel.getName() + "'", 
 				artikel.getBestellgroesse(),
 				artikel.getMengeneinheit().getId(),
 				artikel.getPreis() ,
@@ -200,14 +205,17 @@ public class ArtikelDAO extends AbstractDAO {
 				Util.convertBoolean(artikel.isStandard()),
 				Util.convertBoolean(artikel.isGrundbedarf()) ,
 				artikel.getDurchschnittLT1(),
-				artikel.getDurchschnittLT2(),
-				"'" +artikel.getNotiz() + "'",
+				artikel.getDurchschnittLT2(), notiz,
 				Util.convertBoolean(artikel.isFuerRezept()),
 				artikel.getLagerort().getId()));				
 	}
+	
 	public void updateArtikel(Artikel artikel) throws ConnectException, DAOException {
+		if (artikel.getArtikelnr() != null) { number = "'" + artikel.getArtikelnr() + "'"; }
+		if (artikel.getNotiz() != null) { notiz = "'" + artikel.getNotiz() + "'"; }
+		
 		putManaged("UPDATE artikel SET " +
-				"`artikelnr` = '" + artikel.getArtikelnr() + "'," 
+				"`artikelnr` = " + number + "," 
 				+ "`name` = '" + artikel.getName() + "',"
 				+ "`bestellgroesse` = " + artikel.getBestellgroesse() + "," 
 				+ "`mengeneinheit_fk` = " + artikel.getMengeneinheit().getId() + ","
@@ -219,7 +227,7 @@ public class ArtikelDAO extends AbstractDAO {
 				+ "`durchschnittLT1` = " + artikel.getDurchschnittLT1() + "," 
 				+ "`durchschnittLT2` = " + artikel.getDurchschnittLT2() + "," 
 				+ "`FuerRezepte` = " + Util.convertBoolean(artikel.isFuerRezept()) + ","
-				+ "`notiz` = '" + artikel.getNotiz()  + "',"
+				+ "`notiz` = " + notiz  + ","
 				+ "`lagerort_fk` = " + artikel.getLagerort().getId()
 				+ " WHERE id = " + artikel.getId());
 	}

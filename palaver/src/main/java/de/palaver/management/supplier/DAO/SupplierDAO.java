@@ -16,6 +16,12 @@ import de.palaver.management.supplier.Supplier;
 
 public class SupplierDAO extends AbstractDAO {
 
+	private String kontakt = null;
+	private String adresse = null;
+	private String number = null;
+	private String desc = null;
+	private String comment = null;
+	
 	private static SupplierDAO instance = null;
 
 	private static final String TABLE = "lieferant";
@@ -117,44 +123,42 @@ public class SupplierDAO extends AbstractDAO {
 
 	public Long createLieferant(Supplier supplier) throws ConnectException,
 			DAOException {
-		String kontakt = null;
-		String adresse = null;
-		if (supplier.getKontakte() != null) {
+		if (supplier.getKontakte() != null && supplier.getKontakte().getId() != null) {
 			kontakt = String.valueOf(supplier.getKontakte().getId());
 		}
-		if (supplier.getAdresse() != null) {
+		if (supplier.getAdresse() != null && supplier.getAdresse().getId() != null) {
 			adresse = String.valueOf(supplier.getAdresse().getId());
 		}
-
+		if (supplier.getLieferantnummer() != null) { number = "'" + supplier.getLieferantnummer() + "'"; } 
+		if (supplier.getBezeichnung() != null) { desc = "'" + supplier.getBezeichnung() + "'"; }
+		if (supplier.getNotiz() != null) { comment = "'" + supplier.getNotiz() + "'"; }
+ 
 		return insert(MessageFormat.format(INSERT_QUERY,
 				"'" + supplier.getName() + "'",
-				"'" + supplier.getLieferantnummer() + "'",
-				"'" + supplier.getBezeichnung() + "'",
-				"'" + supplier.getNotiz() + "'",
+				number, desc, comment,
 				Util.convertBoolean(supplier.isMehrereliefertermine()),
 				adresse, kontakt));
 	}
 
 	public void updateLieferant(Supplier supplier) throws ConnectException,
 			DAOException {
-		String kontakt = null;
-		String adresse = null;
 		if (supplier.getKontakte() != null) {
 			kontakt = String.valueOf(supplier.getKontakte().getId());
 		}
 		if (supplier.getAdresse() != null) {
 			adresse = String.valueOf(supplier.getAdresse().getId());
 		}
-		putManaged(MessageFormat.format(UPDATE_QUERY, "'" + supplier.getName()
-				+ "'", "'" + supplier.getLieferantnummer() + "'", "'"
-				+ supplier.getBezeichnung() + "'", "'" + supplier.getNotiz()
-				+ "'", Util.convertBoolean(supplier.isMehrereliefertermine()),
+		if (supplier.getLieferantnummer() != null) { number = "'" + supplier.getLieferantnummer() + "'"; } 
+		if (supplier.getBezeichnung() != null) { desc = "'" + supplier.getBezeichnung() + "'"; }
+		if (supplier.getNotiz() != null) { comment = "'" + supplier.getNotiz() + "'"; }
+		
+		putManaged(MessageFormat.format(UPDATE_QUERY, "'" + supplier.getName() + "'", 
+				number, desc, comment, Util.convertBoolean(supplier.isMehrereliefertermine()),
 				adresse, kontakt, supplier.getId()));
 
 	}
 
-	public void deleteLieferant(Long id) throws ConnectException, DAOException {
-		putManaged(MessageFormat.format(DELETE_QUERY, id));	
-		
+	public void removeSupplier(Long id) throws ConnectException, DAOException {
+		putManaged(MessageFormat.format(DELETE_QUERY, id));
 	}
 }

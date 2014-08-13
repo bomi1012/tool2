@@ -1,18 +1,19 @@
 package de.palaver.view.bean.lieferantenverwaltung;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
-import de.palaver.Application;
 import de.palaver.management.info.person.Adresse;
 import de.palaver.management.info.person.Kontakte;
 import de.palaver.management.supplier.Ansprechpartner;
@@ -24,29 +25,29 @@ public class ChangeContactPersonBean extends ChangeFieldsPersonAbstract implemen
 	private static final long serialVersionUID = 6321945037675101L;
 	private boolean m_toCreate;	
 	private VerticalLayout m_innerBoxContactPerson;
-		
+	private static final String TEXT_FIELD_AP_NAME = "Ansprechpartnername";
 	public ChangeContactPersonBean() {
 		super();
 		init();
 		componetsManager();
 		templateBuilder();
-		listeners();
+		clickListener();
+		changeListner();
 	}
 	
 	
 	private void init() {
+		resetMarkAsChange();
 		m_toCreate = true;
-		m_contactPerson = new Ansprechpartner();
-		m_supplier = new Supplier();
+		m_contactPerson = new Ansprechpartner(new Adresse(), new Kontakte(), m_supplier);
 	}
-
 
 	private void componetsManager() {
 		m_headLine = title("Neuen Ansprechpartner anlegen", STYLE_HEADLINE_STANDART);
 		
 		m_subHeadInformation = title("Information", STYLE_HEADLINE_SUB);
-		m_nameField = textField("Ansprechpartnername", WIDTH_FULL, true, "Ansprechpartnername", 0);
-		m_descriptionField = textField("Bezeichnung", WIDTH_FULL, false, "Bezeichnung", 0);
+		m_nameField = textField("Ansprechpartnername", WIDTH_FULL, true, "Ansprechpartnername", 45);
+		m_descriptionField = textField("Bezeichnung", WIDTH_FULL, false, "Bezeichnung", 100);
 		
 		getContactDataDefinition();
 		getAddressDataDefinition();	
@@ -78,115 +79,221 @@ public class ChangeContactPersonBean extends ChangeFieldsPersonAbstract implemen
 
 
 	@SuppressWarnings("serial")
-	private void listeners() {
+	private void clickListener() {
 		m_buttonSpeichern.addClickListener(new ClickListener() {
 			private static final long serialVersionUID = -835805357073859472L;
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (validiereEingabe()) {
 					saveItem();
-					ViewHandler.getInstance()
-						.switchView(ChangeSupplierBean.class, new ViewDataObject<Supplier>(m_supplier));
 				}
+			}		
+			
+			private boolean validiereEingabe() {
+				if (StringUtils.isBlank(m_nameField.getValue())) {
+					message(MESSAGE_LEER_ARG_1, TEXT_FIELD_AP_NAME);
+					return false;
+				}
+				return true;
 			}
+			
 			private void saveItem() {
 				if (m_toCreate) {
-					addToDB(new Kontakte());
-					addToDB(new Adresse());
-					addToDB(new Ansprechpartner());
+					addToDB(m_contactPerson.getAdresse(), 1);
+					addToDB(m_contactPerson.getKontakt(), 1);
+					addToDB(m_contactPerson, 1);
 				} else {
-					if (m_contactPerson.getKontakt() != null) {
+					if (m_contactPerson.getKontakt().getId() != null) {
 						if (!checkFields(m_contactPerson.getKontakt())) {
 							removeFromDB(m_contactPerson.getKontakt());	
-							m_contactPerson.setKontakt(null);
+							m_contactPerson.setKontakt(new Kontakte());
 						} else {
 							updateInDB(m_contactPerson.getKontakt());							
 						}
 					} else {
-						addToDB(new Kontakte());
-						m_contactPerson.setKontakt(m_kontakte);
+						addToDB(m_contactPerson.getKontakt(), 1);
 					}
 					
-					if (m_contactPerson.getAdresse() != null) {
+					if (m_contactPerson.getAdresse().getId() != null) {
 						if (!checkFields(m_contactPerson.getAdresse())) {
 							removeFromDB(m_contactPerson.getAdresse());	
-							m_contactPerson.setAdresse(null);
+							m_contactPerson.setAdresse(new Adresse());
 						} else {
 							updateInDB(m_contactPerson.getAdresse());							
 						}
 					} else {
-						addToDB(new Adresse());
-						m_contactPerson.setAdresse(m_adresse);
+						addToDB(m_contactPerson.getAdresse(), 1);
 					}					
 					updateInDB(m_contactPerson);
 				}
-			}
-			private boolean validiereEingabe() {
-				boolean isValid = true;
-				if (m_nameField.getValue().equals("")) {
-					((Application) UI.getCurrent().getData()).showDialog(String.format(MESSAGE_LEER_ARG_1, "Name"));
-					isValid = false;
-				}
-				return isValid;
+				close();
 			}
 		});
 		
 		m_buttonVerwerfen.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				ViewHandler.getInstance()
-				.switchView(ChangeSupplierBean.class, new ViewDataObject<Supplier>(m_supplier));
+				close();
 			}
 		});	
 		
 		m_buttonDeaktiviren.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				//TODO: visible = false --> implementieren!
-				//sehe m_control
+				windowModalYesNoRemove(m_contactPerson);	
 			}
 		});		
 	}
+	
+	protected void close() {
+		if (ChangeContactPersonBean.this.getParent() instanceof Window) {
+			((Window) ChangeContactPersonBean.this.getParent()).close();
+		} else {
+			ViewHandler.getInstance().switchView(ChangeSupplierBean.class, new ViewDataObject<Supplier>(m_supplier));
+		}		
+	}
 
+
+	@SuppressWarnings("serial")
+	private void changeListner() {
+		m_nameField.addValueChangeListener(new ValueChangeListener() {			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				m_contactPerson.setName((String) event.getProperty().getValue());
+				markAsChange();
+			}
+		});
+		m_descriptionField.addValueChangeListener(new ValueChangeListener() {
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				m_contactPerson.setBezeichnung((String) event.getProperty().getValue());
+				markAsChange();
+			}
+		});
+		m_telephonField.addValueChangeListener(new ValueChangeListener() {			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				m_contactPerson.getKontakt().setTelefon((String) event.getProperty().getValue());
+				markKontakteAsChange();
+			}
+		});
+		m_handyField.addValueChangeListener(new ValueChangeListener() {			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				m_contactPerson.getKontakt().setHandy((String) event.getProperty().getValue());
+				markKontakteAsChange();
+			}
+		});
+		m_faxField.addValueChangeListener(new ValueChangeListener() {			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				m_contactPerson.getKontakt().setFax((String) event.getProperty().getValue());
+				markKontakteAsChange();
+			}
+		});
+		m_emailField.addValueChangeListener(new ValueChangeListener() {			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				m_contactPerson.getKontakt().setEmail((String) event.getProperty().getValue());
+				markKontakteAsChange();
+			}
+		});
+		m_webField.addValueChangeListener(new ValueChangeListener() {			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				m_contactPerson.getKontakt().setWww((String) event.getProperty().getValue());
+				markKontakteAsChange();
+			}
+		});
+		m_streetField.addValueChangeListener(new ValueChangeListener() {			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				m_contactPerson.getAdresse().setStrasse((String) event.getProperty().getValue());
+				markAdresseAsChange();
+			}
+		});
+		m_housenumberField.addValueChangeListener(new ValueChangeListener() {			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				m_contactPerson.getAdresse().setHausnummer((String) event.getProperty().getValue());
+				markAdresseAsChange();
+			}
+		});
+		m_cityField.addValueChangeListener(new ValueChangeListener() {			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				m_contactPerson.getAdresse().setStadt((String) event.getProperty().getValue());
+				markAdresseAsChange();
+			}
+		});
+		m_plzField.addValueChangeListener(new ValueChangeListener() {			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				m_contactPerson.getAdresse().setPlz((String) event.getProperty().getValue());
+				markAdresseAsChange();
+			}
+		});
+		m_countryField.addValueChangeListener(new ValueChangeListener() {			
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				m_contactPerson.getAdresse().setLand((String) event.getProperty().getValue());
+				markAdresseAsChange();
+			}
+		});
+	}	
 
 	@Override
-	public void valueChange(ValueChangeEvent event) {
-		// TODO Auto-generated method stub		
-	}
+	public void valueChange(ValueChangeEvent event) { }
 	
 	@Override
 	public void getViewParam(ViewData data) {
+		resetMarkAsChange();
 		if(((ViewDataObject<?>) data).getData() instanceof Supplier) { 
 			m_supplier = (Supplier)((ViewDataObject<?>) data).getData();
+			init();
 		} 
 		
-		if(((ViewDataObject<?>) data).getData() instanceof Ansprechpartner) { 
+		if(((ViewDataObject<?>) data).getData() instanceof Ansprechpartner) { 			
 			m_contactPerson = (Ansprechpartner)((ViewDataObject<?>) data).getData();
 			
 			if (((ViewDataObject<?>) data).getObject() != null &&
 					((ViewDataObject<?>) data).getObject() instanceof Supplier) {
 				m_supplier = (Supplier) ((ViewDataObject<?>) data).getObject();
+				m_contactPerson.setLieferant(m_supplier);
 			}
 			
-			m_nameField.setValue(m_contactPerson.getName());
-			m_descriptionField.setValue(m_contactPerson.getBezeichnung());
-			
-			if(m_contactPerson.getKontakt() != null) {
-				m_telephonField.setValue(m_contactPerson.getKontakt().getTelefon());
-				m_handyField.setValue(m_contactPerson.getKontakt().getHandy());
-				m_faxField.setValue(m_contactPerson.getKontakt().getFax());
-				m_emailField.setValue(m_contactPerson.getKontakt().getEmail());
-				m_webField.setValue(m_contactPerson.getKontakt().getWww());
-			}
-			
-			if(m_contactPerson.getAdresse() != null) {
-				m_streetField.setValue(m_contactPerson.getAdresse().getStrasse());
-				m_housenumberField.setValue(m_contactPerson.getAdresse().getHausnummer());
-				m_cityField.setValue(m_contactPerson.getAdresse().getStadt());
-				m_plzField.setValue(m_contactPerson.getAdresse().getPlz());
-				m_countryField.setValue(m_contactPerson.getAdresse().getLand());
-			}
-			m_toCreate = false;
+			setNewInfo();			
+			setValueToComponent(getData());
 		}
+	}
+
+	private void setNewInfo() {
+		getData().clear();
+		getData().put(m_nameField, m_contactPerson.getName());
+		getData().put(m_descriptionField, m_contactPerson.getBezeichnung());
+		
+		if (m_contactPerson.getKontakt() != null) {
+			getData().put(m_telephonField, m_contactPerson.getKontakt().getTelefon());
+			getData().put(m_handyField, m_contactPerson.getKontakt().getHandy());
+			getData().put(m_faxField, m_contactPerson.getKontakt().getFax());
+			getData().put(m_emailField, m_contactPerson.getKontakt().getEmail());
+			getData().put(m_webField, m_contactPerson.getKontakt().getWww());
+		} else {
+			m_contactPerson.setKontakt(new Kontakte());
+		}
+		
+		if (m_contactPerson.getAdresse() != null) {
+			getData().put(m_streetField, m_contactPerson.getAdresse().getStrasse());
+			getData().put(m_housenumberField, m_contactPerson.getAdresse().getHausnummer());
+			getData().put(m_cityField, m_contactPerson.getAdresse().getStadt());
+			getData().put(m_plzField, m_contactPerson.getAdresse().getPlz());
+			getData().put(m_countryField, m_contactPerson.getAdresse().getLand());
+		} else {
+			m_contactPerson.setAdresse(new Adresse());
+		}		
+		
+		m_toCreate = false;		
+		m_headLine.setValue("Ansprechpartner bearbeiten");
+		m_buttonDeaktiviren.setVisible(true);
 	}
 }

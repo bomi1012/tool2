@@ -2,6 +2,7 @@ package de.palaver.view.bean.helpers;
 
 import com.vaadin.ui.UI;
 
+import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
 import de.palaver.management.artikel.Artikel;
@@ -14,10 +15,16 @@ import de.palaver.management.artikel.service.LagerortService;
 import de.palaver.management.artikel.service.MengeneinheitService;
 import de.palaver.management.recipe.Recipe;
 import de.palaver.management.recipe.service.RecipeService;
+import de.palaver.management.supplier.Ansprechpartner;
+import de.palaver.management.supplier.Supplier;
+import de.palaver.management.supplier.service.AnsprechpartnerService;
+import de.palaver.management.supplier.service.SupplierService;
 import de.palaver.view.bean.artikelverwaltung.ShowItemsBean;
 import de.palaver.view.bean.artikelverwaltung.ShowKategoriesBean;
 import de.palaver.view.bean.artikelverwaltung.ShowQuantitiesUnitBean;
 import de.palaver.view.bean.artikelverwaltung.ShowWarehousesBean;
+import de.palaver.view.bean.lieferantenverwaltung.ChangeSupplierBean;
+import de.palaver.view.bean.lieferantenverwaltung.ShowSuppliersBean;
 import de.palaver.view.bean.rezeptverwaltung.ShowRecipesBean;
 
 public class RemoveObjectStrategy {
@@ -54,6 +61,15 @@ public class RemoveObjectStrategy {
 				element = "Artikel";
 				ArtikelService.getInstance().removeArtikel(((Artikel) m_object).getId());
 				ViewHandler.getInstance().switchView(ShowItemsBean.class);
+			} else if (m_object instanceof Supplier) {
+				element = "Supplier";
+				SupplierService.getInstance().removeSupplier((Supplier) m_object);
+				ViewHandler.getInstance().switchView(ShowSuppliersBean.class);
+			} else if (m_object instanceof Ansprechpartner) {
+				element = "Ansprechpartner";
+				AnsprechpartnerService.getInstance().removeAnsprechpartner(((Ansprechpartner) m_object).getId());
+				ViewHandler.getInstance().switchView(ChangeSupplierBean.class, 
+						new ViewDataObject<Supplier>(((Ansprechpartner) m_object).getLieferant()));
 			}
 			((Application) UI.getCurrent().getData()).showDialog(String.format(MESSAGE_SUSSEFULL_ARG_REMOVE, 
 					element));	

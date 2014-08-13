@@ -39,7 +39,7 @@ import de.palaver.view.bean.mitarbeiterverwaltung.ShowEmployeesBean;
 import de.palaver.view.bean.rezeptverwaltung.ChangeRecipeBean;
 import de.palaver.view.bean.rezeptverwaltung.ShowRecipesBean;
 
-public class TemplateBuilder extends AbstractView {
+public class TemplateBuilder extends BaseView {
 	
 	private static final long serialVersionUID = 1367259725869115554L;
 	

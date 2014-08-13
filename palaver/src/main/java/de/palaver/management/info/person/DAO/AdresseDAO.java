@@ -20,6 +20,12 @@ public class AdresseDAO extends AbstractDAO {
 	private static final String FIELD_STADT = "stadt";
 	private static final String FIELD_HAUSNUMMER = "hausnummer";
 	private static final String FIELD_LAND = "land";
+	
+	private String street;
+	private String plz;
+	private String sity;
+	private String haus;
+	private String country;
 
 	private static final String GET_ADRESSE_BY_ID = "SELECT * FROM " + TABLE 
 			+ " WHERE " + FIELD_ID + " = {0}";
@@ -57,6 +63,20 @@ public class AdresseDAO extends AbstractDAO {
 		return m_adresse;
 	}
 
+	public Long createAdresse(Adresse adresse) throws ConnectException, DAOException {		
+		setFields(adresse);	
+		return insert(MessageFormat.format(INSERT_QUERY, street, plz, sity, haus, country));
+	}
+
+	public void deleteAdresse(Long id) throws ConnectException, DAOException {
+		putManaged(MessageFormat.format(DELETE_QUERY, id));			
+	}
+
+	public void updateAdresse(Adresse adresse) throws ConnectException, DAOException {
+		setFields(adresse);
+		putManaged(MessageFormat.format(UPDATE_QUERY, street, haus, sity, plz, country, adresse.getId()));
+	}
+	
 	private Adresse setAdresse(ResultSet set) throws SQLException {
 		return 	new Adresse(set.getLong(FIELD_ID), 
 				set.getString(FIELD_STRASSE), 
@@ -65,24 +85,21 @@ public class AdresseDAO extends AbstractDAO {
 				set.getString(FIELD_PLZ),
 				set.getString(FIELD_LAND));	
 	}
-
-	public Long createAdresse(Adresse adresse) throws ConnectException, DAOException {
-		return insert(MessageFormat.format(INSERT_QUERY, 
-				"'" + adresse.getStrasse() + "'",
-				"'" + adresse.getPlz() + "'",
-				"'" + adresse.getStadt() + "'",
-				"'" + adresse.getHausnummer() + "'",
-				"'" + adresse.getLand() + "'"));
+	
+	private void setFields(Adresse adresse) {
+		setFieldsToNull();
+		if (adresse.getStrasse() != null) { street =  "'" + adresse.getStrasse() + "'"; }
+		if (adresse.getPlz() != null) { plz =  "'" + adresse.getPlz() + "'"; }
+		if (adresse.getStadt() != null) { sity =  "'" + adresse.getStadt() + "'"; }
+		if (adresse.getHausnummer() != null) { haus =  "'" + adresse.getHausnummer() + "'"; }
+		if (adresse.getLand() != null) { country =  "'" + adresse.getLand() + "'"; }
 	}
 
-	public void deleteAdresse(Long id) throws ConnectException, DAOException {
-		putManaged(MessageFormat.format(DELETE_QUERY, id));			
-	}
-
-	public void updateAdresse(Adresse adresse) throws ConnectException, DAOException {
-		putManaged(MessageFormat.format(UPDATE_QUERY, 
-				"'" + adresse.getStrasse() + "'", "'" + adresse.getHausnummer() + "'", 
-				"'" + adresse.getStadt() + "'", "'" + adresse.getPlz() + "'",
-				"'" + adresse.getLand() + "'", adresse.getId()));
+	private void setFieldsToNull() {
+		street = null;
+		plz = null;
+		sity = null;
+		haus = null;
+		country = null;
 	}
 }

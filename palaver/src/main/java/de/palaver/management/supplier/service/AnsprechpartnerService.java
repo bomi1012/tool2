@@ -35,8 +35,8 @@ public class AnsprechpartnerService extends AnsprechpartnerDAO {
 		AnsprechpartnerDAO.getInstance().updateAnsprechpartner(ansprechpartner);
 	}
 
-	public void deleteAnsprechpartner(Long id) throws ConnectException, DAOException {
-		AnsprechpartnerDAO.getInstance().deleteAnsprechpartner(id);		
+	public void removeAnsprechpartner(Long id) throws ConnectException, DAOException {
+		AnsprechpartnerDAO.getInstance().removeAnsprechpartner(id);		
 	}
 	
 	
