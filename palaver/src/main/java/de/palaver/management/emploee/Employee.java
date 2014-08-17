@@ -45,6 +45,11 @@ public class Employee extends EntityName {
 		this(id, null, null, null, null, null, benutzername);
 	}
 	
+	public Employee(Kontakte kontakt) {
+		super();
+		m_kontakt = kontakt;
+	}
+	
 	public Employee(Long id, String name, String vorname, String passwort, String eintrittsdatum, String austrittsdatum,
 			String benutzername) {
 		this(id, name, vorname, passwort, eintrittsdatum, austrittsdatum, null, benutzername, null);

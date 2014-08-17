@@ -13,7 +13,7 @@ import de.palaver.management.employee.service.RolleService;
 import de.palaver.management.info.person.service.KontakteService;
 
 public class EmployeeDAO extends EmployeeHasRollenDAO {
-
+	private static final long serialVersionUID = 189499847070124261L;
 	private static final String VORNAME = "vorname";
 	private static final String PASSWORT = "passwort";
 	private static final String EINTRITTSDATUM = "eintrittsdatum";
@@ -48,6 +48,9 @@ public class EmployeeDAO extends EmployeeHasRollenDAO {
 
 	private ArrayList<Employee> m_list;
 	private Employee m_employee;
+	private String ein;
+	private String aus;
+	private String kontakt;
 
 	public EmployeeDAO() {
 		super();
@@ -79,42 +82,31 @@ public class EmployeeDAO extends EmployeeHasRollenDAO {
 	}
 	
 	public Long create(Employee employee) throws ConnectException, DAOException {
-		String kontakt = null;
-		if (employee.getKontakt() != null) {
-			kontakt = String.valueOf(employee.getKontakt().getId());
-		}
-
+		setFields(employee);
 		return insert(MessageFormat.format(INSERT_QUERY,
 				"'" + employee.getName() + "'",
 				"'" + employee.getVorname() + "'",
-				"'" + employee.getPasswort() + "'",
-				"'" + employee.getEintrittsdatum() + "'",
-				"'" + employee.getAustrittsdatum() + "'",
-				"'" + employee.getBenutzername() + "'",
-				 kontakt));
+				"'" + employee.getPasswort() + "'", ein, aus,
+				"'" + employee.getBenutzername() + "'", kontakt));
 	}
 	
 	public void update(Employee employee) throws ConnectException, DAOException {
-		String kontakt = null;
-		if (employee.getKontakt() != null) {
-			kontakt = String.valueOf(employee.getKontakt().getId());
-		}
-		
+		setFields(employee);		
 		putManaged(MessageFormat.format(UPDATE_QUERY,
 				"'" + employee.getName() + "'",
-				"'" + employee.getVorname() + "'",
-				"'" + employee.getEintrittsdatum() + "'",
-				"'" + employee.getAustrittsdatum() + "'",
-				"'" + employee.getBenutzername() + "'",
-				kontakt, 
+				"'" + employee.getVorname() + "'", ein, aus,
+				"'" + employee.getBenutzername() + "'", kontakt, 
 				employee.getId()));
 		
+	}
+	
+	public void removeEmployee(Long employeeId) throws ConnectException, DAOException {
+		putManaged("DELETE FROM " + TABLE_EMPLOYEE + " WHERE " + FIELD_ID + " = " + employeeId);
 	}
 	
 	public void changePassword(String passwort, Long id) throws ConnectException, DAOException {
 		putManaged(MessageFormat.format(UPDATE_PASSWORD_QUERY,
 				"'" + passwort + "'", id));
-		
 	}
 	
 	
@@ -127,4 +119,18 @@ public class EmployeeDAO extends EmployeeHasRollenDAO {
 				set.getString(BENUTZERNAME), 
 				KontakteService.getInstance().getKontakteById(set.getLong(FIELD_KONTAKTE_FK)));
 	}
+
+	private void setFields(Employee employee) {
+		setFieldsToNull();
+		if (employee.getKontakt() != null) { kontakt = String.valueOf(employee.getKontakt().getId()); }
+		if (employee.getEintrittsdatum() != null) { ein = "'" + employee.getEintrittsdatum() + "'"; }
+		if (employee.getAustrittsdatum() != null) { aus = "'" + employee.getAustrittsdatum() + "'"; }
+	}
+
+	private void setFieldsToNull() {
+		ein = null;
+		aus = null;
+		kontakt = null;
+	}
+
 }

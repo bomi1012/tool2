@@ -13,6 +13,8 @@ import de.palaver.management.artikel.service.ArtikelService;
 import de.palaver.management.artikel.service.KategorieService;
 import de.palaver.management.artikel.service.LagerortService;
 import de.palaver.management.artikel.service.MengeneinheitService;
+import de.palaver.management.emploee.Employee;
+import de.palaver.management.employee.service.EmployeeService;
 import de.palaver.management.recipe.Recipe;
 import de.palaver.management.recipe.service.RecipeService;
 import de.palaver.management.supplier.Ansprechpartner;
@@ -25,6 +27,7 @@ import de.palaver.view.bean.artikelverwaltung.ShowQuantitiesUnitBean;
 import de.palaver.view.bean.artikelverwaltung.ShowWarehousesBean;
 import de.palaver.view.bean.lieferantenverwaltung.ChangeSupplierBean;
 import de.palaver.view.bean.lieferantenverwaltung.ShowSuppliersBean;
+import de.palaver.view.bean.mitarbeiterverwaltung.ShowEmployeesBean;
 import de.palaver.view.bean.rezeptverwaltung.ShowRecipesBean;
 
 public class RemoveObjectStrategy {
@@ -70,6 +73,10 @@ public class RemoveObjectStrategy {
 				AnsprechpartnerService.getInstance().removeAnsprechpartner(((Ansprechpartner) m_object).getId());
 				ViewHandler.getInstance().switchView(ChangeSupplierBean.class, 
 						new ViewDataObject<Supplier>(((Ansprechpartner) m_object).getLieferant()));
+			} else if (m_object instanceof Employee) {
+				element = "Mitarbeiter";
+				EmployeeService.getInstance().removeEmployee(((Employee) m_object).getId());
+				ViewHandler.getInstance().switchView(ShowEmployeesBean.class);
 			}
 			((Application) UI.getCurrent().getData()).showDialog(String.format(MESSAGE_SUSSEFULL_ARG_REMOVE, 
 					element));	

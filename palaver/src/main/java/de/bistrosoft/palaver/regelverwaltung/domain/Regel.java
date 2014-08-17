@@ -269,7 +269,7 @@ public class Regel {
 								if (grid.getComponent(col, row) instanceof MenueComponent) {
 									MenueComponent tmp = (MenueComponent) grid
 											.getComponent(col, row);
-									if (tmp.getMenue().getFussnoten()
+									if (tmp.getMenue().getFussnoten() != null && tmp.getMenue().getFussnoten()
 											.indexOf(fs) >= 0) {
 										if (tmp.getFehlerRegeln() != null) {
 											if (tmp.getFehlerRegeln().indexOf(

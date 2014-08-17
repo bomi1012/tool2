@@ -128,9 +128,7 @@ public class ChangePasswordBean extends TemplateBuilder implements View, ValueCh
 	}
 
 	@Override
-	public void valueChange(ValueChangeEvent event) {
-		
-	}
+	public void valueChange(ValueChangeEvent event) { }
 
 	@Override
 	public void getViewParam(ViewData data) {

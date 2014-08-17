@@ -124,7 +124,7 @@ public class ChangeSupplierBean extends ChangeFieldsPersonAbstract implements Vi
 		m_buttonSpeichern.addClickListener(new ClickListener() {			
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (validiereEingabe()) {
+				if (isMarkAsChange() && validiereEingabe()) {
 					saveItem();	
 					close();
 				}							
@@ -139,40 +139,45 @@ public class ChangeSupplierBean extends ChangeFieldsPersonAbstract implements Vi
 			}
 			
 			private void saveItem() {
-				if (m_toCreate) {
-					addToDB(m_supplier.getAdresse(), 0);
-					addToDB(m_supplier.getKontakte(), 0);
-					addToDB(m_supplier, 0);
-					if (ChangeSupplierBean.this.getParent() instanceof Window) {
-						close();
-					} else {
-						windowModalYesNo();	
-					}
-				} else {
-					if (m_supplier.getKontakte().getId() != null) { 
-						if (!checkFields(m_supplier.getKontakte())) {
-							removeFromDB(m_supplier.getKontakte());	
-							m_supplier.setKontakte(new Kontakte());
-						} else {
-							updateInDB(m_supplier.getKontakte());							
-						}						
-					} else {
-						addToDB(m_supplier.getKontakte(), 0);
-					}
-					
-					if (m_supplier.getAdresse().getId() != null) { 
-						if (!checkFields(m_supplier.getAdresse())) {
-							removeFromDB(m_supplier.getAdresse());	
-							m_supplier.setAdresse(new Adresse());
-						} else {
-							updateInDB(m_supplier.getAdresse());							
-						}							
-					} else {
+				try {
+					if (m_toCreate) {
 						addToDB(m_supplier.getAdresse(), 0);
-					}					
-					updateInDB(m_supplier);
-					close();
-				}
+						addToDB(m_supplier.getKontakte(), 0);
+						addToDB(m_supplier, 0);
+						if (ChangeSupplierBean.this.getParent() instanceof Window) {
+							close();
+						} else {
+							windowModalYesNo();	
+						}
+					} else {
+						if (m_supplier.getKontakte().getId() != null) { 
+							if (!checkFields(m_supplier.getKontakte())) {
+								removeFromDB(m_supplier.getKontakte());	
+								m_supplier.setKontakte(new Kontakte());
+							} else {
+								updateInDB(m_supplier.getKontakte());							
+							}						
+						} else {
+							addToDB(m_supplier.getKontakte(), 0);
+						}
+						
+						if (m_supplier.getAdresse().getId() != null) { 
+							if (!checkFields(m_supplier.getAdresse())) {
+								removeFromDB(m_supplier.getAdresse());	
+								m_supplier.setAdresse(new Adresse());
+							} else {
+								updateInDB(m_supplier.getAdresse());							
+							}							
+						} else {
+							addToDB(m_supplier.getAdresse(), 0);
+						}					
+						updateInDB(m_supplier);
+						close();
+					}
+					message(MESSAGE_SUSSEFULL_ARG_1, "Lieferant");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}				
 			}
 		});	
 		
@@ -225,6 +230,7 @@ public class ChangeSupplierBean extends ChangeFieldsPersonAbstract implements Vi
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				m_supplier.setMehrereliefertermine((Boolean) event.getProperty().getValue());
+				markAsChange();
 			}
 		});
 		m_telephonField.addValueChangeListener(new ValueChangeListener() {			
@@ -400,7 +406,6 @@ public class ChangeSupplierBean extends ChangeFieldsPersonAbstract implements Vi
 	public void valueChange(ValueChangeEvent event) { }
 	@Override
 	public void getViewParam(ViewData data) {
-		resetMarkAsChange();
 		if(((ViewDataObject<?>) data).getData() instanceof Supplier) { 
 			m_supplier = (Supplier)((ViewDataObject<?>) data).getData();
 			setNewInfo();			
@@ -417,6 +422,7 @@ public class ChangeSupplierBean extends ChangeFieldsPersonAbstract implements Vi
 				e.printStackTrace();
 			} 
 		}
+		resetMarkAsChange();
 	}
 
 	private void setNewInfo() {

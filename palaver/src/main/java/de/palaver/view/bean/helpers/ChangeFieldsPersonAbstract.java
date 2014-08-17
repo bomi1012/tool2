@@ -14,6 +14,8 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.TwinColSelect;
 import com.vaadin.ui.VerticalLayout;
 
+import de.palaver.management.emploee.Employee;
+import de.palaver.management.employee.service.EmployeeService;
 import de.palaver.management.info.person.Adresse;
 import de.palaver.management.info.person.Kontakte;
 import de.palaver.management.info.person.service.AdresseService;
@@ -28,6 +30,7 @@ abstract public class ChangeFieldsPersonAbstract extends TemplateBuilder{
 
 	protected Supplier m_supplier;
 	protected Ansprechpartner m_contactPerson;	
+	protected Employee m_employeeView;
 	
 	private boolean m_markKontakteAsChange = false;
 	protected boolean isMarkKontakteAsChange() { return m_markKontakteAsChange; }
@@ -194,8 +197,10 @@ abstract public class ChangeFieldsPersonAbstract extends TemplateBuilder{
 					case 1:
 						m_contactPerson.getKontakt().setId(KontakteService.getInstance().createKontakte((Kontakte) obj));
 						break;
-					}
-					
+					case 2:
+						m_employeeView.getKontakt().setId(KontakteService.getInstance().createKontakte((Kontakte) obj));
+						break;
+					}					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -220,22 +225,26 @@ abstract public class ChangeFieldsPersonAbstract extends TemplateBuilder{
 		}	
 		
 		if (obj instanceof Supplier) {
-			if (isMarkAsChange()) {
-				try {
-					m_supplier.setId(SupplierService.getInstance().createLieferant(m_supplier));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+			try {
+				m_supplier.setId(SupplierService.getInstance().createLieferant(m_supplier));
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 		
 		if (obj instanceof Ansprechpartner) {
-			if (isMarkAsChange()) {
-				try {
-					m_contactPerson.setId(AnsprechpartnerService.getInstance().createAnsprechpartner(m_contactPerson));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+			try {
+				m_contactPerson.setId(AnsprechpartnerService.getInstance().createAnsprechpartner(m_contactPerson));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if (obj instanceof Employee) {
+			try {
+				m_employeeView.setId(EmployeeService.getInstance().create(m_employeeView));	
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 	}
@@ -277,7 +286,7 @@ abstract public class ChangeFieldsPersonAbstract extends TemplateBuilder{
 			}
 		}		
 		if(obj instanceof Supplier) {
-			if (isMarkKontakteAsChange()) {
+			if (isMarkAsChange()) {
 				try {
 					SupplierService.getInstance().updateLieferant((Supplier) obj);
 				} catch (Exception e) {
@@ -286,7 +295,7 @@ abstract public class ChangeFieldsPersonAbstract extends TemplateBuilder{
 			}
 		}		
 		if(obj instanceof Ansprechpartner) {
-			if (isMarkKontakteAsChange()) {
+			if (isMarkAsChange()) {
 				try {
 					AnsprechpartnerService.getInstance().updateAnsprechpartner((Ansprechpartner) obj);
 				} catch (Exception e) {
@@ -294,6 +303,15 @@ abstract public class ChangeFieldsPersonAbstract extends TemplateBuilder{
 				}
 			}
 		} 
+		if(obj instanceof Employee) {
+			if (isMarkAsChange()) {
+				try {
+					EmployeeService.getInstance().update((Employee) obj);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 	
 	protected boolean checkFields(Object obj) {

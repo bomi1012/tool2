@@ -55,6 +55,7 @@ import de.palaver.view.bean.artikelverwaltung.ShowWarehousesBean;
 import de.palaver.view.bean.lieferantenverwaltung.ChangeSupplierBean;
 import de.palaver.view.bean.lieferantenverwaltung.ShowSuppliersBean;
 import de.palaver.view.bean.mitarbeiterverwaltung.ChangeEmployeeBean;
+import de.palaver.view.bean.mitarbeiterverwaltung.ChangePasswordBean;
 import de.palaver.view.bean.mitarbeiterverwaltung.ShowEmployeesBean;
 import de.palaver.view.bean.rezeptverwaltung.ChangeRecipeBean;
 import de.palaver.view.bean.rezeptverwaltung.ShowRecipesBean;
@@ -289,10 +290,14 @@ public class MainLayout extends VerticalLayout implements Command {
 				ViewHandler.getInstance().switchView(ShowEmployeesBean.class);
 			} else if (selectedItem.getText().equals(IConstants.MENU_MITARBEITER_NEU)) {
 				ViewHandler.getInstance().switchView(ChangeEmployeeBean.class);
+			} else if (selectedItem.getText().equals(IConstants.MENU_MITARBEITER_PASSWORD)) {
+				ViewHandler.getInstance().switchView(ChangePasswordBean.class, 
+						new ViewDataObject<Employee>((Employee) SerializationUtils.clone((
+								(Application) UI.getCurrent().getData()).getUser())));
 			} else if (selectedItem.getText().equals(IConstants.MENU_MITARBEITER_PROFILE)) {
-				Employee employeeCopy = (Employee) SerializationUtils.clone(((Application) UI.getCurrent().getData()).getUser());
 				ViewHandler.getInstance().switchView(ChangeEmployeeBean.class, 
-						new ViewDataObject<Employee>(employeeCopy));
+						new ViewDataObject<Employee>((Employee) SerializationUtils.clone((
+								(Application) UI.getCurrent().getData()).getUser())));
 			} else if (selectedItem.getText().equals( IConstants.MENU_REZEPT_ANZEIGEN)) {
 				ViewHandler.getInstance().switchView(ShowRecipesBean.class);
 			} else if (selectedItem.getText().equals(IConstants.MENU_REZEPT_NEU)) {

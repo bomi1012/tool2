@@ -55,7 +55,11 @@ public class EmployeeService {
 		removeRelation(employee.getId());
 		createRelation(employee.getId(), employee.getRollen());
 	}
-	
+
+	public void removeEmployee(Long employeeId) throws ConnectException, DAOException {
+		removeRelation(employeeId);
+		EmployeeDAO.getInstance().removeEmployee(employeeId);
+	}
 
 
 	private void createRelation(Long employeeId, List<Rolle> rollen) throws ConnectException, DAOException {
@@ -72,4 +76,5 @@ public class EmployeeService {
 	public void changePassword(Employee employee) throws ConnectException, DAOException {
 		EmployeeDAO.getInstance().changePassword(employee.getPasswort(), employee.getId());		
 	}
+
 }
