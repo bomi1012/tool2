@@ -22,13 +22,13 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueart;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueartverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
+import de.palaver.management.menu.Menutype;
 
 /**
  * @author Michael Marschall
@@ -56,7 +56,7 @@ public class MenueartEinst extends VerticalLayout implements View {
 
 	private Label lUeberschrift;
 
-	private Menueart ma = new Menueart();
+	private Menutype ma = new Menutype();
 	private Window maNeu;
 
 	public MenueartEinst() {
@@ -103,7 +103,7 @@ public class MenueartEinst extends VerticalLayout implements View {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
-					ma = (Menueart) event.getProperty().getValue();
+					ma = (Menutype) event.getProperty().getValue();
 				}
 			}
 		});
@@ -118,9 +118,9 @@ public class MenueartEinst extends VerticalLayout implements View {
 			}
 		});
 
-		BeanItemContainer<Menueart> ctMenueart;
+		BeanItemContainer<Menutype> ctMenueart;
 		try {
-			ctMenueart = new BeanItemContainer<Menueart>(Menueart.class,
+			ctMenueart = new BeanItemContainer<Menutype>(Menutype.class,
 					Menueartverwaltung.getInstance().getAllMenueart());
 			tblMenueart.setContainerDataSource(ctMenueart);
 			tblMenueart.setVisibleColumns(new Object[] { "bezeichnung", });
@@ -133,7 +133,7 @@ public class MenueartEinst extends VerticalLayout implements View {
 		btAuswaehlen.addClickListener(new ClickListener() {
 			public void buttonClick(ClickEvent event) {
 				if (tblMenueart.getValue() != null
-						&& tblMenueart.getValue() instanceof Menueart) {
+						&& tblMenueart.getValue() instanceof Menutype) {
 					updateMenueart();
 				} else
 					((Application) UI.getCurrent().getData())
@@ -238,7 +238,7 @@ public class MenueartEinst extends VerticalLayout implements View {
 		maNeu.setContent(vl);
 
 		tfBezeichnung.setImmediate(true);
-		tfBezeichnung.setValue(ma.getBezeichnung());
+		tfBezeichnung.setValue(ma.getName());
 		tfBezeichnung.addValidator(new StringLengthValidator(
 				"Bitte gültige Bezeichnung eingeben", 3, 50, false));
 
@@ -259,7 +259,7 @@ public class MenueartEinst extends VerticalLayout implements View {
 	}
 
 	private void speichern() {
-		ma.setBezeichnung(tfBezeichnung.getValue());
+		ma.setName(tfBezeichnung.getValue());
 
 		try {
 			Menueartverwaltung.getInstance().createMenueart(ma);
@@ -278,7 +278,7 @@ public class MenueartEinst extends VerticalLayout implements View {
 	}
 
 	private void update() {
-		ma.setBezeichnung(tfBezeichnung.getValue());
+		ma.setName(tfBezeichnung.getValue());
 
 		try {
 			Menueartverwaltung.getInstance().updateMenueart(ma);

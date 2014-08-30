@@ -50,6 +50,7 @@ public class BaseView extends VerticalLayout {
 	protected static final String CREATE_NEW_KATEGORIE = "Erstelen neue Kategorie";
 	protected static final String CREATE_NEW_LAGERORT = "Erstelen neuen Lagerort";
 	protected static final String CREATE_NEW_ARTIKEL = "Erstelen neuen Artikel";
+	protected static final String CREATE_NEW_ZUBEREITUNG = "Erstelen neue Zubereitung";
 
 	protected static final String CHANGE_OLD_PASSWORD = "Passwort ändern";
 

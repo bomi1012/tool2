@@ -7,16 +7,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.bistrosoft.palaver.data.FussnoteDAO;
-import de.bistrosoft.palaver.data.GeschmackDAO;
 import de.bistrosoft.palaver.data.RezeptartDAO;
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
 import de.palaver.management.artikel.Artikel;
 import de.palaver.management.artikel.DAO.ArtikelDAO;
-import de.palaver.management.recipe.Fussnote;
-import de.palaver.management.recipe.Geschmack;
+import de.palaver.management.menu.Fussnote;
+import de.palaver.management.menu.Geschmack;
+import de.palaver.management.menu.Menu;
+import de.palaver.management.menu.DAO.FussnoteDAO;
+import de.palaver.management.menu.DAO.GeschmackDAO;
 import de.palaver.management.recipe.Recipe;
 import de.palaver.management.recipe.Recipetype;
 import de.palaver.management.recipe.RezeptHasArtikel;
@@ -90,9 +90,9 @@ public class Rezeptverwaltung extends RecipeDAO {
 		super.updateRezept(recipe);
 	}
 
-	public List<Recipe> getRezepteByMenue(Menue menue) {
+	public List<Recipe> getRezepteByMenue(Menu menu) {
 		try {
-			return super.getRezepteByMenue(menue);
+			return super.getRezepteByMenue(menu);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

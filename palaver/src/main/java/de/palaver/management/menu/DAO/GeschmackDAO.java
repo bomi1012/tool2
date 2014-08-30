@@ -1,4 +1,4 @@
-package de.bistrosoft.palaver.data;
+package de.palaver.management.menu.DAO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,7 +9,7 @@ import java.util.List;
 import de.palaver.dao.AbstractDAO;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
-import de.palaver.management.recipe.Geschmack;
+import de.palaver.management.menu.Geschmack;
 
 /**
  * 
@@ -57,8 +57,7 @@ public class GeschmackDAO extends AbstractDAO {
 		List<Geschmack> list = new ArrayList<Geschmack>();
 		ResultSet set = getManaged(GET_ALL_GESCHMACK);
 		while (set.next()) {
-			list.add(new Geschmack(set.getLong(ID), set.getString(NAME), set
-					.getBoolean(INAKTIV)));
+			list.add(new Geschmack(set.getLong(ID), set.getString(NAME)));
 		}
 		return list;
 	}
@@ -69,8 +68,7 @@ public class GeschmackDAO extends AbstractDAO {
 		ResultSet set = getManaged(MessageFormat.format(GET_GESCHMACK_BY_MENUE,
 				id));
 		while (set.next()) {
-			geschmack = new Geschmack(set.getLong(ID), set.getString(NAME),
-					set.getBoolean(INAKTIV));
+			geschmack = new Geschmack(set.getLong(ID), set.getString(NAME));
 		}
 		return geschmack;
 	}
@@ -81,8 +79,7 @@ public class GeschmackDAO extends AbstractDAO {
 		ResultSet set = getManaged(MessageFormat.format(
 				GET_GESCHMACK_BY_REZEPT, id));
 		while (set.next()) {
-			geschmack = new Geschmack(set.getLong(ID), set.getString(NAME),
-					set.getBoolean(INAKTIV));
+			geschmack = new Geschmack(set.getLong(ID), set.getString(NAME));
 		}
 		return geschmack;
 	}
@@ -93,8 +90,7 @@ public class GeschmackDAO extends AbstractDAO {
 		ResultSet set = getManaged(MessageFormat
 				.format(GET_GESCHMACK_BY_ID, id));
 		while (set.next()) {
-			geschmack = new Geschmack(set.getLong(ID), set.getString(NAME),
-					set.getBoolean(INAKTIV));
+			geschmack = new Geschmack(set.getLong(ID), set.getString(NAME));
 		}
 		return geschmack;
 	}
@@ -104,7 +100,7 @@ public class GeschmackDAO extends AbstractDAO {
 		ResultSet set = getManaged(MessageFormat.format(GET_GESCHMACK_BY_NAME,
 				NAME));
 		while (set.next()) {
-			geschmack = new Geschmack(set.getLong("id"), null, false);
+			geschmack = new Geschmack(set.getLong("id"), null);
 		}
 		return geschmack;
 
@@ -115,7 +111,7 @@ public class GeschmackDAO extends AbstractDAO {
 		List<Geschmack> list = new ArrayList<Geschmack>();
 		ResultSet set = getManaged(GET_GESCHMACK_BY_NAME + name + "%'");
 		while (set.next()) {
-			list.add(new Geschmack(set.getLong(ID), set.getString(NAME), null));
+			list.add(new Geschmack(set.getLong(ID), set.getString(NAME)));
 		}
 		return list;
 	}

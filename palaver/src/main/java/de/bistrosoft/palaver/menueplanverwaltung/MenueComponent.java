@@ -20,11 +20,11 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
 
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.palaver.Application;
-import de.palaver.management.recipe.Fussnote;
+import de.palaver.management.menu.Fussnote;
+import de.palaver.management.menu.Menu;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
 /**
@@ -44,7 +44,7 @@ public class MenueComponent extends CustomComponent {
 	private Button btn = new Button();
 	private Button btDelete = new Button();
 	private Button btChange = new Button();
-	private Menue menue;
+	private Menu menu;
 	private Boolean isChanged;
 	private Button btFehler;
 	private Integer portion;
@@ -141,12 +141,12 @@ public class MenueComponent extends CustomComponent {
 		this.col = col;
 	}
 
-	public Menue getMenue() {
-		return menue;
+	public Menu getMenue() {
+		return menu;
 	}
 
-	public void setMenue(Menue menue) {
-		this.menue = menue;
+	public void setMenue(Menu menu) {
+		this.menu = menu;
 	}
 
 	public DDGridLayout getMenueGrid() {
@@ -223,7 +223,7 @@ public class MenueComponent extends CustomComponent {
 	}
 
 	// Konstruktor für Menükomponente
-	public MenueComponent(Menue menue, String angezName,
+	public MenueComponent(Menu menu, String angezName,
 			MenueplanGridLayout nMenueplan, DDGridLayout nMenueGrid, int nRow,
 			int nCol, Boolean isChanged, Integer portion, String fussnote) {
 		this.isChanged = isChanged;
@@ -232,7 +232,7 @@ public class MenueComponent extends CustomComponent {
 		this.menueplan = nMenueplan;
 		this.menueGrid = nMenueGrid;
 		// this.comp = this;
-		this.setMenue(menue);
+		this.setMenue(menu);
 		this.angezeigterName = angezName;
 		this.portion = portion;
 		this.fn = fussnote;
@@ -245,7 +245,7 @@ public class MenueComponent extends CustomComponent {
 			// Menübezeichnung des ausgewählten Menüs der Menükomponente hinzufügen
 			try {
 				fns = Fussnotenverwaltung.getInstance().getFussnoteByMenue(
-						menue.getId());
+						menu.getId());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

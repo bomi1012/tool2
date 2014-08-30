@@ -3,10 +3,10 @@ package de.bistrosoft.palaver.rezeptverwaltung.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import de.bistrosoft.palaver.data.GeschmackDAO;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
-import de.palaver.management.recipe.Geschmack;
+import de.palaver.management.menu.Geschmack;
+import de.palaver.management.menu.DAO.GeschmackDAO;
 
 /**
  * @author Michael Marschall

@@ -46,7 +46,7 @@ public class RemoveObjectStrategy {
 			String element = null;
 			if (m_object instanceof Recipe) {	
 				element = "Rezept";
-				RecipeService.getInstance().removeRecipeFromDB(((Recipe) m_object).getId());				
+				RecipeService.getInstance().removeRecipe(((Recipe) m_object).getId());				
 				ViewHandler.getInstance().switchView(ShowRecipesBean.class);
 			} else if (m_object instanceof Lagerort) {
 				element = "Lagerort";
@@ -77,7 +77,7 @@ public class RemoveObjectStrategy {
 				element = "Mitarbeiter";
 				EmployeeService.getInstance().removeEmployee(((Employee) m_object).getId());
 				ViewHandler.getInstance().switchView(ShowEmployeesBean.class);
-			}
+			} 
 			((Application) UI.getCurrent().getData()).showDialog(String.format(MESSAGE_SUSSEFULL_ARG_REMOVE, 
 					element));	
 		} catch (Exception e) {

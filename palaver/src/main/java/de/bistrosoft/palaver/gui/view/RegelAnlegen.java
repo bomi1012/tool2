@@ -24,13 +24,11 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueart;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueartverwaltung;
 import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
 import de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
-import de.bistrosoft.palaver.rezeptverwaltung.service.Zubereitungverwaltung;
 import de.bistrosoft.palaver.util.TwinColTouch;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
@@ -38,9 +36,11 @@ import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
-import de.palaver.management.recipe.Fussnote;
-import de.palaver.management.recipe.Geschmack;
+import de.palaver.management.menu.Fussnote;
+import de.palaver.management.menu.Geschmack;
+import de.palaver.management.menu.Menutype;
 import de.palaver.management.recipe.Zubereitung;
+import de.palaver.management.recipe.service.RecipeService;
 
 @SuppressWarnings({ "serial", "deprecation" })
 public class RegelAnlegen extends VerticalLayout implements View,
@@ -85,7 +85,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 	BeanItemContainer<Zubereitung> zubereitungContainer;
 	BeanItemContainer<Fussnote> fussnoteContainer;
 	BeanItemContainer<Geschmack> geschmackContainer;
-	BeanItemContainer<Menueart> menueartContainer;
+	BeanItemContainer<Menutype> menueartContainer;
 
 	List<String> operatorinhalt = Arrays.asList(
 			IConstants.INFO_REGEL_OPERATOR_ERLAUBT,
@@ -654,11 +654,11 @@ public class RegelAnlegen extends VerticalLayout implements View,
 		try {
 
 			// Container
-			List<Zubereitung> zb = Zubereitungverwaltung.getInstance()
+			List<Zubereitung> zb = RecipeService.getInstance()
 					.getAllZubereitungen();
 			List<Fussnote> fn = Fussnotenverwaltung.getInstance()
 					.getAllFussnote();
-			List<Menueart> ma = Menueartverwaltung.getInstance()
+			List<Menutype> ma = Menueartverwaltung.getInstance()
 					.getAllMenueart();
 			List<Geschmack> g = Geschmackverwaltung.getInstance()
 					.getAllGeschmack();
@@ -668,15 +668,15 @@ public class RegelAnlegen extends VerticalLayout implements View,
 				kriterienZubereitung.addItem(z.getName());
 			}
 			for (Fussnote f : fn) {
-				kriterienFussnote.addItem(f.getBezeichnung());
+				kriterienFussnote.addItem(f.getName());
 			}
 
 			for (Geschmack ge : g) {
 				kriterienGeschmack.addItem(ge.getName());
 			}
 
-			for (Menueart m : ma) {
-				kriterienMenueart.addItem(m.getBezeichnung());
+			for (Menutype m : ma) {
+				kriterienMenueart.addItem(m.getName());
 			}
 
 		} catch (Exception e) {

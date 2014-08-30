@@ -14,6 +14,7 @@ import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
@@ -26,6 +27,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window.CloseEvent;
 import com.vaadin.ui.Window.CloseListener;
+import com.vaadin.ui.themes.BaseTheme;
 
 import de.bistrosoft.palaver.gui.view.MenueAnlegen;
 import de.hska.awp.palaver2.util.IConstants;
@@ -65,6 +67,8 @@ public class ChangeRecipeBean extends TemplateBuilder implements View, ValueChan
 	
 	private List<RezeptHasArtikelWrapper> m_rezeptHasArtikelWrappers;
 	private Recipe m_recipe;
+	private Button m_addZubereitungButton;
+	private VerticalLayout m_innerBoxZubereitung;
 
 	public ChangeRecipeBean() {
 		super();
@@ -95,6 +99,8 @@ public class ChangeRecipeBean extends TemplateBuilder implements View, ValueChan
 		m_commentField = textArea("Kommentar", WIDTH_FULL, "60", false, "Kommentar", this);
 		
 		m_zubereitungColSelect = twinColSelect(null, "verfügbare Zubereitung", "ausgewählte Zubereitung", 8, 0, true, true);	
+		m_addZubereitungButton = buttonAsIcon(" neue Zubereitung", BaseTheme.BUTTON_LINK, 
+				"cursor-hand lieferant", "icons/bricks.png", true);
 		
 		//Konfiguriere Tabelle Reztepte
 		m_table = HTMLComponents.table(true, true, WIDTH_FULL, "300px");
@@ -116,6 +122,13 @@ public class ChangeRecipeBean extends TemplateBuilder implements View, ValueChan
 		m_commentField.addValueChangeListener(this);
 		m_employeeSelect.addValueChangeListener(this);
 		m_recipetypeSelect.addValueChangeListener(this);
+		
+		m_innerBoxZubereitung = new VerticalLayout();
+		m_innerBoxZubereitung.setWidth(WIDTH_FULL);
+		m_innerBoxZubereitung.setSpacing(true);
+		m_innerBoxZubereitung.setMargin(true);			
+		m_innerBoxZubereitung.addComponent(m_zubereitungColSelect);
+		m_innerBoxZubereitung.addComponent(m_addZubereitungButton);
 		
 		m_innerBoxRecipe = new VerticalLayout();		
 		m_innerBoxRecipe.setWidth(WIDTH_FULL);
@@ -145,11 +158,11 @@ public class ChangeRecipeBean extends TemplateBuilder implements View, ValueChan
 			VerticalLayout verticalLayout = verticalLayout(array, "90%");
 					
 			horizontalLayout.addComponent(verticalLayout);
-			horizontalLayout.addComponent(m_zubereitungColSelect);
+			horizontalLayout.addComponent(m_innerBoxZubereitung);
 			horizontalLayout.setExpandRatio(verticalLayout, 1);
-			horizontalLayout.setExpandRatio(m_zubereitungColSelect, 1);
+			horizontalLayout.setExpandRatio(m_innerBoxZubereitung, 1);
 			horizontalLayout.setComponentAlignment(verticalLayout, Alignment.TOP_LEFT);
-			horizontalLayout.setComponentAlignment(m_zubereitungColSelect, Alignment.TOP_RIGHT);
+			horizontalLayout.setComponentAlignment(m_innerBoxZubereitung, Alignment.TOP_RIGHT);
 			
 		} 
 		if (position == POSITION_BOTTOM) {
@@ -217,22 +230,36 @@ public class ChangeRecipeBean extends TemplateBuilder implements View, ValueChan
 				}
 			}
 		});
+		m_addZubereitungButton.addClickListener(new ClickListener() {			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				getWindowFactory(new ChangeZubereitungBean()); 
+			}
+		});
 	}
 	
 	@SuppressWarnings("serial")
 	private void getWindowFactory(final Object object) {	
-		if(object instanceof ChangeItemBean) {
+		if (object instanceof ChangeItemBean) {
 			addComponent((ChangeItemBean) object);
 			m_window = windowUI(CREATE_NEW_ARTIKEL, true, false, "950", "500");
 			m_window.setContent((ChangeItemBean) object);			
 		} 
+		if(object instanceof ChangeZubereitungBean) {
+			addComponent((ChangeZubereitungBean) object);
+			m_window = windowUI(CREATE_NEW_ZUBEREITUNG, true, false, "500", "250");
+			m_window.setContent((ChangeZubereitungBean) object);
+		}
 		
 		UI.getCurrent().addWindow(m_window);
 		m_window.addCloseListener(new CloseListener() {			
 			@Override
 			public void windowClose(CloseEvent e) {
-				if(((ChangeItemBean) object).getArtikel() != null) {
+				if(object instanceof ChangeItemBean && ((ChangeItemBean) object).getArtikel() != null) {
 					m_containerItem.addItem(((ChangeItemBean) object).getArtikel());
+				} 
+				if(object instanceof ChangeZubereitungBean && ((ChangeZubereitungBean) object).getZubereitung() != null) {
+					m_zubereitungColSelect.addItem(((ChangeZubereitungBean) object).getZubereitung());
 				} 
 			}
 		});

@@ -1,13 +1,12 @@
 package de.bistrosoft.palaver.menueplanverwaltung.service;
 
 import java.sql.SQLException;
-import java.util.List;
 
-import de.bistrosoft.palaver.data.MenueDAO;
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasFussnote;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
+import de.palaver.management.menu.Menu;
+import de.palaver.management.menu.DAO.MenueDAO;
 
 public class Menueverwaltung extends MenueDAO {
 
@@ -24,29 +23,9 @@ public class Menueverwaltung extends MenueDAO {
 		return instance;
 	}
 
-	public List<Menue> getAllMenues() {
-		try {
-			return super.getAllMenues();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	public List<Menue> getAllMenuesTabelle() {
-		try {
-			return super.getAllMenuesTabelle();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	public void createMenue(Menue menue) throws ConnectException, DAOException,
+	public void createMenue(Menu menu) throws ConnectException, DAOException,
 			SQLException {
-		super.createMenue(menue);
+		super.createMenue(menu);
 	}
 
 	public void FussnoteAdd(MenueHasFussnote menueHasFussnote)
@@ -54,7 +33,7 @@ public class Menueverwaltung extends MenueDAO {
 		super.FussnoteAdd(menueHasFussnote);
 	}
 
-	public void setMenueDisabled(Menue menueAusTb) throws ConnectException,
+	public void setMenueDisabled(Menu menueAusTb) throws ConnectException,
 			DAOException, SQLException {
 		super.setMenueDisabled(menueAusTb);
 	}

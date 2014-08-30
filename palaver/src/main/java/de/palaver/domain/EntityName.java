@@ -8,7 +8,7 @@ public class EntityName extends EntityId  {
 	public void setName(String name) { m_name = name; }
 	
 	public EntityName() {
-		this(null, null);
+		super();
 	}
 	
 	public EntityName(Long id, String name) {

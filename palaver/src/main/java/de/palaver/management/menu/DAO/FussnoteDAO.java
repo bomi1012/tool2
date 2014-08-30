@@ -1,4 +1,4 @@
-package de.bistrosoft.palaver.data;
+package de.palaver.management.menu.DAO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,7 +9,7 @@ import java.util.List;
 import de.palaver.dao.AbstractDAO;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
-import de.palaver.management.recipe.Fussnote;
+import de.palaver.management.menu.Fussnote;
 
 /**
  * @author Michael Marschall
@@ -104,7 +104,7 @@ public class FussnoteDAO extends AbstractDAO {
 	public void createFussnote(Fussnote fussnote) throws ConnectException,
 			DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + ","
-				+ ABKUERZUNG + ") VALUES('" + fussnote.getBezeichnung() + "','"
+				+ ABKUERZUNG + ") VALUES('" + fussnote.getName() + "','"
 				+ fussnote.getAbkuerzung() + "');";
 		this.putManaged(INSERT_QUERY);
 	}
@@ -113,7 +113,7 @@ public class FussnoteDAO extends AbstractDAO {
 	public void updateFussnote(Fussnote fussnote) throws ConnectException,
 			DAOException, SQLException {
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + NAME + "='"
-				+ fussnote.getBezeichnung() + "'," + ABKUERZUNG + "='"
+				+ fussnote.getName() + "'," + ABKUERZUNG + "='"
 				+ fussnote.getAbkuerzung() + "'" + " WHERE " + ID + "='"
 				+ fussnote.getId() + "'";
 		this.putManaged(UPDATE_QUERY);

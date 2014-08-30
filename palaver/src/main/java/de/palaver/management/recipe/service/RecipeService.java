@@ -40,7 +40,7 @@ public class RecipeService {
 	public void updateRecipe(Recipe recipe) throws ConnectException, DAOException {
 		RecipeDAO.getInstance().updateRecipe(recipe);
 	}
-	public void removeRecipeFromDB(Long id) throws ConnectException, DAOException {
+	public void removeRecipe(Long id) throws ConnectException, DAOException {
 		RecipeDAO.getInstance().removeRelationZubereitungsByRecipeId(id);
 		RecipeHasArtikelDAO.getInstance().removeRelationItemByRecipeId(id);
 		RecipeDAO.getInstance().removeRecipe(id);
@@ -57,10 +57,9 @@ public class RecipeService {
 	public Long createZubereitung(Zubereitung zubereitung) throws ConnectException, DAOException, SQLException {
 		return ZubereitungDAO.getInstance().createZubereitung(zubereitung);
 	}
-	public void updateKategorie(Zubereitung zubereitung) throws ConnectException, DAOException, SQLException {
+	public void updateZubereitung(Zubereitung zubereitung) throws ConnectException, DAOException, SQLException {
 		ZubereitungDAO.getInstance().updateZubereitung(zubereitung);
-	}
-	
+	}	
 	
 	public void createRelationZubereitung(Long recipeId, List<Zubereitung> zubereitungs) throws ConnectException, DAOException {
 		for (Zubereitung zubereitung : zubereitungs) {
@@ -71,8 +70,6 @@ public class RecipeService {
 		RecipeDAO.getInstance().removeRelationZubereitungsByRecipeId(recipeId);
 		createRelationZubereitung(recipeId, setZubereitungs);
 	}
-	
-
 
 	public List<RezeptHasArtikel> getRecipeHasArtikelByRecipeID(Recipe recipe) throws ConnectException, DAOException, SQLException {
 		return RecipeHasArtikelDAO.getInstance().getRecipeHasArtikelByRecipeID(recipe);
@@ -90,9 +87,18 @@ public class RecipeService {
 	}
 	
 
-
+	////REZEPTART////
 
 	public List<Recipetype> getAllRecipetypes() throws ConnectException, DAOException, SQLException {
 		return RecipetypeDAO.getInstance().getAllRecipetypes();
 	}
+
+	public Long createRecipetype(Recipetype recipetype) throws ConnectException, DAOException {
+		return RecipetypeDAO.getInstance().createRecipetype(recipetype);		
+	}
+
+	public void updateRecipetype(Recipetype recipetype) throws ConnectException, DAOException {
+		RecipetypeDAO.getInstance().updateRecipetype(recipetype);		
+	}
+
 }

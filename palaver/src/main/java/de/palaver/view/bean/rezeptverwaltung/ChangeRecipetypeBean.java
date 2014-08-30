@@ -15,22 +15,22 @@ import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
-import de.palaver.management.recipe.Zubereitung;
+import de.palaver.management.recipe.Recipetype;
 import de.palaver.management.recipe.service.RecipeService;
 import de.palaver.view.bean.helpers.TemplateBuilder;
 import de.palaver.view.bean.helpers.interfaces.IChangeViewPage;
 
-public class ChangeZubereitungBean extends TemplateBuilder implements View, ValueChangeListener, IChangeViewPage{
-	private static final long serialVersionUID = -3484101562729271738L;
-	private static final String TITLE = "Neue Zubereitung erstellen";
-	private static final String TEXT_FIELD_NAME = "Zubereitungsname";
+public class ChangeRecipetypeBean extends TemplateBuilder implements View, ValueChangeListener, IChangeViewPage{
+	private static final long serialVersionUID = -34841015629271738L;
+	private static final String TITLE = "Neues Rezeptart erstellen";
+	private static final String TEXT_FIELD_NAME = "Name des Rezeptarts";
 	
-	private Zubereitung m_zubereitung;
-	public Zubereitung getZubereitung() { return m_zubereitung; }
+	private Recipetype m_recipetype;
+	public Recipetype getRecipetype() { return m_recipetype; }
 	private boolean m_toCreate;
 	private TextField m_nameField;
 
-	public ChangeZubereitungBean() {
+	public ChangeRecipetypeBean() {
 		super();
 		init();
 		componetsManager();
@@ -41,7 +41,7 @@ public class ChangeZubereitungBean extends TemplateBuilder implements View, Valu
 
 	private void init() {
 		m_toCreate = true;
-		m_zubereitung = new Zubereitung();
+		m_recipetype = new Recipetype();
 	}
 
 	private void componetsManager() {
@@ -81,14 +81,14 @@ public class ChangeZubereitungBean extends TemplateBuilder implements View, Valu
 				}
 			}
 			private void saveItem() {
-				m_zubereitung.setName(m_nameField.getValue());
+				m_recipetype.setName(m_nameField.getValue());
 				try {
 					if (m_toCreate) {
-						RecipeService.getInstance().createZubereitung(m_zubereitung);
+						RecipeService.getInstance().createRecipetype(m_recipetype);
 					} else {
-						RecipeService.getInstance().updateZubereitung(m_zubereitung);
+						RecipeService.getInstance().updateRecipetype(m_recipetype);
 					}
-					message(MESSAGE_SUSSEFULL_ARG_1, "Zubereitung");	
+					message(MESSAGE_SUSSEFULL_ARG_1, "Rezeptart");	
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -113,7 +113,7 @@ public class ChangeZubereitungBean extends TemplateBuilder implements View, Valu
 		m_buttonDeaktiviren.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				//windowModalYesNoRemove(m_zubereitung);	
+				//windowModalYesNoRemove(m_recipetype);	
 			}
 		});
 	}
@@ -123,16 +123,16 @@ public class ChangeZubereitungBean extends TemplateBuilder implements View, Valu
 		m_nameField.addValueChangeListener(new ValueChangeListener() {		
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				m_zubereitung.setName(String.valueOf(event.getProperty().getValue()));				
+				m_recipetype.setName(String.valueOf(event.getProperty().getValue()));				
 			}
 		});
 	}
 
 	private void close() {
-		if (ChangeZubereitungBean.this.getParent() instanceof Window) {					
-			((Window) ChangeZubereitungBean.this.getParent()).close();
+		if (ChangeRecipetypeBean.this.getParent() instanceof Window) {					
+			((Window) ChangeRecipetypeBean.this.getParent()).close();
 		} else {
-			ViewHandler.getInstance().switchView(ShowZubereitungenBean.class);
+			ViewHandler.getInstance().switchView(ShowRecipetypesBean.class);
 		}
 	}
 
@@ -141,8 +141,8 @@ public class ChangeZubereitungBean extends TemplateBuilder implements View, Valu
 
 	@Override
 	public void getViewParam(ViewData data) {
-		if(((ViewDataObject<?>) data).getData() instanceof Zubereitung) {
-			m_zubereitung = (Zubereitung)((ViewDataObject<?>) data).getData();		
+		if(((ViewDataObject<?>) data).getData() instanceof Recipetype) {
+			m_recipetype = (Recipetype)((ViewDataObject<?>) data).getData();		
 			setNewInfo();			
 			setValueToComponent(getData());	
 		}		
@@ -150,9 +150,9 @@ public class ChangeZubereitungBean extends TemplateBuilder implements View, Valu
 	
 	private void setNewInfo() {
 		getData().clear();
-		getData().put(m_nameField, m_zubereitung.getName());
+		getData().put(m_nameField, m_recipetype.getName());
 		
 		m_toCreate = false;		
-		m_headLine.setValue("Zubereitung bearbeiten");
+		m_headLine.setValue("Rezeptart bearbeiten");
 	}
 }

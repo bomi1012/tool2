@@ -23,7 +23,6 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 import de.bistrosoft.palaver.gui.view.MenueAnlegen;
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
 import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
 import de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
@@ -32,7 +31,8 @@ import de.palaver.Application;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
 import de.palaver.management.emploee.Employee;
-import de.palaver.management.recipe.Fussnote;
+import de.palaver.management.menu.Fussnote;
+import de.palaver.management.menu.Menu;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
 /**
@@ -46,7 +46,7 @@ public class WinSelectMenue extends Window {
 
 	Window subwindow = this;
 
-	Menue menue;
+	Menu menu;
 	private FilterTable ftMenueList = new FilterTable();
 	private FilterTable ftFehler = new FilterTable();
 
@@ -78,7 +78,7 @@ public class WinSelectMenue extends Window {
 	private MenueplanGridLayout menueplan;
 	DDGridLayout menueGrid;
 
-	BeanItemContainer<Menue> menueContainer;
+	BeanItemContainer<Menu> menueContainer;
 	BeanItemContainer<Regel> ctRegeln;
 
 	VerticalLayout vlLeftLayout = new VerticalLayout();
@@ -229,12 +229,12 @@ public class WinSelectMenue extends Window {
 
 					// Menübezeichnung des ausgewählten Menüs
 					try {
-						Menue menue = (Menue) ftMenueList.getValue();
+						Menu menu = (Menu) ftMenueList.getValue();
 						// Neue Menükomponente aus ausgewähltem Menü erstellen
 						// und hinzufügen
 						Integer iPortion = Integer.parseInt(tfPortion
 								.getValue());
-						MenueComponent menueComp = new MenueComponent(menue,
+						MenueComponent menueComp = new MenueComponent(menu,
 								tfAngezName.getValue(), menueplan, menueGrid,
 								sourceRow, sourceColumn, true, iPortion, tfFussnote.getValue());
 						menueplan.addMenue(menueComp, sourceColumn, sourceRow);
@@ -261,37 +261,37 @@ public class WinSelectMenue extends Window {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
-					menue = (Menue) event.getProperty().getValue();
-					tfId.setValue(menue.getId().toString());
+					menu = (Menu) event.getProperty().getValue();
+					tfId.setValue(menu.getId().toString());
 					tfId.setVisible(false);
-					tfAngezName.setValue(menue.getName());
-					tfName.setValue(menue.getName());
+					tfAngezName.setValue(menu.getName());
+					tfName.setValue(menu.getName());
 					tfName.setEnabled(false);
-					tfKoch.setValue(menue.getKochname());
+					tfKoch.setValue(menu.getEmployee().getName());
 					tfKoch.setEnabled(false);
-					if(menue.getFussnoten() != null) {
+					if(menu.getFussnotenList() != null) {
 						String a = "";
 						int b = 0;
-						for (Fussnote fn : menue.getFussnoten()) {
-							if(menue.getFussnoten().get(menue.getFussnoten().size()-1) == menue.getFussnoten().get(b)){
+						for (Fussnote fn : menu.getFussnotenList()) {
+							if(menu.getFussnotenList().get(menu.getFussnotenList().size()-1) == menu.getFussnotenList().get(b)){
 								a = fn.getAbkuerzung();
 							} else {  a = a + fn.getAbkuerzung() + ", "; }
 						}
 						tfFussnote.setValue(a);
 						tfFussnote.setEnabled(true);
 					}
-					if (menue.getMenueart() != null) {
-						tfMenueart.setValue(menue.getMenueart()
-								.getBezeichnung());
+					if (menu.getMenutype() != null) {
+						tfMenueart.setValue(menu.getMenutype()
+								.getName());
 					}
 					tfMenueart.setEnabled(false);
-					if (menue.getGeschmack() != null) {
-						tfGeschmack.setValue(menue.getGeschmack()
+					if (menu.getGeschmack() != null) {
+						tfGeschmack.setValue(menu.getGeschmack()
 								.getName());
 					}
 					tfGeschmack.setEnabled(false);
-					chbFavorit.setValue(menue.getFavorit());
-					chbAufwand.setValue(menue.getAufwand());
+					chbFavorit.setValue(menu.getFavorit());
+					chbAufwand.setValue(menu.getAufwand());
 					chbFavorit.setEnabled(false);
 					chbAufwand.setEnabled(false);
 					tfPortion.setValue("100");
@@ -304,7 +304,7 @@ public class WinSelectMenue extends Window {
 		});
 		if (destComp instanceof MenueComponent) {
 			Employee tmpMa = ((MenueComponent) destComp).getMenue()
-					.getKoch();
+					.getEmployee();
 			if (((Application) UI.getCurrent().getData()).getUser().equals(
 					tmpMa)) {
 
@@ -344,7 +344,7 @@ public class WinSelectMenue extends Window {
 
 		// Container für Menüliste festlegen
 		try {
-			menueContainer = new BeanItemContainer<Menue>(Menue.class,
+			menueContainer = new BeanItemContainer<Menu>(Menu.class,
 					Menueverwaltung.getInstance().getAllMenuesFast());
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
@@ -358,8 +358,8 @@ public class WinSelectMenue extends Window {
 		ftMenueList.setContainerDataSource(menueContainer);
 
 		// Spalten festlegen
-		ftMenueList.setVisibleColumns(new Object[] { "name", "kochname",
-				"geschmack", "menueart" });
+		ftMenueList.setVisibleColumns(new Object[] { "name", "employee",
+				"geschmack", "menutype" });
 		ftMenueList.sort(new Object[] { "name" }, new boolean[] { true });
 	}
 

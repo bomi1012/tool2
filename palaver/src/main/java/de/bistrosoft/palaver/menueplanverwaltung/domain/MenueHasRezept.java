@@ -1,32 +1,33 @@
 package de.bistrosoft.palaver.menueplanverwaltung.domain;
 
+import de.palaver.management.menu.Menu;
 import de.palaver.management.recipe.Recipe;
 
 public class MenueHasRezept implements java.io.Serializable {
 
 	private MenueHasRezeptId id;
-	private Menue menue;
+	private Menu menu;
 	private Recipe recipe;
 	private Boolean hauptgericht;
 
 	public MenueHasRezept() {
 	}
 
-	public MenueHasRezept(MenueHasRezeptId id, Menue menue, Recipe recipe) {
+	public MenueHasRezept(MenueHasRezeptId id, Menu menu, Recipe recipe) {
 		this.id = id;
-		this.menue = menue;
+		this.menu = menu;
 		this.recipe = recipe;
 	}
 
-	public MenueHasRezept(Menue menue, Recipe recipe) {
+	public MenueHasRezept(Menu menu, Recipe recipe) {
 
-		this.menue = menue;
+		this.menu = menu;
 		this.recipe = recipe;
 	}
 
-	public MenueHasRezept(Menue menue, Recipe recipe, Boolean hauptgericht) {
+	public MenueHasRezept(Menu menu, Recipe recipe, Boolean hauptgericht) {
 
-		this.menue = menue;
+		this.menu = menu;
 		this.recipe = recipe;
 		this.hauptgericht = hauptgericht;
 	}
@@ -47,12 +48,12 @@ public class MenueHasRezept implements java.io.Serializable {
 		this.recipe = recipe;
 	}
 
-	public Menue getMenue() {
-		return menue;
+	public Menu getMenue() {
+		return menu;
 	}
 
-	public void setMenue(Menue menue) {
-		this.menue = menue;
+	public void setMenue(Menu menu) {
+		this.menu = menu;
 	}
 
 	public Boolean getHauptgericht() {
@@ -68,7 +69,7 @@ public class MenueHasRezept implements java.io.Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((recipe == null) ? 0 : recipe.hashCode());
-		result = prime * result + ((menue == null) ? 0 : menue.hashCode());
+		result = prime * result + ((menu == null) ? 0 : menu.hashCode());
 		return result;
 	}
 
@@ -86,17 +87,17 @@ public class MenueHasRezept implements java.io.Serializable {
 				return false;
 		} else if (!recipe.equals(other.recipe))
 			return false;
-		if (menue == null) {
-			if (other.menue != null)
+		if (menu == null) {
+			if (other.menu != null)
 				return false;
-		} else if (!menue.equals(other.menue))
+		} else if (!menu.equals(other.menu))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "menueHasFussnote [fussnote=" + recipe + ", menue=" + menue
+		return "menueHasFussnote [fussnote=" + recipe + ", menue=" + menu
 				+ "]";
 	}
 

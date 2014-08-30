@@ -29,7 +29,7 @@ import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
-import de.palaver.management.recipe.Fussnote;
+import de.palaver.management.menu.Fussnote;
 import de.palaver.management.recipe.Recipe;
 
 /**
@@ -251,7 +251,7 @@ public class FussnoteEinst extends VerticalLayout implements View {
 		fnNeu.setContent(vl);
 
 		tfBezeichnung.setImmediate(true);
-		tfBezeichnung.setValue(fn.getBezeichnung());
+		tfBezeichnung.setValue(fn.getName());
 		tfBezeichnung.addValidator(new StringLengthValidator(
 				"Bitte gültige Bezeichnung eingeben", 3, 50, false));
 
@@ -277,7 +277,7 @@ public class FussnoteEinst extends VerticalLayout implements View {
 	}
 
 	private void speichern() {
-		fn.setBezeichnung(tfBezeichnung.getValue());
+		fn.setName(tfBezeichnung.getValue());
 		fn.setAbkuerzung(tfAbkuerzung.getValue());
 
 		try {
@@ -297,7 +297,7 @@ public class FussnoteEinst extends VerticalLayout implements View {
 	}
 
 	private void update() {
-		fn.setBezeichnung(tfBezeichnung.getValue());
+		fn.setName(tfBezeichnung.getValue());
 		fn.setAbkuerzung(tfAbkuerzung.getValue());
 
 		try {

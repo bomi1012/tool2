@@ -25,7 +25,6 @@ public class RecipetypeDAO extends AbstractDAO{
 		}
 		return m_instance;
 	}
-
 	
 	public List<Recipetype> getAllRecipetypes() throws ConnectException, DAOException, SQLException {
 		m_list = new ArrayList<Recipetype>();
@@ -36,8 +35,22 @@ public class RecipetypeDAO extends AbstractDAO{
 		return m_list;
 	}
 	
+	public Long createRecipetype(Recipetype recipetype) throws ConnectException, DAOException {
+		return insert("INSERT INTO " + TABLE + "(name) VALUES('" + recipetype.getName() + "');");
+	}
+	
+	public void updateRecipetype(Recipetype recipetype) throws ConnectException, DAOException {
+		putManaged("UPDATE " + TABLE + " SET " + FIELD_NAME + " = '"
+				+ recipetype.getName() + "'" + " WHERE " + FIELD_ID + " = '"
+				+ recipetype.getId() + "'");
+	}
+	
 	private Recipetype setRecipetype(ResultSet set) throws SQLException {
 		return new Recipetype(set.getLong(FIELD_ID), set.getString(FIELD_NAME));
 	}
+
+
+
+
 
 }

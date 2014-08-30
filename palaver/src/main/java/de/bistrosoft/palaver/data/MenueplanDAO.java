@@ -12,10 +12,7 @@ import java.util.List;
 import de.bistrosoft.palaver.menueplanverwaltung.ArtikelBedarf;
 import de.bistrosoft.palaver.menueplanverwaltung.KochInMenueplan;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueart;
 import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueplan;
-import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueplanItem;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueartverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
@@ -30,8 +27,10 @@ import de.palaver.management.artikel.service.ArtikelService;
 import de.palaver.management.artikel.service.MengeneinheitService;
 import de.palaver.management.emploee.Employee;
 import de.palaver.management.employee.service.EmployeeService;
-import de.palaver.management.recipe.Fussnote;
-import de.palaver.management.recipe.Geschmack;
+import de.palaver.management.menu.Fussnote;
+import de.palaver.management.menu.Geschmack;
+import de.palaver.management.menu.Menu;
+import de.palaver.management.menu.Menutype;
 import de.palaver.management.recipe.Recipe;
 
 /**
@@ -132,27 +131,27 @@ public class MenueplanDAO extends AbstractDAO {
 				String name = setMenues.getString(2);
 				Employee koch = EmployeeService.getInstance().getEmployee(setMenues.getLong(5));
 				// TODO: = new Mitarbeiter(name, vorname);
-				Menue menue = new Menue(id, name, koch);
+				Menu menu = new Menu(id, name, koch);
 				int row = setMenues.getInt("zeile");
 				int col = setMenues.getInt("spalte");
 				// Rezepte hinzufügen
 				List<Recipe> rezepte = Rezeptverwaltung.getInstance()
-						.getRezepteByMenue(menue);
-				menue.setRezepte(rezepte);
+						.getRezepteByMenue(menu);
+				menu.setRecipeList(rezepte);
 				List<Fussnote> fussnoten = Fussnotenverwaltung.getInstance()
 						.getFussnoteByMenue(id);
-				menue.setFussnoten(fussnoten);
+				menu.setFussnotenList(fussnoten);
 				Geschmack geschmack = Geschmackverwaltung.getInstance()
 						.getGeschmackById(setMenues.getLong(9));
-				menue.setGeschmack(geschmack);
-				Menueart menueart = Menueartverwaltung.getInstance()
+				menu.setGeschmack(geschmack);
+				Menutype menutype = Menueartverwaltung.getInstance()
 						.getMenueartById(setMenues.getLong(11));
-				menue.setMenueart(menueart);
+				menu.setMenutype(menutype);
 				
 				String angezName = setMenues.getString("angezName");
 				Integer portion = setMenues.getInt("portion");
 				String fussnote = setMenues.getString("fussnote");
-				MenueComponent menueComp = new MenueComponent(menue, angezName,
+				MenueComponent menueComp = new MenueComponent(menu, angezName,
 						null, null, row, col, false,portion, fussnote);
 				menues.add(menueComp);
 			}
@@ -198,23 +197,23 @@ public class MenueplanDAO extends AbstractDAO {
 				koch.setVorname(setMenues.getString(7));
 				koch.setBenutzername(setMenues.getString(8));
 				// TODO: = new Mitarbeiter(name, vorname);
-				Menue menue = new Menue(id, name, koch);
-				menue.setAufwand(setMenues.getBoolean(3));
-				menue.setFavorit(setMenues.getBoolean(4));
+				Menu menu = new Menu(id, name, koch);
+				menu.setAufwand(setMenues.getBoolean(3));
+				menu.setFavorit(setMenues.getBoolean(4));
 				int row = setMenues.getInt("zeile");
 				int col = setMenues.getInt("spalte");
 				List<Fussnote> fussnoten = Fussnotenverwaltung.getInstance()
 						.getFussnoteByMenue(id);
-				menue.setFussnoten(fussnoten);
-				Geschmack geschmack = new Geschmack(setMenues.getLong(9), setMenues.getString(10), true);
-				menue.setGeschmack(geschmack);
-				Menueart menueart = new Menueart(setMenues.getLong(11), setMenues.getString(12));
-				menue.setMenueart(menueart);
+				menu.setFussnotenList(fussnoten);
+				Geschmack geschmack = new Geschmack(setMenues.getLong(9), setMenues.getString(10));
+				menu.setGeschmack(geschmack);
+				Menutype menutype = new Menutype(setMenues.getLong(11), setMenues.getString(12));
+				menu.setMenutype(menutype);
 				
 				String angezName = setMenues.getString("angezName");
 				Integer portion = setMenues.getInt("portion");
 				String fussnote = setMenues.getString("fussnote");
-				MenueComponent menueComp = new MenueComponent(menue, angezName,
+				MenueComponent menueComp = new MenueComponent(menu, angezName,
 						null, null, row, col, false, portion, fussnote);
 				menues.add(menueComp);
 			}
@@ -223,85 +222,12 @@ public class MenueplanDAO extends AbstractDAO {
 		return menueplan;
 	}
 
-	// public Menueplan getMenueplanByWeekWithMenues(Week week) throws
-	// ConnectException, DAOException, SQLException{
-	// Menueplan menueplan = null;
-	// ResultSet setMpl = get(MessageFormat.format(GET_MENUEPLAN_BY_WEEK,
-	// week.getWeek(),week.getYear()));
-	//
-	// while (setMpl.next()) {
-	// menueplan = new Menueplan(setMpl.getLong(ID),week);
-	// }
-	//
-	//
-	//
-	// if(menueplan!=null){
-	// // TODO: Köche laden
-	//
-	// List<MenueComponent> menues = new ArrayList<>();
-	// // TODO: Menüs laden
-	// ResultSet setMenues = get(MessageFormat.format(GET_MENUES_BY_MENUEPLAN,
-	// menueplan.getId()));
-	//
-	// while (setMenues.next()) {
-	// Long id = setMenues.getLong("id");
-	// String name = setMenues.getString("name");
-	// Mitarbeiter koch=null;
-	// // TODO: = new Mitarbeiter(name, vorname);
-	// Menue menue = new Menue(id, name, koch);
-	// int row = setMenues.getInt("zeile");
-	// int col = setMenues.getInt("spalte");
-	// MenueComponent menueComp = new MenueComponent(menue, null, null, row,
-	// col, false);
-	// menues.add(menueComp);
-	// }
-	// menueplan.setMenues(menues);
-	// }
-	// return menueplan;
-	// }
-
-	public List<MenueplanItem> getItemsForMenueplan(Long menuplanID)
-			throws ConnectException, DAOException, SQLException {
-		List<MenueplanItem> items = new ArrayList<MenueplanItem>();
-
-		ResultSet set = getManaged(MessageFormat.format(
-				GET_MENUES_BY_MENUEPLAN, menuplanID));
-
-		while (set.next()) {
-			Long id = set.getLong("id");
-			String name = set.getString("name");
-			Employee koch = null;
-			Menue men = new Menue(id, name, koch);
-			MenueplanItem item = new MenueplanItem();
-			item.setMenue(men);
-			int spalte = set.getInt("spalte");
-			item.setSpalte(spalte);
-			int zeile = set.getInt("zeile");
-			item.setZeile(zeile);
-			items.add(item);
-		}
-		return items;
-	}
-
-	public List<Menue> getMenuesByMenueplan(Long menuplanID)
-			throws ConnectException, DAOException, SQLException {
-		List<Menue> menues = new ArrayList<Menue>();
-
-		List<MenueplanItem> items = getItemsForMenueplan(menuplanID);
-
-		for (MenueplanItem i : items) {
-			menues.add(i.getMenue());
-		}
-
-		return menues;
-	}
-
-	public void createMenueForMenueplan(Menueplan mpl, Menue menue,
+	public void createMenueForMenueplan(Menueplan mpl, Menu menu,
 			String name, int col, int row, Integer portion, String fussnote) throws ConnectException,
 			DAOException {
 		String strName = "'" + name + "'";
 		putManaged(MessageFormat.format(CREATE_MENUE_FOR_MENUEPLAN,
-				mpl.getId(), menue.getId(), strName, col, row,portion, "'" + fussnote + "'"));
+				mpl.getId(), menu.getId(), strName, col, row,portion, "'" + fussnote + "'"));
 
 	}
 

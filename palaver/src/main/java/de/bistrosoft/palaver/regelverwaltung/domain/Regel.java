@@ -8,11 +8,11 @@ import com.vaadin.ui.UI;
 
 import de.bistrosoft.palaver.menueplanverwaltung.MenueComponent;
 import de.bistrosoft.palaver.menueplanverwaltung.MenueplanGridLayout;
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.palaver.Application;
-import de.palaver.management.recipe.Fussnote;
+import de.palaver.management.menu.Fussnote;
+import de.palaver.management.menu.Menu;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
 public class Regel {
@@ -224,11 +224,11 @@ public class Regel {
 	// Name Menü
 
 	private Regel checkZubereitung(MenueComponent mc, MenueplanGridLayout mp) {
-		Menue menue = mc.getMenue();
+		Menu menu = mc.getMenue();
 		if (operator.equals(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
-			if (menue.getFussnoten() != null && menue.getFussnoten().size() > 0) {
-				for (Fussnote fs : menue.getFussnoten()) {
-					if (kriterienlist.indexOf(fs.getBezeichnung()) >= 0) {
+			if (menu.getFussnotenList() != null && menu.getFussnotenList().size() > 0) {
+				for (Fussnote fs : menu.getFussnotenList()) {
+					if (kriterienlist.indexOf(fs.getName()) >= 0) {
 						return null;
 					}
 					return this;
@@ -237,9 +237,9 @@ public class Regel {
 				return this;
 
 		} else if (operator.equals(IConstants.INFO_REGEL_OPERATOR_VERBOTEN)) {
-			if (menue.getFussnoten() != null && menue.getFussnoten().size() > 0) {
-				for (Fussnote fs : menue.getFussnoten()) {
-					if (kriterienlist.indexOf(fs.getBezeichnung()) == -1) {
+			if (menu.getFussnotenList() != null && menu.getFussnotenList().size() > 0) {
+				for (Fussnote fs : menu.getFussnotenList()) {
+					if (kriterienlist.indexOf(fs.getName()) == -1) {
 						return null;
 					} else
 						return this;
@@ -248,7 +248,7 @@ public class Regel {
 				return null;
 
 		} else if (operator.equals(IConstants.INFO_REGEL_OPERATOR_MAXIMAL)) {
-			if (menue.getFussnoten() != null) {
+			if (menu.getFussnotenList() != null) {
 				int count = 0;
 				int maxValue = Integer.MAX_VALUE;
 				try {
@@ -258,7 +258,7 @@ public class Regel {
 				}
 
 				DDGridLayout grid = mp.layout;
-				for (Fussnote fs : mc.getMenue().getFussnoten()) {
+				for (Fussnote fs : mc.getMenue().getFussnotenList()) {
 					count = 0;
 					for (int col = 0; col < grid.getColumns(); ++col) {
 						for (int row = 0; row < grid.getRows(); ++row) {
@@ -269,7 +269,7 @@ public class Regel {
 								if (grid.getComponent(col, row) instanceof MenueComponent) {
 									MenueComponent tmp = (MenueComponent) grid
 											.getComponent(col, row);
-									if (tmp.getMenue().getFussnoten() != null && tmp.getMenue().getFussnoten()
+									if (tmp.getMenue().getFussnotenList() != null && tmp.getMenue().getFussnotenList()
 											.indexOf(fs) >= 0) {
 										if (tmp.getFehlerRegeln() != null) {
 											if (tmp.getFehlerRegeln().indexOf(
@@ -300,11 +300,11 @@ public class Regel {
 	}
 
 	private Regel checkFussnote(MenueComponent mc, MenueplanGridLayout mp) {
-		Menue menue = mc.getMenue();
+		Menu menu = mc.getMenue();
 		if (operator.equals(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
-			if (menue.getFussnoten() != null && menue.getFussnoten().size() > 0) {
-				for (Fussnote fs : menue.getFussnoten()) {
-					if (kriterienlist.indexOf(fs.getBezeichnung()) >= 0) {
+			if (menu.getFussnotenList() != null && menu.getFussnotenList().size() > 0) {
+				for (Fussnote fs : menu.getFussnotenList()) {
+					if (kriterienlist.indexOf(fs.getName()) >= 0) {
 						return null;
 					}
 					return this;
@@ -313,9 +313,9 @@ public class Regel {
 				return this;
 
 		} else if (operator.equals(IConstants.INFO_REGEL_OPERATOR_VERBOTEN)) {
-			if (menue.getFussnoten() != null && menue.getFussnoten().size() > 0) {
-				for (Fussnote fs : menue.getFussnoten()) {
-					if (kriterienlist.indexOf(fs.getBezeichnung()) == -1) {
+			if (menu.getFussnotenList() != null && menu.getFussnotenList().size() > 0) {
+				for (Fussnote fs : menu.getFussnotenList()) {
+					if (kriterienlist.indexOf(fs.getName()) == -1) {
 
 					} else
 						return this;
@@ -324,7 +324,7 @@ public class Regel {
 				return null;
 
 		}  else if (operator.equals(IConstants.INFO_REGEL_OPERATOR_MAXIMAL)) {
-			if (menue.getFussnoten() != null) {
+			if (menu.getFussnotenList() != null) {
 				int count = 0;
 				int maxValue = Integer.MAX_VALUE;
 				try {
@@ -334,7 +334,7 @@ public class Regel {
 				}
 
 				DDGridLayout grid = mp.layout;
-				for (Fussnote fs : mc.getMenue().getFussnoten()) {
+				for (Fussnote fs : mc.getMenue().getFussnotenList()) {
 					count = 0;
 					for (int col = 0; col < grid.getColumns(); ++col) {
 						for (int row = 0; row < grid.getRows(); ++row) {
@@ -345,7 +345,7 @@ public class Regel {
 								if (grid.getComponent(col, row) instanceof MenueComponent) {
 									MenueComponent tmp = (MenueComponent) grid
 											.getComponent(col, row);
-									if (tmp.getMenue().getFussnoten()
+									if (tmp.getMenue().getFussnotenList()
 											.indexOf(fs) >= 0) {
 										if (tmp.getFehlerRegeln() != null) {
 											if (tmp.getFehlerRegeln().indexOf(
@@ -374,15 +374,15 @@ public class Regel {
 	}
 
 	private Regel checkGeschmack(MenueComponent mc, MenueplanGridLayout mp) {
-		Menue menue = mc.getMenue();
-		if (menue.getGeschmack() != null) {
+		Menu menu = mc.getMenue();
+		if (menu.getGeschmack() != null) {
 			if (operator.equals(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
-				if (kriterienlist.indexOf(menue.getGeschmack().getName()
+				if (kriterienlist.indexOf(menu.getGeschmack().getName()
 						.toString()) == -1) {
 					return this;
 				}
 			} else if (operator.equals(IConstants.INFO_REGEL_OPERATOR_VERBOTEN)) {
-				if (kriterienlist.indexOf(menue.getGeschmack().getName()
+				if (kriterienlist.indexOf(menu.getGeschmack().getName()
 						.toString()) >= 0) {
 					return this;
 				}
@@ -431,15 +431,15 @@ public class Regel {
 	}
 
 	private Regel checkAufwand(MenueComponent mc, MenueplanGridLayout mp) {
-		Menue menue = mc.getMenue();
-		if (menue.getGeschmack() != null) {
+		Menu menu = mc.getMenue();
+		if (menu.getGeschmack() != null) {
 			if (operator.equals(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
-				if (kriterienlist.indexOf(menue.getGeschmack().getName()
+				if (kriterienlist.indexOf(menu.getGeschmack().getName()
 						.toString()) == -1) {
 					return this;
 				}
 			} else if (operator.equals(IConstants.INFO_REGEL_OPERATOR_VERBOTEN)) {
-				if (kriterienlist.indexOf(menue.getGeschmack().getName()
+				if (kriterienlist.indexOf(menu.getGeschmack().getName()
 						.toString()) >= 0) {
 					return this;
 				}
@@ -462,8 +462,8 @@ public class Regel {
 							if (grid.getComponent(col, row) instanceof MenueComponent) {
 								MenueComponent tmp = (MenueComponent) grid
 										.getComponent(col, row);
-								if (mc.getMenue().getKoch()
-										.equals(tmp.getMenue().getKoch())
+								if (mc.getMenue().getEmployee()
+										.equals(tmp.getMenue().getEmployee())
 										&& mc.getMenue().getAufwand()) {
 									if (tmp.getFehlerRegeln() != null) {
 										if (tmp.getFehlerRegeln().indexOf(this) == -1) {
@@ -489,15 +489,15 @@ public class Regel {
 	}
 
 	private Regel checkMenueart(MenueComponent mc, MenueplanGridLayout mp) {
-		Menue menue = mc.getMenue();
-		if (menue.getMenueart() != null) {
+		Menu menu = mc.getMenue();
+		if (menu.getMenutype() != null) {
 			if (operator.equals(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
-				if (kriterienlist.indexOf(menue.getMenueart().getBezeichnung()
+				if (kriterienlist.indexOf(menu.getMenutype().getName()
 						.toString()) == -1) {
 					return this;
 				}
 			} else if (operator.equals(IConstants.INFO_REGEL_OPERATOR_VERBOTEN)) {
-				if (kriterienlist.indexOf(menue.getMenueart().getBezeichnung()
+				if (kriterienlist.indexOf(menu.getMenutype().getName()
 						.toString()) >= 0) {
 					return this;
 				}
@@ -520,8 +520,8 @@ public class Regel {
 							if (grid.getComponent(col, row) instanceof MenueComponent) {
 								MenueComponent tmp = (MenueComponent) grid
 										.getComponent(col, row);
-								if (mc.getMenue().getMenueart()
-										.equals(tmp.getMenue().getMenueart())) {
+								if (mc.getMenue().getMenutype()
+										.equals(tmp.getMenue().getMenutype())) {
 									if (tmp.getFehlerRegeln() != null) {
 										if (tmp.getFehlerRegeln().indexOf(this) == -1) {
 											++count;
@@ -546,15 +546,15 @@ public class Regel {
 	}
 
 	private Regel checkName(MenueComponent mc, MenueplanGridLayout mp) {
-		Menue menue = mc.getMenue();
+		Menu menu = mc.getMenue();
 
 		if (operator.equals(IConstants.INFO_REGEL_OPERATOR_ERLAUBT)) {
-			if (kriterienlist.indexOf(menue.getName()) == -1) {
+			if (kriterienlist.indexOf(menu.getName()) == -1) {
 
 				return this;
 			}
 		} else if (operator.equals(IConstants.INFO_REGEL_OPERATOR_VERBOTEN)) {
-			if (kriterienlist.indexOf(menue.getName()) >= 0) {
+			if (kriterienlist.indexOf(menu.getName()) >= 0) {
 
 				return this;
 			}

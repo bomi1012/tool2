@@ -28,7 +28,7 @@ import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
-import de.palaver.management.recipe.Geschmack;
+import de.palaver.management.menu.Geschmack;
 
 /**
  * @author Michael Marschall Jan Lauinger - Geschmack hinzufügen

@@ -57,8 +57,10 @@ import de.palaver.view.bean.mitarbeiterverwaltung.ChangeEmployeeBean;
 import de.palaver.view.bean.mitarbeiterverwaltung.ChangePasswordBean;
 import de.palaver.view.bean.mitarbeiterverwaltung.ShowEmployeesBean;
 import de.palaver.view.bean.rezeptverwaltung.ChangeRecipeBean;
+import de.palaver.view.bean.rezeptverwaltung.ChangeRecipetypeBean;
 import de.palaver.view.bean.rezeptverwaltung.ChangeZubereitungBean;
 import de.palaver.view.bean.rezeptverwaltung.ShowRecipesBean;
+import de.palaver.view.bean.rezeptverwaltung.ShowRecipetypesBean;
 import de.palaver.view.bean.rezeptverwaltung.ShowZubereitungenBean;
 
 @SuppressWarnings("serial")
@@ -192,13 +194,18 @@ public class MainLayout extends VerticalLayout implements Command {
 		recipeItem.addSeparator();
 		MenuItem zubereitungItem = recipeItem.addItem(IConstants.MENU_ZUBEREITUNG, null);	
 		zubereitungItem.setIcon(new ThemeResource(IConstants.ICON_FOLDER_PAGE_WHITE));
+		MenuItem recipetypeItem = recipeItem.addItem(IConstants.MENU_RECIPETYPE, null);	
+		recipetypeItem.setIcon(new ThemeResource(IConstants.ICON_FOLDER_PAGE_WHITE));
 		
 		/** 2 Level */
 		MenuItem zubereitungShow = zubereitungItem.addItem(IConstants.MENU_ZUBEREITUNGEN_ANZEIGEN, this);
 		zubereitungShow.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_LUPE));
 		MenuItem zubereitungAnlegen = zubereitungItem.addItem(IConstants.MENU_ZUBEREITUNGEN_NEU, this);
 		zubereitungAnlegen.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_ADD));
-		
+		MenuItem recipetypeShow = recipetypeItem.addItem(IConstants.MENU_RECIPETYPE_ANZEIGEN, this);
+		recipetypeShow.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_LUPE));
+		MenuItem recipetypeAnlegen = recipetypeItem.addItem(IConstants.MENU_RECIPETYPE_NEU, this);
+		recipetypeAnlegen.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_ADD));
 		
 		
 		
@@ -245,7 +252,6 @@ public class MainLayout extends VerticalLayout implements Command {
 		einstellungItem.addItem(IConstants.MENU_FUSSNOTE, this);
 		einstellungItem.addItem(IConstants.MENU_GESCHMACK, this);
 		einstellungItem.addItem(IConstants.MENU_MENUEART, this);
-		einstellungItem.addItem(IConstants.MENU_ZUBEREITUNG, this);
 		einstellungItem.addItem("Email", this);
 		einstellungItem.addItem("Nachrichten", this);
 		einstellungItem.addItem(IConstants.MENU_MENUPLAN_HISTORIE, this);
@@ -314,6 +320,10 @@ public class MainLayout extends VerticalLayout implements Command {
 				ViewHandler.getInstance().switchView(ShowZubereitungenBean.class);
 			} else if (selectedItem.getText().equals(IConstants.MENU_ZUBEREITUNGEN_NEU)) {
 				ViewHandler.getInstance().switchView(ChangeZubereitungBean.class);
+			} else if (selectedItem.getText().equals(IConstants.MENU_RECIPETYPE_ANZEIGEN)) {
+				ViewHandler.getInstance().switchView(ShowRecipetypesBean.class);
+			} else if (selectedItem.getText().equals(IConstants.MENU_RECIPETYPE_NEU)) {
+				ViewHandler.getInstance().switchView(ChangeRecipetypeBean.class);
 			} 
 			
 			

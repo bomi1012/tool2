@@ -15,21 +15,21 @@ import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
-import de.palaver.management.recipe.Zubereitung;
+import de.palaver.management.recipe.Recipetype;
 import de.palaver.management.recipe.service.RecipeService;
 import de.palaver.view.bean.helpers.HTMLComponents;
 import de.palaver.view.bean.helpers.TemplateBuilder;
 import de.palaver.view.bean.helpers.interfaces.IShowSingleTable;
 
 @SuppressWarnings("serial")
-public class ShowZubereitungenBean extends TemplateBuilder implements View, IShowSingleTable {
-	private static final long serialVersionUID = -23408367394117164L;
-	private static final String TITLE = "Alle Zubereitungen";
-	private BeanItemContainer<Zubereitung> m_container;
+public class ShowRecipetypesBean extends TemplateBuilder implements View, IShowSingleTable {
+	private static final long serialVersionUID = -2340836739417164L;
+	private static final String TITLE = "Alle Rezeptarten";
+	private BeanItemContainer<Recipetype> m_container;
 
-	private Zubereitung m_zubereitung;
+	private Recipetype m_recipetype;
 	
-	public ShowZubereitungenBean() {
+	public ShowRecipetypesBean() {
 		super();
 		m_container = null;
 		componetsManager();
@@ -53,7 +53,7 @@ public class ShowZubereitungenBean extends TemplateBuilder implements View, ISho
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
-					m_zubereitung = (Zubereitung) event.getProperty().getValue();
+					m_recipetype = (Recipetype) event.getProperty().getValue();
 					m_buttonEdit.setEnabled(true);
 				}
 			}
@@ -71,11 +71,11 @@ public class ShowZubereitungenBean extends TemplateBuilder implements View, ISho
 		m_buttonEdit.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (m_zubereitung != null) {
-					ViewHandler.getInstance().switchView(ChangeZubereitungBean.class, new ViewDataObject<Zubereitung>(m_zubereitung));
+				if (m_recipetype != null) {
+					ViewHandler.getInstance().switchView(ChangeRecipetypeBean.class, new ViewDataObject<Recipetype>(m_recipetype));
 				}
 				else {
-					((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_ZUBEREITUNG_SELECT);
+					((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_REZEPTART_SELECT);
 				}
 			}
 		});
@@ -83,14 +83,14 @@ public class ShowZubereitungenBean extends TemplateBuilder implements View, ISho
 		m_buttonCreate.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				ViewHandler.getInstance().switchView(ChangeZubereitungBean.class);
+				ViewHandler.getInstance().switchView(ChangeRecipetypeBean.class);
 			}
 		});		
 	}
 	
 	private void beans() {
 		try {
-			m_container = new BeanItemContainer<Zubereitung>(Zubereitung.class, RecipeService.getInstance().getAllZubereitungen());
+			m_container = new BeanItemContainer<Recipetype>(Recipetype.class, RecipeService.getInstance().getAllRecipetypes());
 			setTable();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -106,3 +106,15 @@ public class ShowZubereitungenBean extends TemplateBuilder implements View, ISho
 	@Override
 	public void getViewParam(ViewData data) { }
 }
+
+
+
+
+
+
+
+
+
+
+
+

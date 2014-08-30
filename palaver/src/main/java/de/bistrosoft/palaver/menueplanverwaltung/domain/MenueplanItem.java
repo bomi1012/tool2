@@ -1,5 +1,7 @@
 package de.bistrosoft.palaver.menueplanverwaltung.domain;
 
+import de.palaver.management.menu.Menu;
+
 public class MenueplanItem {
 
 	/**
@@ -7,16 +9,16 @@ public class MenueplanItem {
 	 */
 	private static final long serialVersionUID = -3949683156254221803L;
 
-	private Menue menue;
+	private Menu menu;
 	private int zeile;
 	private int spalte;
 
-	public Menue getMenue() {
-		return menue;
+	public Menu getMenue() {
+		return menu;
 	}
 
-	public void setMenue(Menue menue) {
-		this.menue = menue;
+	public void setMenue(Menu menu) {
+		this.menu = menu;
 	}
 
 	public int getZeile() {

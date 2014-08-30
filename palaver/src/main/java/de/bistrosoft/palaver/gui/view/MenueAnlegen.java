@@ -33,9 +33,6 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Window.CloseEvent;
 
-import de.bistrosoft.palaver.data.MenueDAO;
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueart;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueartverwaltung;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
@@ -52,8 +49,11 @@ import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
 import de.palaver.management.emploee.Employee;
 import de.palaver.management.employee.service.EmployeeService;
-import de.palaver.management.recipe.Fussnote;
-import de.palaver.management.recipe.Geschmack;
+import de.palaver.management.menu.Fussnote;
+import de.palaver.management.menu.Geschmack;
+import de.palaver.management.menu.Menu;
+import de.palaver.management.menu.Menutype;
+import de.palaver.management.menu.DAO.MenueDAO;
 import de.palaver.management.recipe.Recipe;
 import de.palaver.view.bean.rezeptverwaltung.ChangeRecipeBean;
 
@@ -106,7 +106,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	private List<Recipe> tmpRezepte = new ArrayList<Recipe>();
 	List<Recipe> listrezept = new ArrayList<Recipe>();
 	List<Fussnote> listfussnote = new ArrayList<Fussnote>();
-	Menue menue = new Menue();
+	Menu menu = new Menu();
 
 	private Label headlineAnlegen;
 	private Label headlineUpdate;
@@ -402,9 +402,9 @@ public class MenueAnlegen extends VerticalLayout implements View,
 
 			}
 
-			List<Menueart> menueart = Menueartverwaltung.getInstance()
+			List<Menutype> menutype = Menueartverwaltung.getInstance()
 					.getAllMenueart();
-			for (Menueart e : menueart) {
+			for (Menutype e : menutype) {
 				nsMenueart.addItem(e);
 
 			}
@@ -424,8 +424,8 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	public void getViewParam(ViewData data) {
 
 		Object dataParam = ((ViewDataObject<?>) data).getData();
-		if (dataParam instanceof Menue) {
-			menue = (Menue) dataParam;
+		if (dataParam instanceof Menu) {
+			menu = (Menu) dataParam;
 			ladeMenue();
 		} else if (dataParam instanceof Recipe) {
 			Recipe recipe = (Recipe) dataParam;
@@ -456,10 +456,10 @@ public class MenueAnlegen extends VerticalLayout implements View,
 
 	private void ladeMenue() {
 
-		Long id = menue.getId();
-		menue = null;
+		Long id = menu.getId();
+		menu = null;
 		try {
-			menue = Menueverwaltung.getInstance().getMenueById(id);
+			menu = Menueverwaltung.getInstance().getMenueById(id);
 		} catch (ConnectException e1) {
 			e1.printStackTrace();
 		} catch (DAOException e1) {
@@ -468,7 +468,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			e1.printStackTrace();
 		}
 		try {
-			menue = MenueDAO.getInstance().getMenueById(menue.getId());
+			menu = MenueDAO.getInstance().getMenueById(menu.getId());
 		} catch (ConnectException e) {
 			e.printStackTrace();
 		} catch (DAOException e) {
@@ -478,26 +478,26 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		}
 
 		// vorhandene Rezepte setzen
-		if (menue.getRezepte() != null) {
-			tmpRezepte = menue.getRezepte();
+		if (menu.getRecipeList() != null) {
+			tmpRezepte = menu.getRecipeList();
 		} else {
 			tmpRezepte = new ArrayList<Recipe>();
 		}
 
-		tfMenuename.setValue(menue.getName());
+		tfMenuename.setValue(menu.getName());
 
-		nsKoch.select(menue.getKoch());
+		nsKoch.select(menu.getEmployee());
 
-		nsMenueart.select(menue.getMenueart());
+		nsMenueart.select(menu.getMenutype());
 
-		nsGeschmack.select(menue.getGeschmack());
+		nsGeschmack.select(menu.getGeschmack());
 
-		chbAufwand.setValue(menue.getAufwand());
+		chbAufwand.setValue(menu.getAufwand());
 
-		chbFavorit.setValue(menue.getFavorit());
+		chbFavorit.setValue(menu.getFavorit());
 
-		for (int i = 0; i < menue.getFussnoten().size(); i++) {
-			tcsFussnoten.select(menue.getFussnoten().get(i));
+		for (int i = 0; i < menu.getFussnotenList().size(); i++) {
+			tcsFussnoten.select(menu.getFussnotenList().get(i));
 		}
 
 		tblMenueRezepte = null;
@@ -507,14 +507,14 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		tblMenueRezepte.setImmediate(true);
 
 		tblMenueRezepte.setContainerDataSource(ctRezepte);
-		tmpRezepte = menue.getRezepte();
+		tmpRezepte = menu.getRecipeList();
 		for (Recipe r : tmpRezepte) {
 			ctRezepte.removeItem(r);
 			ctMenue.addItem(r);
 
 		}
 
-		menue.setRezepte(tmpRezepte);
+		menu.setRecipeList(tmpRezepte);
 
 		hlControl.replaceComponent(btSpeichern, btUpdate);
 		headlineUpdate = new Label("Menü bearbeiten");
@@ -543,7 +543,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 
 		erstelleMenue();
 		try {
-			Menueverwaltung.getInstance().speicherMenue(menue);
+			Menueverwaltung.getInstance().speicherMenue(menu);
 		} catch (ConnectException e) {
 			e.printStackTrace();
 		} catch (DAOException e) {
@@ -555,28 +555,28 @@ public class MenueAnlegen extends VerticalLayout implements View,
 
 	private void erstelleMenue() {
 
-		if (menue == null) {
-			menue = new Menue();
+		if (menu == null) {
+			menu = new Menu();
 		}
 
-		menue.setName(tfMenuename.getValue());
-		menue.setKoch((Employee) nsKoch.getValue());
-		menue.setMenueart((Menueart) nsMenueart.getValue());
-		menue.setGeschmack((Geschmack) nsGeschmack.getValue());
+		menu.setName(tfMenuename.getValue());
+		menu.setEmployee((Employee) nsKoch.getValue());
+		menu.setMenutype((Menutype) nsMenueart.getValue());
+		menu.setGeschmack((Geschmack) nsGeschmack.getValue());
 
 		if (chbFavorit.getValue()) {
-			menue.setFavorit(true);
+			menu.setFavorit(true);
 		} else
-			menue.setFavorit(false);
+			menu.setFavorit(false);
 
 		if (chbAufwand.getValue()) {
-			menue.setAufwand(true);
+			menu.setAufwand(true);
 		} else
-			menue.setAufwand(false);
+			menu.setAufwand(false);
 
-		menue.setFussnoten(ladeFussnotenAusTCS());
+		menu.setFussnotenList(ladeFussnotenAusTCS());
 
-		menue.setRezepte(tmpRezepte);
+		menu.setRecipeList(tmpRezepte);
 	}
 
 	private List<Fussnote> ladeFussnotenAusTCS() {
@@ -607,7 +607,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 		erstelleMenue();
 
 		try {
-			Menueverwaltung.getInstance().updateMenue(menue);
+			Menueverwaltung.getInstance().updateMenue(menu);
 		} catch (ConnectException e) {
 			e.printStackTrace();
 		} catch (DAOException e) {

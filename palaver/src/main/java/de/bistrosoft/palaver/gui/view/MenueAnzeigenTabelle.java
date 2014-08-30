@@ -20,7 +20,6 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
@@ -32,6 +31,7 @@ import de.hska.awp.palaver2.util.customFilterDecorator;
 import de.palaver.Application;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
+import de.palaver.management.menu.Menu;
 
 @SuppressWarnings("serial")
 public class MenueAnzeigenTabelle extends VerticalLayout implements View {
@@ -40,7 +40,7 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 	private FilterTable table;
 
 	private Button btFilterLeeren;
-	private Menue menue;
+	private Menu menu;
 
 	private Button btAuswaehlen;
 	private Button btLoeschen;
@@ -81,7 +81,7 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
-					menue = (Menue) event.getProperty().getValue();
+					menu = (Menu) event.getProperty().getValue();
 				}
 			}
 		});
@@ -92,15 +92,15 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 			public void itemClick(ItemClickEvent event) {
 				if (event.isDoubleClick()) {
 					ViewHandler.getInstance().switchView(MenueAnlegen.class,
-							new ViewDataObject<Menue>(menue));
+							new ViewDataObject<Menu>(menu));
 				}
 			}
 		});
 
-		BeanItemContainer<Menue> container;
+		BeanItemContainer<Menu> container;
 
 		try {
-			container = new BeanItemContainer<Menue>(Menue.class,
+			container = new BeanItemContainer<Menu>(Menu.class,
 					Menueverwaltung.getInstance().getAllMenuesFast());
 			table.setContainerDataSource(container);
 			table.setVisibleColumns(new Object[] { "name", "kochname",
@@ -136,11 +136,11 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 		btAuswaehlen.addClickListener(new ClickListener() {
 			public void buttonClick(ClickEvent event) {
 				if (table.getValue() != null
-						&& table.getValue() instanceof Menue) {
+						&& table.getValue() instanceof Menu) {
 
-					Menue menueAusTb = (Menue) table.getValue();
+					Menu menueAusTb = (Menu) table.getValue();
 					ViewHandler.getInstance().switchView(MenueAnlegen.class,
-							new ViewDataObject<Menue>(menueAusTb));
+							new ViewDataObject<Menu>(menueAusTb));
 				} else {
 					((Application) UI.getCurrent().getData())
 							.showDialog(IConstants.INFO_MENUEANZEIGEN_SELECT);
@@ -152,9 +152,9 @@ public class MenueAnzeigenTabelle extends VerticalLayout implements View {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (table.getValue() != null
-						&& table.getValue() instanceof Menue) {
+						&& table.getValue() instanceof Menu) {
 
-					Menue menueAusTb = (Menue) table.getValue();
+					Menu menueAusTb = (Menu) table.getValue();
 					try {
 						Menueverwaltung.getInstance().setMenueDisabled(
 								menueAusTb);

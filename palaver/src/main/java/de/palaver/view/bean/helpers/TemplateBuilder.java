@@ -36,7 +36,7 @@ public class TemplateBuilder extends BaseView {
 	protected static final String 		BUTTON_TEXT_CREATE = "Anlegen";
 	protected static final String 		BUTTON_TEXT_SAVE = "Speichern";
 	protected static final String 		BUTTON_TEXT_VERWERFEN = "Verwerfen";
-	protected static final String 		BUTTON_TEXT_DEAKTIVIEREN = "Deaktivieren";
+	protected static final String 		BUTTON_TEXT_DEAKTIVIEREN = "Entgültig löschen";
 	private static final String 		BUTTON_TEXT_EDIT = "Bearbeiten";
 	protected static final String 		BUTTON_TEXT_ADD_ITEM = "Artikel anlegen";
 	protected static final String 		BUTTON_TEXT_ADD_TO_MENUE = "In Menü überführen";

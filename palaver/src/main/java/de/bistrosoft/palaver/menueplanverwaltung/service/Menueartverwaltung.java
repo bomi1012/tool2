@@ -3,10 +3,10 @@ package de.bistrosoft.palaver.menueplanverwaltung.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import de.bistrosoft.palaver.data.MenueartDAO;
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueart;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
+import de.palaver.management.menu.Menutype;
+import de.palaver.management.menu.DAO.MenueartDAO;
 
 /**
  * @author Jasmin Baumgartner
@@ -27,34 +27,34 @@ public class Menueartverwaltung extends MenueartDAO {
 		return instance;
 	}
 
-	public List<Menueart> getAllMenueart() throws ConnectException,
+	public List<Menutype> getAllMenueart() throws ConnectException,
 			DAOException, SQLException {
-		List<Menueart> result = null;
+		List<Menutype> result = null;
 		result = super.getAllMenueart();
 		return result;
 	}
 
-	public List<Menueart> getMenueartByName(String name)
+	public List<Menutype> getMenueartByName(String name)
 			throws ConnectException, DAOException, SQLException {
-		List<Menueart> result = null;
+		List<Menutype> result = null;
 		result = super.getMenueartByName(name);
 		return result;
 	}
 
-	public Menueart getMenueartById(Long id) throws ConnectException,
+	public Menutype getMenueartById(Long id) throws ConnectException,
 			DAOException, SQLException {
-		Menueart menueart = null;
-		menueart = super.getMenueartById(id);
-		return menueart;
+		Menutype menutype = null;
+		menutype = super.getMenueartById(id);
+		return menutype;
 	}
 
-	public void createMenueart(Menueart menueart) throws ConnectException,
+	public void createMenueart(Menutype menutype) throws ConnectException,
 			DAOException, SQLException {
-		super.createMenueart(menueart);
+		super.createMenueart(menutype);
 	}
 
-	public void updateMenuetart(Menueart menueart) throws ConnectException,
+	public void updateMenuetart(Menutype menutype) throws ConnectException,
 			DAOException, SQLException {
-		super.updateMenueart(menueart);
+		super.updateMenueart(menutype);
 	}
 }

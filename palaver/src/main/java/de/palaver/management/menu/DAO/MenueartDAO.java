@@ -1,4 +1,4 @@
-package de.bistrosoft.palaver.data;
+package de.palaver.management.menu.DAO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -6,10 +6,10 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menueart;
 import de.palaver.dao.AbstractDAO;
 import de.palaver.dao.ConnectException;
 import de.palaver.dao.DAOException;
+import de.palaver.management.menu.Menutype;
 
 /**
  * @author Jasmin Baumgartner
@@ -32,7 +32,7 @@ public class MenueartDAO extends AbstractDAO {
 
 	private static MenueartDAO instance = null;
 
-	Menueart menueart;
+	Menutype menutype;
 
 	// Konstruktor
 	public MenueartDAO() {
@@ -49,64 +49,64 @@ public class MenueartDAO extends AbstractDAO {
 	}
 
 	// Methode, die alle Menuearten in einer Liste zurückliefert
-	public List<Menueart> getAllMenueart() throws ConnectException,
+	public List<Menutype> getAllMenueart() throws ConnectException,
 			DAOException, SQLException {
-		List<Menueart> list = new ArrayList<Menueart>();
+		List<Menutype> list = new ArrayList<Menutype>();
 		ResultSet set = getManaged(GET_ALL_MENUEART);
 		while (set.next()) {
-			list.add(new Menueart(set.getLong(ID), set.getString(NAME)));
+			list.add(new Menutype(set.getLong(ID), set.getString(NAME)));
 		}
 		return list;
 	}
 
 	// Methode, die eine Menueart über die ID zurückliefert
-	public Menueart getMenueartById(Long id) throws ConnectException,
+	public Menutype getMenueartById(Long id) throws ConnectException,
 			DAOException, SQLException {
 		ResultSet set = getManaged(MessageFormat.format(GET_MENUEART_BY_ID, id));
 		while (set.next()) {
-			menueart = new Menueart(set.getLong("id"), set.getString("name"));
+			menutype = new Menutype(set.getLong("id"), set.getString("name"));
 		}
-		return menueart;
+		return menutype;
 	}
 
 	// Methode, die eine Menueart eines Menue über die ID zurückliefert
-	public Menueart getMenueartByMenue(Long id) throws ConnectException,
+	public Menutype getMenueartByMenue(Long id) throws ConnectException,
 			DAOException, SQLException {
 		ResultSet set = getManaged(MessageFormat.format(GET_MENUEART_BY_MENUE,
 				id));
 		while (set.next()) {
-			menueart = new Menueart(set.getLong(ID), set.getString(NAME));
+			menutype = new Menutype(set.getLong(ID), set.getString(NAME));
 		}
-		return menueart;
+		return menutype;
 	}
 
 	// Methode, die eine Menueart über den Namen zurückliefert
-	public List<Menueart> getMenueartByName(String name)
+	public List<Menutype> getMenueartByName(String name)
 			throws ConnectException, DAOException, SQLException {
-		List<Menueart> list = new ArrayList<Menueart>();
+		List<Menutype> list = new ArrayList<Menutype>();
 
 		ResultSet set = getManaged(GET_MENUEART_BY_NAME + name + "%'");
 
 		while (set.next()) {
-			list.add(new Menueart(set.getLong(ID), set.getString(NAME)));
+			list.add(new Menutype(set.getLong(ID), set.getString(NAME)));
 		}
 		return list;
 	}
 
 	// Methode, die eine Menueart erstellt
-	public void createMenueart(Menueart menueart) throws ConnectException,
+	public void createMenueart(Menutype menutype) throws ConnectException,
 			DAOException, SQLException {
 		String INSERT_QUERY = "INSERT INTO " + TABLE + "(name) VALUES('"
-				+ menueart.getBezeichnung() + "');";
+				+ menutype.getName() + "');";
 		this.putManaged(INSERT_QUERY);
 	}
 
 	// Methode, die eine Menueart Ã¤ndert
-	public void updateMenueart(Menueart menueart) throws ConnectException,
+	public void updateMenueart(Menutype menutype) throws ConnectException,
 			DAOException, SQLException {
 		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + NAME + "='"
-				+ menueart.getBezeichnung() + "'" + " WHERE " + ID + "='"
-				+ menueart.getId() + "'";
+				+ menutype.getName() + "'" + " WHERE " + ID + "='"
+				+ menutype.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
 	}
 }

@@ -10,7 +10,7 @@ import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.TextField;
+import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -28,11 +28,10 @@ import de.palaver.view.bean.helpers.TemplateBuilder;
 public class ChangePasswordBean extends TemplateBuilder implements View, ValueChangeListener {
 	private static final long serialVersionUID = -34841015627292738L;
 	private static final String TITLE = "Passwort ändern";
-	private static final String TEXT_FIELD_PASSWORD = "Passwort";
 	
 
 	private Employee m_employee;
-	private TextField m_passwordField;
+	private PasswordField m_passwordField;
 
 	public ChangePasswordBean() {
 		super();
@@ -50,8 +49,8 @@ public class ChangePasswordBean extends TemplateBuilder implements View, ValueCh
 	}
 
 	private void componetsManager() {
-		m_headLine = title(TITLE, STYLE_HEADLINE_STANDART);
-		m_passwordField = textField(TEXT_FIELD_PASSWORD, WIDTH_FULL, true, TEXT_FIELD_PASSWORD, 0);
+		m_headLine = title(TITLE, STYLE_HEADLINE_STANDART);		
+		m_passwordField = passwordField("Passwort", WIDTH_FULL, "Bitte gültigen Passwort eingeben", true, 6, 45, true, true);
 		m_control = controlPanel(this);
 	}
 	

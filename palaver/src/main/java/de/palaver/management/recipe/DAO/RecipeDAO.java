@@ -8,7 +8,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import de.bistrosoft.palaver.data.RezeptartDAO;
-import de.bistrosoft.palaver.menueplanverwaltung.domain.Menue;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptartverwaltung;
 import de.palaver.dao.AbstractDAO;
 import de.palaver.dao.ConnectException;
@@ -17,6 +16,7 @@ import de.palaver.management.artikel.Artikel;
 import de.palaver.management.artikel.service.ArtikelService;
 import de.palaver.management.emploee.Employee;
 import de.palaver.management.employee.service.EmployeeService;
+import de.palaver.management.menu.Menu;
 import de.palaver.management.recipe.Recipe;
 import de.palaver.management.recipe.Recipetype;
 import de.palaver.management.recipe.RezeptHasArtikel;
@@ -256,11 +256,11 @@ public class RecipeDAO extends AbstractDAO {
 	}
 
 	// Methode, die Rezepte zu einem Menue in einer Liste zurueckliefert
-	public List<Recipe> getRezepteByMenue(Menue menue) throws ConnectException,
+	public List<Recipe> getRezepteByMenue(Menu menu) throws ConnectException,
 			DAOException, SQLException {
 		List<Recipe> rezepte = new ArrayList<Recipe>();
 		ResultSet set = getManaged("select rez.* from menue_has_rezept mhr, rezept rez where mhr.rezept_id=rez.id and mhr.menue_id = "
-				+ menue.getId());
+				+ menu.getId());
 		while (set.next()) {
 			Recipe rez = new Recipe();
 			Long id = set.getLong("id");
