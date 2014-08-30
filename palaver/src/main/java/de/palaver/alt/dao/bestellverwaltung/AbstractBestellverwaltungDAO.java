@@ -1,17 +1,17 @@
-package de.palaver.dao.bestellverwaltung;
+package de.palaver.alt.dao.bestellverwaltung;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import de.palaver.dao.AbstractDAO;
-import de.palaver.dao.ConnectException;
-import de.palaver.dao.DAOException;
-import de.palaver.domain.bestellverwaltung.Bestellposition;
-import de.palaver.domain.bestellverwaltung.Bestellung;
+import de.palaver.alt.domain.bestellverwaltung.Bestellposition;
+import de.palaver.alt.domain.bestellverwaltung.Bestellung;
 import de.palaver.management.artikel.DAO.ArtikelDAO;
 import de.palaver.management.employee.service.EmployeeService;
 import de.palaver.management.supplier.DAO.SupplierDAO;
+import de.palaver.management.util.dao.AbstractDAO;
+import de.palaver.management.util.dao.ConnectException;
+import de.palaver.management.util.dao.DAOException;
 
 public class AbstractBestellverwaltungDAO extends AbstractDAO {
 	protected static final String TABLE_B = "bestellung";

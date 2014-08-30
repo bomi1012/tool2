@@ -29,9 +29,9 @@ import de.hska.awp.palaver2.util.ViewHandler;
 import de.hska.awp.palaver2.util.customFilter;
 import de.hska.awp.palaver2.util.customFilterDecorator;
 import de.palaver.Application;
-import de.palaver.dao.ConnectException;
-import de.palaver.dao.DAOException;
 import de.palaver.management.menu.Menu;
+import de.palaver.management.util.dao.ConnectException;
+import de.palaver.management.util.dao.DAOException;
 
 @SuppressWarnings("serial")
 public class MenueAnzeigenTabelle extends VerticalLayout implements View {

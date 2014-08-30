@@ -18,9 +18,6 @@ import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.Week;
-import de.palaver.dao.AbstractDAO;
-import de.palaver.dao.ConnectException;
-import de.palaver.dao.DAOException;
 import de.palaver.management.artikel.Artikel;
 import de.palaver.management.artikel.Mengeneinheit;
 import de.palaver.management.artikel.service.ArtikelService;
@@ -32,6 +29,9 @@ import de.palaver.management.menu.Geschmack;
 import de.palaver.management.menu.Menu;
 import de.palaver.management.menu.Menutype;
 import de.palaver.management.recipe.Recipe;
+import de.palaver.management.util.dao.AbstractDAO;
+import de.palaver.management.util.dao.ConnectException;
+import de.palaver.management.util.dao.DAOException;
 
 /**
  * @author Eike

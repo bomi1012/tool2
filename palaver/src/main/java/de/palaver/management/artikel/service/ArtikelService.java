@@ -6,10 +6,10 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.palaver.dao.ConnectException;
-import de.palaver.dao.DAOException;
 import de.palaver.management.artikel.Artikel;
 import de.palaver.management.artikel.DAO.ArtikelDAO;
+import de.palaver.management.util.dao.ConnectException;
+import de.palaver.management.util.dao.DAOException;
 
 public class ArtikelService {
 	private static ArtikelService instance = null;

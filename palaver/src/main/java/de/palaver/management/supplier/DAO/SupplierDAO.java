@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hska.awp.palaver2.util.Util;
-import de.palaver.dao.AbstractDAO;
-import de.palaver.dao.ConnectException;
-import de.palaver.dao.DAOException;
 import de.palaver.management.info.person.service.AdresseService;
 import de.palaver.management.info.person.service.KontakteService;
 import de.palaver.management.supplier.Supplier;
+import de.palaver.management.util.dao.AbstractDAO;
+import de.palaver.management.util.dao.ConnectException;
+import de.palaver.management.util.dao.DAOException;
 
 public class SupplierDAO extends AbstractDAO {
 

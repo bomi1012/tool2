@@ -28,8 +28,8 @@ import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
+import de.palaver.alt.service.emailversand.MailService;
 import de.palaver.management.supplier.Supplier;
-import de.palaver.service.emailversand.MailService;
 
 /**
  * 

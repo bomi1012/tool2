@@ -13,9 +13,9 @@ import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
-import de.palaver.dao.DAOException;
 import de.palaver.management.artikel.Mengeneinheit;
 import de.palaver.management.artikel.service.MengeneinheitService;
+import de.palaver.management.util.dao.DAOException;
 import de.palaver.view.bean.helpers.TemplateBuilder;
 import de.palaver.view.bean.helpers.interfaces.IChangeViewPage;
 

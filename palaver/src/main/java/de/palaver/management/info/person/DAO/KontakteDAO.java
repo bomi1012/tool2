@@ -4,10 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
 
-import de.palaver.dao.AbstractDAO;
-import de.palaver.dao.ConnectException;
-import de.palaver.dao.DAOException;
 import de.palaver.management.info.person.Kontakte;
+import de.palaver.management.util.dao.AbstractDAO;
+import de.palaver.management.util.dao.ConnectException;
+import de.palaver.management.util.dao.DAOException;
 
 
 public class KontakteDAO extends AbstractDAO{

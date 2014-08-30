@@ -8,9 +8,9 @@ import java.util.List;
 
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.FussnoteKuchen;
 
-import de.palaver.dao.AbstractDAO;
-import de.palaver.dao.ConnectException;
-import de.palaver.dao.DAOException;
+import de.palaver.management.util.dao.AbstractDAO;
+import de.palaver.management.util.dao.ConnectException;
+import de.palaver.management.util.dao.DAOException;
 
 /**
  * 

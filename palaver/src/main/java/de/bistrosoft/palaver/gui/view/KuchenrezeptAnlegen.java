@@ -47,10 +47,10 @@ import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
-import de.palaver.dao.ConnectException;
-import de.palaver.dao.DAOException;
 import de.palaver.management.artikel.Artikel;
 import de.palaver.management.artikel.service.ArtikelService;
+import de.palaver.management.util.dao.ConnectException;
+import de.palaver.management.util.dao.DAOException;
 import de.palaver.view.bean.artikelverwaltung.ChangeItemBean;
 
 /**

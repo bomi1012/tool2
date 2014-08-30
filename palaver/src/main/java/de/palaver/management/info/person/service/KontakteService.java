@@ -2,10 +2,10 @@ package de.palaver.management.info.person.service;
 
 import java.sql.SQLException;
 
-import de.palaver.dao.ConnectException;
-import de.palaver.dao.DAOException;
 import de.palaver.management.info.person.Kontakte;
 import de.palaver.management.info.person.DAO.KontakteDAO;
+import de.palaver.management.util.dao.ConnectException;
+import de.palaver.management.util.dao.DAOException;
 
 public class KontakteService {
 	private static KontakteService instance = null;

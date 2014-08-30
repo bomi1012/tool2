@@ -1,4 +1,4 @@
-package de.palaver.service.emailversand;
+package de.palaver.alt.service.emailversand;
 
 import java.io.File;
 import java.util.Properties;

@@ -2,10 +2,10 @@ package de.palaver.management.info.person.service;
 
 import java.sql.SQLException;
 
-import de.palaver.dao.ConnectException;
-import de.palaver.dao.DAOException;
 import de.palaver.management.info.person.Adresse;
 import de.palaver.management.info.person.DAO.AdresseDAO;
+import de.palaver.management.util.dao.ConnectException;
+import de.palaver.management.util.dao.DAOException;
 
 public class AdresseService {
 

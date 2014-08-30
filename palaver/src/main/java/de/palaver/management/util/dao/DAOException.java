@@ -5,7 +5,7 @@
  *
  * Copyright (c) 2012 SEEBURGER AG, Germany. All Rights Reserved.
  */
-package de.palaver.dao;
+package de.palaver.management.util.dao;
 
 public class DAOException extends Exception {
 	private static final long serialVersionUID = 6985496923909454404L;

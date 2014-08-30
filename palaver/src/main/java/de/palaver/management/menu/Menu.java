@@ -2,9 +2,9 @@ package de.palaver.management.menu;
 
 import java.util.List;
 
-import de.palaver.domain.EntityKoch;
 import de.palaver.management.emploee.Employee;
 import de.palaver.management.recipe.Recipe;
+import de.palaver.management.util.entity.EntityKoch;
 
 public class Menu extends EntityKoch {
 	private static final long serialVersionUID = 4540138544043368369L;

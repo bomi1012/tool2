@@ -3,12 +3,12 @@ package de.palaver.management.employee.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import de.palaver.dao.ConnectException;
-import de.palaver.dao.DAOException;
 import de.palaver.management.emploee.Employee;
 import de.palaver.management.emploee.Rolle;
 import de.palaver.management.emploee.DAO.EmployeeDAO;
 import de.palaver.management.emploee.DAO.EmployeeHasRollenDAO;
+import de.palaver.management.util.dao.ConnectException;
+import de.palaver.management.util.dao.DAOException;
 
 public class EmployeeService {
 

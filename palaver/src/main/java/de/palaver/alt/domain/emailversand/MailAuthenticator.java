@@ -1,4 +1,4 @@
-package de.palaver.domain.emailversand;
+package de.palaver.alt.domain.emailversand;
 
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;

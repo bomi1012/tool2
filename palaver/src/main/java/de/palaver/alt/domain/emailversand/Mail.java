@@ -1,6 +1,6 @@
-package de.palaver.domain.emailversand;
+package de.palaver.alt.domain.emailversand;
 
-import de.palaver.domain.EntityId;
+import de.palaver.management.util.entity.EntityId;
 
 public class Mail extends EntityId {
 	

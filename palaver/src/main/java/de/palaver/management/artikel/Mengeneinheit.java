@@ -1,6 +1,6 @@
 package de.palaver.management.artikel;
 
-import de.palaver.domain.EntityName;
+import de.palaver.management.util.entity.EntityName;
 
 public class Mengeneinheit extends EntityName implements java.io.Serializable {
 	private static final long serialVersionUID = 5210068506937506344L;

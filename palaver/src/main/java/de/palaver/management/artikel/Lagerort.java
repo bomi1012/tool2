@@ -1,6 +1,6 @@
 package de.palaver.management.artikel;
 
-import de.palaver.domain.EntityName;
+import de.palaver.management.util.entity.EntityName;
 
 public class Lagerort extends EntityName {
 	

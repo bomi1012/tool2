@@ -3,13 +3,13 @@ package de.palaver.management.supplier.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import de.palaver.dao.ConnectException;
-import de.palaver.dao.DAOException;
 import de.palaver.management.info.person.DAO.AdresseDAO;
 import de.palaver.management.info.person.DAO.KontakteDAO;
 import de.palaver.management.supplier.Supplier;
 import de.palaver.management.supplier.DAO.AnsprechpartnerDAO;
 import de.palaver.management.supplier.DAO.SupplierDAO;
+import de.palaver.management.util.dao.ConnectException;
+import de.palaver.management.util.dao.DAOException;
 
 
 public class SupplierService {

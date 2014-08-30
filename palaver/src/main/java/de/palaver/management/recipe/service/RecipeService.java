@@ -3,8 +3,6 @@ package de.palaver.management.recipe.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import de.palaver.dao.ConnectException;
-import de.palaver.dao.DAOException;
 import de.palaver.management.recipe.Recipe;
 import de.palaver.management.recipe.Recipetype;
 import de.palaver.management.recipe.RezeptHasArtikel;
@@ -13,6 +11,8 @@ import de.palaver.management.recipe.DAO.RecipeDAO;
 import de.palaver.management.recipe.DAO.RecipeHasArtikelDAO;
 import de.palaver.management.recipe.DAO.RecipetypeDAO;
 import de.palaver.management.recipe.DAO.ZubereitungDAO;
+import de.palaver.management.util.dao.ConnectException;
+import de.palaver.management.util.dao.DAOException;
 import de.palaver.view.bean.helpers.wrappers.RezeptHasArtikelWrapper;
 
 public class RecipeService {

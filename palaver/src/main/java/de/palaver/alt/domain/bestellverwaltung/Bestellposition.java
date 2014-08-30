@@ -1,7 +1,7 @@
-package de.palaver.domain.bestellverwaltung;
+package de.palaver.alt.domain.bestellverwaltung;
 
-import de.palaver.domain.EntityId;
 import de.palaver.management.artikel.Artikel;
+import de.palaver.management.util.entity.EntityId;
 
 /**
  * Die Klasse Bestellposition spiegelt den Bestellposition aus der Datenbank

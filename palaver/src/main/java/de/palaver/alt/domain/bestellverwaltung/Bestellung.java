@@ -1,10 +1,10 @@
-package de.palaver.domain.bestellverwaltung;
+package de.palaver.alt.domain.bestellverwaltung;
 
 import java.sql.Date;
 
-import de.palaver.domain.EntityId;
 import de.palaver.management.emploee.Employee;
 import de.palaver.management.supplier.Supplier;
+import de.palaver.management.util.entity.EntityId;
 
 /**
  * Die Klasse Bestellung spiegelt den Bestellung aus der Datenbank wieder.

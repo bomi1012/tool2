@@ -45,8 +45,6 @@ import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
-import de.palaver.dao.ConnectException;
-import de.palaver.dao.DAOException;
 import de.palaver.management.emploee.Employee;
 import de.palaver.management.employee.service.EmployeeService;
 import de.palaver.management.menu.Fussnote;
@@ -55,6 +53,8 @@ import de.palaver.management.menu.Menu;
 import de.palaver.management.menu.Menutype;
 import de.palaver.management.menu.DAO.MenueDAO;
 import de.palaver.management.recipe.Recipe;
+import de.palaver.management.util.dao.ConnectException;
+import de.palaver.management.util.dao.DAOException;
 import de.palaver.view.bean.rezeptverwaltung.ChangeRecipeBean;
 
 /**

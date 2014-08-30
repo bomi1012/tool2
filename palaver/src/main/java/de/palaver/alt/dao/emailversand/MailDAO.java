@@ -1,13 +1,13 @@
-package de.palaver.dao.emailversand;
+package de.palaver.alt.dao.emailversand;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
 
-import de.palaver.dao.AbstractDAO;
-import de.palaver.dao.ConnectException;
-import de.palaver.dao.DAOException;
-import de.palaver.domain.emailversand.Mail;
+import de.palaver.alt.domain.emailversand.Mail;
+import de.palaver.management.util.dao.AbstractDAO;
+import de.palaver.management.util.dao.ConnectException;
+import de.palaver.management.util.dao.DAOException;
 
 public class MailDAO extends AbstractDAO{
 

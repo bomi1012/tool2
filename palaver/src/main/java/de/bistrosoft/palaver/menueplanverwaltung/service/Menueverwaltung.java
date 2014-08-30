@@ -3,10 +3,10 @@ package de.bistrosoft.palaver.menueplanverwaltung.service;
 import java.sql.SQLException;
 
 import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasFussnote;
-import de.palaver.dao.ConnectException;
-import de.palaver.dao.DAOException;
 import de.palaver.management.menu.Menu;
 import de.palaver.management.menu.DAO.MenueDAO;
+import de.palaver.management.util.dao.ConnectException;
+import de.palaver.management.util.dao.DAOException;
 
 public class Menueverwaltung extends MenueDAO {
 

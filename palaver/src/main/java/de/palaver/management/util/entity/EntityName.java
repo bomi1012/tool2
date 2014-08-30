@@ -1,4 +1,4 @@
-package de.palaver.domain;
+package de.palaver.management.util.entity;
 
 
 public class EntityName extends EntityId  {

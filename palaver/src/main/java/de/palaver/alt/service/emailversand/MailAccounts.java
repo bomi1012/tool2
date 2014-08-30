@@ -1,6 +1,6 @@
-package de.palaver.service.emailversand;
+package de.palaver.alt.service.emailversand;
 
-import de.palaver.domain.emailversand.MailAuthenticator;
+import de.palaver.alt.domain.emailversand.MailAuthenticator;
 
 /**
  * @author Mihon

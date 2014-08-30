@@ -3,8 +3,8 @@ package de.palaver.management.recipe;
 import java.util.Date;
 import java.util.List;
 
-import de.palaver.domain.EntityKoch;
 import de.palaver.management.emploee.Employee;
+import de.palaver.management.util.entity.EntityKoch;
 
 public class Recipe extends EntityKoch {
 	private static final long serialVersionUID = 7984117576450240771L;

@@ -1,4 +1,4 @@
-package de.palaver.service.bestellverwaltung;
+package de.palaver.alt.service.bestellverwaltung;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -10,8 +10,8 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-import de.palaver.domain.bestellverwaltung.Bestellposition;
-import de.palaver.domain.bestellverwaltung.Bestellung;
+import de.palaver.alt.domain.bestellverwaltung.Bestellposition;
+import de.palaver.alt.domain.bestellverwaltung.Bestellung;
 public class ExcelDatei {
 
 	private static ExcelDatei instance = null;

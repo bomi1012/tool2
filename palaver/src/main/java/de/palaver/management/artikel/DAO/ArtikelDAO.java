@@ -10,15 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hska.awp.palaver2.util.Util;
-import de.palaver.dao.AbstractDAO;
-import de.palaver.dao.ConnectException;
-import de.palaver.dao.DAOException;
 import de.palaver.management.artikel.Artikel;
 import de.palaver.management.artikel.Kategorie;
 import de.palaver.management.artikel.Lagerort;
 import de.palaver.management.artikel.Mengeneinheit;
 import de.palaver.management.supplier.Supplier;
 import de.palaver.management.supplier.DAO.SupplierDAO;
+import de.palaver.management.util.dao.AbstractDAO;
+import de.palaver.management.util.dao.ConnectException;
+import de.palaver.management.util.dao.DAOException;
 
 /**
  * Klasse ArtikelDAO. Die Klasse stellt für den Artikel alle notwendigen

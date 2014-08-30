@@ -6,13 +6,13 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.palaver.dao.AbstractDAO;
-import de.palaver.dao.ConnectException;
-import de.palaver.dao.DAOException;
 import de.palaver.management.emploee.Employee;
 import de.palaver.management.emploee.InternMessage;
 import de.palaver.management.emploee.Rolle;
 import de.palaver.management.employee.service.EmployeeService;
+import de.palaver.management.util.dao.AbstractDAO;
+import de.palaver.management.util.dao.ConnectException;
+import de.palaver.management.util.dao.DAOException;
 
 /**
  * Die Klasse stellt Methoden für den Datenbankzugriff für das Objekt Nachricht

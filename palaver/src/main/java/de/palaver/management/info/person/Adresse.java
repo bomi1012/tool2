@@ -1,6 +1,6 @@
 package de.palaver.management.info.person;
 
-import de.palaver.domain.EntityId;
+import de.palaver.management.util.entity.EntityId;
 
 public class Adresse extends EntityId {
 

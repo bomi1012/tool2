@@ -2,7 +2,7 @@ package de.palaver.management.emploee;
 
 import java.io.Serializable;
 
-import de.palaver.domain.EntityId;
+import de.palaver.management.util.entity.EntityId;
 
 public class InternMessage extends EntityId implements Serializable {
 

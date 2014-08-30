@@ -6,11 +6,11 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.palaver.dao.ConnectException;
-import de.palaver.dao.DAOException;
 import de.palaver.management.emploee.Employee;
 import de.palaver.management.employee.service.RolleService;
 import de.palaver.management.info.person.service.KontakteService;
+import de.palaver.management.util.dao.ConnectException;
+import de.palaver.management.util.dao.DAOException;
 
 public class EmployeeDAO extends EmployeeHasRollenDAO {
 	private static final long serialVersionUID = 189499847070124261L;

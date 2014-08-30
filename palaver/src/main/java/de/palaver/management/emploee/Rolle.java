@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.palaver.domain.EntityName;
+import de.palaver.management.util.entity.EntityName;
 
 public class Rolle extends EntityName implements Serializable {
 

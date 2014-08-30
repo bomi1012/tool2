@@ -1,6 +1,6 @@
 package de.palaver.management.menu;
 
-import de.palaver.domain.EntityName;
+import de.palaver.management.util.entity.EntityName;
 
 public class Fussnote extends EntityName  {
 	private static final long serialVersionUID = 5587891631592514791L;

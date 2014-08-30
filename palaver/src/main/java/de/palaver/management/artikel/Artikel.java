@@ -2,8 +2,9 @@ package de.palaver.management.artikel;
 
 import java.io.Serializable;
 
-import de.palaver.domain.EntityName;
 import de.palaver.management.supplier.Supplier;
+import de.palaver.management.util.entity.EntityName;
+
 
 public class Artikel extends EntityName implements Serializable {
 	private static final long serialVersionUID = 6557876739298794189L;

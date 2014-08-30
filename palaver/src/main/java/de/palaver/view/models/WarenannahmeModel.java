@@ -8,10 +8,10 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 
-import de.palaver.dao.ConnectException;
-import de.palaver.dao.DAOException;
-import de.palaver.domain.bestellverwaltung.Bestellposition;
-import de.palaver.service.bestellverwaltung.BestellpositionService;
+import de.palaver.alt.domain.bestellverwaltung.Bestellposition;
+import de.palaver.alt.service.bestellverwaltung.BestellpositionService;
+import de.palaver.management.util.dao.ConnectException;
+import de.palaver.management.util.dao.DAOException;
 
 public class WarenannahmeModel implements Serializable{
 	private static final long serialVersionUID = 6472077862405421086L;

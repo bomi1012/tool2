@@ -28,11 +28,11 @@ import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
 import de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.palaver.Application;
-import de.palaver.dao.ConnectException;
-import de.palaver.dao.DAOException;
 import de.palaver.management.emploee.Employee;
 import de.palaver.management.menu.Fussnote;
 import de.palaver.management.menu.Menu;
+import de.palaver.management.util.dao.ConnectException;
+import de.palaver.management.util.dao.DAOException;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
 /**

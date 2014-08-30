@@ -1,4 +1,4 @@
-package de.palaver.dao;
+package de.palaver.management.util.dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;

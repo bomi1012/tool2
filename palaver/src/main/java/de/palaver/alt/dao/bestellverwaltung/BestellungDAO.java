@@ -1,13 +1,13 @@
-package de.palaver.dao.bestellverwaltung;
+package de.palaver.alt.dao.bestellverwaltung;
 
 import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.palaver.dao.ConnectException;
-import de.palaver.dao.DAOException;
-import de.palaver.domain.bestellverwaltung.Bestellung;
+import de.palaver.alt.domain.bestellverwaltung.Bestellung;
+import de.palaver.management.util.dao.ConnectException;
+import de.palaver.management.util.dao.DAOException;
 
 /**
  * Klasse BestellungDAO. Die Klasse stellt für die Bestellung alle notwendigen

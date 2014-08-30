@@ -1,4 +1,4 @@
-package de.palaver.dao;
+package de.palaver.management.util.dao;
 
 public class ConnectException extends Exception {
 

@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.bistrosoft.palaver.data.RezeptartDAO;
-import de.palaver.dao.ConnectException;
-import de.palaver.dao.DAOException;
 import de.palaver.management.artikel.Artikel;
 import de.palaver.management.artikel.DAO.ArtikelDAO;
 import de.palaver.management.menu.Fussnote;
@@ -23,6 +21,8 @@ import de.palaver.management.recipe.RezeptHasArtikel;
 import de.palaver.management.recipe.Zubereitung;
 import de.palaver.management.recipe.DAO.RecipeDAO;
 import de.palaver.management.recipe.DAO.ZubereitungDAO;
+import de.palaver.management.util.dao.ConnectException;
+import de.palaver.management.util.dao.DAOException;
 
 public class Rezeptverwaltung extends RecipeDAO {
 

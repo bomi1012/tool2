@@ -1,4 +1,4 @@
-package de.palaver.service.emailversand;
+package de.palaver.alt.service.emailversand;
 
 import java.security.Security;
 
@@ -7,8 +7,8 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
 
-import de.palaver.dao.emailversand.MailDAO;
-import de.palaver.domain.emailversand.Mail;
+import de.palaver.alt.dao.emailversand.MailDAO;
+import de.palaver.alt.domain.emailversand.Mail;
 
 public class MailService {
 	private static MailService instance = null;

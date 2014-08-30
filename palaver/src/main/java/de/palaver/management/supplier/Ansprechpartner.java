@@ -1,8 +1,8 @@
 package de.palaver.management.supplier;
 
-import de.palaver.domain.EntityName;
 import de.palaver.management.info.person.Adresse;
 import de.palaver.management.info.person.Kontakte;
+import de.palaver.management.util.entity.EntityName;
 
 public class Ansprechpartner extends EntityName {
 
