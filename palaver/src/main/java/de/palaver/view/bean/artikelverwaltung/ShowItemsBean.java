@@ -24,9 +24,10 @@ import de.palaver.management.artikel.Artikel;
 import de.palaver.management.artikel.service.ArtikelService;
 import de.palaver.view.bean.helpers.HTMLComponents;
 import de.palaver.view.bean.helpers.TemplateBuilder;
+import de.palaver.view.bean.helpers.interfaces.IShowSingleTable;
 
 @SuppressWarnings("serial")
-public class ShowItemsBean extends TemplateBuilder implements View {
+public class ShowItemsBean extends TemplateBuilder implements View, IShowSingleTable {
 	private static final Logger LOG = LoggerFactory.getLogger(ShowItemsBean.class.getName());	
 	private static final long serialVersionUID = -2340836709411564164L;
 	private static final String TITLE = "Alle Artikeln";

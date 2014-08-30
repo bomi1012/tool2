@@ -22,22 +22,11 @@ import com.vaadin.ui.Window;
 
 import de.palaver.Application;
 import de.palaver.management.emploee.Rolle;
-import de.palaver.view.bean.artikelverwaltung.ChangeItemBean;
-import de.palaver.view.bean.artikelverwaltung.ChangeKategoryBean;
-import de.palaver.view.bean.artikelverwaltung.ChangeQuantityUnitBean;
-import de.palaver.view.bean.artikelverwaltung.ChangeWarehouseBean;
-import de.palaver.view.bean.artikelverwaltung.ShowItemsBean;
-import de.palaver.view.bean.artikelverwaltung.ShowKategoriesBean;
-import de.palaver.view.bean.artikelverwaltung.ShowQuantitiesUnitBean;
-import de.palaver.view.bean.artikelverwaltung.ShowWarehousesBean;
-import de.palaver.view.bean.lieferantenverwaltung.ChangeContactPersonBean;
-import de.palaver.view.bean.lieferantenverwaltung.ChangeSupplierBean;
-import de.palaver.view.bean.lieferantenverwaltung.ShowSuppliersBean;
-import de.palaver.view.bean.mitarbeiterverwaltung.ChangeEmployeeBean;
+import de.palaver.view.bean.helpers.interfaces.IChangeViewPage;
+import de.palaver.view.bean.helpers.interfaces.IShowSingleTable;
 import de.palaver.view.bean.mitarbeiterverwaltung.ChangePasswordBean;
 import de.palaver.view.bean.mitarbeiterverwaltung.ShowEmployeesBean;
 import de.palaver.view.bean.rezeptverwaltung.ChangeRecipeBean;
-import de.palaver.view.bean.rezeptverwaltung.ShowRecipesBean;
 
 public class TemplateBuilder extends BaseView {
 	
@@ -110,18 +99,13 @@ public class TemplateBuilder extends BaseView {
 	
 	protected HorizontalLayout controlPanel(Object object) {
 		List<Button> buttons = new ArrayList<Button>();
-		if(object instanceof ShowItemsBean || object instanceof ShowQuantitiesUnitBean ||
-				object instanceof ShowKategoriesBean || object instanceof ShowWarehousesBean ||
-				object instanceof ShowSuppliersBean || object instanceof ShowRecipesBean) { 
+		if(object instanceof IShowSingleTable) { 
 			m_buttonCreate = button(BUTTON_TEXT_CREATE, BUTTON_ICON_CREATE, true, true);
 			m_buttonEdit = button(BUTTON_TEXT_EDIT, BUTTON_ICON_EDIT, true, false);
 			
 			buttons.add(m_buttonCreate);
 			buttons.add(m_buttonEdit);
-		} else if (object instanceof ChangeItemBean || object instanceof ChangeQuantityUnitBean ||
-				object instanceof ChangeKategoryBean || object instanceof ChangeWarehouseBean ||
-				object instanceof ChangeSupplierBean || object instanceof ChangeContactPersonBean ||
-				object instanceof ChangeEmployeeBean) {
+		} else if (object instanceof IChangeViewPage) {
 			m_buttonSpeichern = button(BUTTON_TEXT_SAVE, BUTTON_ICON_SAVE, true, true);
 			m_buttonVerwerfen = button(BUTTON_TEXT_VERWERFEN, BUTTON_ICON_VERWERFEN, true, true);
 			m_buttonDeaktiviren = button(BUTTON_TEXT_DEAKTIVIEREN,BUTTON_ICON_DEAKTIVIEREN, false, true);

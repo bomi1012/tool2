@@ -1,7 +1,4 @@
-package de.palaver.view.bean.artikelverwaltung;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+package de.palaver.view.bean.rezeptverwaltung;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -18,22 +15,21 @@ import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
-import de.palaver.management.artikel.Mengeneinheit;
-import de.palaver.management.artikel.service.MengeneinheitService;
+import de.palaver.management.recipe.Zubereitung;
+import de.palaver.management.recipe.service.RecipeService;
 import de.palaver.view.bean.helpers.HTMLComponents;
 import de.palaver.view.bean.helpers.TemplateBuilder;
 import de.palaver.view.bean.helpers.interfaces.IShowSingleTable;
 
-public class ShowQuantitiesUnitBean extends TemplateBuilder implements View, IShowSingleTable {
-	private static final Logger LOG = LoggerFactory.getLogger(ShowQuantitiesUnitBean.class.getName());
-	private static final long serialVersionUID = -1227087597370434248L;
-	private static final String TITLE = "Alle Mengeneinheiten anzeigen";
+@SuppressWarnings("serial")
+public class ShowZubereitungenBean extends TemplateBuilder implements View, IShowSingleTable {
+	private static final long serialVersionUID = -23408367394117164L;
+	private static final String TITLE = "Alle Zubereitungen";
+	private BeanItemContainer<Zubereitung> m_container;
 
-	private BeanItemContainer<Mengeneinheit> m_container;
-	private Mengeneinheit m_mengeneinheit;
+	private Zubereitung m_zubereitung;
 	
-	
-	public ShowQuantitiesUnitBean() {
+	public ShowZubereitungenBean() {
 		super();
 		m_container = null;
 		componetsManager();
@@ -41,24 +37,23 @@ public class ShowQuantitiesUnitBean extends TemplateBuilder implements View, ISh
 		listeners();
 		beans();
 	}
-
+	
 	private void componetsManager() {		
 		m_headLine = title(TITLE, STYLE_HEADLINE_STANDART);
 		m_table = HTMLComponents.table(true, true, WIDTH_FULL, WIDTH_FULL);
-		m_control = controlPanel(this);			
-	}	
-	
+		m_control = controlPanel(this);		
+	}
+
 	private void templateBuilder() {
 		defaultShowPageTable(m_headLine, m_table, m_control, "60%");
 	}
 
-	@SuppressWarnings("serial")
 	private void listeners() {
 		m_table.addValueChangeListener(new ValueChangeListener() {			
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				if (event.getProperty().getValue() != null) {
-					m_mengeneinheit = (Mengeneinheit) event.getProperty().getValue();
+					m_zubereitung = (Zubereitung) event.getProperty().getValue();
 					m_buttonEdit.setEnabled(true);
 				}
 			}
@@ -76,11 +71,11 @@ public class ShowQuantitiesUnitBean extends TemplateBuilder implements View, ISh
 		m_buttonEdit.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (m_mengeneinheit != null) {
-					ViewHandler.getInstance().switchView(ChangeQuantityUnitBean.class, new ViewDataObject<Mengeneinheit>(m_mengeneinheit));
+				if (m_zubereitung != null) {
+					ViewHandler.getInstance().switchView(ChangeZubereitungBean.class, new ViewDataObject<Zubereitung>(m_zubereitung));
 				}
 				else {
-					((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_MENGENEINHEIT_AUSWAEHLEN);
+					((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_ZUBEREITUNG_SELECT);
 				}
 			}
 		});
@@ -88,32 +83,26 @@ public class ShowQuantitiesUnitBean extends TemplateBuilder implements View, ISh
 		m_buttonCreate.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				ViewHandler.getInstance().switchView(ChangeQuantityUnitBean.class);
+				ViewHandler.getInstance().switchView(ChangeZubereitungBean.class);
 			}
-		});			
+		});		
 	}
-
+	
 	private void beans() {
 		try {
-			m_container = new BeanItemContainer<Mengeneinheit>(Mengeneinheit.class,
-					MengeneinheitService.getInstance().getAllMengeneinheiten());
-			setTable();			
+			m_container = new BeanItemContainer<Zubereitung>(Zubereitung.class, RecipeService.getInstance().getAllZubereitungen());
+			setTable();
 		} catch (Exception e) {
-			LOG.error(e.toString());
-		}
+			e.printStackTrace();
+		}		
 	}
 	
 	private void setTable() {
 		m_table.setContainerDataSource(m_container);
-		m_table.setVisibleColumns(new Object[] { FIELD_NAME, FIELD_KURZ });
+		m_table.setVisibleColumns(new Object[] { FIELD_NAME });
 		m_table.sort(new Object[] { FIELD_NAME }, new boolean[] { true });
-		m_table.setColumnWidth(FIELD_KURZ, 90);
-		m_table.setColumnHeader(FIELD_KURZ, "abkürzung");
-		m_table.setColumnAlignment(FIELD_KURZ, m_table.ALIGN_CENTER);
 	}
-		
+	
 	@Override
-	public void getViewParam(ViewData data) {
-		// TODO Auto-generated method stub		
-	}
+	public void getViewParam(ViewData data) { }
 }

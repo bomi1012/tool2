@@ -22,9 +22,10 @@ import de.palaver.management.artikel.Lagerort;
 import de.palaver.management.artikel.service.LagerortService;
 import de.palaver.view.bean.helpers.HTMLComponents;
 import de.palaver.view.bean.helpers.TemplateBuilder;
+import de.palaver.view.bean.helpers.interfaces.IShowSingleTable;
 
 @SuppressWarnings("serial")
-public class ShowWarehousesBean extends TemplateBuilder implements View {
+public class ShowWarehousesBean extends TemplateBuilder implements View, IShowSingleTable {
 	private static final Logger LOG = LoggerFactory.getLogger(ShowWarehousesBean.class.getName());	
 	private static final long serialVersionUID = -23408367394167164L;
 	private static final String TITLE = "Alle Lagerorte";

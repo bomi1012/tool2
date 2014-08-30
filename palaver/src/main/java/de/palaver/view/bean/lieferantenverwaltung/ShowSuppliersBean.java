@@ -22,9 +22,10 @@ import de.palaver.management.supplier.Supplier;
 import de.palaver.management.supplier.service.SupplierService;
 import de.palaver.view.bean.helpers.HTMLComponents;
 import de.palaver.view.bean.helpers.TemplateBuilder;
+import de.palaver.view.bean.helpers.interfaces.IShowSingleTable;
 
 @SuppressWarnings("serial")
-public class ShowSuppliersBean extends TemplateBuilder implements View {
+public class ShowSuppliersBean extends TemplateBuilder implements View, IShowSingleTable {
 	private static final Logger LOG = LoggerFactory.getLogger(ShowSuppliersBean.class.getName());	
 	private static final long serialVersionUID = -2340836709414164L;
 	private static final String TITLE = "Lieferanten Anzeigen";

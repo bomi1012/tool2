@@ -48,7 +48,7 @@ public class Rezeptverwaltung extends RecipeDAO {
 			DAOException, SQLException {
 		List<Zubereitung> result = null;
 
-		result = ZubereitungDAO.getInstance().getAllZubereitungs();
+		result = ZubereitungDAO.getInstance().getAllZubereitungen();
 
 		return result;
 	}

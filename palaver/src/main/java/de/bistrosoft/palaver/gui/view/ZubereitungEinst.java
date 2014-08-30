@@ -122,7 +122,7 @@ public class ZubereitungEinst extends VerticalLayout implements View {
 		try {
 			ctZubereitung = new BeanItemContainer<Zubereitung>(
 					Zubereitung.class, Zubereitungverwaltung.getInstance()
-							.getAllZubereitungs());
+							.getAllZubereitungen());
 			tblZubereitung.setContainerDataSource(ctZubereitung);
 			tblZubereitung.setVisibleColumns(new Object[] { "bezeichnung", });
 			tblZubereitung.sort(new Object[] { "bezeichnung" },

@@ -22,9 +22,10 @@ import de.palaver.management.artikel.Kategorie;
 import de.palaver.management.artikel.service.KategorieService;
 import de.palaver.view.bean.helpers.HTMLComponents;
 import de.palaver.view.bean.helpers.TemplateBuilder;
+import de.palaver.view.bean.helpers.interfaces.IShowSingleTable;
 
 @SuppressWarnings("serial")
-public class ShowKategoriesBean extends TemplateBuilder implements View {
+public class ShowKategoriesBean extends TemplateBuilder implements View, IShowSingleTable {
 	private static final Logger LOG = LoggerFactory.getLogger(ShowKategoriesBean.class.getName());	
 	private static final long serialVersionUID = -2340836739411567164L;
 	private static final String TITLE = "Alle Kategorien";

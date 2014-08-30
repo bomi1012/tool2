@@ -18,9 +18,10 @@ import de.palaver.Application;
 import de.palaver.management.recipe.Recipe;
 import de.palaver.view.bean.helpers.HTMLComponents;
 import de.palaver.view.bean.helpers.TemplateBuilder;
+import de.palaver.view.bean.helpers.interfaces.IShowSingleTable;
 import de.palaver.view.bean.helpers.wrappers.RecipeWrapper;
 
-public class ShowRecipesBean  extends TemplateBuilder implements View {
+public class ShowRecipesBean  extends TemplateBuilder implements View, IShowSingleTable {
 	private static final long serialVersionUID = 7835379225675541891L;
 	private static final String TITLE = "Rezepten Anzeigen";
 	

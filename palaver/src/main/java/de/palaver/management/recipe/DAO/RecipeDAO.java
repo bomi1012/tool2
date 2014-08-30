@@ -63,6 +63,7 @@ public class RecipeDAO extends AbstractDAO {
 
 
 	private ArrayList<Recipe> m_list;
+	private String comment;
 
 	public RecipeDAO() {
 		super();
@@ -86,18 +87,17 @@ public class RecipeDAO extends AbstractDAO {
 	
 	public Long createRecipe(Recipe recipe) throws ConnectException, DAOException {
 		Calendar calendar = Calendar.getInstance();
+		setFields(recipe);
 		return insert(MessageFormat.format(INSERT_QUERY,
-				"'" + recipe.getName() + "'",
-				"'" + recipe.getKommentar() + "'",
+				"'" + recipe.getName() + "'", comment,
 				"'" + new java.sql.Date(calendar.getTime().getTime()) + "'",
-				recipe.getEmployee().getId(),
-				recipe.getRecipetype().getId()));
+				recipe.getEmployee().getId(), recipe.getRecipetype().getId()));
 	}
 	
 	public void updateRecipe(Recipe recipe) throws ConnectException, DAOException {
+		setFields(recipe);
 		putManaged(MessageFormat.format(UPDATE_QUERY,
-				"'" + recipe.getName() + "'",
-				"'" + recipe.getKommentar() + "'",
+				"'" + recipe.getName() + "'", comment,
 				recipe.getEmployee().getId(), recipe.getRecipetype().getId(),
 				recipe.getId()));
 	}
@@ -119,7 +119,10 @@ public class RecipeDAO extends AbstractDAO {
 	
 
 	
-	
+	private void setFields(Recipe recipe) {
+		comment = null;
+		if(recipe.getKommentar() != null) { comment = "'" + recipe.getKommentar() + "'"; }
+	}
 	/**
 	 * r.id
 	 * r.name

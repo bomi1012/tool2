@@ -70,7 +70,9 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&passw
 	String 		MENU_GESCHMACK = "Geschmäcker";
 	String 		MENU_REZEPTART = "Rezeptarten";
 	String		MENU_MENUEART="Menüarten";
-	String 		MENU_ZUBEREITUNG = "Zubereitungen";
+	String 		MENU_ZUBEREITUNG = "Zubereitung";
+	String 		MENU_ZUBEREITUNGEN_ANZEIGEN = "Alle Zubereitungen anzeigen";
+	String 		MENU_ZUBEREITUNGEN_NEU = "Zubereitung anlegen";
 	String		MENU_LOGOUT = "Abmelden";
 	String 		MENU_MENUE_HEADLINE = "Menü";
 	String 		MENU_MENUE_ANLEGEN = " Menü anlegen";

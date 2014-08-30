@@ -47,13 +47,21 @@ public class RecipeService {
 	}
 	
 	
-	
-	public List<Zubereitung> getAllZubereitungs() throws ConnectException, DAOException, SQLException {
-		return ZubereitungDAO.getInstance().getAllZubereitungs();
+	////ZUBEREITUNG////	
+	public List<Zubereitung> getAllZubereitungen() throws ConnectException, DAOException, SQLException {
+		return ZubereitungDAO.getInstance().getAllZubereitungen();
 	}
 	public List<Zubereitung> getAllZubereitungsByRecipeId(Long recipeId) throws SQLException, ConnectException, DAOException {
 		return ZubereitungDAO.getInstance().getAllZubereitungsByRecipeId(recipeId);
 	}
+	public Long createZubereitung(Zubereitung zubereitung) throws ConnectException, DAOException, SQLException {
+		return ZubereitungDAO.getInstance().createZubereitung(zubereitung);
+	}
+	public void updateKategorie(Zubereitung zubereitung) throws ConnectException, DAOException, SQLException {
+		ZubereitungDAO.getInstance().updateZubereitung(zubereitung);
+	}
+	
+	
 	public void createRelationZubereitung(Long recipeId, List<Zubereitung> zubereitungs) throws ConnectException, DAOException {
 		for (Zubereitung zubereitung : zubereitungs) {
 			RecipeDAO.getInstance().createRelationZubereitung(recipeId, zubereitung.getId());
@@ -87,5 +95,4 @@ public class RecipeService {
 	public List<Recipetype> getAllRecipetypes() throws ConnectException, DAOException, SQLException {
 		return RecipetypeDAO.getInstance().getAllRecipetypes();
 	}
-
 }

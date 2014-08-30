@@ -30,8 +30,9 @@ import de.palaver.management.emploee.Rolle;
 import de.palaver.management.employee.service.RolleService;
 import de.palaver.management.info.person.Kontakte;
 import de.palaver.view.bean.helpers.ChangeFieldsPersonAbstract;
+import de.palaver.view.bean.helpers.interfaces.IChangeViewPage;
 
-public class ChangeEmployeeBean extends ChangeFieldsPersonAbstract implements View, ValueChangeListener {
+public class ChangeEmployeeBean extends ChangeFieldsPersonAbstract implements View, ValueChangeListener, IChangeViewPage {
 	private static final long serialVersionUID = -7019286728687412031L;
 	private boolean m_toCreate;
 	private VerticalLayout m_innerBox;

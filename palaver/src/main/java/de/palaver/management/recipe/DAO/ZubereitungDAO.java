@@ -33,7 +33,7 @@ public class ZubereitungDAO extends AbstractDAO {
 	}
 
 	// Methode, die alle Zubereitung in einer Liste zurückliefert
-	public List<Zubereitung> getAllZubereitungs() throws ConnectException, DAOException, SQLException {
+	public List<Zubereitung> getAllZubereitungen() throws ConnectException, DAOException, SQLException {
 		m_list = new ArrayList<Zubereitung>();
 		m_set = getManaged(GET_ALL_ZUBEREITUNGS);
 		while (m_set.next()) {
@@ -55,8 +55,15 @@ public class ZubereitungDAO extends AbstractDAO {
 		return new Zubereitung(set.getLong(FIELD_ID), set.getString(FIELD_NAME));
 	}
 
+	public Long createZubereitung(Zubereitung zubereitung) throws ConnectException, DAOException, SQLException {
+		return insert("INSERT INTO " + TABLE + "(name) VALUES('" + zubereitung.getName() + "');");
+	}
 	
-	
+	public void updateZubereitung(Zubereitung zubereitung) throws ConnectException, DAOException, SQLException {
+		putManaged("UPDATE " + TABLE + " SET " + FIELD_NAME + " = '"
+				+ zubereitung.getName() + "'" + " WHERE " + FIELD_ID + " = '"
+				+ zubereitung.getId() + "'");
+	}
 	
 	
 	
@@ -82,22 +89,5 @@ public class ZubereitungDAO extends AbstractDAO {
 			list.add(new Zubereitung(set.getLong(FIELD_ID), set.getString(FIELD_NAME)));
 		}
 		return list.get(0);
-	}
-
-	// Methode, die eine Zubereitung erstellt
-	public void createZubereitung(Zubereitung zubereitung)
-			throws ConnectException, DAOException, SQLException {
-		String INSERT_QUERY = "INSERT INTO " + TABLE + "(name) VALUES('"
-				+ zubereitung.getName() + "');";
-		this.putManaged(INSERT_QUERY);
-	}
-
-	// Methode, die eine Zubereitung Ã¤ndert
-	public void updateZubereitung(Zubereitung zubereitung)
-			throws ConnectException, DAOException, SQLException {
-		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + FIELD_NAME + "='"
-				+ zubereitung.getName() + "'" + " WHERE " + FIELD_ID + "='"
-				+ zubereitung.getId() + "'";
-		this.putManaged(UPDATE_QUERY);
 	}
 }

@@ -34,9 +34,10 @@ import de.palaver.management.artikel.service.MengeneinheitService;
 import de.palaver.management.supplier.Supplier;
 import de.palaver.management.supplier.service.SupplierService;
 import de.palaver.view.bean.helpers.TemplateBuilder;
+import de.palaver.view.bean.helpers.interfaces.IChangeViewPage;
 import de.palaver.view.bean.lieferantenverwaltung.ChangeSupplierBean;
 
-public class ChangeItemBean extends TemplateBuilder implements View, ValueChangeListener {
+public class ChangeItemBean extends TemplateBuilder implements View, ValueChangeListener, IChangeViewPage {
 	private static final long serialVersionUID = 8763219450376751801L;
 
 	private static final String TITLE_NEW_ARTIKEL = "Neuer Artikel erstellen";

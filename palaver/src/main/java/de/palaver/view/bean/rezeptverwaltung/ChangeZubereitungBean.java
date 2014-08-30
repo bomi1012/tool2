@@ -1,4 +1,4 @@
-package de.palaver.view.bean.artikelverwaltung;
+package de.palaver.view.bean.rezeptverwaltung;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -15,21 +15,21 @@ import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
-import de.palaver.management.artikel.Lagerort;
-import de.palaver.management.artikel.service.LagerortService;
+import de.palaver.management.recipe.Zubereitung;
+import de.palaver.management.recipe.service.RecipeService;
 import de.palaver.view.bean.helpers.TemplateBuilder;
 import de.palaver.view.bean.helpers.interfaces.IChangeViewPage;
 
-public class ChangeWarehouseBean extends TemplateBuilder implements View, ValueChangeListener, IChangeViewPage {
+public class ChangeZubereitungBean extends TemplateBuilder implements View, ValueChangeListener, IChangeViewPage{
 	private static final long serialVersionUID = -3484101562729271738L;
-	private static final String TITLE = "Neuer Lagerort erstellen";
-	private static final String TEXT_FIELD_LAGERORT_NAME = "Lagerortname";
+	private static final String TITLE = "Neue Zubereitung erstellen";
+	private static final String TEXT_FIELD_NAME = "Zubereitungsname";
 	
-	private Lagerort m_warehouse;
+	private Zubereitung m_zubereitung;
 	private boolean m_toCreate;
 	private TextField m_nameField;
 
-	public ChangeWarehouseBean() {
+	public ChangeZubereitungBean() {
 		super();
 		init();
 		componetsManager();
@@ -40,18 +40,16 @@ public class ChangeWarehouseBean extends TemplateBuilder implements View, ValueC
 
 	private void init() {
 		m_toCreate = true;
-		m_warehouse = new Lagerort();
+		m_zubereitung = new Zubereitung();
 	}
 
 	private void componetsManager() {
 		m_headLine = title(TITLE, STYLE_HEADLINE_STANDART);
-		m_nameField = textField(TEXT_FIELD_LAGERORT_NAME, WIDTH_FULL, true, TEXT_FIELD_LAGERORT_NAME, 45);
+		m_nameField = textField(TEXT_FIELD_NAME, WIDTH_FULL, true, TEXT_FIELD_NAME, 45);
 		m_control = controlPanel(this);
 	}
 	
 	private void templateBuilder() {
-		m_nameField.addValueChangeListener(this);
-		
 		setMargin(true);
 		VerticalLayout innerBox = new VerticalLayout();		
 		innerBox.setWidth("65%");
@@ -69,25 +67,27 @@ public class ChangeWarehouseBean extends TemplateBuilder implements View, ValueC
 		setComponentAlignment(innerBox, Alignment.MIDDLE_CENTER);
 	}
 
-
+	
 	@SuppressWarnings("serial")
 	private void clickListener() {
 		m_buttonSpeichern.addClickListener(new ClickListener() {
+			private static final long serialVersionUID = -835805357073859472L;
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (validiereEingabe()) {
-					saveItem();
+					saveItem();	
 					close();					
 				}
 			}
 			private void saveItem() {
+				m_zubereitung.setName(m_nameField.getValue());
 				try {
 					if (m_toCreate) {
-						LagerortService.getInstance().createLagerort(m_warehouse);
+						RecipeService.getInstance().createZubereitung(m_zubereitung);
 					} else {
-						LagerortService.getInstance().updateLagerort(m_warehouse);
+						RecipeService.getInstance().updateKategorie(m_zubereitung);
 					}
-					message(MESSAGE_SUSSEFULL_ARG_1, "Lagerort");	
+					message(MESSAGE_SUSSEFULL_ARG_1, "Zubereitung");	
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -112,7 +112,7 @@ public class ChangeWarehouseBean extends TemplateBuilder implements View, ValueC
 		m_buttonDeaktiviren.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				windowModalYesNoRemove(m_warehouse);	
+				windowModalYesNoRemove(m_zubereitung);	
 			}
 		});
 	}
@@ -122,16 +122,16 @@ public class ChangeWarehouseBean extends TemplateBuilder implements View, ValueC
 		m_nameField.addValueChangeListener(new ValueChangeListener() {		
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				m_warehouse.setName(String.valueOf(event.getProperty().getValue()));				
+				m_zubereitung.setName(String.valueOf(event.getProperty().getValue()));				
 			}
 		});
 	}
 
 	private void close() {
-		if (ChangeWarehouseBean.this.getParent() instanceof Window) {					
-			((Window) ChangeWarehouseBean.this.getParent()).close();
+		if (ChangeZubereitungBean.this.getParent() instanceof Window) {					
+			((Window) ChangeZubereitungBean.this.getParent()).close();
 		} else {
-			ViewHandler.getInstance().switchView(ShowWarehousesBean.class);
+			ViewHandler.getInstance().switchView(ShowZubereitungenBean.class);
 		}
 	}
 
@@ -140,20 +140,19 @@ public class ChangeWarehouseBean extends TemplateBuilder implements View, ValueC
 
 	@Override
 	public void getViewParam(ViewData data) {
-		if(((ViewDataObject<?>) data).getData() instanceof Lagerort) {
-			m_warehouse = (Lagerort)((ViewDataObject<?>) data).getData();	
-			setNewInfo();
-			
+		if(((ViewDataObject<?>) data).getData() instanceof Zubereitung) {
+			m_zubereitung = (Zubereitung)((ViewDataObject<?>) data).getData();		
+			setNewInfo();			
 			setValueToComponent(getData());	
 		}		
 	}
-
+	
 	private void setNewInfo() {
 		getData().clear();
-		getData().put(m_nameField, m_warehouse.getName());
+		getData().put(m_nameField, m_zubereitung.getName());
 		
 		m_toCreate = false;		
-		m_headLine.setValue("Lager bearbeiten");
+		m_headLine.setValue("Zubereitung bearbeiten");
 		m_buttonDeaktiviren.setVisible(true);
 	}
 }

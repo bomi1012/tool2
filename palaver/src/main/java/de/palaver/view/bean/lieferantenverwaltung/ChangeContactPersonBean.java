@@ -20,8 +20,9 @@ import de.palaver.management.supplier.Ansprechpartner;
 import de.palaver.management.supplier.Supplier;
 import de.palaver.view.bean.helpers.ChangeFieldsPersonAbstract;
 import de.palaver.view.bean.helpers.HTMLComponents;
+import de.palaver.view.bean.helpers.interfaces.IChangeViewPage;
 
-public class ChangeContactPersonBean extends ChangeFieldsPersonAbstract implements View, ValueChangeListener {
+public class ChangeContactPersonBean extends ChangeFieldsPersonAbstract implements View, ValueChangeListener, IChangeViewPage {
 	private static final long serialVersionUID = 6321945037675101L;
 	private boolean m_toCreate;	
 	private VerticalLayout m_innerBoxContactPerson;

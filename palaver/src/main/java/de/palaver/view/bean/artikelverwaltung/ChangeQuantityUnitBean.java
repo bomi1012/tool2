@@ -17,8 +17,9 @@ import de.palaver.dao.DAOException;
 import de.palaver.management.artikel.Mengeneinheit;
 import de.palaver.management.artikel.service.MengeneinheitService;
 import de.palaver.view.bean.helpers.TemplateBuilder;
+import de.palaver.view.bean.helpers.interfaces.IChangeViewPage;
 
-public class ChangeQuantityUnitBean extends TemplateBuilder implements View, ValueChangeListener {
+public class ChangeQuantityUnitBean extends TemplateBuilder implements View, ValueChangeListener, IChangeViewPage {
 	private static final long serialVersionUID = -3484101562729271738L;
 	private static final String TITLE = "Mengeneinheit erstellen";
 	private static final String TEXT_FIELD_MENGENEINHEIT_NAME = "Mengeneinheitname";

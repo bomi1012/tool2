@@ -385,7 +385,7 @@ public class ChangeRecipeBean extends TemplateBuilder implements View, ValueChan
 
 	private void setDataToTwinColSelect() {
 		try {
-			for (Zubereitung zubereitung : RecipeService.getInstance().getAllZubereitungs()) {
+			for (Zubereitung zubereitung : RecipeService.getInstance().getAllZubereitungen()) {
 				m_zubereitungColSelect.addItem(zubereitung.getId());
 				m_zubereitungColSelect.setItemCaption(zubereitung.getId(), zubereitung.getName());
 			}
