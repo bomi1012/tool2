@@ -13,7 +13,7 @@ import de.palaver.management.recipe.DAO.RecipetypeDAO;
 import de.palaver.management.recipe.DAO.ZubereitungDAO;
 import de.palaver.management.util.dao.ConnectException;
 import de.palaver.management.util.dao.DAOException;
-import de.palaver.view.bean.helpers.wrappers.RezeptHasArtikelWrapper;
+import de.palaver.view.bean.util.wrappers.RezeptHasArtikelWrapper;
 
 public class RecipeService {
 

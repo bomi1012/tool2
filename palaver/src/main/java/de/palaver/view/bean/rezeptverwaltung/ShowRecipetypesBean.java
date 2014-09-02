@@ -17,9 +17,9 @@ import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
 import de.palaver.management.recipe.Recipetype;
 import de.palaver.management.recipe.service.RecipeService;
-import de.palaver.view.bean.helpers.HTMLComponents;
-import de.palaver.view.bean.helpers.TemplateBuilder;
-import de.palaver.view.bean.helpers.interfaces.IShowSingleTable;
+import de.palaver.view.bean.util.HTMLComponents;
+import de.palaver.view.bean.util.TemplateBuilder;
+import de.palaver.view.bean.util.interfaces.IShowSingleTable;
 
 @SuppressWarnings("serial")
 public class ShowRecipetypesBean extends TemplateBuilder implements View, IShowSingleTable {

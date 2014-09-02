@@ -28,9 +28,9 @@ import de.palaver.management.info.person.Kontakte;
 import de.palaver.management.supplier.Ansprechpartner;
 import de.palaver.management.supplier.Supplier;
 import de.palaver.management.supplier.service.AnsprechpartnerService;
-import de.palaver.view.bean.helpers.ChangeFieldsPersonAbstract;
-import de.palaver.view.bean.helpers.HTMLComponents;
-import de.palaver.view.bean.helpers.interfaces.IChangeViewPage;
+import de.palaver.view.bean.util.ChangeFieldsPersonAbstract;
+import de.palaver.view.bean.util.HTMLComponents;
+import de.palaver.view.bean.util.interfaces.IChangeViewPage;
 import de.palaver.view.layout.popup.YesNoPopup;
 
 public class ChangeSupplierBean extends ChangeFieldsPersonAbstract implements View, ValueChangeListener, IChangeViewPage {

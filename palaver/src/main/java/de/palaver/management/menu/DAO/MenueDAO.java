@@ -26,18 +26,25 @@ import de.palaver.management.util.dao.DAOException;
 
 public class MenueDAO extends AbstractDAO {
 	private static MenueDAO instance;
-	private final String TABLE = "menue";
-	private final String ID = "id";
-	private final static String NAME = "name";
+	private final static String TABLE = "menue";
 	private static final String MENUEART = "menueart_fk";
 	private final static String KOCH = "koch";
 	private final static String AKTIV = "aktiv";
+	
+	//FIXME:!!!!!!!!!!
+	private static final String GET_ALL_MENUES = "SELECT m.id, m.name, m.aufwand, m.favorit, " 
+			+ " k.id, k.benutzername, g.id, g.name, ma.id, ma.name "
+			+ " FROM menue m, mitarbeiter k, geschmack g, menueart ma "
+			+ " WHERE m.geschmack_fk = g.id "
+			+ " AND m.menueart_fk = ma.id "
+			+ " AND m.koch = k.id ";
+	
+	
+	
 	private final String GET_HAUPTGERICHT = "Select * from rezept join menue_has_rezept ON rezept.id = menue_has_rezept.rezept_id WHERE (menue_has_rezept.hauptgericht = true) AND (menue_has_rezept.menue_id = {0})";
 	private final String GET_Beilagen = "Select * from rezept join menue_has_rezept ON rezept.id = menue_has_rezept.rezept_id WHERE (menue_has_rezept.hauptgericht = false) AND (menue_has_rezept.menue_id = {0})";
-	private final String GET_ALL_MENUES = "SELECT * FROM menue";
-	private final String GET_ALL_MENUES_AKTIV = "SELECT * FROM " + TABLE
-			+ " WHERE " + AKTIV + "=true";
 	private final String GET_MENUE_BY_NAME = "SELECT * FROM menue WHERE menue.name = {0}";
+	private ArrayList<Menu> m_list;
 	private static final String GET_MENUE_BY_ID = "SELECT * FROM menue WHERE id = {0}";
 	private static final String GET_REZEPTE_BY_MENUE = "SELECT * FROM rezept JOIN menue_has_rezept ON rezept.id = menue_has_rezept.rezept_fk WHERE menue_has_rezept.menue_fk = {0}";
 
@@ -58,6 +65,54 @@ public class MenueDAO extends AbstractDAO {
 		}
 		return instance;
 	}
+	
+	
+	public List<Menu> getAllMenues() throws ConnectException, DAOException, SQLException {
+		m_list = new ArrayList<Menu>();
+		m_set = getManaged(GET_ALL_MENUES);
+		while (m_set.next()) {
+			m_list.add(setMenuRelations(m_set));
+		}		
+		return m_list;		
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * m.id, 
+	 * m.name, 
+	 * m.aufwand,
+	 * m.favorit,
+	 * 
+	 * k.id, 
+	 * k.benutzername, 
+	 * 
+	 * g.id, 
+	 * g.name, 
+	 * 
+	 * ma.id, 
+	 * ma.name
+	 * 
+	 * @param set
+	 * @return
+	 * @throws SQLException 
+	 */
+	private Menu setMenuRelations(ResultSet set) throws SQLException {
+		return new Menu(set.getLong(1), set.getString(2), set.getBoolean(3), set.getBoolean(4),
+				new Employee(set.getLong(5), set.getString(6)), 
+				new Geschmack(set.getLong(7), set.getString(8)),
+				new Menutype(set.getLong(9), set.getString(10)));
+	}
+
+	
+	////OLD////////
+	
+	
+	
+
 
 	public List<Menu> getAllMenuesFast() throws ConnectException, DAOException,
 	SQLException {
@@ -94,7 +149,7 @@ public class MenueDAO extends AbstractDAO {
 					EmployeeService.getInstance().getEmployee(
 							set.getLong("koch")), GeschmackDAO.getInstance()
 							.getGeschmackById(set.getLong("geschmack_fk")),
-					MenueartDAO.getInstance().getMenueartById(
+					MenutypeDAO.getInstance().getMenueartById(
 							set.getLong("menueart_fk")),
 					set.getBoolean("aufwand"), set.getBoolean("favorit"));
 		}
@@ -177,7 +232,7 @@ public class MenueDAO extends AbstractDAO {
 					EmployeeService.getInstance().getEmployee(
 							set.getLong("koch")), GeschmackDAO.getInstance()
 							.getGeschmackById(set.getLong("geschmack_fk")),
-					MenueartDAO.getInstance().getMenueartById(
+					MenutypeDAO.getInstance().getMenueartById(
 							set.getLong("menueart_fk")),
 					set.getBoolean("aufwand"), set.getBoolean("favorit"));
 			List<Fussnote> fussnoten = Fussnotenverwaltung.getInstance()
@@ -192,19 +247,19 @@ public class MenueDAO extends AbstractDAO {
 
 	public void createMenue(Menu menu) throws ConnectException, DAOException,
 			SQLException {
-		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + "," + KOCH
+		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + FIELD_NAME + "," + KOCH
 				+ ", geschmack_fk, menueart_fk, aufwand, favorit,aktiv)"
 				+ " VALUES" + "('" + menu.getName() + "',"
 				+ menu.getEmployee().getId() + ", " + menu.getGeschmack().getId()
 				+ ", " + menu.getMenutype().getId() + ", "
-				+ Util.convertBoolean(menu.getAufwand()) + ", "
-				+ Util.convertBoolean(menu.getFavorit()) + ",true)";
+				+ Util.convertBoolean(menu.hasAufwand()) + ", "
+				+ Util.convertBoolean(menu.isFavorit()) + ",true)";
 		this.putManaged(INSERT_QUERY);
 	}
 
 	public void createRezeptAlsMenue(Menu menu) throws ConnectException,
 			DAOException, SQLException {
-		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + NAME + "," + KOCH
+		String INSERT_QUERY = "INSERT INTO " + TABLE + "(" + FIELD_NAME + "," + KOCH
 				+ "," + MENUEART + ")" + " VALUES" + "('" + menu.getName()
 				+ "'," + menu.getEmployee().getId() + ",1)";
 		this.putManaged(INSERT_QUERY);
@@ -212,13 +267,13 @@ public class MenueDAO extends AbstractDAO {
 
 	public void updateMenue(Menu menu) throws ConnectException, DAOException,
 			SQLException {
-		String INSERT_QUERY = "UPDATE " + TABLE + " SET " + NAME + " = '"
+		String INSERT_QUERY = "UPDATE " + TABLE + " SET " + FIELD_NAME + " = '"
 				+ menu.getName() + "' ," + KOCH + " = "
 				+ menu.getEmployee().getId() + ", geschmack_fk = "
 				+ menu.getGeschmack().getId() + ", menueart_fk = "
 				+ menu.getMenutype().getId() + ", aufwand = "
-				+ Util.convertBoolean(menu.getAufwand()) + ", favorit = "
-				+ Util.convertBoolean(menu.getFavorit())
+				+ Util.convertBoolean(menu.hasAufwand()) + ", favorit = "
+				+ Util.convertBoolean(menu.isFavorit())
 				+ " WHERE menue.id = " + menu.getId() + ";";
 		this.putManaged(INSERT_QUERY);
 

@@ -290,8 +290,8 @@ public class WinSelectMenue extends Window {
 								.getName());
 					}
 					tfGeschmack.setEnabled(false);
-					chbFavorit.setValue(menu.getFavorit());
-					chbAufwand.setValue(menu.getAufwand());
+					chbFavorit.setValue(menu.isFavorit());
+					chbAufwand.setValue(menu.hasAufwand());
 					chbFavorit.setEnabled(false);
 					chbAufwand.setEnabled(false);
 					tfPortion.setValue("100");

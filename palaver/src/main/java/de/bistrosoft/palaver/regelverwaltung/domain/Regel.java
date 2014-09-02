@@ -464,7 +464,7 @@ public class Regel {
 										.getComponent(col, row);
 								if (mc.getMenue().getEmployee()
 										.equals(tmp.getMenue().getEmployee())
-										&& mc.getMenue().getAufwand()) {
+										&& mc.getMenue().hasAufwand()) {
 									if (tmp.getFehlerRegeln() != null) {
 										if (tmp.getFehlerRegeln().indexOf(this) == -1) {
 											++count;

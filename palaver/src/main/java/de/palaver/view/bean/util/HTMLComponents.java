@@ -1,4 +1,4 @@
-package de.palaver.view.bean.helpers;
+package de.palaver.view.bean.util;
 
 import org.tepi.filtertable.FilterTable;
 import org.vaadin.risto.stepper.IntStepper;

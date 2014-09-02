@@ -11,56 +11,61 @@ import de.palaver.management.util.dao.AbstractDAO;
 import de.palaver.management.util.dao.ConnectException;
 import de.palaver.management.util.dao.DAOException;
 
-/**
- * 
- * @author Michael Marschall
- * 
- */
-
 public class GeschmackDAO extends AbstractDAO {
 
-	private final static String ID = "id";
-	private final static String NAME = "name";
 	private final static String TABLE = "geschmack";
-	private final static String INAKTIV = "inaktiv";
 
-	private static GeschmackDAO instance = null;
+	private static GeschmackDAO m_instance = null;
 
-	Geschmack geschmack;
+	private Geschmack m_geschmack;
+	private ArrayList<Geschmack> m_list;
 
 	// SQL-Statements
-	private final static String GET_ALL_GESCHMACK = "SELECT * FROM " + TABLE;
 	private final static String GET_GESCHMACK_BY_ID = "SELECT * FROM " + TABLE
-			+ " WHERE " + ID + "={0}";
+			+ " WHERE " + FIELD_ID + "={0}";
 	private final static String GET_GESCHMACK_BY_NAME = "SELECT * FROM "
 			+ TABLE + " WHERE name = '{0}'";
 	private static final String GET_GESCHMACK_BY_REZEPT = "Select geschmack.id, geschmack.name, geschmack.inaktiv from geschmack Join rezept On rezept.geschmack_fk = geschmack.id WHERE rezept.id = {0}";
 	private static final String GET_GESCHMACK_BY_MENUE = "Select geschmack.id, geschmack.name, geschmack.inaktiv from geschmack Join menue On menue.geschmack_fk = geschmack.id WHERE menue.id = {0}";
 
-	// Konstruktor
 	public GeschmackDAO() {
 		super();
 	}
 
-	// Instanz erzeugen
 	public static GeschmackDAO getInstance() {
-		if (instance == null) {
-			instance = new GeschmackDAO();
+		if (m_instance == null) {
+			m_instance = new GeschmackDAO();
 		}
 
-		return instance;
+		return m_instance;
 	}
 
-	// Methode, die alle GeschmÃ¤cker in einer Liste zurückliefert
-	public List<Geschmack> getAllGeschmack() throws ConnectException,
-			DAOException, SQLException {
-		List<Geschmack> list = new ArrayList<Geschmack>();
-		ResultSet set = getManaged(GET_ALL_GESCHMACK);
-		while (set.next()) {
-			list.add(new Geschmack(set.getLong(ID), set.getString(NAME)));
+	public List<Geschmack> getAllGeschmack() throws ConnectException, DAOException, SQLException {
+		m_list = new ArrayList<Geschmack>();
+		m_set = getManaged("SELECT * FROM " + TABLE);
+		while (m_set.next()) {
+			m_list.add(setResult(m_set));
 		}
-		return list;
+		return m_list;
 	}
+	
+	private Geschmack setResult(ResultSet set) throws SQLException {
+		return new Geschmack(set.getLong(FIELD_ID), set.getString(FIELD_NAME));
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	// Methode, die einen Geschmack zu einem Menü über die ID zurückliefert
 	public Geschmack getGeschmackByMenue(Long id) throws ConnectException,
@@ -68,9 +73,9 @@ public class GeschmackDAO extends AbstractDAO {
 		ResultSet set = getManaged(MessageFormat.format(GET_GESCHMACK_BY_MENUE,
 				id));
 		while (set.next()) {
-			geschmack = new Geschmack(set.getLong(ID), set.getString(NAME));
+			m_geschmack = new Geschmack(set.getLong(FIELD_ID), set.getString(FIELD_NAME));
 		}
-		return geschmack;
+		return m_geschmack;
 	}
 
 	// Methode, die einen Geschmack zu einem Rezept über die ID zurückliefert
@@ -79,9 +84,9 @@ public class GeschmackDAO extends AbstractDAO {
 		ResultSet set = getManaged(MessageFormat.format(
 				GET_GESCHMACK_BY_REZEPT, id));
 		while (set.next()) {
-			geschmack = new Geschmack(set.getLong(ID), set.getString(NAME));
+			m_geschmack = new Geschmack(set.getLong(FIELD_ID), set.getString(FIELD_NAME));
 		}
-		return geschmack;
+		return m_geschmack;
 	}
 
 	// Methode, die einen Geschmack über die ID zurückliefert
@@ -90,19 +95,19 @@ public class GeschmackDAO extends AbstractDAO {
 		ResultSet set = getManaged(MessageFormat
 				.format(GET_GESCHMACK_BY_ID, id));
 		while (set.next()) {
-			geschmack = new Geschmack(set.getLong(ID), set.getString(NAME));
+			m_geschmack = new Geschmack(set.getLong(FIELD_ID), set.getString(FIELD_NAME));
 		}
-		return geschmack;
+		return m_geschmack;
 	}
 
 	public Geschmack getGeschmackByName1(String name) throws ConnectException,
 			DAOException, SQLException {
 		ResultSet set = getManaged(MessageFormat.format(GET_GESCHMACK_BY_NAME,
-				NAME));
+				FIELD_NAME));
 		while (set.next()) {
-			geschmack = new Geschmack(set.getLong("id"), null);
+			m_geschmack = new Geschmack(set.getLong("id"), null);
 		}
-		return geschmack;
+		return m_geschmack;
 
 	}
 
@@ -111,7 +116,7 @@ public class GeschmackDAO extends AbstractDAO {
 		List<Geschmack> list = new ArrayList<Geschmack>();
 		ResultSet set = getManaged(GET_GESCHMACK_BY_NAME + name + "%'");
 		while (set.next()) {
-			list.add(new Geschmack(set.getLong(ID), set.getString(NAME)));
+			list.add(new Geschmack(set.getLong(FIELD_ID), set.getString(FIELD_NAME)));
 		}
 		return list;
 	}
@@ -128,8 +133,8 @@ public class GeschmackDAO extends AbstractDAO {
 	// Methode, die einen Geschmack Ã¤ndert
 	public void updateGeschmack(Geschmack geschmack) throws ConnectException,
 			DAOException, SQLException {
-		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + NAME + "= '"
-				+ geschmack.getName() + "' WHERE " + ID + " = "
+		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + FIELD_NAME + "= '"
+				+ geschmack.getName() + "' WHERE " + FIELD_ID + " = "
 				+ geschmack.getId() + ";";
 		this.putManaged(UPDATE_QUERY);
 

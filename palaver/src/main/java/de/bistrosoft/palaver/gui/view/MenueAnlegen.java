@@ -403,7 +403,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			}
 
 			List<Menutype> menutype = Menueartverwaltung.getInstance()
-					.getAllMenueart();
+					.getAllMenutypes();
 			for (Menutype e : menutype) {
 				nsMenueart.addItem(e);
 
@@ -492,9 +492,9 @@ public class MenueAnlegen extends VerticalLayout implements View,
 
 		nsGeschmack.select(menu.getGeschmack());
 
-		chbAufwand.setValue(menu.getAufwand());
+		chbAufwand.setValue(menu.hasAufwand());
 
-		chbFavorit.setValue(menu.getFavorit());
+		chbFavorit.setValue(menu.isFavorit());
 
 		for (int i = 0; i < menu.getFussnotenList().size(); i++) {
 			tcsFussnoten.select(menu.getFussnotenList().get(i));

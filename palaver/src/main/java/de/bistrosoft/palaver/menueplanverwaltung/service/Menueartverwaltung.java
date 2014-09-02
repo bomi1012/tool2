@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import de.palaver.management.menu.Menutype;
-import de.palaver.management.menu.DAO.MenueartDAO;
+import de.palaver.management.menu.DAO.MenutypeDAO;
 import de.palaver.management.util.dao.ConnectException;
 import de.palaver.management.util.dao.DAOException;
 
@@ -12,7 +12,7 @@ import de.palaver.management.util.dao.DAOException;
  * @author Jasmin Baumgartner
  * 
  */
-public class Menueartverwaltung extends MenueartDAO {
+public class Menueartverwaltung extends MenutypeDAO {
 
 	private static Menueartverwaltung instance = null;
 
@@ -27,10 +27,10 @@ public class Menueartverwaltung extends MenueartDAO {
 		return instance;
 	}
 
-	public List<Menutype> getAllMenueart() throws ConnectException,
+	public List<Menutype> getAllMenutypes() throws ConnectException,
 			DAOException, SQLException {
 		List<Menutype> result = null;
-		result = super.getAllMenueart();
+		result = super.getAllMenutypes();
 		return result;
 	}
 

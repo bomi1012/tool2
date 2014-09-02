@@ -16,8 +16,8 @@ import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.management.artikel.Mengeneinheit;
 import de.palaver.management.artikel.service.MengeneinheitService;
 import de.palaver.management.util.dao.DAOException;
-import de.palaver.view.bean.helpers.TemplateBuilder;
-import de.palaver.view.bean.helpers.interfaces.IChangeViewPage;
+import de.palaver.view.bean.util.TemplateBuilder;
+import de.palaver.view.bean.util.interfaces.IChangeViewPage;
 
 public class ChangeQuantityUnitBean extends TemplateBuilder implements View, ValueChangeListener, IChangeViewPage {
 	private static final long serialVersionUID = -3484101562729271738L;

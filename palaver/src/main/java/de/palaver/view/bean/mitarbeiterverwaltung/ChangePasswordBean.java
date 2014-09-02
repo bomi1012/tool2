@@ -23,7 +23,7 @@ import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
 import de.palaver.management.emploee.Employee;
 import de.palaver.management.employee.service.EmployeeService;
-import de.palaver.view.bean.helpers.TemplateBuilder;
+import de.palaver.view.bean.util.TemplateBuilder;
 
 public class ChangePasswordBean extends TemplateBuilder implements View, ValueChangeListener {
 	private static final long serialVersionUID = -34841015627292738L;

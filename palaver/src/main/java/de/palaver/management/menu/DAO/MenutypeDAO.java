@@ -11,62 +11,66 @@ import de.palaver.management.util.dao.AbstractDAO;
 import de.palaver.management.util.dao.ConnectException;
 import de.palaver.management.util.dao.DAOException;
 
-/**
- * @author Jasmin Baumgartner
- * 
- */
+public class MenutypeDAO extends AbstractDAO {
 
-public class MenueartDAO extends AbstractDAO {
-
-	private final static String ID = "id";
-	private final static String NAME = "name";
 	private final static String TABLE = "menueart";
 
-	// SQL-Statements
-	private static final String GET_ALL_MENUEART = "SELECT * FROM " + TABLE;
 	private static final String GET_MENUEART_BY_ID = "SELECT * FROM " + TABLE
-			+ " WHERE " + ID + "={0}";
+			+ " WHERE " + FIELD_ID + "={0}";
 	private static final String GET_MENUEART_BY_NAME = "SELECT * FROM " + TABLE
-			+ " WHERE " + NAME + " LIKE" + " '%";
+			+ " WHERE " + FIELD_NAME + " LIKE" + " '%";
 	private static final String GET_MENUEART_BY_MENUE = "Select menueart.id, menueart.name from menueart Join menue On menue.menueart_fk = menueart.id WHERE menue.id = {0}";
 
-	private static MenueartDAO instance = null;
+	private static MenutypeDAO m_instance = null;
 
-	Menutype menutype;
+	private Menutype m_menutype;
+	private ArrayList<Menutype> m_list;
 
-	// Konstruktor
-	public MenueartDAO() {
+	public MenutypeDAO() {
 		super();
 	}
 
-	// Instanz erzeugen
-	public static MenueartDAO getInstance() {
-		if (instance == null) {
-			instance = new MenueartDAO();
+	public static MenutypeDAO getInstance() {
+		if (m_instance == null) {
+			m_instance = new MenutypeDAO();
 		}
-
-		return instance;
+		return m_instance;
 	}
 
-	// Methode, die alle Menuearten in einer Liste zurückliefert
-	public List<Menutype> getAllMenueart() throws ConnectException,
-			DAOException, SQLException {
-		List<Menutype> list = new ArrayList<Menutype>();
-		ResultSet set = getManaged(GET_ALL_MENUEART);
-		while (set.next()) {
-			list.add(new Menutype(set.getLong(ID), set.getString(NAME)));
+	public List<Menutype> getAllMenutypes() throws ConnectException, DAOException, SQLException {
+		m_list = new ArrayList<Menutype>();
+		m_set = getManaged("SELECT * FROM " + TABLE);
+		while (m_set.next()) {
+			m_list.add(setResult(m_set));
 		}
-		return list;
+		return m_list;
 	}
+	
+	private Menutype setResult(ResultSet set) throws SQLException {
+		return new Menutype(set.getLong(FIELD_ID), set.getString(FIELD_NAME));
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	// Methode, die eine Menueart über die ID zurückliefert
 	public Menutype getMenueartById(Long id) throws ConnectException,
 			DAOException, SQLException {
 		ResultSet set = getManaged(MessageFormat.format(GET_MENUEART_BY_ID, id));
 		while (set.next()) {
-			menutype = new Menutype(set.getLong("id"), set.getString("name"));
+			m_menutype = new Menutype(set.getLong("id"), set.getString("name"));
 		}
-		return menutype;
+		return m_menutype;
 	}
 
 	// Methode, die eine Menueart eines Menue über die ID zurückliefert
@@ -75,9 +79,9 @@ public class MenueartDAO extends AbstractDAO {
 		ResultSet set = getManaged(MessageFormat.format(GET_MENUEART_BY_MENUE,
 				id));
 		while (set.next()) {
-			menutype = new Menutype(set.getLong(ID), set.getString(NAME));
+			m_menutype = new Menutype(set.getLong(FIELD_ID), set.getString(FIELD_NAME));
 		}
-		return menutype;
+		return m_menutype;
 	}
 
 	// Methode, die eine Menueart über den Namen zurückliefert
@@ -88,7 +92,7 @@ public class MenueartDAO extends AbstractDAO {
 		ResultSet set = getManaged(GET_MENUEART_BY_NAME + name + "%'");
 
 		while (set.next()) {
-			list.add(new Menutype(set.getLong(ID), set.getString(NAME)));
+			list.add(new Menutype(set.getLong(FIELD_ID), set.getString(FIELD_NAME)));
 		}
 		return list;
 	}
@@ -104,8 +108,8 @@ public class MenueartDAO extends AbstractDAO {
 	// Methode, die eine Menueart Ã¤ndert
 	public void updateMenueart(Menutype menutype) throws ConnectException,
 			DAOException, SQLException {
-		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + NAME + "='"
-				+ menutype.getName() + "'" + " WHERE " + ID + "='"
+		String UPDATE_QUERY = "UPDATE " + TABLE + " SET " + FIELD_NAME + "='"
+				+ menutype.getName() + "'" + " WHERE " + FIELD_ID + "='"
 				+ menutype.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
 	}

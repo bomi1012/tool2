@@ -17,8 +17,8 @@ import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.management.recipe.Recipetype;
 import de.palaver.management.recipe.service.RecipeService;
-import de.palaver.view.bean.helpers.TemplateBuilder;
-import de.palaver.view.bean.helpers.interfaces.IChangeViewPage;
+import de.palaver.view.bean.util.TemplateBuilder;
+import de.palaver.view.bean.util.interfaces.IChangeViewPage;
 
 public class ChangeRecipetypeBean extends TemplateBuilder implements View, ValueChangeListener, IChangeViewPage{
 	private static final long serialVersionUID = -34841015629271738L;

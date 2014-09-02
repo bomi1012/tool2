@@ -29,8 +29,8 @@ import de.palaver.management.emploee.Employee;
 import de.palaver.management.emploee.Rolle;
 import de.palaver.management.employee.service.RolleService;
 import de.palaver.management.info.person.Kontakte;
-import de.palaver.view.bean.helpers.ChangeFieldsPersonAbstract;
-import de.palaver.view.bean.helpers.interfaces.IChangeViewPage;
+import de.palaver.view.bean.util.ChangeFieldsPersonAbstract;
+import de.palaver.view.bean.util.interfaces.IChangeViewPage;
 
 public class ChangeEmployeeBean extends ChangeFieldsPersonAbstract implements View, ValueChangeListener, IChangeViewPage {
 	private static final long serialVersionUID = -7019286728687412031L;

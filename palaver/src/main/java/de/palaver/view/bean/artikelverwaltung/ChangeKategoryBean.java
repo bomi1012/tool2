@@ -17,8 +17,8 @@ import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.management.artikel.Kategorie;
 import de.palaver.management.artikel.service.KategorieService;
-import de.palaver.view.bean.helpers.TemplateBuilder;
-import de.palaver.view.bean.helpers.interfaces.IChangeViewPage;
+import de.palaver.view.bean.util.TemplateBuilder;
+import de.palaver.view.bean.util.interfaces.IChangeViewPage;
 
 public class ChangeKategoryBean extends TemplateBuilder implements View, ValueChangeListener, IChangeViewPage {
 	private static final long serialVersionUID = -3484101562729271738L;

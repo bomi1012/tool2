@@ -12,9 +12,9 @@ import de.palaver.management.util.dao.DAOException;
 
 public class RecipetypeDAO extends AbstractDAO{
 	private final static String TABLE = "rezeptart";
-	private static final String GET_ALL_RECIPETYPES = "SELECT * FROM " + TABLE;
 	private static RecipetypeDAO m_instance = null;
 	private ArrayList<Recipetype> m_list;
+	
 	public RecipetypeDAO() {
 		super();
 	}
@@ -28,7 +28,7 @@ public class RecipetypeDAO extends AbstractDAO{
 	
 	public List<Recipetype> getAllRecipetypes() throws ConnectException, DAOException, SQLException {
 		m_list = new ArrayList<Recipetype>();
-		m_set = getManaged(GET_ALL_RECIPETYPES);
+		m_set = getManaged("SELECT * FROM " + TABLE);
 		while (m_set.next()) {
 			m_list.add(setRecipetype(m_set));
 		}

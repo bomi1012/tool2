@@ -1,4 +1,4 @@
-package de.palaver.view.bean.helpers;
+package de.palaver.view.bean.util;
 
 import java.util.HashMap;
 import java.util.Map;

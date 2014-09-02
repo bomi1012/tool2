@@ -659,7 +659,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 			List<Fussnote> fn = Fussnotenverwaltung.getInstance()
 					.getAllFussnote();
 			List<Menutype> ma = Menueartverwaltung.getInstance()
-					.getAllMenueart();
+					.getAllMenutypes();
 			List<Geschmack> g = Geschmackverwaltung.getInstance()
 					.getAllGeschmack();
 

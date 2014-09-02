@@ -18,9 +18,9 @@ import de.palaver.management.info.person.Adresse;
 import de.palaver.management.info.person.Kontakte;
 import de.palaver.management.supplier.Ansprechpartner;
 import de.palaver.management.supplier.Supplier;
-import de.palaver.view.bean.helpers.ChangeFieldsPersonAbstract;
-import de.palaver.view.bean.helpers.HTMLComponents;
-import de.palaver.view.bean.helpers.interfaces.IChangeViewPage;
+import de.palaver.view.bean.util.ChangeFieldsPersonAbstract;
+import de.palaver.view.bean.util.HTMLComponents;
+import de.palaver.view.bean.util.interfaces.IChangeViewPage;
 
 public class ChangeContactPersonBean extends ChangeFieldsPersonAbstract implements View, ValueChangeListener, IChangeViewPage {
 	private static final long serialVersionUID = 6321945037675101L;

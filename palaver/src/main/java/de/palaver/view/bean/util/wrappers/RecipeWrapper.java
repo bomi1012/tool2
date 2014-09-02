@@ -1,4 +1,4 @@
-package de.palaver.view.bean.helpers.wrappers;
+package de.palaver.view.bean.util.wrappers;
 
 import java.util.ArrayList;
 import java.util.Date;

@@ -46,9 +46,9 @@ import de.palaver.management.recipe.Zubereitung;
 import de.palaver.management.recipe.service.RecipeService;
 import de.palaver.management.util.Helper;
 import de.palaver.view.bean.artikelverwaltung.ChangeItemBean;
-import de.palaver.view.bean.helpers.HTMLComponents;
-import de.palaver.view.bean.helpers.TemplateBuilder;
-import de.palaver.view.bean.helpers.wrappers.RezeptHasArtikelWrapper;
+import de.palaver.view.bean.util.HTMLComponents;
+import de.palaver.view.bean.util.TemplateBuilder;
+import de.palaver.view.bean.util.wrappers.RezeptHasArtikelWrapper;
 
 public class ChangeRecipeBean extends TemplateBuilder implements View, ValueChangeListener {
 	private static final long serialVersionUID = -4672352966956210418L;
@@ -105,7 +105,7 @@ public class ChangeRecipeBean extends TemplateBuilder implements View, ValueChan
 		//Konfiguriere Tabelle Reztepte
 		m_table = HTMLComponents.table(true, true, WIDTH_FULL, "300px");
 		m_table.setStyleName("palaverTable");
-		m_table.setCaption("Zutatenliste");
+		m_table.setCaption("Rezeptkomponenten");
 		m_table.setDragMode(com.vaadin.ui.Table.TableDragMode.ROW);
 
 		//Konfiguriere Tabelle der Artikel

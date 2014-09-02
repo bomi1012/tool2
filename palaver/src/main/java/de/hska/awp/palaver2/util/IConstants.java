@@ -79,7 +79,7 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&passw
 	String		MENU_LOGOUT = "Abmelden";
 	String 		MENU_MENUE_HEADLINE = "Menü";
 	String 		MENU_MENUE_ANLEGEN = " Menü anlegen";
-	String 		MENU_MENUE_SUCHEN = " Alle Menüs anzeigen";
+	String 		MENU_MENUE_ANZEIGEN = " Alle Menüs anzeigen";
 	String 		MENU_REGEL = "Regeln";
 	String 		MENU_HEADER = "Kopfzeile anzeigen/ausblenden";
 	
@@ -256,6 +256,8 @@ String		DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/palaver?user=root&passw
 	String		INFO_VALID_ABKUERZUNG = "Bitte Abkürzung eingeben!";
 	String 		INFO_VALID_BEZ_DOPPELT = "Bezeichnung bereits vorhanden!";
 	String 		INFO_VALID_BEZ_ABK_DOPPELT = "Bezeichnung oder Abkürzung bereits vorhanden!";
+	
+	String 		INFO_MENU_SELECT = "Bitte Menü auswählen!";
 	
 	String 		INFO_REZEPTANZEIGEN_SELECT = "Bitte Rezept auswählen!";
 	String 		INFO_REZEPTART_SELECT = "Bitte Rezeptart auswählen!";

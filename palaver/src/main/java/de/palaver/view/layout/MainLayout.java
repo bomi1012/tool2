@@ -28,8 +28,6 @@ import de.bistrosoft.palaver.gui.view.KuchenplanAnzeigen;
 import de.bistrosoft.palaver.gui.view.KuchenplanHistorie;
 import de.bistrosoft.palaver.gui.view.KuchenrezeptAnlegen;
 import de.bistrosoft.palaver.gui.view.KuchenrezeptAnzeigen;
-import de.bistrosoft.palaver.gui.view.MenueAnlegen;
-import de.bistrosoft.palaver.gui.view.MenueAnzeigenTabelle;
 import de.bistrosoft.palaver.gui.view.MenueartEinst;
 import de.bistrosoft.palaver.gui.view.MenueplanAnzeigen;
 import de.bistrosoft.palaver.gui.view.MenueplanHistorie;
@@ -53,6 +51,8 @@ import de.palaver.view.bean.artikelverwaltung.ShowQuantitiesUnitBean;
 import de.palaver.view.bean.artikelverwaltung.ShowWarehousesBean;
 import de.palaver.view.bean.lieferantenverwaltung.ChangeSupplierBean;
 import de.palaver.view.bean.lieferantenverwaltung.ShowSuppliersBean;
+import de.palaver.view.bean.menuverwaltung.ChangeMenuBean;
+import de.palaver.view.bean.menuverwaltung.ShowMenusBean;
 import de.palaver.view.bean.mitarbeiterverwaltung.ChangeEmployeeBean;
 import de.palaver.view.bean.mitarbeiterverwaltung.ChangePasswordBean;
 import de.palaver.view.bean.mitarbeiterverwaltung.ShowEmployeesBean;
@@ -207,14 +207,21 @@ public class MainLayout extends VerticalLayout implements Command {
 		MenuItem recipetypeAnlegen = recipetypeItem.addItem(IConstants.MENU_RECIPETYPE_NEU, this);
 		recipetypeAnlegen.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_ADD));
 		
+		/** Menu */
+		MenuItem menuItem = menu.addItem(IConstants.MENU_MENUE_HEADLINE, null);
+		/** 1 Level */
+		MenuItem menuShow = menuItem.addItem(IConstants.MENU_MENUE_ANZEIGEN, this);
+		menuShow.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_LUPE));
+		MenuItem menuAnlegen = menuItem.addItem(IConstants.MENU_MENUE_ANLEGEN, this);
+		menuAnlegen.setIcon(new ThemeResource(IConstants.ICON_PAGE_WHITE_ADD));
 		
 		
 		
 
-		MenuItem menue1Item = menu
-				.addItem(IConstants.MENU_MENUE_HEADLINE, null);
-		menue1Item.addItem(IConstants.MENU_MENUE_ANLEGEN, this);
-		menue1Item.addItem(IConstants.MENU_MENUE_SUCHEN, this);
+//		MenuItem menue1Item = menu
+//				.addItem(IConstants.MENU_MENUE_HEADLINE, null);
+//		menue1Item.addItem(IConstants.MENU_MENUE_ANLEGEN, this);
+//		menue1Item.addItem(IConstants.MENU_MENUE_ANZEIGEN, this);
 
 		MenuItem menuplanItem = menu.addItem(IConstants.MENU_MENUPLAN_HEADLINE,
 				this);
@@ -324,7 +331,11 @@ public class MainLayout extends VerticalLayout implements Command {
 				ViewHandler.getInstance().switchView(ShowRecipetypesBean.class);
 			} else if (selectedItem.getText().equals(IConstants.MENU_RECIPETYPE_NEU)) {
 				ViewHandler.getInstance().switchView(ChangeRecipetypeBean.class);
-			} 
+			} else if (selectedItem.getText().equals(IConstants.MENU_MENUE_ANLEGEN)) {
+				ViewHandler.getInstance().switchView(ChangeMenuBean.class);
+			} else if (selectedItem.getText().equals(IConstants.MENU_MENUE_ANZEIGEN)) {
+				ViewHandler.getInstance().switchView(ShowMenusBean.class);
+			}
 			
 			
 			
@@ -385,14 +396,7 @@ public class MainLayout extends VerticalLayout implements Command {
 				ViewHandler.getInstance().switchView(GeschmackEinst.class);
 			} else if (selectedItem.getText().equals(IConstants.MENU_MENUEART)) {
 				ViewHandler.getInstance().switchView(MenueartEinst.class);
-			} else if (selectedItem.getText().equals(
-					IConstants.MENU_MENUE_ANLEGEN)) {
-				ViewHandler.getInstance().switchView(MenueAnlegen.class);
-			} else if (selectedItem.getText().equals(
-					IConstants.MENU_MENUE_SUCHEN)) {
-				ViewHandler.getInstance()
-						.switchView(MenueAnzeigenTabelle.class);
-			} else if (selectedItem.getText().equals(IConstants.MENU_REGEL)) {
+			}  else if (selectedItem.getText().equals(IConstants.MENU_REGEL)) {
 				ViewHandler.getInstance().switchView(RegelnAnzeigen.class);
 			} else if (selectedItem.getText().equals("Email")) // Temp
 			{

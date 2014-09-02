@@ -16,10 +16,10 @@ import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
 import de.palaver.management.recipe.Recipe;
-import de.palaver.view.bean.helpers.HTMLComponents;
-import de.palaver.view.bean.helpers.TemplateBuilder;
-import de.palaver.view.bean.helpers.interfaces.IShowSingleTable;
-import de.palaver.view.bean.helpers.wrappers.RecipeWrapper;
+import de.palaver.view.bean.util.HTMLComponents;
+import de.palaver.view.bean.util.TemplateBuilder;
+import de.palaver.view.bean.util.interfaces.IShowSingleTable;
+import de.palaver.view.bean.util.wrappers.RecipeWrapper;
 
 public class ShowRecipesBean  extends TemplateBuilder implements View, IShowSingleTable {
 	private static final long serialVersionUID = 7835379225675541891L;

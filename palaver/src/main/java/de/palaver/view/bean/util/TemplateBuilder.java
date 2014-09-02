@@ -1,4 +1,4 @@
-package de.palaver.view.bean.helpers;
+package de.palaver.view.bean.util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +22,12 @@ import com.vaadin.ui.Window;
 
 import de.palaver.Application;
 import de.palaver.management.emploee.Rolle;
-import de.palaver.view.bean.helpers.interfaces.IChangeViewPage;
-import de.palaver.view.bean.helpers.interfaces.IShowSingleTable;
+import de.palaver.view.bean.menuverwaltung.ChangeMenuBean;
 import de.palaver.view.bean.mitarbeiterverwaltung.ChangePasswordBean;
 import de.palaver.view.bean.mitarbeiterverwaltung.ShowEmployeesBean;
 import de.palaver.view.bean.rezeptverwaltung.ChangeRecipeBean;
+import de.palaver.view.bean.util.interfaces.IChangeViewPage;
+import de.palaver.view.bean.util.interfaces.IShowSingleTable;
 
 public class TemplateBuilder extends BaseView {
 	
@@ -39,6 +40,7 @@ public class TemplateBuilder extends BaseView {
 	protected static final String 		BUTTON_TEXT_DEAKTIVIEREN = "Entgültig löschen";
 	private static final String 		BUTTON_TEXT_EDIT = "Bearbeiten";
 	protected static final String 		BUTTON_TEXT_ADD_ITEM = "Artikel anlegen";
+	protected static final String 		BUTTON_TEXT_ADD_RECIPE = "Rezept anlegen";
 	protected static final String 		BUTTON_TEXT_ADD_TO_MENUE = "In Menü überführen";
 
 	private static final String			BUTTON_ICON_EDIT = "icons/page_edit.png";
@@ -56,6 +58,7 @@ public class TemplateBuilder extends BaseView {
 	protected Button m_buttonVerwerfen;
 	protected Button m_buttonDeaktiviren;
 	protected Button m_buttonAddItem;
+	protected Button m_buttonAddRecipe;
 	protected Button m_buttonAddToMenue;
 	
 	protected Label 				m_headLine;
@@ -136,6 +139,15 @@ public class TemplateBuilder extends BaseView {
 			m_buttonAddToMenue = button(BUTTON_TEXT_ADD_TO_MENUE, BUTTON_ICON_GO, true, true);
 			buttons.add(m_buttonAddToMenue);
 			buttons.add(m_buttonAddItem);
+			buttons.add(m_buttonVerwerfen);
+			buttons.add(m_buttonSpeichern);
+			buttons.add(m_buttonDeaktiviren);
+		} else if (object instanceof ChangeMenuBean) {
+			m_buttonSpeichern = button(BUTTON_TEXT_SAVE, BUTTON_ICON_SAVE, true, true);
+			m_buttonVerwerfen = button(BUTTON_TEXT_VERWERFEN, BUTTON_ICON_VERWERFEN, true, true);
+			m_buttonDeaktiviren = button(BUTTON_TEXT_DEAKTIVIEREN,BUTTON_ICON_DEAKTIVIEREN, false, true);
+			m_buttonAddRecipe = button(BUTTON_TEXT_ADD_RECIPE, BUTTON_ICON_CREATE , true, true);
+			buttons.add(m_buttonAddRecipe);
 			buttons.add(m_buttonVerwerfen);
 			buttons.add(m_buttonSpeichern);
 			buttons.add(m_buttonDeaktiviren);
