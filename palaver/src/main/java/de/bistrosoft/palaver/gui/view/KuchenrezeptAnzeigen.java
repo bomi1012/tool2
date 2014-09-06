@@ -23,7 +23,7 @@ import de.bistrosoft.palaver.kuchenrezeptverwaltung.domain.Kuchenrezept;
 import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Kuchenrezeptverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
-import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.IViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.hska.awp.palaver2.util.customFilter;
@@ -210,7 +210,7 @@ public class KuchenrezeptAnzeigen extends VerticalLayout implements View {
 	 * .ViewData)
 	 */
 	@Override
-	public void getViewParam(ViewData data) {
+	public void getViewParam(IViewData data) {
 	}
 
 }

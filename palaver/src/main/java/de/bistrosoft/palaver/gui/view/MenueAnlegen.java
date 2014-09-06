@@ -41,7 +41,7 @@ import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
 import de.bistrosoft.palaver.util.TwinColTouch;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
-import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.IViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
@@ -51,7 +51,7 @@ import de.palaver.management.menu.Fussnote;
 import de.palaver.management.menu.Geschmack;
 import de.palaver.management.menu.Menu;
 import de.palaver.management.menu.Menutype;
-import de.palaver.management.menu.DAO.MenueDAO;
+import de.palaver.management.menu.DAO.MenuDAO;
 import de.palaver.management.recipe.Recipe;
 import de.palaver.management.util.dao.ConnectException;
 import de.palaver.management.util.dao.DAOException;
@@ -421,7 +421,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 	}
 
 	@Override
-	public void getViewParam(ViewData data) {
+	public void getViewParam(IViewData data) {
 
 		Object dataParam = ((ViewDataObject<?>) data).getData();
 		if (dataParam instanceof Menu) {
@@ -468,7 +468,7 @@ public class MenueAnlegen extends VerticalLayout implements View,
 			e1.printStackTrace();
 		}
 		try {
-			menu = MenueDAO.getInstance().getMenueById(menu.getId());
+			menu = MenuDAO.getInstance().getMenueById(menu.getId());
 		} catch (ConnectException e) {
 			e.printStackTrace();
 		} catch (DAOException e) {

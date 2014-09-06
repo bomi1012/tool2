@@ -12,7 +12,6 @@ import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasRezept;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Fussnotenverwaltung;
 import de.bistrosoft.palaver.rezeptverwaltung.service.Rezeptverwaltung;
-import de.bistrosoft.palaver.util.Util;
 import de.palaver.management.emploee.Employee;
 import de.palaver.management.employee.service.EmployeeService;
 import de.palaver.management.menu.Fussnote;
@@ -20,24 +19,27 @@ import de.palaver.management.menu.Geschmack;
 import de.palaver.management.menu.Menu;
 import de.palaver.management.menu.Menutype;
 import de.palaver.management.recipe.Recipe;
+import de.palaver.management.util.Helper;
 import de.palaver.management.util.dao.AbstractDAO;
 import de.palaver.management.util.dao.ConnectException;
 import de.palaver.management.util.dao.DAOException;
 
-public class MenueDAO extends AbstractDAO {
-	private static MenueDAO instance;
+public class MenuDAO extends AbstractDAO {
+	private static MenuDAO instance;
 	private final static String TABLE = "menue";
+	private final static String TABLE_MENU_FUSSNOTE = "menue_has_fussnote";
+	private final static String TABLE_MENU_RECIPE = "menue_has_rezept";
 	private static final String MENUEART = "menueart_fk";
 	private final static String KOCH = "koch";
 	private final static String AKTIV = "aktiv";
 	
-	//FIXME:!!!!!!!!!!
 	private static final String GET_ALL_MENUES = "SELECT m.id, m.name, m.aufwand, m.favorit, " 
 			+ " k.id, k.benutzername, g.id, g.name, ma.id, ma.name "
 			+ " FROM menue m, mitarbeiter k, geschmack g, menueart ma "
 			+ " WHERE m.geschmack_fk = g.id "
 			+ " AND m.menueart_fk = ma.id "
 			+ " AND m.koch = k.id ";
+	
 	
 	
 	
@@ -55,13 +57,13 @@ public class MenueDAO extends AbstractDAO {
 															+"AND m.koch=k.id " 
 															+"AND aktiv = 1";
 	
-	public MenueDAO() {
+	public MenuDAO() {
 		super();
 	}
 
-	public static MenueDAO getInstance() {
+	public static MenuDAO getInstance() {
 		if (instance == null) {
-			instance = new MenueDAO();
+			instance = new MenuDAO();
 		}
 		return instance;
 	}
@@ -76,9 +78,52 @@ public class MenueDAO extends AbstractDAO {
 		return m_list;		
 	}
 	
+	/**
+	 * create new menu
+	 * @param menu {@link Menu}
+	 * @return menuId
+	 */
+	public Long createMenu(Menu menu) throws ConnectException, DAOException {		
+		return insert ("INSERT INTO " + TABLE + "(" + FIELD_NAME + "," + KOCH
+				+ ", geschmack_fk, menueart_fk, aufwand, favorit)"
+				+ " VALUES" + "('" + menu.getName() + "'," + menu.getEmployee().getId() + ", " 
+				+ menu.getGeschmack().getId() + ", " + menu.getMenutype().getId() + ", "
+				+ Helper.convertBoolean(menu.hasAufwand()) + ", " + Helper.convertBoolean(menu.isFavorit()) + ")");
+	}
+	
+	/**
+	 * update menu
+	 * @param menu {@link Menu}
+	 */
+	public void updateMenu(Menu menu) throws ConnectException, DAOException {
+		putManaged("UPDATE " + TABLE + " SET " + FIELD_NAME + " = '"
+				+ menu.getName() + "' ," + KOCH + " = "
+				+ menu.getEmployee().getId() + ", geschmack_fk = "
+				+ menu.getGeschmack().getId() + ", menueart_fk = "
+				+ menu.getMenutype().getId() + ", aufwand = "
+				+ Helper.convertBoolean(menu.hasAufwand()) + ", favorit = "
+				+ Helper.convertBoolean(menu.isFavorit())
+				+ " WHERE menue.id = " + menu.getId() + ";");		
+	}
 	
 	
+	public void createRelationFussnoten(Long menuId, Long fussnoteId) throws ConnectException, DAOException {
+		putManaged("INSERT INTO " + TABLE_MENU_FUSSNOTE + " (menue_fk, fussnote_fk) VALUES "
+				+ "(" + menuId + ", " + fussnoteId + ")");
+	}
+	public void removeRelationFussnotenByMenuId(Long menuId) throws ConnectException, DAOException {
+		putManaged("DELETE FROM " + TABLE_MENU_FUSSNOTE + " WHERE menue_fk = " + menuId);
+	}	
 	
+	public void createRelationRecipe(Long menuId, Long recipeId) throws ConnectException, DAOException {
+		putManaged("INSERT INTO " + TABLE_MENU_RECIPE + " (menue_id, fussnote_id) VALUES "
+				+ "(" + menuId + ", " + recipeId + ")");
+	}
+	public void removeRelationRecipeByMenuId(Long menuId) throws ConnectException, DAOException {
+		this.putManaged("DELETE FROM " + TABLE_MENU_RECIPE + " WHERE menue_id = " + menuId);
+	}
+	
+
 	
 	
 	/**
@@ -252,8 +297,8 @@ public class MenueDAO extends AbstractDAO {
 				+ " VALUES" + "('" + menu.getName() + "',"
 				+ menu.getEmployee().getId() + ", " + menu.getGeschmack().getId()
 				+ ", " + menu.getMenutype().getId() + ", "
-				+ Util.convertBoolean(menu.hasAufwand()) + ", "
-				+ Util.convertBoolean(menu.isFavorit()) + ",true)";
+				+ Helper.convertBoolean(menu.hasAufwand()) + ", "
+				+ Helper.convertBoolean(menu.isFavorit()) + ",true)";
 		this.putManaged(INSERT_QUERY);
 	}
 
@@ -272,8 +317,8 @@ public class MenueDAO extends AbstractDAO {
 				+ menu.getEmployee().getId() + ", geschmack_fk = "
 				+ menu.getGeschmack().getId() + ", menueart_fk = "
 				+ menu.getMenutype().getId() + ", aufwand = "
-				+ Util.convertBoolean(menu.hasAufwand()) + ", favorit = "
-				+ Util.convertBoolean(menu.isFavorit())
+				+ Helper.convertBoolean(menu.hasAufwand()) + ", favorit = "
+				+ Helper.convertBoolean(menu.isFavorit())
 				+ " WHERE menue.id = " + menu.getId() + ";";
 		this.putManaged(INSERT_QUERY);
 
@@ -345,4 +390,8 @@ public class MenueDAO extends AbstractDAO {
 				+ "=false WHERE id=" + menueAusTb.getId();
 		this.putManaged(UPDATE_QUERY);
 	}
+
+
+
+
 }

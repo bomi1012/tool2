@@ -26,7 +26,7 @@ import com.vaadin.ui.VerticalLayout;
 import de.hska.awp.palaver2.nachrichtenverwaltung.service.Nachrichtenverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
-import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.IViewData;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
 import de.palaver.management.emploee.Employee;
@@ -271,7 +271,7 @@ public class NachrichtAnzeigen extends VerticalLayout implements View, ValueChan
 	}
 
 	@Override
-	public void getViewParam(ViewData data) {
+	public void getViewParam(IViewData data) {
 
 	}
 

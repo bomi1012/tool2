@@ -43,7 +43,7 @@ import de.bistrosoft.palaver.kuchenrezeptverwaltung.service.Kuchenrezeptverwaltu
 import de.bistrosoft.palaver.util.TwinColTouch;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
-import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.IViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
@@ -335,7 +335,7 @@ public class KuchenrezeptAnlegen extends VerticalLayout implements View,
 
 	// Methode zum Laden der Daten zum Ansehen und Ändern
 	@Override
-	public void getViewParam(ViewData data) {
+	public void getViewParam(IViewData data) {
 
 		kuchenrezept = (Kuchenrezept) ((ViewDataObject<?>) data).getData();
 		try {

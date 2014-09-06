@@ -32,7 +32,7 @@ import de.bistrosoft.palaver.rezeptverwaltung.service.Geschmackverwaltung;
 import de.bistrosoft.palaver.util.TwinColTouch;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
-import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.IViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
@@ -686,7 +686,7 @@ public class RegelAnlegen extends VerticalLayout implements View,
 
 	// Diese Methode wird aufgerufen, sobald man eine Regel per Doppelklick
 	// auswühlt
-	public void getViewParam(ViewData data) {
+	public void getViewParam(IViewData data) {
 		// Angeklickte Regel
 		regel = (Regel) ((ViewDataObject<?>) data).getData();
 

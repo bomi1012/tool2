@@ -24,4 +24,8 @@ public class Helper {
 	    }
 	    return true;
 	}
+	
+	public static Integer convertBoolean(Boolean bool) {
+		return (bool) ? 1 : 0;
+	}
 }

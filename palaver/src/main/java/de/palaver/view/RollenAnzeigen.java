@@ -24,7 +24,7 @@ import com.vaadin.ui.Window;
 
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
-import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.IViewData;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.management.emploee.Rolle;
 import de.palaver.management.employee.service.RolleService;
@@ -169,7 +169,7 @@ public class RollenAnzeigen extends VerticalLayout implements View {
 	}
 
 	@Override
-	public void getViewParam(ViewData data) {
+	public void getViewParam(IViewData data) {
 		// TODO Auto-generated method stub
 
 	}

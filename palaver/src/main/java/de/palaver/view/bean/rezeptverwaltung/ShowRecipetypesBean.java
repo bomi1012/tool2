@@ -11,7 +11,7 @@ import com.vaadin.ui.UI;
 
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
-import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.IViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
@@ -104,7 +104,7 @@ public class ShowRecipetypesBean extends TemplateBuilder implements View, IShowS
 	}
 	
 	@Override
-	public void getViewParam(ViewData data) { }
+	public void getViewParam(IViewData data) { }
 }
 
 

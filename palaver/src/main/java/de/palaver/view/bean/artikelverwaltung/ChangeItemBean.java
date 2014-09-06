@@ -20,7 +20,7 @@ import com.vaadin.ui.Window.CloseEvent;
 import com.vaadin.ui.Window.CloseListener;
 
 import de.hska.awp.palaver2.util.View;
-import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.IViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.management.artikel.Artikel;
@@ -452,7 +452,7 @@ public class ChangeItemBean extends TemplateBuilder implements View, ValueChange
 	}
 
 	@Override
-	public void getViewParam(ViewData data) {		
+	public void getViewParam(IViewData data) {		
 		if(((ViewDataObject<?>) data).getData() instanceof Artikel) {
 			m_artikel = (Artikel)((ViewDataObject<?>) data).getData();
 			setNewInfo();			

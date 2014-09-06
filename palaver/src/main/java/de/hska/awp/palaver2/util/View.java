@@ -7,5 +7,5 @@ package de.hska.awp.palaver2.util;
 import com.vaadin.ui.ComponentContainer;
 
 public interface View extends ComponentContainer {
-	public void getViewParam(ViewData data);
+	public void getViewParam(IViewData data);
 }

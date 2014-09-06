@@ -1,6 +1,9 @@
 package de.palaver.view.bean.menuverwaltung;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -24,8 +27,10 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 
+import de.hska.awp.palaver2.util.IConstants;
+import de.hska.awp.palaver2.util.IViewData;
 import de.hska.awp.palaver2.util.View;
-import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
 import de.palaver.management.emploee.Employee;
@@ -148,10 +153,10 @@ public class ChangeMenuBean extends TemplateBuilder implements View, ValueChange
 		m_buttonSpeichern.addClickListener(new ClickListener() {			
 			@Override
 			public void buttonClick(ClickEvent event) {
-//				if (validiereEingabe()) {
-//					saveItem();	
-//					ViewHandler.getInstance().switchView(ShowMenusBean.class, new ViewDataObject<Menu>(m_menu));
-//				}							
+				if (validiereEingabe()) {
+					saveItem();	
+					ViewHandler.getInstance().switchView(ShowMenusBean.class, new ViewDataObject<Menu>(m_menu));
+				}							
 			}
 		});		
 		
@@ -175,6 +180,59 @@ public class ChangeMenuBean extends TemplateBuilder implements View, ValueChange
 				//TODO:   getWindowFactory(new ChangeFussnotenBean()); 
 			}
 		});
+	}
+	
+	private boolean validiereEingabe() {
+		boolean bool = true;
+		if (isMarkAsChange()) {
+			if (StringUtils.isBlank(m_nameField.getValue())) {
+				((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_MENUE_NAME);
+				bool = false;
+			} else if (m_menutypeSelect.getValue() == null) {
+				((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_MENUEART_SELECT);
+				bool = false;
+			} else if (m_employeeSelect.getValue() == null) {
+				((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_MENUE_KOCH);
+				bool = false;
+			} else if (m_geschmackSelect.getValue() == null) {
+				((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_GESCHMACK_SELECT);
+				bool = false;
+			}  
+			else if (m_containerMenuHasRecipe.getItemIds().size() == 0) {
+				((Application) UI.getCurrent().getData()).showDialog(IConstants.INFO_MENUE_REZEPT);					
+				bool = false;
+			} 
+		} else {
+			bool = false;
+		} 			
+		return bool;		
+	}
+	
+	private void saveItem() {		
+		try {
+			if (m_toCreate) { //TODO: TESTEN
+				Long menuId = MenuService.getInstance().createMenu(m_menu);
+				MenuService.getInstance().createRelationFussnoten(menuId, setFussnoten());
+				MenuService.getInstance().createRelationRecipe(menuId, m_containerMenuHasRecipe.getItemIds());
+			} else {
+				MenuService.getInstance().updateMenu(m_menu);
+				MenuService.getInstance().updateRelationFussnoten(m_menu.getId(), setFussnoten());
+				MenuService.getInstance().updateRelationItem(m_menu.getId(), m_containerMenuHasRecipe.getItemIds());
+			}			
+			message(MESSAGE_SUSSEFULL_ARG_1, "Menü");	
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 		
+	}
+	
+	private List<Fussnote> setFussnoten() {
+		List<Fussnote> fussnotenList = new ArrayList<Fussnote>();
+		for (Object id : m_fussnotenColSelect.getItemIds()) {					
+			if (m_fussnotenColSelect.isSelected((Long) id))	{				
+				fussnotenList.add(new Fussnote((Long) id, null, null));
+			} 							
+		}
+		return fussnotenList;
 	}
 	
 	@SuppressWarnings("serial")
@@ -386,5 +444,5 @@ public class ChangeMenuBean extends TemplateBuilder implements View, ValueChange
 	public void valueChange(ValueChangeEvent event) { }
 
 	@Override
-	public void getViewParam(ViewData data) { 	}
+	public void getViewParam(IViewData data) { 	}
 }

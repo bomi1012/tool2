@@ -24,7 +24,7 @@ import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
-import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.IViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
@@ -167,7 +167,7 @@ public class EmailOhneBestellung extends VerticalLayout implements View {
 	}
 	
 	@Override
-	public void getViewParam(ViewData data) {
+	public void getViewParam(IViewData data) {
 		supplier = (Supplier) ((ViewDataObject<?>) data).getData();
 		empfaengerInput = supplier.getKontakte().getEmail();
 		empfaenger.setValue(empfaengerInput);

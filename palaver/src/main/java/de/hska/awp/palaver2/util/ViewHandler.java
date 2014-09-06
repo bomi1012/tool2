@@ -58,7 +58,7 @@ public class ViewHandler {
 		}
 	}
 
-	public void switchView(Class<? extends View> view, ViewData data) {
+	public void switchView(Class<? extends View> view, IViewData data) {
 		Application app = (Application) UI.getCurrent().getData();
 		if (app != null)
 		{

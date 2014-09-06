@@ -12,7 +12,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 import de.hska.awp.palaver2.util.View;
-import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.IViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.management.artikel.Kategorie;
@@ -139,7 +139,7 @@ public class ChangeKategoryBean extends TemplateBuilder implements View, ValueCh
 	public void valueChange(ValueChangeEvent event) { }
 
 	@Override
-	public void getViewParam(ViewData data) {
+	public void getViewParam(IViewData data) {
 		if(((ViewDataObject<?>) data).getData() instanceof Kategorie) {
 			m_kategorie = (Kategorie)((ViewDataObject<?>) data).getData();		
 			setNewInfo();			

@@ -10,7 +10,7 @@ import com.vaadin.ui.Image;
 import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver2.util.View;
-import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.IViewData;
 
 /**
  * @author Sebastian
@@ -35,6 +35,6 @@ public class DefaultView extends VerticalLayout implements View {
 	 * .ViewData)
 	 */
 	@Override
-	public void getViewParam(ViewData data) {
+	public void getViewParam(IViewData data) {
 	}
 }

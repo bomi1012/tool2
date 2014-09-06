@@ -11,7 +11,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 import de.hska.awp.palaver2.util.View;
-import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.IViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.management.info.person.Adresse;
@@ -247,7 +247,7 @@ public class ChangeContactPersonBean extends ChangeFieldsPersonAbstract implemen
 	public void valueChange(ValueChangeEvent event) { }
 	
 	@Override
-	public void getViewParam(ViewData data) {
+	public void getViewParam(IViewData data) {
 		resetMarkAsChange();
 		if(((ViewDataObject<?>) data).getData() instanceof Supplier) { 
 			m_supplier = (Supplier)((ViewDataObject<?>) data).getData();

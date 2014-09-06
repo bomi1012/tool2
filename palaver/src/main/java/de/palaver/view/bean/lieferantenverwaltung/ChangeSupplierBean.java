@@ -20,7 +20,7 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.BaseTheme;
 
 import de.hska.awp.palaver2.util.View;
-import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.IViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.management.info.person.Adresse;
@@ -406,7 +406,7 @@ public class ChangeSupplierBean extends ChangeFieldsPersonAbstract implements Vi
 	@Override
 	public void valueChange(ValueChangeEvent event) { }
 	@Override
-	public void getViewParam(ViewData data) {
+	public void getViewParam(IViewData data) {
 		if(((ViewDataObject<?>) data).getData() instanceof Supplier) { 
 			m_supplier = (Supplier)((ViewDataObject<?>) data).getData();
 			setNewInfo();			

@@ -17,7 +17,7 @@ import com.vaadin.ui.Window;
 
 import de.hska.awp.palaver2.util.Util;
 import de.hska.awp.palaver2.util.View;
-import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.IViewData;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
@@ -130,7 +130,7 @@ public class ChangePasswordBean extends TemplateBuilder implements View, ValueCh
 	public void valueChange(ValueChangeEvent event) { }
 
 	@Override
-	public void getViewParam(ViewData data) {
+	public void getViewParam(IViewData data) {
 		if(((ViewDataObject<?>) data).getData() instanceof Employee) {
 			m_employee = (Employee)((ViewDataObject<?>) data).getData(); 
 		}

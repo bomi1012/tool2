@@ -10,7 +10,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 import de.hska.awp.palaver2.util.View;
-import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.IViewData;
 import de.palaver.view.ViewAbstract;
 
 @SuppressWarnings("serial")
@@ -61,7 +61,7 @@ public class YesNoPopup extends ViewAbstract implements View, ValueChangeListene
 	}
 
 	@Override
-	public void getViewParam(ViewData data) {
+	public void getViewParam(IViewData data) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -4,11 +4,11 @@ import java.sql.SQLException;
 
 import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasFussnote;
 import de.palaver.management.menu.Menu;
-import de.palaver.management.menu.DAO.MenueDAO;
+import de.palaver.management.menu.DAO.MenuDAO;
 import de.palaver.management.util.dao.ConnectException;
 import de.palaver.management.util.dao.DAOException;
 
-public class Menueverwaltung extends MenueDAO {
+public class Menueverwaltung extends MenuDAO {
 
 	private static Menueverwaltung instance = null;
 

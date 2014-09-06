@@ -25,7 +25,7 @@ import com.vaadin.ui.Window;
 import de.bistrosoft.palaver.menueplanverwaltung.service.Menueartverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
 import de.hska.awp.palaver2.util.View;
-import de.hska.awp.palaver2.util.ViewData;
+import de.hska.awp.palaver2.util.IViewData;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
 import de.palaver.management.menu.Menutype;
@@ -315,6 +315,6 @@ public class MenueartEinst extends VerticalLayout implements View {
 	}
 
 	@Override
-	public void getViewParam(ViewData data) {
+	public void getViewParam(IViewData data) {
 	}
 }

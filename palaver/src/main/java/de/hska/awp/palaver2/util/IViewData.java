@@ -4,6 +4,6 @@
  */
 package de.hska.awp.palaver2.util;
 
-public interface ViewData {
+public interface IViewData {
 
 }

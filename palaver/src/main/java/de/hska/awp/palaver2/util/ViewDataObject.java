@@ -1,6 +1,6 @@
 package de.hska.awp.palaver2.util;
 
-public class ViewDataObject<T> implements ViewData {
+public class ViewDataObject<T> implements IViewData {
 	private T m_data;
 	private Object m_object;
 
