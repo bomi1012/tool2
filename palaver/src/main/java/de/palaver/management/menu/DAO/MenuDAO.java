@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.bistrosoft.palaver.menueplanverwaltung.domain.MenueHasFussnote;
 import de.palaver.management.emploee.Employee;
 import de.palaver.management.menu.Geschmack;
 import de.palaver.management.menu.Menu;
@@ -142,27 +141,4 @@ public class MenuDAO extends AbstractDAO {
 				new Geschmack(set.getLong(7), set.getString(8)),
 				new Menutype(set.getLong(9), set.getString(10)));
 	}
-
-	
-	////OLD////////
-	
-	
-	
-	public void FussnoteAdd(MenueHasFussnote menueHasFussnote)
-			throws ConnectException, DAOException, SQLException {
-		String INSERT_QUERY = "INSERT INTO menue_has_fussnote (menue_fk, fussnote_fk) VALUES"
-				+ "("
-				+ menueHasFussnote.getMenue().getId()
-				+ ", "
-				+ menueHasFussnote.getFussnote().getId() + ")";
-		this.putManaged(INSERT_QUERY);
-	}
-
-
-
-
-
-
-
-
 }
