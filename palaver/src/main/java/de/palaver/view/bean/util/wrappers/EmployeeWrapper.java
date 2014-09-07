@@ -56,7 +56,6 @@ public class EmployeeWrapper {
 				wrappers.add(new EmployeeWrapper(emp));
 			}
 		} catch (Exception e) {
-			LOG.error("ERROR_" + EmployeeWrapper.class.getName() + " : " + e.toString());
 			e.printStackTrace();
 		} 
 	

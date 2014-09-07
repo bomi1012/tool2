@@ -29,10 +29,9 @@ import com.vaadin.ui.Window.CloseEvent;
 import com.vaadin.ui.Window.CloseListener;
 import com.vaadin.ui.themes.BaseTheme;
 
-import de.bistrosoft.palaver.gui.view.MenueAnlegen;
 import de.hska.awp.palaver2.util.IConstants;
-import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.IViewData;
+import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
@@ -46,6 +45,7 @@ import de.palaver.management.recipe.Zubereitung;
 import de.palaver.management.recipe.service.RecipeService;
 import de.palaver.management.util.Helper;
 import de.palaver.view.bean.artikelverwaltung.ChangeItemBean;
+import de.palaver.view.bean.menuverwaltung.ChangeMenuBean;
 import de.palaver.view.bean.util.HTMLComponents;
 import de.palaver.view.bean.util.TemplateBuilder;
 import de.palaver.view.bean.util.wrappers.RezeptHasArtikelWrapper;
@@ -226,7 +226,7 @@ public class ChangeRecipeBean extends TemplateBuilder implements View, ValueChan
 			public void buttonClick(ClickEvent event) {
 				if (validiereEingabe()) {
 					saveItem();	
-					ViewHandler.getInstance().switchView(MenueAnlegen.class, new ViewDataObject<Recipe>(m_recipe));	
+					ViewHandler.getInstance().switchView(ChangeMenuBean.class, new ViewDataObject<Recipe>(m_recipe));	
 				}
 			}
 		});

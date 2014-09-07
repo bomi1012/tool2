@@ -15,6 +15,7 @@ public class FussnoteDAO extends AbstractDAO {
 	
 	private static final String FIELD_ABKUERZUNG = "abkuerzung";
 	private final static String TABLE = "fussnote";
+	private final static String TABLE_MENU_FUSSNOTE = "menue_has_fussnote";
 
 	private static FussnoteDAO instance = null;
 
@@ -29,7 +30,9 @@ public class FussnoteDAO extends AbstractDAO {
 			+ " WHERE " + FIELD_ID + "={0}";
 	private final static String GET_FUSSNOTE_BY_NAME = "SELECT * FROM " + TABLE
 			+ " WHERE name = {0}";
-	private final static String GET_FUSSNOTE_BY_MENUE = "Select fussnote.id, fussnote.name, fussnote.abkuerzung from fussnote JOIN menue_has_fussnote On menue_has_fussnote.fussnote_fk = fussnote.id WHERE menue_has_fussnote.menue_fk = {0}";
+	private final static String GET_FUSSNOTE_BY_MENUE = "SELECT f.* FROM " 
+			+ TABLE + " f JOIN " + TABLE_MENU_FUSSNOTE + " mf" 
+			+ " ON mf.fussnote_fk = f.id WHERE mf.menue_fk = {0}";
 
 	// Konstruktor
 	public FussnoteDAO() {
@@ -55,10 +58,20 @@ public class FussnoteDAO extends AbstractDAO {
 		return m_list;
 	}
 	
+	public List<Fussnote> getAllFussnotenByMenuId(Long menuId) throws ConnectException, DAOException, SQLException {
+		m_list = new ArrayList<Fussnote>();
+		m_set = getManaged(MessageFormat.format(GET_FUSSNOTE_BY_MENUE, menuId));
+		while (m_set.next()) {
+			m_list.add(setFussnone(m_set));
+		}
+		return m_list;
+	}
+	
 	private Fussnote setFussnone(ResultSet set) throws SQLException {
 		return new Fussnote(set.getLong(FIELD_ID), set.getString(FIELD_NAME), set.getString(FIELD_ABKUERZUNG));
 	}
 	
+
 	
 	
 	
@@ -128,4 +141,6 @@ public class FussnoteDAO extends AbstractDAO {
 				+ fussnote.getId() + "'";
 		this.putManaged(UPDATE_QUERY);
 	}
+
+
 }

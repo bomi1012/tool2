@@ -22,8 +22,6 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-import de.bistrosoft.palaver.gui.view.MenueAnlegen;
-import de.bistrosoft.palaver.menueplanverwaltung.service.Menueverwaltung;
 import de.bistrosoft.palaver.regelverwaltung.domain.Regel;
 import de.bistrosoft.palaver.regelverwaltung.service.Regelverwaltung;
 import de.hska.awp.palaver2.util.IConstants;
@@ -31,8 +29,10 @@ import de.palaver.Application;
 import de.palaver.management.emploee.Employee;
 import de.palaver.management.menu.Fussnote;
 import de.palaver.management.menu.Menu;
+import de.palaver.management.menu.service.MenuService;
 import de.palaver.management.util.dao.ConnectException;
 import de.palaver.management.util.dao.DAOException;
+import de.palaver.view.bean.menuverwaltung.ChangeMenuBean;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 
 /**
@@ -345,7 +345,7 @@ public class WinSelectMenue extends Window {
 		// Container für Menüliste festlegen
 		try {
 			menueContainer = new BeanItemContainer<Menu>(Menu.class,
-					Menueverwaltung.getInstance().getAllMenuesFast());
+					MenuService.getInstance().getAllMenus());
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		} catch (ConnectException e) {
@@ -370,7 +370,7 @@ public class WinSelectMenue extends Window {
 		win.setWidth("1100px");
 		win.setHeight("850px");
 
-		MenueAnlegen me = new MenueAnlegen();
+		ChangeMenuBean me = new ChangeMenuBean();
 		win.setContent(me);
 		// addComponent(me);
 

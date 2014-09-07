@@ -34,12 +34,6 @@ public class Menueartverwaltung extends MenutypeDAO {
 		return result;
 	}
 
-	public List<Menutype> getMenueartByName(String name)
-			throws ConnectException, DAOException, SQLException {
-		List<Menutype> result = null;
-		result = super.getMenueartByName(name);
-		return result;
-	}
 
 	public Menutype getMenueartById(Long id) throws ConnectException,
 			DAOException, SQLException {
@@ -48,13 +42,5 @@ public class Menueartverwaltung extends MenutypeDAO {
 		return menutype;
 	}
 
-	public void createMenueart(Menutype menutype) throws ConnectException,
-			DAOException, SQLException {
-		super.createMenueart(menutype);
-	}
 
-	public void updateMenuetart(Menutype menutype) throws ConnectException,
-			DAOException, SQLException {
-		super.updateMenueart(menutype);
-	}
 }

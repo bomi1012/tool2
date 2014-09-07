@@ -49,7 +49,7 @@ public class ChangeMenuBean extends TemplateBuilder implements View, ValueChange
 	private static final int POSITION_TOP = 0;
 	private static final int POSITION_BOTTOM = 1;
 	private Menu m_menu;
-	private ArrayList<RecipeWrapper> m_menuHasRecipeList;
+	private List<RecipeWrapper> m_menuHasRecipeList;
 	private boolean m_toCreate;
 	private TextField m_nameField;
 	private NativeSelect m_employeeSelect;
@@ -210,7 +210,7 @@ public class ChangeMenuBean extends TemplateBuilder implements View, ValueChange
 	
 	private void saveItem() {		
 		try {
-			if (m_toCreate) { //TODO: TESTEN
+			if (m_toCreate) {
 				Long menuId = MenuService.getInstance().createMenu(m_menu);
 				MenuService.getInstance().createRelationFussnoten(menuId, setFussnoten());
 				MenuService.getInstance().createRelationRecipe(menuId, m_containerMenuHasRecipe.getItemIds());
@@ -444,5 +444,43 @@ public class ChangeMenuBean extends TemplateBuilder implements View, ValueChange
 	public void valueChange(ValueChangeEvent event) { }
 
 	@Override
-	public void getViewParam(IViewData data) { 	}
+	public void getViewParam(IViewData data) { 
+		if(((ViewDataObject<?>) data).getData() instanceof Menu) {
+			try {
+				m_menu = (Menu)((ViewDataObject<?>) data).getData(); 
+				setNewInfo();
+				setValueToComponent(getData());
+				
+				m_menu.setFussnotenList(MenuService.getInstance().getAllFussnotenByMenuId(m_menu.getId()));				
+				if (m_menu.getFussnotenList() != null && m_menu.getFussnotenList().size() > 0) {
+					for (Fussnote fussnote : m_menu.getFussnotenList()) {
+						m_fussnotenColSelect.select(fussnote.getId());
+					}
+				}
+				
+				m_menuHasRecipeList = RecipeWrapper.getRecipeWrappersByMenu(m_menu);
+				
+				for (RecipeWrapper rezeptWrapper : m_menuHasRecipeList) {
+					m_containerItem.removeItem(rezeptWrapper);
+					m_containerMenuHasRecipe.addItem(rezeptWrapper);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} 			
+		}
+	}
+	
+	private void setNewInfo() {
+		getData().clear();
+		getData().put(m_nameField, m_menu.getName());
+		getData().put(m_employeeSelect, m_menu.getEmployee());
+		getData().put(m_geschmackSelect, m_menu.getGeschmack());
+		getData().put(m_menutypeSelect, m_menu.getMenutype());
+		getData().put(m_aufwandCheckbox, m_menu.hasAufwand());
+		getData().put(m_favoritCheckbox, m_menu.isFavorit());
+		
+		m_toCreate = false;		
+		m_headLine.setValue("Menü bearbeiten");
+		m_buttonDeaktiviren.setVisible(true);
+	}
 }

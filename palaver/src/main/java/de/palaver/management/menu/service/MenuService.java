@@ -65,6 +65,9 @@ public class MenuService {
 	public List<Fussnote> getAllFussnote() throws ConnectException, DAOException, SQLException {
 		return FussnoteDAO.getInstance().getAllFussnote();
 	}
+	public List<Fussnote> getAllFussnotenByMenuId(Long menuId) throws ConnectException, DAOException, SQLException {
+		return FussnoteDAO.getInstance().getAllFussnotenByMenuId(menuId);
+	}
 
 	//// MENUTYPES ////
 	public List<Menutype> getAllMenutypes() throws ConnectException, DAOException, SQLException {
@@ -75,6 +78,8 @@ public class MenuService {
 	public List<Geschmack> getAllGeschmacks() throws ConnectException, DAOException, SQLException {
 		return GeschmackDAO.getInstance().getAllGeschmack();
 	}
+
+
 
 
 

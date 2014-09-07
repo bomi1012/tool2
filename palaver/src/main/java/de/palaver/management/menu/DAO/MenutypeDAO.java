@@ -73,29 +73,7 @@ public class MenutypeDAO extends AbstractDAO {
 		return m_menutype;
 	}
 
-	// Methode, die eine Menueart eines Menue über die ID zurückliefert
-	public Menutype getMenueartByMenue(Long id) throws ConnectException,
-			DAOException, SQLException {
-		ResultSet set = getManaged(MessageFormat.format(GET_MENUEART_BY_MENUE,
-				id));
-		while (set.next()) {
-			m_menutype = new Menutype(set.getLong(FIELD_ID), set.getString(FIELD_NAME));
-		}
-		return m_menutype;
-	}
 
-	// Methode, die eine Menueart über den Namen zurückliefert
-	public List<Menutype> getMenueartByName(String name)
-			throws ConnectException, DAOException, SQLException {
-		List<Menutype> list = new ArrayList<Menutype>();
-
-		ResultSet set = getManaged(GET_MENUEART_BY_NAME + name + "%'");
-
-		while (set.next()) {
-			list.add(new Menutype(set.getLong(FIELD_ID), set.getString(FIELD_NAME)));
-		}
-		return list;
-	}
 
 	// Methode, die eine Menueart erstellt
 	public void createMenueart(Menutype menutype) throws ConnectException,

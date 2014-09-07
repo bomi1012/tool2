@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.vaadin.ui.Label;
 
+import de.palaver.management.menu.Menu;
 import de.palaver.management.recipe.Recipe;
 import de.palaver.management.recipe.service.RecipeService;
 
@@ -42,6 +43,18 @@ public class RecipeWrapper {
 		List<RecipeWrapper> wrappers = new ArrayList<RecipeWrapper>();
 		try {
 			for (Recipe recipe : RecipeService.getInstance().getAllRecipes()) {
+				wrappers.add(new RecipeWrapper(recipe));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 	
+		return wrappers;
+	}
+
+	public static List<RecipeWrapper> getRecipeWrappersByMenu(Menu menu) {
+		List<RecipeWrapper> wrappers = new ArrayList<RecipeWrapper>();
+		try {
+			for (Recipe recipe : RecipeService.getInstance().getAllRecipesByMenuId(menu.getId())) {
 				wrappers.add(new RecipeWrapper(recipe));
 			}
 		} catch (Exception e) {
