@@ -17,12 +17,14 @@ public class RecipeWrapper {
 	
 	private Label m_name = new Label();
 	public Label getName() { return m_name; }
+	public String getNameString() { return m_name.getValue(); }
 	
 	private Label m_recipetype = new Label();
 	public Label getRecipetype() { return m_recipetype; }
 	
 	private Label m_employee = new Label();
 	public Label getEmployee() { return m_employee; }
+	public String getEmployeeString() { return m_employee.getValue(); }
 	
 	private Label m_kommentar = new Label();
 	public Label getKommentar() { return m_kommentar; }

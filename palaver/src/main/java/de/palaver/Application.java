@@ -87,34 +87,7 @@ public class Application extends UI
 		Page.getCurrent().setTitle("PalaverApp");
 		
         setContent(new LoginForm());
-        
-//        Button button = new Button("Datenbank Test");
-//        button.addClickListener(new Button.ClickListener() 
-//        {
-//            public void buttonClick(ClickEvent event) 
-//            {
-//                SystemDAO dao = SystemDAO.getInstance();
-//                try
-//				{
-//					layout.addComponent(new Label("Erfolg: " + dao.testConnection()));
-//				} 
-//                catch (ConnectException e)
-//				{
-//					layout.addComponent(new Label(e.toString()));
-//				} 
-//                catch (DAOException e)
-//				{
-//                	layout.addComponent(new Label(e.toString()));
-//				} 
-//                catch (SQLException e)
-//				{
-//                	layout.addComponent(new Label(e.toString()));
-//				}
-//            }
-//        });
-//        layout.addComponent(button);
-//        layout.addComponent(MainLayout.getInstance());
-    }
+        }
 	
 	public Employee getUser()
 	{

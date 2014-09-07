@@ -45,12 +45,6 @@ public class RecipeDAO extends AbstractDAO {
 			"WHERE r.rezeptart_fk = ra.id AND r.mitarbeiter_fk = m.id " +
 			"AND mr.rezept_id = r.id AND mr.menue_id = {0}";	
 	
-	
-//	private final static String GET_ALL_RECIPES_BY_MENUE = "SELECT r.* FROM " 
-//			+ TABLE + " r JOIN " + TABLE_RECIPE_MENU + " mr" 
-//			+ " ON mr.rezept_id = r.id WHERE mr.menue_id = {0}";
-
-	
 	private static final String INSERT_QUERY = "INSERT INTO " + TABLE + "("
 			+ "`" + FIELD_NAME + "`, " + "`" + FIELD_KOMMENTAR + "`, "
 			+ "`" + FIELD_ERSTELLT + "`, " + "`" + FIELD_MITARBEITER + "`, `"

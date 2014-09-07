@@ -10,8 +10,8 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.UI;
 
 import de.hska.awp.palaver2.util.IConstants;
-import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.IViewData;
+import de.hska.awp.palaver2.util.View;
 import de.hska.awp.palaver2.util.ViewDataObject;
 import de.hska.awp.palaver2.util.ViewHandler;
 import de.palaver.Application;
@@ -106,13 +106,14 @@ public class ShowRecipesBean  extends TemplateBuilder implements View, IShowSing
 
 	private void setTable() {
 		m_filterTable.setContainerDataSource(m_container);
-		m_filterTable.setVisibleColumns(new Object[] { "name",  "recipetype", "employee", "erstellt", "kommentar"});
-		m_filterTable.sort(new Object[] { "name" }, new boolean[] { true });
+		m_filterTable.setVisibleColumns(new Object[] { "nameString",  "recipetype", "employeeString", "erstellt", "kommentar"});
+		m_filterTable.sort(new Object[] { "nameString" }, new boolean[] { true });
 		
-		m_filterTable.setColumnHeader("employee", "Mitarbeiter");
+		m_filterTable.setColumnHeader("nameString", "Rezeptname");
+		m_filterTable.setColumnHeader("employeeString", "Mitarbeiter");
 		m_filterTable.setColumnHeader("recipetype", "Rezeptart");
 		
-		m_filterTable.setFilterFieldValue("employee", ((Application) UI.getCurrent().getData()).getUser().getBenutzername());
+		m_filterTable.setFilterFieldValue("employeeString", ((Application) UI.getCurrent().getData()).getUser().getBenutzername());
 	}
 
 	@Override
@@ -120,7 +121,7 @@ public class ShowRecipesBean  extends TemplateBuilder implements View, IShowSing
 		if(((ViewDataObject<?>) data).getData() instanceof Recipe) {
 			m_recipe = (Recipe)((ViewDataObject<?>) data).getData(); 
 			m_filterTable.resetFilters();
-			m_filterTable.setFilterFieldValue("name", ((Recipe)((ViewDataObject<?>) data).getData()).getName());
+			m_filterTable.setFilterFieldValue("nameString", ((Recipe)((ViewDataObject<?>) data).getData()).getName());
 		}
 	}
 }

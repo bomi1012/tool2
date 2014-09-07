@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.vaadin.ui.Label;
 
@@ -14,7 +12,6 @@ import de.palaver.management.emploee.Rolle;
 import de.palaver.management.employee.service.EmployeeService;
 
 public class EmployeeWrapper {
-	private static final Logger LOG = LoggerFactory.getLogger(EmployeeWrapper.class.getName());
 	
 	private Employee m_employee;
 	public Employee getEmployee() { return m_employee; }
